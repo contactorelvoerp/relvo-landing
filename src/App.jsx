@@ -34,8 +34,8 @@ function App() {
       <BackgroundLayers />
       <Navbar />
       <Hero />
-      <AIAssistant />
       <Solution />
+      <AIAssistant />
       <Pricing />
       <EarlyBird />
       <Footer />

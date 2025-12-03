@@ -17,10 +17,10 @@ export const Pricing = () => {
   }
 
   return (
-    <section className="border-[var(--glass-border)] z-10 border-t pt-24 pr-6 pb-24 pl-6 relative" id="precios">
+    <section className="border-[var(--glass-border)] z-10 border-t pt-24 pr-6 pb-24 pl-6 relative scroll-mt-32" id="precios">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-medium tracking-tight mb-16 text-center">
-          Planes diseñados para crecer
+          Planes diseñados para escalar
         </h2>
 
         {/* Pricing Cards */}
@@ -29,7 +29,7 @@ export const Pricing = () => {
           <div className="glass-panel p-8 rounded-2xl border-t border-[var(--glass-border)] hover:bg-[var(--glass-hover)] transition-colors h-full flex flex-col">
             <h3 className="text-lg font-medium text-muted mb-2">Starter</h3>
             <div className="text-3xl font-medium mb-1">
-              $99 <span className="text-sm text-muted font-normal">USD/mes</span>
+              $299 <span className="text-sm text-muted font-normal">USD/mes</span>
             </div>
             <p className="text-xs text-muted mb-6">Para empresas pequeñas.</p>
             <ul className="space-y-3 text-sm text-muted mb-8 flex-grow">
@@ -44,7 +44,7 @@ export const Pricing = () => {
               </li>
             </ul>
             <button className="w-full py-2.5 rounded-lg border border-[var(--glass-border)] text-sm font-medium hover:bg-[var(--glass-hover)] transition-colors">
-              Seleccionar
+              Próximamente
             </button>
           </div>
 
@@ -55,7 +55,7 @@ export const Pricing = () => {
             </div>
             <h3 className="text-lg font-medium text-indigo-400 mb-2">Pro</h3>
             <div className="text-3xl font-medium mb-1">
-              $299 <span className="text-sm text-muted font-normal">USD/mes</span>
+              $799 <span className="text-sm text-muted font-normal">USD/mes</span>
             </div>
             <p className="text-xs text-muted mb-6">Para equipos en expansión.</p>
             <ul className="space-y-3 text-sm text-muted mb-8 flex-grow">
@@ -70,15 +70,15 @@ export const Pricing = () => {
               </li>
             </ul>
             <button className="w-full py-2.5 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-500 transition-colors shadow-lg shadow-indigo-500/20">
-              Empezar con Pro
+              Próximamente
             </button>
           </div>
 
           {/* Enterprise */}
           <div className="glass-panel p-8 rounded-2xl border-t border-[var(--glass-border)] hover:bg-[var(--glass-hover)] transition-colors h-full flex flex-col">
-            <h3 className="text-lg font-medium text-muted mb-2">Enterprise</h3>
-            <div className="text-xl font-medium mb-1 pt-1.5 pb-1.5">Precio tailormade</div>
-            <p className="text-muted text-xs mb-6">Para operaciones complejas.</p>
+            <h3 className="text-lg font-medium text-muted mb-2">Enterprise y estudios contables</h3>
+            <div className="text-xl font-medium mb-1 pt-1.5 pb-1.5">Contactar a ventas</div>
+            <p className="text-muted text-xs mb-6">Para operaciones complejas, multiples sociedades y estudios contables.</p>
             <ul className="space-y-3 text-sm text-muted mb-8 flex-grow">
               <li className="flex items-center gap-2">
                 <Check className="w-4 h-4" /> Multiempresa
@@ -91,7 +91,7 @@ export const Pricing = () => {
               </li>
             </ul>
             <button className="w-full py-2.5 rounded-lg border border-[var(--glass-border)] text-sm font-medium hover:bg-[var(--glass-hover)] transition-colors">
-              Contactar Ventas
+              Próximamente
             </button>
           </div>
         </div>

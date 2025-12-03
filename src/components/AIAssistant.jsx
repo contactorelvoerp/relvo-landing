@@ -2,15 +2,15 @@ import { BookOpen, Landmark, Sparkles, Bot, MoreHorizontal, ArrowUp } from 'luci
 
 export const AIAssistant = () => {
   return (
-    <section className="z-10 pt-24 pr-6 pb-32 pl-6 relative" id="ai-assistant">
+    <section className="z-10 pt-24 pr-6 pb-32 pl-6 relative scroll-mt-32" id="ai-assistant">
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* EXPERTISE SPECIFICATIONS (LEFT SIDE) */}
           <div className="order-2 lg:order-1 space-y-10">
             <div>
-              <h2 className="text-3xl font-medium tracking-tight mb-4">Tu analista financiero 24/7</h2>
+              <h2 className="text-3xl font-medium tracking-tight mb-4">Tu copiloto contable 24/7</h2>
               <p className="text-muted text-lg font-light leading-relaxed">
-                Relvo AI no es solo un chat. Es un experto tributario y financiero conectado en tiempo real a tus datos, capaz de responder consultas complejas al instante.
+              Relvo AI responde al instante preguntas complejas sobre tu negocio: normativa IFRS, impuestos, gastos, balances o flujos.
               </p>
             </div>
 

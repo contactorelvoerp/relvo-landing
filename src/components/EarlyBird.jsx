@@ -57,9 +57,9 @@ export const EarlyBird = () => {
           Early Access: Q1 2026
         </div>
 
-        <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">Migra a Relvo</h2>
+        <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">Sumate a Relvo beta</h2>
         <p className="text-muted font-light mb-8">
-          Estamos abriendo cupos para empresas listas para dejar su ERP tradicional. Asegura tu lugar para recibir onboarding prioritario.
+          Estamos buscando empresas que quieran probar Relvo. Dejanos tu email y te contactaremos cuando estemos listos.
         </p>
 
         <form onSubmit={handleSubmit} className="relative w-full max-w-sm mx-auto group">
@@ -85,7 +85,7 @@ export const EarlyBird = () => {
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               ) : (
-                isSupabaseConfigured ? 'Unirme' : 'Configura Supabase'
+                isSupabaseConfigured ? 'Unirme' : 'Inscribirme'
               )}
             </button>
           </div>

@@ -2,14 +2,14 @@ import { Cpu, Zap, Users, Blocks, ShoppingCart, ShoppingBag, Package, Receipt, C
 
 export const Solution = () => {
   return (
-    <section className="border-[var(--glass-border)] z-10 border-t pt-24 pr-6 pb-24 pl-6 relative" id="solucion">
+    <section className="border-[var(--glass-border)] z-10 border-t pt-24 pr-6 pb-24 pl-6 relative scroll-mt-32" id="solucion">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 max-w-2xl mx-auto">
           <h2 className="md:text-4xl text-3xl font-medium tracking-tight mb-4">
-            El ERP que reemplaza a los demás
+          La suite contable automatizada y nativa en IA primera en LATAM
           </h2>
           <p className="text-muted leading-relaxed">
-            Deja atrás los sistemas legacy. Relvo unifica tu operación integrándose directamente con las herramientas modernas que ya usas.
+          Reemplaza múltiples herramientas y procesos contables en una sola solución inteligente.
           </p>
         </div>
 
@@ -69,9 +69,11 @@ export const Solution = () => {
             <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 mb-4 border border-purple-500/20">
               <Users className="w-5 h-5" />
             </div>
-            <h3 className="text-xl font-medium mb-2">Centralización</h3>
+            <h3 className="text-xl font-medium mb-2">Centralización de tus EEFF</h3>
             <p className="text-muted text-sm mb-4">
-              Controla HR, Ventas y Tesorería en una sola plataforma unificada.
+              Controla HR, Ventas y Tesorería en una sola plataforma unificada.<br />
+              - Multi sociedad<br />
+              - Multi moneda
             </p>
 
             <div className="flex items-center justify-between text-xs font-medium mt-6 pt-4 border-t border-[var(--glass-border)]">
@@ -83,7 +85,7 @@ export const Solution = () => {
           </div>
 
           {/* Feature 4: Integration Ecosystem */}
-          <div className="md:col-span-2 glass-panel rounded-2xl p-8 relative overflow-hidden group flex flex-col md:flex-row items-center gap-8" id="integraciones">
+          <div className="md:col-span-2 glass-panel rounded-2xl p-8 relative overflow-hidden group flex flex-col md:flex-row items-center gap-8 scroll-mt-32" id="integraciones">
             <div className="flex-1">
               <div className="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500 mb-4 border border-pink-500/20">
                 <Blocks className="w-5 h-5" />

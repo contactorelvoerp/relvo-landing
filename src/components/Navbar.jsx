@@ -16,7 +16,7 @@ export const Navbar = () => {
         
         <div className="hidden md:flex items-center gap-8 text-sm text-muted font-medium">
           <a href="#solucion" className="hover:text-[var(--text-main)] transition-colors">Solución</a>
-          <a href="#integraciones" className="hover:text-[var(--text-main)] transition-colors">Ecosistema</a>
+          <a href="#ai-assistant" className="hover:text-[var(--text-main)] transition-colors">Asistente IA</a>
           <a href="#precios" className="hover:text-[var(--text-main)] transition-colors">Precios</a>
         </div>
         
