@@ -1,0 +1,843 @@
+<html lang="es" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relvo | El ERP Inteligente para CFOs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        
+        /* THEME VARIABLES */
+        :root {
+            /* Light Mode */
+            --bg-main: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --glass-hover: rgba(0, 0, 0, 0.04);
+            --grid-color: rgba(0, 0, 0, 0.06);
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --card-inner: rgba(241, 245, 249, 0.5);
+            --accent-glow: rgba(79, 70, 229, 0.15);
+            --cursor-spotlight: rgba(0, 0, 0, 0.03);
+        }
+
+        body.dark {
+            /* Dark Mode (Default) */
+            --bg-main: #030712;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.05);
+            --grid-color: rgba(255, 255, 255, 0.04);
+            --nav-bg: rgba(3, 7, 18, 0.8);
+            --card-inner: rgba(2, 6, 23, 0.5);
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --cursor-spotlight: rgba(99, 102, 241, 0.15);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s;
+        }
+
+        /* UTILITIES */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-panel:hover {
+            border-color: rgba(129, 140, 248, 0.3);
+            background: var(--glass-hover);
+        }
+
+        .text-muted {
+            color: var(--text-muted);
+        }
+
+        /* MODERN BACKGROUNDS & ANIMATION */
+        .grid-bg {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                              linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at 50% 0%, black 40%, transparent 80%);
+            transform: perspective(1000px) rotateX(10deg) translateY(-50px) scale(1.1);
+            opacity: 0.8;
+            z-index: 0;
+        }
+
+        /* The dynamic spotlight following cursor */
+        #spotlight {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                var(--cursor-spotlight), 
+                transparent 40%
+            );
+            opacity: 0; /* Hidden initially until JS activates */
+            transition: opacity 0.5s ease;
+        }
+
+        .ambient-glow {
+            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+            filter: blur(60px);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* Typewriter Cursor */
+        .typewriter-cursor {
+            display: inline-block;
+            width: 4px;
+            height: 1em;
+            background-color: #a855f7; /* Purple to match gradient */
+            margin-left: 4px;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+            border-radius: 2px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 4px; opacity: 0.5; }
+
+        /* Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Table Styles */
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+        }
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Fade overlay for table */
+        .table-fade-overlay {
+            background: linear-gradient(to bottom, transparent, var(--bg-main));
+            pointer-events: none; /* Allows clicks to pass through usually, but we need to re-enable for button */
+        }
+
+        /* Integration Badge Style */
+        .integration-badge {
+            background-color: var(--card-inner);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .integration-badge:hover {
+            border-color: rgba(129, 140, 248, 0.5);
+            transform: translateY(-1px);
+        }
+
+        /* Form Input Autofill Fix */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px var(--bg-main) inset !important;
+            -webkit-text-fill-color: var(--text-main) !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style></head>
+<body id="app-body" class="antialiased selection:bg-indigo-500/30 selection:text-indigo-400 relative overflow-x-hidden dark font-geist">
+
+    <!-- Spotlight Effect Layer -->
+    <div id="spotlight" style="opacity: 0; --mouse-x: 50px; --mouse-y: 705px;"></div>
+
+    <!-- Background Layers -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <!-- Grid -->
+        <div class="absolute inset-0 grid-bg"></div>
+        <!-- Ambient Glows -->
+        <div class="absolute top-0 left-1/4 w-[800px] h-[800px] ambient-glow rounded-full mix-blend-screen translate-y-[-50%]"></div>
+        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] ambient-glow rounded-full mix-blend-screen translate-y-[30%] opacity-50"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 border-b border-[var(--glass-border)] bg-[var(--nav-bg)] backdrop-blur-xl transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-[var(--text-main)] rounded-sm flex items-center justify-center transition-colors">
+                    <div class="w-3 h-3 bg-[var(--bg-main)] rounded-sm transition-colors"></div>
+                </div>
+                <span class="text-lg font-semibold tracking-tighter">RELVO</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm text-muted font-medium">
+                <a href="#solucion" class="hover:text-[var(--text-main)] transition-colors">Solución</a>
+                <a href="#integraciones" class="hover:text-[var(--text-main)] transition-colors">Ecosistema</a>
+                <a href="#precios" class="hover:text-[var(--text-main)] transition-colors">Precios</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-[var(--glass-hover)] text-muted hover:text-[var(--text-main)] transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="sun" id="theme-icon-sun" class="lucide lucide-sun w-4 h-4 hidden"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="moon" id="theme-icon-moon" class="lucide lucide-moon w-4 h-4"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path></svg>
+                </button>
+                <a href="#early-bird" class="text-xs font-medium bg-[var(--text-main)] text-[var(--bg-main)] px-4 py-2 rounded-full hover:opacity-90 transition-opacity tracking-tight">
+                    Acceso anticipado
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="md:pt-48 md:pb-32 z-10 pt-32 pr-6 pb-20 pl-6 relative">
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-500 text-xs font-medium mb-8">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                </span>
+                Próximamente: Contabilidad Autónoma v1.0
+            </div>
+
+            <h1 class="md:text-7xl leading-[1.1] text-5xl font-medium tracking-tight mb-6" style=""><span class="bg-clip-text font-semibold text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400" id="typewriter-text">Cierres contable</span><span class="typewriter-cursor"></span><br> <span class="text-[var(--text-main)]">en piloto automático</span></h1>
+
+            <p class="md:text-xl text-muted leading-relaxed text-lg font-light max-w-2xl mr-auto mb-10 ml-auto">Relvo es el IA - Based ERP que centraliza y automatiza tus finanzas. Migra de tu ERP legacy y conecta tus herramientas de HR, Ventas y Bancos en un solo lugar.</p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#early-bird" class="w-full sm:w-auto px-8 py-3 bg-[var(--text-main)] text-[var(--bg-main)] rounded-full font-medium hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm">
+                    Migrar a Relvo <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Dashboard Abstract Visual -->
+        <div class="mt-20 max-w-6xl mx-auto animate-float">
+            <div class="glass-panel rounded-xl p-1 shadow-2xl shadow-indigo-500/10">
+                <div class="bg-[var(--card-inner)] rounded-lg p-6 md:p-10 transition-colors duration-500">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 gap-x-6 gap-y-6">
+                        <div class="col-span-1 glass-panel p-5 rounded-lg border-0 bg-[var(--bg-main)]/50">
+                            <div class="text-muted text-xs font-medium uppercase tracking-widest mb-2">Conciliación Bancaria</div>
+                            <div class="text-3xl font-medium mb-1">100%</div>
+                            <div class="text-xs text-green-500 flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" class="lucide lucide-check-circle w-3 h-3"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg> Bancos LATAM Sincronizados
+                            </div>
+                        </div>
+                        <div class="col-span-1 glass-panel border-0 rounded-lg pt-5 pr-5 pb-5 pl-5">
+                            <div class="text-muted text-xs font-medium uppercase tracking-widest mb-2">Ventas E-commerce</div>
+                            <div class="text-3xl font-medium mb-1">$4.2M</div>
+                            <div class="text-xs text-indigo-500 flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="trending-up" class="lucide lucide-trending-up w-3 h-3"><path d="M16 7h6v6"></path><path d="m22 7-8.5 8.5-5-5L2 17"></path></svg> Shopify + Bsale
+                            </div>
+                        </div>
+                        <div class="col-span-1 glass-panel p-5 rounded-lg border-0 bg-[var(--bg-main)]/50">
+                            <div class="text-muted text-xs font-medium uppercase tracking-widest mb-2">Nómina (Buk/Talana)</div>
+                            <div class="text-3xl font-medium mb-1">1,402</div>
+                            <div class="text-xs text-muted flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="zap" class="lucide lucide-zap w-3 h-3"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg> Centralizado en Relvo
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI CHATBOT SECTION with EXPERTISE SIDEBAR -->
+    <section class="z-10 pt-24 pr-6 pb-32 pl-6 relative" id="ai-assistant">
+        <div class="max-w-6xl mx-auto">
+            
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- EXPERTISE SPECIFICATIONS (LEFT SIDE) -->
+                <div class="order-2 lg:order-1 space-y-10">
+                    <div>
+                        <h2 class="text-3xl font-medium tracking-tight mb-4">Tu analista financiero 24/7</h2>
+                        <p class="text-muted text-lg font-light leading-relaxed">
+                            Relvo AI no es solo un chat. Es un experto tributario y financiero conectado en tiempo real a tus datos, capaz de responder consultas complejas al instante.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                         <!-- Item 1: IFRS -->
+                        <div class="flex gap-5 group">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-500 group-hover:scale-110 transition-transform duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-6 h-6"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-[var(--text-main)] text-lg mb-1">Normativa IFRS Actualizada</h3>
+                                <p class="text-sm text-muted leading-relaxed">Motor de conocimiento sincronizado con los últimos estándares internacionales de contabilidad (Full y Pyme).</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 2: SII / Tax -->
+                        <div class="flex gap-5 group">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-500 group-hover:scale-110 transition-transform duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-landmark w-6 h-6"><line x1="3" x2="21" y1="22" y2="22"></line><line x1="6" x2="6" y1="12" y2="5"></line><line x1="10" x2="10" y1="12" y2="5"></line><line x1="14" x2="14" y1="12" y2="5"></line><line x1="18" x2="18" y1="12" y2="5"></line><line x1="12" x2="12" y1="2" y2="2"></line><path d="M4 12h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2Z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-[var(--text-main)] text-lg mb-1">Leyes Tributarias SII (Chile)</h3>
+                                <p class="text-sm text-muted leading-relaxed">Base legal actualizada con las últimas reformas, circulares y oficios del Servicio de Impuestos Internos.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 3: Analysis -->
+                        <div class="flex gap-5 group">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 text-purple-500 group-hover:scale-110 transition-transform duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-6 h-6"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-[var(--text-main)] text-lg mb-1">Auditoría y Compliance</h3>
+                                <p class="text-sm text-muted leading-relaxed">Detección automática de discrepancias y alertas preventivas sobre flujo de caja y obligaciones laborales.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHAT INTERFACE (RIGHT SIDE) -->
+                <div class="order-1 lg:order-2">
+                    <div class="glass-panel rounded-2xl border border-[var(--glass-border)] shadow-2xl overflow-hidden flex flex-col relative z-20">
+                        <!-- Chat Header -->
+                        <div class="px-6 py-4 border-b border-[var(--glass-border)] bg-[var(--nav-bg)]/80 backdrop-blur-md flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-500 relative">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"></path></svg>
+                                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[var(--bg-main)] rounded-full"></span>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium">Relvo AI</div>
+                                    <div class="text-[10px] text-muted">Conectado a Bancos, SII, Buk &amp; Shopify</div>
+                                </div>
+                            </div>
+                            <button class="text-muted hover:text-[var(--text-main)] transition-colors p-1 rounded-md hover:bg-[var(--glass-hover)]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal w-5 h-5"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                            </button>
+                        </div>
+
+                        <!-- Chat Messages -->
+                        <div class="p-6 space-y-6 min-h-[360px] bg-gradient-to-b from-[var(--bg-main)]/50 to-[var(--bg-main)]/80 relative">
+                            <!-- Date divider -->
+                            <div class="flex justify-center">
+                                <span class="text-[10px] font-medium text-muted uppercase tracking-widest opacity-60">Hoy, 10:45 AM</span>
+                            </div>
+
+                            <!-- AI Welcome -->
+                            <div class="flex gap-4 max-w-[95%]">
+                                <div class="w-8 h-8 rounded-full bg-indigo-500/10 flex-shrink-0 flex items-center justify-center text-indigo-500 mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot w-4 h-4"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="bg-[var(--card-inner)] border border-[var(--glass-border)] rounded-2xl rounded-tl-sm p-4 text-sm leading-relaxed shadow-sm">
+                                        <p>Hola. He conciliado los pagos de nómina desde <span class="font-medium text-[var(--text-main)]">Buk</span> y las ventas de ayer de <span class="font-medium text-[var(--text-main)]">Shopify</span>. Tu flujo de caja actual es de $4.2M (+12%).</p>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <span class="text-[10px] bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2 py-1 rounded-md">Ver reporte SII</span>
+                                        <span class="text-[10px] bg-[var(--glass-hover)] text-muted border border-[var(--glass-border)] px-2 py-1 rounded-md">Detalle nómina</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Input Area -->
+                        <div class="p-4 bg-[var(--nav-bg)] border-t border-[var(--glass-border)]">
+                            <div class="relative flex items-center group">
+                                <input type="text" placeholder="Pregunta sobre gastos, ventas o impuestos..." class="w-full bg-[var(--bg-main)] text-sm border border-[var(--glass-border)] rounded-full pl-12 pr-12 py-3 focus:outline-none focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-muted/50">
+                                <button class="absolute right-2 p-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full transition-colors shadow-lg shadow-indigo-500/20">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up w-4 h-4"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Decoration behind -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-indigo-500/5 blur-[100px] rounded-full -z-10 pointer-events-none"></div>
+    </section>
+
+    <!-- Value Proposition Section (Redesigned) -->
+    <section class="border-[var(--glass-border)] z-10 border-t pt-24 pr-6 pb-24 pl-6 relative" id="solucion">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 max-w-2xl mx-auto">
+                <h2 class="md:text-4xl text-3xl font-medium tracking-tight mb-4">El ERP que reemplaza a los demás</h2>
+                <p class="text-muted leading-relaxed">
+                    Deja atrás los sistemas legacy. Relvo unifica tu operación integrándose directamente con las herramientas modernas que ya usas.
+                </p>
+            </div>
+
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Main Feature: Autonomous Accounting -->
+                <div class="md:col-span-2 glass-panel rounded-2xl p-8 relative overflow-hidden group border border-[var(--glass-border)] hover:border-indigo-500/30 transition-all duration-500">
+                    <div class="absolute top-0 right-0 p-40 bg-indigo-500/5 blur-[80px] rounded-full group-hover:bg-indigo-500/10 transition-all"></div>
+                    <div class="relative z-10 flex flex-col h-full justify-between">
+                        <div class="mb-8">
+                            <div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 mb-4 border border-indigo-500/20">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu w-5 h-5"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-medium mb-2">Motor Contable Autónomo</h3>
+                            <p class="text-muted text-sm max-w-md">Procesamos transacciones de todos tus canales de venta y cuentas bancarias, categorizando y conciliando automáticamente.</p>
+                        </div>
+                        
+                        <!-- Visual representation of automation -->
+                        <div class="w-full bg-[var(--bg-main)] border border-[var(--glass-border)] rounded-xl p-4 flex items-center gap-4">
+                            <div class="flex-1 space-y-2">
+                                <div class="flex justify-between text-xs text-muted mb-1">
+                                    <span>Centralizando data...</span>
+                                    <span class="text-indigo-500 font-mono">99.8%</span>
+                                </div>
+                                <div class="h-1.5 w-full bg-[var(--grid-color)] rounded-full overflow-hidden">
+                                    <div class="h-full bg-indigo-500 rounded-full animate-[width_2s_ease-in-out_infinite]" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-green-500/10 border border-[var(--bg-main)] flex items-center justify-center text-green-500 text-[8px] font-bold">SII</div>
+                                <div class="w-8 h-8 rounded-full bg-blue-500/10 border border-[var(--bg-main)] flex items-center justify-center text-blue-500 text-[8px] font-bold">BUK</div>
+                                <div class="w-8 h-8 rounded-full bg-orange-500/10 border border-[var(--bg-main)] flex items-center justify-center text-orange-500 text-[8px] font-bold">SHOPIFY</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2: Real Time -->
+                <div class="md:col-span-1 glass-panel rounded-2xl p-8 relative overflow-hidden group hover:bg-[var(--glass-hover)] transition-colors">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-4 border border-emerald-500/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap w-5 h-5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    </div>
+                    <h3 class="text-xl font-medium mb-2">Migración Simple</h3>
+                    <p class="text-muted text-sm mb-6">Importa tu historial y reemplaza tu ERP anterior sin perder trazabilidad.</p>
+                    
+                    <div class="flex items-center gap-3 p-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5">
+                        <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                        <div class="text-xs font-medium text-emerald-500">Onboarding asistido</div>
+                    </div>
+                </div>
+
+                <!-- Feature 3: Scalability -->
+                <div class="md:col-span-1 glass-panel rounded-2xl p-8 relative overflow-hidden group hover:bg-[var(--glass-hover)] transition-colors">
+                    <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 mb-4 border border-purple-500/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users w-5 h-5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-medium mb-2">Centralización</h3>
+                    <p class="text-muted text-sm mb-4">Controla HR, Ventas y Tesorería en una sola plataforma unificada.</p>
+                    
+                    <div class="flex items-center justify-between text-xs font-medium mt-6 pt-4 border-t border-[var(--glass-border)]">
+                        <span class="text-muted">Visibilidad Total</span>
+                        <span class="text-purple-400 flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-3 h-3"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg> 360°</span>
+                    </div>
+                </div>
+
+                <!-- Feature 4: Integration Ecosystem -->
+                <div class="md:col-span-2 glass-panel rounded-2xl p-8 relative overflow-hidden group flex flex-col md:flex-row items-center gap-8" id="integraciones">
+                     <div class="flex-1">
+                        <div class="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500 mb-4 border border-pink-500/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-blocks w-5 h-5"><rect width="7" height="7" x="14" y="3" rx="1"></rect><path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-medium mb-2">Integrado a tu ecosistema</h3>
+                        <p class="text-muted text-sm">Relvo no se conecta a otros ERPs, los reemplaza. Nos integramos nativamente con tus herramientas de negocio:</p>
+                        
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <!-- Category Labels -->
+                            <span class="text-[10px] uppercase font-bold tracking-wider text-muted opacity-60">HR</span>
+                            <span class="text-[10px] uppercase font-bold tracking-wider text-muted opacity-60 ml-2">Ventas</span>
+                            <span class="text-[10px] uppercase font-bold tracking-wider text-muted opacity-60 ml-2">Gastos</span>
+                            <span class="text-[10px] uppercase font-bold tracking-wider text-muted opacity-60 ml-2">Banca &amp; Tax</span>
+                        </div>
+                     </div>
+                     
+                     <!-- Ecosystem Badges Grid -->
+                     <div class="flex flex-col gap-2 w-full md:w-auto">
+                        <div class="flex flex-wrap gap-2 justify-center md:justify-end">
+                            <div class="integration-badge group-hover:border-blue-400/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users text-blue-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                Buk
+                            </div>
+                            <div class="integration-badge group-hover:border-blue-400/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users text-blue-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                Talana
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 justify-center md:justify-end">
+                            <div class="integration-badge group-hover:border-green-400/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart text-green-400"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+                                Shopify
+                            </div>
+                            <div class="integration-badge group-hover:border-green-400/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag text-green-400"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                Bsale
+                            </div>
+                            <div class="integration-badge group-hover:border-yellow-400/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package text-yellow-400"><path d="m7.5 4.27 9 5.15"></path><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
+                                MercadoLibre
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 justify-center md:justify-end">
+                            <div class="integration-badge group-hover:border-purple-400/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-receipt text-purple-400"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path><path d="M14 8H8"></path><path d="M16 12H8"></path><path d="M13 16H8"></path></svg>
+                                Rindegastos
+                            </div>
+                             <div class="integration-badge group-hover:border-purple-400/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card text-purple-400"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+                                Xpendit
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 justify-center md:justify-end">
+                            <div class="integration-badge group-hover:border-red-400/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-landmark text-red-400"><line x1="3" x2="21" y1="22" y2="22"></line><line x1="6" x2="6" y1="12" y2="5"></line><line x1="10" x2="10" y1="12" y2="5"></line><line x1="14" x2="14" y1="12" y2="5"></line><line x1="18" x2="18" y1="12" y2="5"></line><line x1="12" x2="12" y1="2" y2="2"></line><path d="M4 12h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2Z"></path></svg>
+                                Bancos LATAM
+                            </div>
+                            <div class="integration-badge group-hover:border-red-400/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text text-red-400"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                SII
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section with Collapsible Table -->
+    <section class="border-[var(--glass-border)] z-10 border-t pt-24 pr-6 pb-24 pl-6 relative" id="precios">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-medium tracking-tight mb-16 text-center">Planes diseñados para crecer</h2>
+
+            <!-- Pricing Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 gap-x-8 gap-y-8 items-start mb-24">
+                
+                <!-- Starter -->
+                <div class="glass-panel p-8 rounded-2xl border-t border-[var(--glass-border)] hover:bg-[var(--glass-hover)] transition-colors h-full flex flex-col">
+                    <h3 class="text-lg font-medium text-muted mb-2">Starter</h3>
+                    <div class="text-3xl font-medium mb-1">$99 <span class="text-sm text-muted font-normal">USD/mes</span></div>
+                    <p class="text-xs text-muted mb-6">Para empresas pequeñas.</p>
+                    <ul class="space-y-3 text-sm text-muted mb-8 flex-grow">
+                        <li class="flex gap-2 gap-x-2 gap-y-2 items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4"><path d="M20 6 9 17l-5-5"></path></svg>Bancos + SII</li>
+                        <li class="flex gap-2 gap-x-2 gap-y-2 items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4"><path d="M20 6 9 17l-5-5"></path></svg>1 Sociedad</li>
+                        <li class="flex gap-x-2 gap-y-2 items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4"><path d="M20 6 9 17l-5-5"></path></svg>Integración Básica</li>
+                    </ul>
+                    <button class="w-full py-2.5 rounded-lg border border-[var(--glass-border)] text-sm font-medium hover:bg-[var(--glass-hover)] transition-colors">Seleccionar</button>
+                </div>
+
+                <!-- Pro -->
+                <div class="glass-panel p-8 rounded-2xl border border-indigo-500/30 relative bg-[var(--card-inner)] shadow-2xl shadow-indigo-500/5 h-full flex flex-col transform md:-translate-y-4">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-indigo-500 text-white text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full shadow-lg shadow-indigo-500/40">Popular</div>
+                    <h3 class="text-lg font-medium text-indigo-400 mb-2">Pro</h3>
+                    <div class="text-3xl font-medium mb-1">$299 <span class="text-sm text-muted font-normal">USD/mes</span></div>
+                    <p class="text-xs text-muted mb-6">Para equipos en expansión.</p>
+                    <ul class="space-y-3 text-sm text-muted mb-8 flex-grow">
+                        <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4 text-indigo-400"><path d="M20 6 9 17l-5-5"></path></svg> HR + Ventas (Shopify, Buk)</li>
+                        <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4 text-indigo-400"><path d="M20 6 9 17l-5-5"></path></svg> Multiusuario</li>
+                        <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4 text-indigo-400"><path d="M20 6 9 17l-5-5"></path></svg> Conciliación Avanzada</li>
+                    </ul>
+                    <button class="w-full py-2.5 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-500 transition-colors shadow-lg shadow-indigo-500/20">Empezar con Pro</button>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="glass-panel p-8 rounded-2xl border-t border-[var(--glass-border)] hover:bg-[var(--glass-hover)] transition-colors h-full flex flex-col">
+                    <h3 class="text-lg font-medium text-muted mb-2">Enterprise</h3>
+                    <div class="text-xl font-medium mb-1 pt-1.5 pb-1.5">Precio tailormade</div>
+                    <p class="text-muted text-xs mb-6">Para operaciones complejas.</p>
+                    <ul class="space-y-3 text-sm text-muted mb-8 flex-grow">
+                        <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4"><path d="M20 6 9 17l-5-5"></path></svg> Multiempresa</li>
+                        <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4"><path d="M20 6 9 17l-5-5"></path></svg> Migración Dedicada</li>
+                        <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4"><path d="M20 6 9 17l-5-5"></path></svg> API Personalizada</li>
+                    </ul>
+                    <button class="w-full py-2.5 rounded-lg border border-[var(--glass-border)] text-sm font-medium hover:bg-[var(--glass-hover)] transition-colors">Contactar Ventas</button>
+                </div>
+            </div>
+
+            <!-- COLLAPSIBLE COMPARATIVE GRID -->
+            <div class="relative rounded-2xl overflow-hidden border border-[var(--glass-border)] glass-panel bg-[var(--bg-main)]/30" id="comparison-container">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse comparison-table">
+                        <thead class="bg-[var(--glass-hover)]">
+                            <tr>
+                                <th class="text-sm font-medium text-muted border-b border-[var(--glass-border)] w-1/4 py-4 pl-6">Funcionalidades</th>
+                                <th class="text-sm font-semibold text-[var(--text-main)] border-b border-[var(--glass-border)] w-1/4 text-center py-4">Starter</th>
+                                <th class="text-sm font-semibold text-indigo-400 border-b border-[var(--glass-border)] w-1/4 text-center py-4">Pro</th>
+                                <th class="text-sm font-semibold text-[var(--text-main)] border-b border-[var(--glass-border)] w-1/4 text-center py-4">Enterprise</th>
+                            </tr>
+                        </thead>
+                        <!-- Always Visible Section -->
+                        <tbody class="text-sm">
+                            <tr class="">
+                                <td colspan="4" class="py-4 px-6 text-[11px] font-bold uppercase tracking-widest text-muted/60 bg-[var(--bg-main)]/20">General</td>
+                            </tr>
+                            <tr class="group hover:bg-[var(--glass-hover)] transition-colors">
+                                <td class="border-b border-[var(--glass-border)] text-muted group-hover:text-[var(--text-main)] transition-colors font-medium pl-6">Usuarios</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-muted">1</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-[var(--text-main)] font-medium">5</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-[var(--text-main)] font-medium">Ilimitados</td>
+                            </tr>
+                            <tr class="group hover:bg-[var(--glass-hover)] transition-colors">
+                                <td class="border-b border-[var(--glass-border)] text-muted group-hover:text-[var(--text-main)] transition-colors font-medium pl-6">Sociedades</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-muted">1</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-[var(--text-main)] font-medium">3</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-[var(--text-main)] font-medium">Ilimitadas</td>
+                            </tr>
+                            <tr class="group hover:bg-[var(--glass-hover)] transition-colors">
+                                <td class="border-b border-[var(--glass-border)] text-muted group-hover:text-[var(--text-main)] transition-colors font-medium pl-6">Almacenamiento Documentos</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-muted">10 GB</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-[var(--text-main)] font-medium">100 GB</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-[var(--text-main)] font-medium">1 TB</td>
+                            </tr>
+                        </tbody>
+
+                        <!-- Hidden / Collapsible Section -->
+                        <tbody id="detailed-comparison" class="text-sm hidden opacity-0 transition-all duration-700">
+                            <!-- Category: Contabilidad & IA -->
+                            <tr class="">
+                                <td colspan="4" class="py-4 px-6 text-[11px] font-bold uppercase tracking-widest text-muted/60 bg-[var(--bg-main)]/20">Contabilidad &amp; Automatización</td>
+                            </tr>
+                            <tr class="group hover:bg-[var(--glass-hover)] transition-colors">
+                                <td class="border-b border-[var(--glass-border)] text-muted group-hover:text-[var(--text-main)] transition-colors font-medium pl-6">Conciliación Bancaria</td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                            </tr>
+                            <tr class="group hover:bg-[var(--glass-hover)] transition-colors">
+                                <td class="border-b border-[var(--glass-border)] text-muted group-hover:text-[var(--text-main)] transition-colors font-medium pl-6">Reglas de IA (Categorización)</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-muted">Básicas</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-[var(--text-main)] font-medium">Avanzadas (Contextual)</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-[var(--text-main)] font-medium">Modelos Personalizados</td>
+                            </tr>
+
+                            <!-- Category: Integraciones -->
+                            <tr>
+                                <td colspan="4" class="py-4 px-6 text-[11px] font-bold uppercase tracking-widest text-muted/60 bg-[var(--bg-main)]/20">Integraciones &amp; Ecosistema</td>
+                            </tr>
+                            <tr class="group hover:bg-[var(--glass-hover)] transition-colors">
+                                <td class="border-b border-[var(--glass-border)] text-muted group-hover:text-[var(--text-main)] transition-colors font-medium pl-6">Bancos &amp; SII</td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                            </tr>
+                            <tr class="group hover:bg-[var(--glass-hover)] transition-colors">
+                                <td class="border-b border-[var(--glass-border)] text-muted group-hover:text-[var(--text-main)] transition-colors font-medium pl-6">Ventas (Shopify, Bsale, MeLi)</td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus w-4 h-4 text-muted mx-auto opacity-30"><path d="M5 12h14"></path></svg></td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                            </tr>
+                            <tr class="group hover:bg-[var(--glass-hover)] transition-colors">
+                                <td class="border-b border-[var(--glass-border)] text-muted group-hover:text-[var(--text-main)] transition-colors font-medium pl-6">HR (Buk, Talana)</td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus w-4 h-4 text-muted mx-auto opacity-30"><path d="M5 12h14"></path></svg></td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                            </tr>
+                            <tr class="group hover:bg-[var(--glass-hover)] transition-colors">
+                                <td class="border-b border-[var(--glass-border)] text-muted group-hover:text-[var(--text-main)] transition-colors font-medium pl-6">Gastos (Rindegastos, Xpendit)</td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus w-4 h-4 text-muted mx-auto opacity-30"><path d="M5 12h14"></path></svg></td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                                <td class="border-b border-[var(--glass-border)] text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-indigo-500 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+                            </tr>
+                            
+                            <!-- Category: Soporte -->
+                             <tr>
+                                <td colspan="4" class="py-4 px-6 text-[11px] font-bold uppercase tracking-widest text-muted/60 bg-[var(--bg-main)]/20">Soporte &amp; Migración</td>
+                            </tr>
+                            <tr class="group hover:bg-[var(--glass-hover)] transition-colors">
+                                <td class="border-b border-[var(--glass-border)] text-muted group-hover:text-[var(--text-main)] transition-colors font-medium pl-6">Migración de ERP Legacy</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-muted">Auto-servicio</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-[var(--text-main)] font-medium">Asistida</td>
+                                <td class="border-b border-[var(--glass-border)] text-center text-[var(--text-main)] font-medium">Dedicada</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Gradient Fade Overlay -->
+                <div id="table-fade" class="absolute bottom-0 left-0 w-full h-32 table-fade-overlay flex items-end justify-center pb-8 z-10 transition-opacity duration-500">
+                    <button onclick="toggleTable()" class="group flex items-center gap-2 bg-[var(--text-main)] text-[var(--bg-main)] px-5 py-2.5 rounded-full text-sm font-medium hover:opacity-90 transition-all shadow-xl shadow-indigo-500/10 hover:shadow-indigo-500/20 pointer-events-auto">
+                        <span>Ver todas las características</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down w-4 h-4 group-hover:translate-y-0.5 transition-transform"><path d="m6 9 6 6 6-6"></path></svg>
+                    </button>
+                </div>
+
+                <!-- Collapse Button (Hidden initially) -->
+                 <div id="table-collapse-btn" class="hidden w-full flex items-center justify-center py-6 border-t border-[var(--glass-border)] bg-[var(--bg-main)]/30">
+                    <button onclick="toggleTable()" class="group flex items-center gap-2 text-muted hover:text-[var(--text-main)] text-sm font-medium transition-colors">
+                        <span>Colapsar tabla</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up w-4 h-4 group-hover:-translate-y-0.5 transition-transform"><path d="m18 15-6-6-6 6"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Early Bird Form / CTA -->
+    <section class="overflow-hidden text-center z-10 pt-32 pr-6 pb-32 pl-6 relative" id="early-bird">
+        
+        <!-- Background decorative elements for form section -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-indigo-600/10 blur-[100px] rounded-full -z-10"></div>
+
+        <div class="max-w-xl mx-auto relative glass-panel p-8 md:p-12 rounded-3xl border border-indigo-500/20">
+            <div class="inline-flex gap-2 text-xs font-medium text-indigo-400 bg-indigo-500/10 border-indigo-500/20 border rounded-full mb-6 pt-1 pr-3 pb-1 pl-3 gap-x-2 gap-y-2 items-center">Early Access: Q1 2026</div>
+            
+            <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-4">Migra a Relvo</h2>
+            <p class="text-muted font-light mb-8">
+                Estamos abriendo cupos para empresas listas para dejar su ERP tradicional. Asegura tu lugar para recibir onboarding prioritario.
+            </p>
+            
+            <form class="relative w-full max-w-sm mx-auto group">
+                <div class="relative flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="mail" class="lucide lucide-mail absolute left-4 w-5 h-5 text-muted transition-colors group-focus-within:text-indigo-400"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+                    <input type="email" required="" placeholder="tu@empresa.com" class="border-[var(--glass-border)] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-muted/50 text-sm w-full border rounded-full pt-4 pr-32 pb-4 pl-12 shadow-sm">
+                    <button type="submit" class="absolute right-1.5 top-1.5 bottom-1.5 bg-[var(--text-main)] text-[var(--bg-main)] hover:bg-indigo-600 hover:text-white rounded-full px-5 text-xs font-semibold transition-all">
+                        Unirme
+                    </button>
+                </div>
+                <div class="mt-3 flex items-center justify-center gap-2 text-[10px] text-muted opacity-70">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="lock" class="lucide lucide-lock w-3 h-3"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Sin spam. Solo updates del producto.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-[var(--glass-border)] z-10 border-t pt-12 pr-6 pb-12 pl-6 relative">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-5 h-5 bg-[var(--text-main)] rounded-sm flex items-center justify-center">
+                    <div class="w-2 h-2 bg-[var(--bg-main)] rounded-sm"></div>
+                </div>
+                <span class="text-base font-semibold tracking-tighter">RELVO</span>
+            </div>
+            <div class="text-xs text-muted">
+                © 2024 Relvo Inc. Todos los derechos reservados.
+            </div>
+            <div class="flex gap-6">
+                <a href="#" class="text-muted hover:text-[var(--text-main)] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="linkedin" class="lucide lucide-linkedin w-5 h-5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                <a href="#" class="text-muted hover:text-[var(--text-main)] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="twitter" class="lucide lucide-twitter w-5 h-5"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons({
+            attrs: {
+                'stroke-width': 1.5
+            }
+        });
+
+        // Theme Toggle Logic
+        function toggleTheme() {
+            const body = document.getElementById('app-body');
+            const isDark = body.classList.contains('dark');
+            const sunIcon = document.getElementById('theme-icon-sun');
+            const moonIcon = document.getElementById('theme-icon-moon');
+
+            if (isDark) {
+                body.classList.remove('dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                body.classList.add('dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        }
+
+        // Table Collapse Logic
+        function toggleTable() {
+            const detailedBody = document.getElementById('detailed-comparison');
+            const fadeOverlay = document.getElementById('table-fade');
+            const collapseBtn = document.getElementById('table-collapse-btn');
+            
+            if (detailedBody.classList.contains('hidden')) {
+                // Show
+                detailedBody.classList.remove('hidden');
+                // Small timeout to allow transition to work
+                setTimeout(() => detailedBody.classList.remove('opacity-0'), 10);
+                fadeOverlay.classList.add('opacity-0', 'pointer-events-none');
+                collapseBtn.classList.remove('hidden');
+            } else {
+                // Hide
+                detailedBody.classList.add('opacity-0');
+                setTimeout(() => detailedBody.classList.add('hidden'), 500); // Wait for fade out
+                fadeOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                collapseBtn.classList.add('hidden');
+                
+                // Scroll back up slightly to table context
+                document.getElementById('comparison-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Spotlight Logic
+        const spotlight = document.getElementById('spotlight');
+        
+        document.addEventListener('mousemove', (e) => {
+            if(spotlight.style.opacity === '') {
+                spotlight.style.opacity = '1';
+            }
+            const x = e.clientX;
+            const y = e.clientY;
+            spotlight.style.setProperty('--mouse-x', `${x}px`);
+            spotlight.style.setProperty('--mouse-y', `${y}px`);
+        });
+
+        // Typewriter Effect
+        const phrases = ["Cierres contables", "Conciliaciones", "Estados de resultado", "Flujos de caja"];
+        let currentPhraseIndex = 0;
+        let isDeleting = false;
+        let txt = '';
+        
+        function type() {
+          const fullTxt = phrases[currentPhraseIndex];
+          
+          if (isDeleting) {
+            txt = fullTxt.substring(0, txt.length - 1);
+          } else {
+            txt = fullTxt.substring(0, txt.length + 1);
+          }
+
+          const element = document.getElementById('typewriter-text');
+          if(element) element.innerHTML = txt;
+
+          let typeSpeed = 300;
+          if (isDeleting) typeSpeed /= 2;
+
+          if (!isDeleting && txt === fullTxt) {
+            typeSpeed = 3000; // Wait at end
+            isDeleting = true;
+          } else if (isDeleting && txt === '') {
+            isDeleting = false;
+            currentPhraseIndex++;
+            if (currentPhraseIndex === phrases.length) currentPhraseIndex = 0;
+            typeSpeed = 800;
+          }
+
+          setTimeout(type, typeSpeed);
+        }
+
+        document.addEventListener('DOMContentLoaded', type);
+    </script>
+
+</body></html>
