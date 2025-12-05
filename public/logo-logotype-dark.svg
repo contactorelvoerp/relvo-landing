@@ -1,0 +1,11 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" fill="#010101" />
+  <g transform="translate(64 156)">
+    <rect width="180" height="180" rx="36" fill="#FFFFFF" />
+    <rect x="48" y="48" width="84" height="84" rx="16" fill="#010101" />
+    <text x="220" y="130" fill="#FFFFFF" font-family="Inter, 'Segoe UI', sans-serif" font-size="120" font-weight="600" letter-spacing="6">
+      RELVO
+    </text>
+  </g>
+</svg>
+

@@ -6,7 +6,7 @@ export const Solution = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 max-w-2xl mx-auto">
           <h2 className="md:text-4xl text-3xl font-medium tracking-tight mb-4">
-          La suite contable automatizada y nativa en IA primera en LATAM
+          La suite contable nativa en IA, <br />primera en LATAM
           </h2>
           <p className="text-muted leading-relaxed">
           Reemplaza múltiples herramientas y procesos contables en una sola solución inteligente.
