@@ -9,6 +9,15 @@
     font-display: swap;
 }
 
+/* Map light (300) to UltraLight to avoid synthetic weight */
+@font-face {
+    font-family: 'Telegraf';
+    src: url('/fonts/telegraf/Telegraf-UltraLight-200.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
 @font-face {
     font-family: 'Telegraf';
     src: url('/fonts/telegraf/Telegraf-Regular.otf') format('opentype');
@@ -17,10 +26,36 @@
     font-display: swap;
 }
 
+/* Map medium/semibold to regular to keep consistent face */
+@font-face {
+    font-family: 'Telegraf';
+    src: url('/fonts/telegraf/Telegraf-Regular.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Telegraf';
+    src: url('/fonts/telegraf/Telegraf-Regular.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
 @font-face {
     font-family: 'Telegraf';
     src: url('/fonts/telegraf/Telegraf-UltraBold-800.otf') format('opentype');
     font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Map bold (700) to UltraBold to avoid browser synthesis */
+@font-face {
+    font-family: 'Telegraf';
+    src: url('/fonts/telegraf/Telegraf-UltraBold-800.otf') format('opentype');
+    font-weight: 700;
     font-style: normal;
     font-display: swap;
 }
@@ -61,10 +96,17 @@ body.dark {
 }
 
 body {
-    font-family: 'Telegraf', 'Inter', 'Geist', sans-serif;
+    font-family: 'Geist', 'Inter', 'Telegraf', sans-serif;
     background-color: var(--bg-main);
     color: var(--text-main);
     transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s;
+}
+
+/* Display / titles use Telegraf */
+h1, h2, h3,
+.display-text,
+.section-title {
+    font-family: 'Telegraf', 'Inter', sans-serif;
 }
 
 /* UTILITIES */

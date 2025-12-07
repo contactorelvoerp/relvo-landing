@@ -21,7 +21,7 @@ export const Hero = () => {
           Próximamente: Contabilidad Autónoma v1.0
         </div>
 
-        <h1 className="md:text-7xl leading-[1.1] text-5xl font-medium tracking-tight mb-6">
+        <h1 className="md:text-7xl leading-[1.1] text-5xl font-medium tracking-tight mb-6 font-telegraf">
           <span className="bg-clip-text font-semibold text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
             {typewriterText}
           </span>
