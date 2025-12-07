@@ -8,6 +8,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        'telegraf': ['Telegraf', 'Inter', 'sans-serif'],
         'geist': ['Geist', 'sans-serif'],
         'inter': ['Inter', 'sans-serif'],
       },

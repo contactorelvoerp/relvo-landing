@@ -31,8 +31,7 @@ export const Hero = () => {
         </h1>
 
         <p className="md:text-xl text-muted leading-relaxed text-lg font-light max-w-2xl mr-auto mb-10 ml-auto">
-          Relvo es el IA - Based ERP que centraliza y automatiza tus finanzas. Tareas repetitivas en manos de agentes. Categorización inteligente. Aprende de tus datos. Cierres en un día.
-        </p>
+          Centraliza y automatiza tus finanzas con un ERP contable inteligente. Tareas repetitivas en manos de agentes. Categorización inteligente. Aprende de tus datos. Cierres contables en un día.        </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a

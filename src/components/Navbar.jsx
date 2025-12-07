@@ -11,11 +11,11 @@ export const Navbar = () => {
           <div className="w-6 h-6 bg-[var(--text-main)] rounded-sm flex items-center justify-center transition-colors">
             <div className="w-3 h-3 bg-[var(--bg-main)] rounded-sm transition-colors"></div>
           </div>
-          <span className="text-lg font-semibold tracking-tighter">RELVO</span>
+          <span className="text-lg font-semibold tracking-tighter font-geist">RELVO</span>
         </div>
         
         <div className="hidden md:flex items-center gap-8 text-sm text-muted font-medium">
-          <a href="#solucion" className="hover:text-[var(--text-main)] transition-colors">Solución</a>
+          <a href="#solucion" className="hover:text-[var(--text-main)] transition-colors">Contabilidad</a>
           <a href="#ai-assistant" className="hover:text-[var(--text-main)] transition-colors">Asistente IA</a>
           <a href="#precios" className="hover:text-[var(--text-main)] transition-colors">Precios</a>
         </div>
