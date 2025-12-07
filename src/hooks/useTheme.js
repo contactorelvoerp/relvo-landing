@@ -1,49 +1,16 @@
 import { useState, useEffect } from 'react'
-
-const THEME_KEY = 'relvo-theme'
-
-const getLocalHour = () => new Date().getHours() // browser local time
-
-const getInitialTheme = () => {
-  if (typeof window === 'undefined') return true // fallback dark
-
-  // If pre-script already set a theme, honor it to avoid mismatch
-  const domTheme = document.documentElement.dataset.theme
-  if (domTheme === 'dark') return true
-  if (domTheme === 'light') return false
-  if (document.body.classList.contains('dark')) return true
-
-  // Manual preference wins
-  const stored = localStorage.getItem(THEME_KEY)
-  if (stored === 'dark') return true
-  if (stored === 'light') return false
-
-  // Default by local hour only (ignore OS preference for consistency): night (19-6) => dark, else light
-  const hour = getLocalHour()
-  return hour >= 19 || hour < 7
-}
+import { computeTheme, applyTheme, persistTheme, toggleThemeValue } from '../utils/theme'
 
 export const useTheme = () => {
-  const [isDark, setIsDark] = useState(getInitialTheme)
-
-  const applyTheme = (dark) => {
-    const body = document.body
-    body.classList.toggle('dark', dark)
-    document.documentElement.dataset.theme = dark ? 'dark' : 'light'
-  }
-
-  // Apply on mount to avoid mismatch between UI and DOM
-  useEffect(() => {
-    applyTheme(isDark)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  const [theme, setTheme] = useState(() => computeTheme())
 
   useEffect(() => {
-    applyTheme(isDark)
-    localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light')
-  }, [isDark])
+    applyTheme(theme)
+    persistTheme(theme)
+  }, [theme])
 
-  const toggleTheme = () => setIsDark(prev => !prev)
+  const toggleTheme = () => setTheme(prev => toggleThemeValue(prev))
 
-  return { isDark, toggleTheme }
+  return { isDark: theme === 'dark', toggleTheme }
 }
 

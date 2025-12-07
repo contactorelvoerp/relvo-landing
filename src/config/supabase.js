@@ -48,27 +48,38 @@ export const submitEarlyBird = async ({ name, email, phone, company, comment }) 
     }
   }
 
-  const { data, error } = await client
-    .from(TABLE_NAME)
-    .insert([
-      {
-        name: name || null,
-        email: email,
-        phone: phone || null,
-        company: company || null,
-        comments: comment || null, // matches Supabase column name
+  try {
+    const { data, error } = await client
+      .from(TABLE_NAME)
+      .insert([
+        {
+          name: name || null,
+          email: email,
+          phone: phone || null,
+          company: company || null,
+          comments: comment || null, // matches Supabase column name
+        }
+      ])
+      .select()
+
+    if (error) {
+      if (error.code === '23505') {
+        return { success: true, message: '¡Ya estás registrado! Te notificaremos cuando estemos listos.' }
       }
-    ])
-    .select()
-
-  if (error) {
-    if (error.code === '23505') {
-      return { success: true, message: '¡Ya estás registrado! Te notificaremos cuando estemos listos.' }
+      if (error.code === '42501') {
+        return {
+          success: false,
+          message: 'El formulario no tiene permisos de inserción (revisa las políticas RLS de early_birds).'
+        }
+      }
+      return { success: false, message: error.message || 'Error al guardar en Supabase.' }
     }
-    throw error
-  }
 
-  return { success: true, data, message: '¡Gracias! Te notificaremos cuando estemos listos.' }
+    return { success: true, data, message: '¡Gracias! Te notificaremos cuando estemos listos.' }
+  } catch (err) {
+    console.error('Supabase insert error:', err)
+    return { success: false, message: err?.message || 'Hubo un error. Intenta más tarde.' }
+  }
 }
 
 export { TABLE_NAME, isSupabaseConfigured }
