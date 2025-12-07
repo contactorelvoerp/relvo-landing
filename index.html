@@ -12,6 +12,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
+    <script>
+      (() => {
+        const THEME_KEY = 'relvo-theme';
+        const getLocalHour = () => {
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          const now = tz
+            ? new Date(new Date().toLocaleString('en-US', { timeZone: tz }))
+            : new Date();
+          return now.getHours();
+        };
+
+        let dark = null;
+        const stored = localStorage.getItem(THEME_KEY);
+        if (stored === 'dark') dark = true;
+        if (stored === 'light') dark = false;
+        if (dark === null) {
+          const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+          const prefersLight = window.matchMedia?.('(prefers-color-scheme: light)').matches;
+          if (prefersDark) dark = true;
+          else if (prefersLight) dark = false;
+          else {
+            const h = getLocalHour();
+            dark = h >= 19 || h < 7;
+          }
+        }
+
+        const body = document.body;
+        body.classList.toggle('dark', dark);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
