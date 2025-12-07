@@ -1,17 +1,29 @@
 import { useState } from 'react'
-import { Mail, Lock } from 'lucide-react'
+import { Mail, Lock, User, Building2, Phone, MessageSquare } from 'lucide-react'
 import { submitEarlyBird, isSupabaseConfigured } from '../config/supabase'
 
 export const EarlyBird = () => {
-  const [email, setEmail] = useState('')
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    comment: '',
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     
-    if (!email.trim()) {
-      setMessage({ type: 'error', text: 'Por favor ingresa un email válido' })
+    const name = form.name.trim()
+    const email = form.email.trim()
+    const phone = form.phone.trim()
+    const company = form.company.trim()
+    const comment = form.comment.trim()
+
+    if (!name) {
+      setMessage({ type: 'error', text: 'Por favor ingresa tu nombre' })
       return
     }
 
@@ -25,11 +37,17 @@ export const EarlyBird = () => {
     setMessage(null)
 
     try {
-      const result = await submitEarlyBird(email)
+      const result = await submitEarlyBird({
+        name,
+        email,
+        phone,
+        company,
+        comment,
+      })
 
       if (result.success) {
         setMessage({ type: 'success', text: result.message })
-        setEmail('')
+        setForm({ name: '', email: '', phone: '', company: '', comment: '' })
       } else {
         setMessage({ type: 'error', text: result.message })
       }
@@ -59,25 +77,83 @@ export const EarlyBird = () => {
 
         <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">Sumate a Relvo beta</h2>
         <p className="text-muted font-light mb-8">
-          Estamos buscando empresas que quieran probar Relvo. Dejanos tu email y te contactaremos cuando estemos listos.
+          Estamos buscando empresas que quieran probar Relvo. Déjanos tus datos y te contactaremos cuando estemos listos.
         </p>
 
-        <form onSubmit={handleSubmit} className="relative w-full max-w-sm mx-auto group">
-          <div className="relative flex items-center">
-            <Mail className="absolute left-4 w-5 h-5 text-muted transition-colors group-focus-within:text-indigo-400" />
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@empresa.com"
-              disabled={isSubmitting || !isSupabaseConfigured}
-              className="border-[var(--glass-border)] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-muted/50 text-sm w-full border rounded-full pt-4 pr-32 pb-4 pl-12 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+        <form onSubmit={handleSubmit} className="relative w-full max-w-2xl mx-auto group space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="relative flex items-center">
+              <User className="absolute left-4 w-5 h-5 text-muted transition-colors group-focus-within:text-indigo-400" />
+              <input
+                type="text"
+                required
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                placeholder="Nombre completo"
+                autoComplete="name"
+                disabled={isSubmitting}
+                className="border-[var(--glass-border)] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-muted/50 text-[var(--text-main)] bg-[var(--bg-main)] text-sm w-full border rounded-full pt-4 pr-4 pb-4 pl-12 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+            </div>
+            <div className="relative flex items-center">
+              <Mail className="absolute left-4 w-5 h-5 text-muted transition-colors group-focus-within:text-indigo-400" />
+              <input
+                type="email"
+                required
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                placeholder="tu@empresa.com"
+                autoComplete="email"
+                disabled={isSubmitting}
+                className="border-[var(--glass-border)] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-muted/50 text-[var(--text-main)] bg-[var(--bg-main)] text-sm w-full border rounded-full pt-4 pr-4 pb-4 pl-12 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+            </div>
+            <div className="relative flex items-center">
+              <Phone className="absolute left-4 w-5 h-5 text-muted transition-colors group-focus-within:text-indigo-400" />
+              <input
+                type="tel"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                placeholder="Teléfono"
+                autoComplete="tel"
+                disabled={isSubmitting}
+                className="border-[var(--glass-border)] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-muted/50 text-[var(--text-main)] bg-[var(--bg-main)] text-sm w-full border rounded-full pt-4 pr-4 pb-4 pl-12 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+            </div>
+            <div className="relative flex items-center">
+              <Building2 className="absolute left-4 w-5 h-5 text-muted transition-colors group-focus-within:text-indigo-400" />
+              <input
+                type="text"
+                value={form.company}
+                onChange={(e) => setForm({ ...form, company: e.target.value })}
+                placeholder="Empresa"
+                autoComplete="organization"
+                disabled={isSubmitting}
+                className="border-[var(--glass-border)] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-muted/50 text-[var(--text-main)] bg-[var(--bg-main)] text-sm w-full border rounded-full pt-4 pr-4 pb-4 pl-12 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+            </div>
+          </div>
+
+          <div className="relative">
+            <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-muted transition-colors group-focus-within:text-indigo-400" />
+            <textarea
+              value={form.comment}
+              onChange={(e) => setForm({ ...form, comment: e.target.value })}
+              placeholder="¿Qué necesitas automatizar? (opcional)"
+              rows={3}
+              disabled={isSubmitting}
+              className="border-[var(--glass-border)] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-muted/50 text-[var(--text-main)] bg-[var(--bg-main)] text-sm w-full border rounded-2xl pt-4 pr-4 pb-4 pl-12 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed resize-none"
             />
+          </div>
+
+          <div className="flex items-center justify-between flex-col sm:flex-row gap-3">
+            <div className="flex items-center justify-center gap-2 text-[10px] text-muted opacity-70">
+              <Lock className="w-3 h-3" /> Sin spam. Solo updates del producto.
+            </div>
             <button
               type="submit"
               disabled={isSubmitting || !isSupabaseConfigured}
-              className="absolute right-1.5 top-1.5 bottom-1.5 bg-[var(--text-main)] text-[var(--bg-main)] hover:bg-indigo-600 hover:text-white rounded-full px-5 text-xs font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="bg-[var(--text-main)] text-[var(--bg-main)] hover:bg-indigo-600 hover:text-white rounded-full px-6 py-3 text-xs font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {isSubmitting ? (
                 <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -85,13 +161,9 @@ export const EarlyBird = () => {
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               ) : (
-                isSupabaseConfigured ? 'Unirme' : 'Inscribirme'
+                isSupabaseConfigured ? 'Suscribirme' : 'Suscribirme'
               )}
             </button>
-          </div>
-          
-          <div className="mt-3 flex items-center justify-center gap-2 text-[10px] text-muted opacity-70">
-            <Lock className="w-3 h-3" /> Sin spam. Solo updates del producto.
           </div>
 
           {/* Message feedback */}

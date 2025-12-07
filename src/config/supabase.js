@@ -38,7 +38,7 @@ export const getSupabase = () => {
   return supabase
 }
 
-export const submitEarlyBird = async (email) => {
+export const submitEarlyBird = async ({ name, email, phone, company, comment }) => {
   const client = getSupabase()
 
   if (!client) {
@@ -52,9 +52,11 @@ export const submitEarlyBird = async (email) => {
     .from(TABLE_NAME)
     .insert([
       {
+        name: name || null,
         email: email,
-        created_at: new Date().toISOString(),
-        source: 'landing_page'
+        phone: phone || null,
+        company: company || null,
+        comments: comment || null, // matches Supabase column name
       }
     ])
     .select()
