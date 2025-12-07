@@ -2,14 +2,7 @@ import { useState, useEffect } from 'react'
 
 const THEME_KEY = 'relvo-theme'
 
-const getLocalHour = () => {
-  // Use browser timezone explicitly to avoid UTC drift
-  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-  const now = tz
-    ? new Date(new Date().toLocaleString('en-US', { timeZone: tz }))
-    : new Date()
-  return now.getHours()
-}
+const getLocalHour = () => new Date().getHours() // browser local time
 
 const getInitialTheme = () => {
   if (typeof window === 'undefined') return true // fallback dark
