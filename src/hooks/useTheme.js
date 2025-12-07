@@ -14,17 +14,18 @@ const getLocalHour = () => {
 const getInitialTheme = () => {
   if (typeof window === 'undefined') return true // fallback dark
 
+  // If pre-script already set a theme, honor it to avoid mismatch
+  const domTheme = document.documentElement.dataset.theme
+  if (domTheme === 'dark') return true
+  if (domTheme === 'light') return false
+  if (document.body.classList.contains('dark')) return true
+
   // Manual preference wins
   const stored = localStorage.getItem(THEME_KEY)
   if (stored === 'dark') return true
   if (stored === 'light') return false
 
-  // OS preference next
-  const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches
-  if (prefersDark) return true
-  if (window.matchMedia?.('(prefers-color-scheme: light)').matches) return false
-
-  // Default by local hour: night (19-6) => dark, else light
+  // Default by local hour only (ignore OS preference for consistency): night (19-6) => dark, else light
   const hour = getLocalHour()
   return hour >= 19 || hour < 7
 }

@@ -28,14 +28,8 @@
         if (stored === 'dark') dark = true;
         if (stored === 'light') dark = false;
         if (dark === null) {
-          const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
-          const prefersLight = window.matchMedia?.('(prefers-color-scheme: light)').matches;
-          if (prefersDark) dark = true;
-          else if (prefersLight) dark = false;
-          else {
-            const h = getLocalHour();
-            dark = h >= 19 || h < 7;
-          }
+          const h = getLocalHour();
+          dark = h >= 19 || h < 7;
         }
 
         const body = document.body;
