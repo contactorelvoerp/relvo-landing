@@ -1,44 +1,29 @@
-import { Sun, Moon } from 'lucide-react'
-import { useTheme } from '../hooks/useTheme'
-
 export const Navbar = () => {
-  const { isDark, toggleTheme } = useTheme()
+  const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
+
+  const handleScrollToConversemos = (e) => {
+    e.preventDefault()
+    document.getElementById('conversemos')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-[var(--glass-border)] bg-[var(--nav-bg)] backdrop-blur-xl transition-colors duration-500">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-[var(--text-main)] rounded-sm flex items-center justify-center transition-colors">
-            <div className="w-3 h-3 bg-[var(--bg-main)] rounded-sm transition-colors"></div>
+    <nav className="fixed top-6 left-0 right-0 z-50 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+        <a href="#statement" className="flex items-center gap-2">
+          <div className="w-7 h-7 bg-[var(--text-main)] rounded-sm flex items-center justify-center">
+            <div className="w-3 h-3 bg-[var(--bg-main)] rounded-sm"></div>
           </div>
-          <span className="text-lg font-semibold tracking-tighter font-geist">RELVO</span>
-        </div>
-        
-        <div className="hidden md:flex items-center gap-8 text-sm text-muted font-medium">
-          <a href="#solucion" className="hover:text-[var(--text-main)] transition-colors">Contabilidad</a>
-          <a href="#ai-assistant" className="hover:text-[var(--text-main)] transition-colors">Asistente IA</a>
-          <a href="#precios" className="hover:text-[var(--text-main)] transition-colors">Precios</a>
-        </div>
-        
-        <div className="flex items-center gap-4">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-[var(--glass-hover)] text-muted hover:text-[var(--text-main)] transition-all"
-            aria-label="Toggle theme"
-          >
-            {isDark ? (
-              <Moon className="w-4 h-4" />
-            ) : (
-              <Sun className="w-4 h-4" />
-            )}
-          </button>
-          <a
-            href="#early-bird"
-            className="text-xs font-medium bg-[var(--text-main)] text-[var(--bg-main)] px-4 py-2 rounded-full hover:opacity-90 transition-opacity tracking-tight"
-          >
-            Acceso anticipado
-          </a>
-        </div>
+          <span className="font-body text-xs font-semibold tracking-[0.22em] text-ink">RELVO</span>
+        </a>
+
+        {/* Right CTA */}
+        <a
+          href="#conversemos"
+          onClick={handleScrollToConversemos}
+          className="font-body inline-flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase text-ink ng-link"
+        >
+          CONVERSEMOS
+        </a>
       </div>
     </nav>
   )

@@ -1,47 +1,13 @@
-import { useEffect } from 'react'
-import { Spotlight } from './components/Spotlight'
-import { BackgroundLayers } from './components/BackgroundLayers'
 import { Navbar } from './components/Navbar'
-import { Hero } from './components/Hero'
-import { AIAssistant } from './components/AIAssistant'
-import { Solution } from './components/Solution'
-import { Pricing } from './components/Pricing'
-import { EarlyBird } from './components/EarlyBird'
-import { Footer } from './components/Footer'
-import { initSupabase } from './config/supabase'
+import { OneStatement } from './components/OneStatement'
 
 function App() {
-  useEffect(() => {
-    // Apply dark mode by default to body
-    document.body.classList.add('dark')
-    
-    // Initialize Supabase on app mount
-    initSupabase()
-    
-    // Initialize Lucide icons
-    if (window.lucide) {
-      window.lucide.createIcons({
-        attrs: {
-          'stroke-width': 1.5
-        }
-      })
-    }
-  }, [])
-
   return (
-    <div id="app-body" className="antialiased selection:bg-indigo-500/30 selection:text-indigo-400 relative overflow-x-hidden">
-      <Spotlight />
-      <BackgroundLayers />
+    <div id="app-body" className="antialiased selection:bg-black/10 selection:text-black/80 relative overflow-x-hidden">
       <Navbar />
-      <Hero />
-      <Solution />
-      <AIAssistant />
-      <Pricing />
-      <EarlyBird />
-      <Footer />
+      <OneStatement />
     </div>
   )
 }
 
 export default App
-
