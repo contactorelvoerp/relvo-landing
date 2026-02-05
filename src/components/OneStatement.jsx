@@ -55,7 +55,7 @@ export const OneStatement = () => {
         <section className="relative snap-start min-h-[100dvh] flex items-center">
           <div className="w-full max-w-6xl mx-auto">
             <p className="font-body text-center tracking-[-0.015em] text-ink text-[clamp(22px,3.2vw,44px)] leading-[1.12] mx-auto max-w-[22ch]">
-              Cierres lentos, tareas manuales y procesos repetitivos que consumen tiempo del equipo financiero.
+              Cierres lentos, tareas manuales y procesos repetitivos consumen tiempo del equipo financiero.
             </p>
           </div>
           <ScrollHint />
