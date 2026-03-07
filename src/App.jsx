@@ -1,11 +1,15 @@
-import { Navbar } from './components/Navbar'
-import { OneStatement } from './components/OneStatement'
+import { HeroSection } from './components/landing/HeroSection'
+
+const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
 
 function App() {
   return (
-    <div id="app-body" className="antialiased selection:bg-black/10 selection:text-black/80 relative overflow-x-hidden">
-      <Navbar />
-      <OneStatement />
+    <div className="relative min-h-screen overflow-x-hidden bg-[var(--bg-main)] text-[var(--text-main)] antialiased">
+      <div aria-hidden className="page-glow" />
+
+      <main id="inicio" className="relative">
+        <HeroSection ctaHref={calendlyHref} />
+      </main>
     </div>
   )
 }
