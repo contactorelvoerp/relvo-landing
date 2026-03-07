@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* exported SUPABASE_CONFIG, TABLE_NAME */
+
 // Supabase Configuration
 // Reemplaza estos valores con tus credenciales de Supabase
 const SUPABASE_CONFIG = {

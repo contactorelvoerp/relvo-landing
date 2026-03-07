@@ -1,3 +1,5 @@
+/* global supabase, SUPABASE_CONFIG, TABLE_NAME */
+
 // Supabase Integration for Early Bird Form
 // Este archivo maneja el envío del formulario a Supabase
 
@@ -55,7 +57,7 @@ async function handleEarlyBirdSubmit(event) {
         }
         
         // Insertar en Supabase
-        const { data, error } = await supabaseClient
+        const { error } = await supabaseClient
             .from(TABLE_NAME)
             .insert([
                 {
