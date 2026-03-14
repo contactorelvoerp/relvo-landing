@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Relvo ERP Landing Page - React Version",
+  "description": "Relvo Landing Page - React Version",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
