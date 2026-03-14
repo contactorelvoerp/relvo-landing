@@ -1,91 +1,138 @@
 import { ButtonLink } from './ButtonLink'
 
-const executiveBlocks = [
-  {
-    title: 'Centraliza contratos y pricing',
-    text: 'Modela planes, condiciones comerciales y excepciones sin depender de planillas.',
-  },
-  {
-    title: 'Calcula automaticamente lo que debes cobrar',
-    text: 'Consumo, volumen o performance para transformar operacion en cargos correctos.',
-  },
-  {
-    title: 'Visibiliza tu facturacion',
-    text: 'Muestra que fue cobrado, que falta por facturar y donde se esta escapando revenue.',
-  },
-]
-
-export const HeroSection = ({ ctaHref }) => {
+export const HeroSection = ({ ctaHref, t }) => {
   return (
-    <section className="hero-shell section-shell flex min-h-screen items-center pt-8 sm:pt-10 lg:pt-12">
-      <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1.02fr)_minmax(380px,0.86fr)] lg:gap-12">
-        <div className="max-w-3xl">
-          <div className="mb-8 flex items-center gap-4 sm:mb-10 sm:gap-5">
-            <img
-              src="/logo-mark-dark.svg"
-              alt="Relvo"
-              className="h-14 w-14 sm:h-16 sm:w-16"
-            />
-            <span className="font-display text-[2.3rem] font-semibold tracking-[0.02em] text-[var(--text-main)] sm:text-[2.75rem]">
-              RELVO
-            </span>
-          </div>
+    <section className="hero-shell section-shell relative flex min-h-[calc(100vh-110px)] items-center bg-white pt-6 sm:pt-8 lg:pt-10">      
+      <div className="grid w-full items-center gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14">
+        <div className="flex max-w-[36rem] flex-col lg:max-w-[38rem]">
+          <p className="eyebrow-compact">{t.heroEyebrow}</p>
 
-          <p className="eyebrow-compact">Revenue automation para B2B en LATAM</p>
-          <h1 className="mt-4 max-w-[13ch] font-display text-[clamp(2.55rem,5.4vw,4.95rem)] leading-[0.98] tracking-[-0.06em] text-[var(--text-main)]">
-            Convierte contratos, pricing y consumo en revenue confiable.
+          <h1 className="mt-4 max-w-[14ch] font-display text-[clamp(2.65rem,5.4vw,5rem)] leading-[0.96] tracking-[-0.05em] text-[var(--text-main)] lg:min-h-[3.2em]">
+            {t.heroTitle}
           </h1>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--text-muted)] sm:text-xl">
-            Relvo centraliza contratos, reglas comerciales y datos de uso para
-            calcular cargos, ordenar la facturacion y dar control sobre tu revenue.
+
+          <p className="mt-4 max-w-xl text-lg leading-8 text-[var(--text-muted)] sm:text-xl">
+            {t.heroDescription}
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <p className="mt-4 text-sm leading-6 text-[var(--text-soft)]">
+            {t.heroSupport}
+          </p>
+
+          <div className="mt-6">
             <ButtonLink
               href={ctaHref}
               external
-              className="min-w-[190px] px-6 py-3.5 text-base shadow-[0_22px_45px_rgba(16,16,14,0.18)]"
+              variant="primary"
+              className="group px-6 py-3.5 text-base font-medium shadow-[0_20px_45px_rgba(16,16,14,0.12)]"
             >
-              Agendar demo
-              <span aria-hidden="true">{'->'}</span>
+              {t.navCta}
+              <span
+                aria-hidden="true"
+                className="ml-2 transition-transform duration-200 ease-out group-hover:translate-x-1"
+              >
+                →
+              </span>
             </ButtonLink>
           </div>
         </div>
 
-        <div className="compact-visual relative">
-          <div className="surface-panel relative overflow-hidden rounded-[2rem] border border-black/[0.12] bg-white/[0.9] p-5 shadow-[0_28px_60px_rgba(16,16,14,0.08)] sm:p-6">
-            <div className="border-b border-black/[0.08] pb-4">
-              <div className="inline-flex rounded-full border border-black/[0.08] bg-[var(--surface-subtle)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-soft)]">
-                Revenue control
+        <div className="relative">
+          <div className="overflow-hidden rounded-[2rem] border border-black/[0.08] bg-white shadow-[0_20px_50px_rgba(16,16,14,0.08)]">
+            <div className="border-b border-black/[0.06] px-5 py-4 sm:px-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-soft)]">
+                    {t.panelEyebrow}
+                  </p>
+                  <h2 className="mt-2 font-display text-[1.8rem] tracking-[-0.04em] text-[var(--text-main)]">
+                    {t.panelTitle}
+                  </h2>
+                </div>
+
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-600/15 bg-emerald-600/8 px-3 py-1 text-xs font-medium text-emerald-700">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                  {t.panelStatus}
+                </div>
               </div>
-              <h2 className="mt-4 max-w-[16ch] font-display text-[clamp(1.72rem,2.6vw,2.3rem)] leading-[1.02] tracking-[-0.05em] text-[var(--text-main)]">
-                Mas control. Menos trabajo manual.
-              </h2>
-              <p className="mt-4 max-w-[36ch] text-sm leading-7 text-[var(--text-muted)] sm:text-[15px]">
-                Una vista consistente del contrato al monto cobrado, con mas
-                trazabilidad y menos dependencia de reconciliar numeros a mano.
-              </p>
             </div>
 
-            <div className="mt-5 space-y-3">
-              {executiveBlocks.map((block) => (
-                <div
-                  key={block.title}
-                  className="rounded-[1.35rem] border border-black/[0.08] bg-[rgba(238,230,218,0.55)] px-4 py-4 shadow-[0_12px_24px_rgba(16,16,14,0.035)]"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="mt-[0.7rem] h-2 w-2 shrink-0 rounded-full bg-[var(--text-main)]" />
-                    <div>
-                      <p className="text-sm font-semibold tracking-[-0.02em] text-[var(--text-main)]">
-                        {block.title}
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
-                        {block.text}
-                      </p>
-                    </div>
+            <div className="p-5 sm:p-6">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="rounded-2xl border border-black/[0.06] bg-[var(--surface-subtle)] px-4 py-4">
+                  <p className="text-xs font-semibold text-[var(--text-soft)]">
+                    {t.contractLabel}
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-[var(--text-main)]">
+                    {t.contractName}
+                  </p>
+                  <p className="text-sm text-[var(--text-muted)]">
+                    {t.contractMeta}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-black/[0.06] bg-[var(--surface-subtle)] px-4 py-4">
+                  <p className="text-xs font-semibold text-[var(--text-soft)]">
+                    {t.pricingLabel}
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-[var(--text-main)]">
+                    {t.pricingValue}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-black/[0.06] bg-[var(--surface-subtle)] px-4 py-4">
+                  <p className="text-xs font-semibold text-[var(--text-soft)]">
+                    {t.usageLabel}
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-[var(--text-main)]">
+                    {t.usageValue}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-black/[0.06] bg-[var(--surface-subtle)] px-4 py-4">
+                  <p className="text-xs font-semibold text-[var(--text-soft)]">
+                    {t.chargesLabel}
+                  </p>
+                  <p className="mt-2 text-base font-semibold text-[var(--text-main)]">
+                    {t.chargesValue}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-4 rounded-[1.5rem] border border-black/[0.06] bg-[var(--surface-subtle)] p-4">
+                <p className="text-xs font-semibold text-[var(--text-soft)]">
+                  {t.revenueStatusLabel}
+                </p>
+
+                <div className="mt-3 grid gap-3 sm:grid-cols-3">
+                  <div>
+                    <p className="text-xs text-[var(--text-soft)]">
+                      {t.collectedLabel}
+                    </p>
+                    <p className="text-sm font-semibold text-[var(--text-main)]">
+                      {t.collectedValue}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-xs text-[var(--text-soft)]">
+                      {t.pendingLabel}
+                    </p>
+                    <p className="text-sm font-semibold text-[var(--text-main)]">
+                      {t.pendingValue}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-xs text-[var(--text-soft)]">
+                      {t.riskLabel}
+                    </p>
+                    <p className="text-sm font-semibold text-[var(--text-main)]">
+                      {t.riskValue}
+                    </p>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
