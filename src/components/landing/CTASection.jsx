@@ -36,8 +36,8 @@ export const CTASection = ({ ctaHref, t, lang }) => {
 
           <p className="mt-4 text-sm text-[var(--text-soft)]">
             {lang === 'es'
-              ? 'Diseñado para SaaS con pricing complejo.'
-              : 'Built for SaaS companies with complex pricing.'}
+              ? 'Diseñado para B2B con pricing complejo.'
+              : 'Built for B2B companies with complex pricing.'}
           </p>
         </div>
       </div>

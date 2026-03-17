@@ -9,7 +9,7 @@ export const TeamSection = () => {
 
         <p className="mt-6 text-lg leading-8 text-[var(--text-muted)]">
           Relvo is built by engineers focused on modern revenue infrastructure
-          and financial systems for SaaS companies.
+          and financial systems for B2B companies.
         </p>
 
         <div className="mt-8">
