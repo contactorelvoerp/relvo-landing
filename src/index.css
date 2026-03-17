@@ -59,7 +59,7 @@
 @tailwind utilities;
 
 :root {
-  --bg-main: #fcfcfb;
+  --bg-main: #ffffff;
   --surface-card: #ffffff;
   --surface-panel: #ffffff;
   --surface-subtle: #f6f7f8;

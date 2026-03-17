@@ -47,9 +47,9 @@ function App() {
         </section>
       </main>
 
-      <footer className="border-t border-black/[0.06] bg-white py-10">
+      <footer className="border-t border-black/[0.06] bg-white py-6">
         <div className="section-shell">
-          <div className="flex flex-col items-center justify-between gap-3 text-center text-sm text-[var(--text-soft)] sm:flex-row sm:text-left">
+          <div className="flex flex-col items-center justify-between gap-2 text-center text-sm text-[var(--text-soft)] sm:flex-row sm:text-left">
             <p>
               © {new Date().getFullYear()} Relvo. {t.footerRights}
             </p>

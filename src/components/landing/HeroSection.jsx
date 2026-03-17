@@ -2,7 +2,7 @@ import { ButtonLink } from './ButtonLink'
 
 export const HeroSection = ({ ctaHref, t }) => {
   return (
-    <section className="hero-shell section-shell relative flex min-h-[calc(100vh-110px)] items-center bg-white pt-6 sm:pt-8 lg:pt-10">      
+    <section className="hero-shell section-shell relative flex min-h-[calc(100vh-110px)] items-center bg-white pb-12 pt-6 sm:pb-16 sm:pt-8 lg:pb-20 lg:pt-10">      
       <div className="grid w-full items-center gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14">
         <div className="flex max-w-[36rem] flex-col lg:max-w-[38rem]">
           <p className="eyebrow-compact">{t.heroEyebrow}</p>
