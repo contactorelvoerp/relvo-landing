@@ -4,14 +4,14 @@ export const text = {
     langEs: 'ES',
     langEn: 'EN',
 
-    heroEyebrow: 'Infraestructura de revenue para SaaS con pricing complejo',
+    heroEyebrow: 'Infraestructura de revenue para B2B',
 
     heroTitle: 'Convierte contratos y uso en revenue predecible.',
 
     heroDescription:
       'Relvo conecta contratos, pricing y datos de uso para calcular cargos, generar facturas y dar visibilidad completa sobre cómo se genera el revenue.',
 
-    heroSupport: 'Diseñado para SaaS con pricing complejo.',
+    heroSupport: 'Diseñado para B2B con pricing complejo.',
 
     panelEyebrow: 'Vista de revenue',
 
@@ -56,14 +56,14 @@ export const text = {
     langEs: 'ES',
     langEn: 'EN',
 
-    heroEyebrow: 'Revenue infrastructure for SaaS with complex pricing',
+    heroEyebrow: 'Revenue infrastructure for B2B',
 
     heroTitle: 'Turn contracts and usage into predictable revenue.',
 
     heroDescription:
       'Relvo connects contracts, pricing and usage data to calculate charges, generate invoices and give teams full visibility into how revenue is generated.',
 
-    heroSupport: 'Built for SaaS with complex pricing.',
+    heroSupport: 'Built for B2B with complex pricing.',
 
     panelEyebrow: 'Revenue overview',
 
