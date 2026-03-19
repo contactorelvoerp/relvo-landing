@@ -27,8 +27,43 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
           </p>
         </div>
 
+        <div className="sm:hidden">
+          <div className="aspect-video w-full">
+            {showMedia ? (
+              isVideo ? (
+                <video
+                  className="hero-video h-full w-full object-contain"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls={false}
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  tabIndex={-1}
+                  onError={() => setMediaOk(false)}
+                >
+                  <source src={mobileHeroSrc} type="video/mp4" />
+                </video>
+              ) : (
+                <img
+                  src={mediaSrc}
+                  alt={t.heroGifAlt}
+                  onError={() => setMediaOk(false)}
+                  className="h-full w-full object-contain"
+                  loading="lazy"
+                />
+              )
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-white/5">
+                <div className="h-16 w-16 rounded-[var(--radius-md)] bg-white/10" />
+              </div>
+            )}
+          </div>
+        </div>
+
         <div
-          className="relative overflow-hidden rounded-[var(--radius-2xl)] bg-cover bg-center px-6 py-4 shadow-[0_10px_28px_rgba(16,16,14,0.08)] sm:px-10 sm:py-12"
+          className="relative hidden overflow-hidden rounded-[var(--radius-2xl)] bg-cover bg-center px-6 py-4 shadow-[0_10px_28px_rgba(16,16,14,0.08)] sm:block sm:px-10 sm:py-12"
           style={{ backgroundImage: "url('/Fondo%20Hero.png')" }}
         >
           <div className="relative mx-auto hidden max-w-3xl text-center sm:block">
