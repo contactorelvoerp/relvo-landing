@@ -4,12 +4,15 @@ function createVideo(src) {
   const v = document.createElement('video')
   v.src = src
   v.autoplay = true
+  v.controls = false
+  v.removeAttribute('controls')
   v.muted = true
   v.setAttribute('muted', '')
   v.loop = true
   v.setAttribute('loop', '')
   v.playsInline = true
   v.setAttribute('playsinline', '')
+  v.setAttribute('webkit-playsinline', '')
   v.preload = 'auto'
   v.disablePictureInPicture = true
   v.disableRemotePlayback = true
@@ -63,12 +66,8 @@ export const HeroCanvasVideo = ({
     }
 
     const video = createVideo(src)
-    video.style.position = 'fixed'
-    video.style.left = '-9999px'
-    video.style.top = '0'
-    video.style.width = '1px'
-    video.style.height = '1px'
-    video.style.opacity = '0'
+    video.className = 'hero-video'
+    video.style.display = 'none'
     video.style.pointerEvents = 'none'
     document.body.appendChild(video)
 
