@@ -104,7 +104,7 @@ body {
 }
 
 ::selection {
-  background: var(--brand-accent);
+  background: #f5bba2;
 }
 
 a {
