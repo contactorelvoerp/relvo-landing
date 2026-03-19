@@ -35,7 +35,7 @@ export const text = {
       {
         title: 'Calcula y factura automáticamente.',
         description:
-          'Relvo emite facturas en base al consumo, anticipación, sin intervención humana y sin errores.',
+          'Relvo emite facuras en base al consumo, se conecta a tu sistema, sin intervención huamna, sin errores.',
         imageSide: 'right',
         imageSrc: '/Feature%203.png',
         imageAlt: 'Calcula y factura automáticamente',
@@ -60,9 +60,9 @@ export const text = {
     ctaSubmit: 'Guardar correo',
     ctaHelper: 'Quedamos en contacto!',
     ctaEmailRequired: 'Ingresa tu email de trabajo.',
-    ctaEmailInvalid: 'Ingresa un email valido.',
+    ctaEmailInvalid: 'Ingresa un email válido.',
     ctaEmailExists: 'Este email ya fue registrado.',
-    ctaEmailSaved: 'Email guardado con exito.',
+    ctaEmailSaved: 'Email guardado con éxito.',
     ctaStoredCountLabel: 'Correos guardados:',
     ctaDownloadCsv: 'Descargar CSV',
 
@@ -70,24 +70,24 @@ export const text = {
       {
         title: 'Factura lo que negocias, sin fricción.',
         description:
-          'Permite a tus ejecutivos negociar todo tipo de precios y convertirlos automaticamente en facturacion.',
+          'Permite a tus ejecutivos negociar todo tipo de precios y convertirlos automáticamente en facturación.',
       },
       {
         title: 'Acelera tu recaudación',
         description:
-          'Disminuye el tiempo en recaudar con un sistema que identifica morosos y los notificaid de manera autónoma',
+          'Disminuye el tiempo en recaudar con un sistema que identifica morosos y los notifica de manera autónoma.',
       },
       {
         title: 'Proyecta tus flujos futuros',
         description:
-          'Analiza tus modelos de precios, ingresos por cliente o metrica, y genera forecast de tus flujos futuros.',
+          'Analiza tus modelos de precios, ingresos por cliente o métrica, y genera forecast de tus flujos futuros.',
       },
     ],
-    benefitsTitle: 'Que ganas con Relvo?',
+    benefitsTitle: '¿Qué ganas con Relvo?',
     bridgeFrom: 'De Excel + apps desconectadas',
-    bridgeTo: 'a un sistema unico de ingresos.',
-    bridgeSupport: 'Contrato comercial, facturación, recaudación y conciliación en el mismo flujo.\nMulti-empresa y multi-moneda.',
-    footerTagline: 'Infraestuctura de ingresos con IA para B2B en LATAM',
+    bridgeTo: 'a un sistema único de ingresos.',
+    bridgeSupport: 'Contrato comercial, facturación, recaudación y conciliación en el mismo flujo.\nMultiempresa y multimoneda.',
+    footerTagline: 'Infraestructura de ingresos con IA para B2B en LATAM',
 
     footerColumns: [
       {
@@ -98,7 +98,7 @@ export const text = {
         title: 'Demo',
         links: [
           {
-            label: 'Agendar reunion',
+            label: 'Agendar reunión',
             href: 'https://calendar.app.google/GbBM26VivFQHGzyL9',
             external: true,
           },
