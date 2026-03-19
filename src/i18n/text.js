@@ -83,7 +83,7 @@ export const text = {
           'Analiza tus modelos de precios, ingresos por cliente o metrica, y genera forecast de tus flujos futuros.',
       },
     ],
-    benefitsTitle: 'Que ganas con Relvo.',
+    benefitsTitle: 'Que ganas con Relvo?',
     bridgeFrom: 'De Excel + apps desconectadas',
     bridgeTo: 'a un sistema unico de ingresos.',
     bridgeSupport: 'Contrato comercial, facturación, recaudación y conciliación en el mismo flujo.\nMulti-empresa y multi-moneda.',
