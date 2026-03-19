@@ -1,10 +1,18 @@
 import { Reveal } from './Reveal'
 import { HeroCanvasVideo } from './HeroCanvasVideo'
-import { canUseAlphaCanvasVideo } from '../../utils/mediaSupport'
+import { canUseAlphaCanvasVideo, isMobileDevice } from '../../utils/mediaSupport'
+
+const MOBILE_FEATURE_VIDEO_SRC_BY_INDEX = [
+  '/Feature%201%20movil.mp4',
+  '/Feature%202%20movil.mp4',
+  '/Feature%203%20movil.mp4',
+  '/Feature%204%20movil.mp4',
+]
 
 export const AboutSection = ({ t }) => {
   const features = t.features ?? []
   const supportsAlphaCanvas = canUseAlphaCanvasVideo()
+  const useMobileLayout = isMobileDevice()
 
   return (
     <section className="section-shell bg-white py-20 sm:py-24 lg:py-28">
@@ -31,10 +39,16 @@ export const AboutSection = ({ t }) => {
                     </div>
                   )}
 
-                  {feature.videoSrc && supportsAlphaCanvas ? (
+                  {feature.videoSrc ? (
                     <HeroCanvasVideo
-                      src={feature.videoSrc}
-                      fit="contain"
+                      src={
+                        useMobileLayout
+                          ? MOBILE_FEATURE_VIDEO_SRC_BY_INDEX[idx] || feature.videoSrc
+                          : feature.videoSrc
+                      }
+                      fit={useMobileLayout ? 'cover' : 'contain'}
+                      topCropPx={useMobileLayout ? 14 : 0}
+                      backgroundColor={useMobileLayout ? '#ffffff' : ''}
                       className="pointer-events-none absolute inset-0 h-full w-full"
                     />
                   ) : null}
