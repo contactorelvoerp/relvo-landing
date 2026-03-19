@@ -7,7 +7,7 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
   const showMedia = Boolean(mediaSrc) && mediaOk
   const supportsAlphaCanvas = canUseAlphaCanvasVideo()
   const useMobileLayout = isMobileDevice()
-  const mobileHeroSrc = '/hero_mobil.mp4'
+  const mobileHeroSrc = '/Hero%20fondo%20blanco.mp4'
 
   const lower = String(mediaSrc || '').toLowerCase()
   const isVideo =
@@ -34,7 +34,8 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
                 isVideo ? (
                   <HeroCanvasVideo
                     src={mobileHeroSrc}
-                    fit="cover"
+                    fit="contain"
+                    backgroundColor="#ffffff"
                     className="h-full w-full"
                     onError={() => setMediaOk(false)}
                   />
@@ -99,7 +100,8 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
                       ) : (
                         <HeroCanvasVideo
                           src={mobileHeroSrc}
-                          fit="cover"
+                          fit="contain"
+                          backgroundColor="#ffffff"
                           className="absolute inset-0 h-full w-full"
                           onError={() => setMediaOk(false)}
                         />

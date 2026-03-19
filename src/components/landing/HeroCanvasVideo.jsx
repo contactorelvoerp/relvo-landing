@@ -38,6 +38,7 @@ export const HeroCanvasVideo = ({
   src,
   topCropPx = 0,
   fit = 'cover',
+  backgroundColor = '',
   className = '',
   onError,
 }) => {
@@ -111,6 +112,13 @@ export const HeroCanvasVideo = ({
       const h = canvas.height || 1
       if (video.readyState >= 2) {
         try {
+          if (backgroundColor) {
+            ctx.save()
+            ctx.globalCompositeOperation = 'source-over'
+            ctx.fillStyle = backgroundColor
+            ctx.fillRect(0, 0, w, h)
+            ctx.restore()
+          }
           const crop = Math.max(0, Number(topCropPx) || 0) * (dprRef.current || 1)
           drawFit(ctx, video, w, h, crop, fit)
         } catch {
