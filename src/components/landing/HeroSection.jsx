@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { HeroCanvasVideo } from './HeroCanvasVideo'
+import { canUseAlphaCanvasVideo } from '../../utils/mediaSupport'
 
 export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
   const [mediaOk, setMediaOk] = useState(true)
   const showMedia = Boolean(mediaSrc) && mediaOk
+  const supportsAlphaCanvas = canUseAlphaCanvasVideo()
+  const heroFallbackSrc = '/hero-debug-frame.png'
 
   const lower = String(mediaSrc || '').toLowerCase()
   const isVideo =
@@ -33,26 +36,38 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
               {showMedia ? (
                 isVideo ? (
                   <div className="relative h-full w-full">
-                    <HeroCanvasVideo
-                      src={mediaSrc}
-                      topCropPx={14}
-                      className="absolute inset-0 h-full w-full"
-                      onError={() => setMediaOk(false)}
-                    />
-                    <video
-                      className="hero-video absolute inset-0 h-full w-full bg-transparent object-cover opacity-0"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      controls={false}
-                      disablePictureInPicture
-                      disableRemotePlayback
-                      tabIndex={-1}
-                      onError={() => setMediaOk(false)}
-                    >
-                      <source src={mediaSrc} type="video/webm" />
-                    </video>
+                    {supportsAlphaCanvas ? (
+                      <>
+                        <HeroCanvasVideo
+                          src={mediaSrc}
+                          topCropPx={14}
+                          className="absolute inset-0 h-full w-full"
+                          onError={() => setMediaOk(false)}
+                        />
+                        <video
+                          className="hero-video absolute inset-0 h-full w-full bg-transparent object-cover opacity-0"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          controls={false}
+                          disablePictureInPicture
+                          disableRemotePlayback
+                          tabIndex={-1}
+                          onError={() => setMediaOk(false)}
+                        >
+                          <source src={mediaSrc} type="video/webm" />
+                        </video>
+                      </>
+                    ) : (
+                      <img
+                        src={heroFallbackSrc}
+                        alt={t.heroGifAlt}
+                        className="h-full w-full object-cover"
+                        loading="eager"
+                        onError={() => setMediaOk(false)}
+                      />
+                    )}
                   </div>
                 ) : (
                   <img

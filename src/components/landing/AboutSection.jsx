@@ -1,8 +1,10 @@
 import { Reveal } from './Reveal'
 import { HeroCanvasVideo } from './HeroCanvasVideo'
+import { canUseAlphaCanvasVideo } from '../../utils/mediaSupport'
 
 export const AboutSection = ({ t }) => {
   const features = t.features ?? []
+  const supportsAlphaCanvas = canUseAlphaCanvasVideo()
 
   return (
     <section className="section-shell bg-white py-20 sm:py-24 lg:py-28">
@@ -29,7 +31,7 @@ export const AboutSection = ({ t }) => {
                     </div>
                   )}
 
-                  {feature.videoSrc ? (
+                  {feature.videoSrc && supportsAlphaCanvas ? (
                     <HeroCanvasVideo
                       src={feature.videoSrc}
                       fit="contain"
