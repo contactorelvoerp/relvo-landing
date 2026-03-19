@@ -21,11 +21,17 @@ export const AboutSection = ({ t }) => {
           const imageLeft = feature.imageSide === 'left'
           const aspectClass = 'aspect-square'
 
+          const mobileVideoOnly = useMobileLayout && Boolean(feature.videoSrc)
+
           const media = (
-            <div className="overflow-hidden rounded-[var(--radius-xl)] bg-black/[0.03]">
+            <div
+              className={`overflow-hidden rounded-[var(--radius-xl)] ${
+                mobileVideoOnly ? 'bg-transparent' : 'bg-black/[0.03]'
+              }`}
+            >
               <div className={`w-full ${aspectClass}`}>
                 <div className="relative h-full w-full">
-                  {feature.imageSrc ? (
+                  {feature.imageSrc && !mobileVideoOnly ? (
                     <img
                       src={feature.imageSrc}
                       alt={feature.imageAlt ?? feature.title}
@@ -48,7 +54,7 @@ export const AboutSection = ({ t }) => {
                       }
                       fit={useMobileLayout ? 'cover' : 'contain'}
                       topCropPx={useMobileLayout ? 14 : 0}
-                      backgroundColor={useMobileLayout ? '#ffffff' : ''}
+                      backgroundColor=""
                       className="pointer-events-none absolute inset-0 h-full w-full"
                     />
                   ) : null}

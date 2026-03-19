@@ -36,7 +36,6 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
                     src={mobileHeroSrc}
                     fit="cover"
                     topCropPx={14}
-                    backgroundColor="#ffffff"
                     className="h-full w-full"
                     onError={() => setMediaOk(false)}
                   />
@@ -103,7 +102,6 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
                           src={mobileHeroSrc}
                           fit="cover"
                           topCropPx={14}
-                          backgroundColor="#ffffff"
                           className="absolute inset-0 h-full w-full"
                           onError={() => setMediaOk(false)}
                         />
