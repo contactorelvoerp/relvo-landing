@@ -37,7 +37,7 @@ export const ButtonLink = ({
       className={cx(
         `
           inline-flex items-center justify-center
-          rounded-full
+          rounded-[var(--radius-button)]
           px-5 py-2.5
           text-sm font-medium
           transition-all duration-200
