@@ -6,7 +6,6 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
   const [mediaOk, setMediaOk] = useState(true)
   const showMedia = Boolean(mediaSrc) && mediaOk
   const supportsAlphaCanvas = canUseAlphaCanvasVideo()
-  const heroFallbackSrc = '/Panel_de_ingresos.png'
 
   const lower = String(mediaSrc || '').toLowerCase()
   const isVideo =
@@ -60,13 +59,7 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
                         </video>
                       </>
                     ) : (
-                      <img
-                        src={heroFallbackSrc}
-                        alt={t.heroGifAlt}
-                        className="h-full w-full object-contain"
-                        loading="eager"
-                        onError={() => setMediaOk(false)}
-                      />
+                      <div className="h-full w-full" aria-hidden="true" />
                     )}
                   </div>
                 ) : (
