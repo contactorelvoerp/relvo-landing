@@ -31,20 +31,12 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
           <div className="aspect-video w-full">
             {showMedia ? (
               isVideo ? (
-                <video
-                  className="hero-video h-full w-full object-contain"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  controls={false}
-                  disablePictureInPicture
-                  disableRemotePlayback
-                  tabIndex={-1}
+                <HeroCanvasVideo
+                  src={mobileHeroSrc}
+                  fit="contain"
+                  className="h-full w-full"
                   onError={() => setMediaOk(false)}
-                >
-                  <source src={mobileHeroSrc} type="video/mp4" />
-                </video>
+                />
               ) : (
                 <img
                   src={mediaSrc}
