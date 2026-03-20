@@ -9,7 +9,7 @@ export const text = {
 
     heroTitle: 'Deja tu facturación en automático.',
     heroDescription:
-      'Relvo es la infraestructura de ingresos con IA que modela cómo cobras, factura, gestiona la cobranza y concilia con tu banco. Todo en una sola plataforma.',
+      'Relvo toma tus contratos con pricing complejo — por uso, hitos o performance — y automatiza todo lo que viene después: reconocimiento, facturación y cobranza. Una sola fuente de verdad, desde el contrato hasta el cash.',
 
     heroGifAlt: 'Vista del producto (GIF)',
 
