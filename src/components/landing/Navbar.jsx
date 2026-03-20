@@ -4,7 +4,7 @@ export const Navbar = ({ t }) => {
       <nav className="nav-shell mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
         <a
           href="#inicio"
-          className="rounded-[var(--radius-sm)] px-2 py-1 font-display text-sm font-semibold tracking-[-0.01em] text-[var(--text-main)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:text-base"
+          className="rounded-[var(--radius-sm)] px-2 py-1 font-display text-base font-semibold tracking-[-0.01em] text-[var(--text-main)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:text-lg"
         >
           Relvo
         </a>

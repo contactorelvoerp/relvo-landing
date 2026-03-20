@@ -7,9 +7,9 @@ export const text = {
       { label: 'Demos', href: '#demos' },
     ],
 
-    heroTitle: 'Deja tu facturación en automático.',
+    heroTitle: 'Tu pricing, bien ejecutado.',
     heroDescription:
-      'Relvo toma tus contratos con pricing complejo — por uso, hitos o performance — y automatiza todo lo que viene después: reconocimiento, facturación y cobranza. Una sola fuente de verdad, desde el contrato hasta el cash.',
+      'Relvo toma lo que negociaste con cada cliente y automatiza lo que viene después: facturación, recaudación y conciliación. Del cierre comercial a la plata en tu cuenta, más rápido.',
 
     heroGifAlt: 'Vista del producto (GIF)',
 
@@ -35,7 +35,7 @@ export const text = {
       {
         title: 'Calcula y factura automáticamente.',
         description:
-          'Relvo emite facuras en base al consumo, se conecta a tu sistema, sin intervención huamna, sin errores.',
+          'Relvo emite facuras en base al consumo, se conecta a tu sistema, sin intervención humana, sin errores.',
         imageSide: 'right',
         imageSrc: '/Feature%203.png',
         imageAlt: 'Calcula y factura automáticamente',
