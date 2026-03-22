@@ -1,5 +1,60 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+// ─── Native video (mobile MP4) ───────────────────────────────────────────────
+
+export const NativeVideo = ({ src, fit = 'cover', className = '', onError }) => {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const v = ref.current
+    if (!v) return
+
+    const tryPlay = () => {
+      if (!v.paused) return
+      v.play().catch(() => {})
+    }
+
+    // Atributo requerido por Safari/iOS antiguo
+    v.setAttribute('webkit-playsinline', '')
+    tryPlay()
+    v.addEventListener('loadeddata', tryPlay)
+    v.addEventListener('canplay', tryPlay)
+    const onVisibility = () => { if (!document.hidden) tryPlay() }
+    document.addEventListener('visibilitychange', onVisibility)
+
+    const observer = new IntersectionObserver(
+      (entries) => { if (entries[0]?.isIntersecting) tryPlay() },
+      { threshold: 0.1 }
+    )
+    observer.observe(v)
+
+    return () => {
+      v.removeEventListener('loadeddata', tryPlay)
+      v.removeEventListener('canplay', tryPlay)
+      document.removeEventListener('visibilitychange', onVisibility)
+      observer.disconnect()
+    }
+  }, [src])
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      autoPlay
+      muted
+      loop
+      playsInline
+      disablePictureInPicture
+      disableRemotePlayback
+      className={`hero-video ${className}`}
+      style={{ objectFit: fit, pointerEvents: 'none' }}
+      onError={onError}
+    />
+  )
+}
+
+// ─── Canvas video (desktop WebM con alpha) ───────────────────────────────────
+
 function createVideo(src) {
   const v = document.createElement('video')
   v.src = src
@@ -18,8 +73,6 @@ function createVideo(src) {
   v.disablePictureInPicture = true
   v.disableRemotePlayback = true
 
-  // iOS/Safari no procesa ni dispara canplay en elementos con display:none.
-  // Posicionamos off-screen para que el browser cargue y procese el video.
   Object.assign(v.style, {
     position: 'fixed',
     top: '-9999px',
@@ -51,70 +104,7 @@ function drawFit(ctx, video, width, height, topCropPx = 0, fit = 'cover') {
   ctx.drawImage(video, dx, dy, dw, dh)
 }
 
-export const HeroCanvasVideo = ({
-  src,
-  topCropPx = 0,
-  fit = 'cover',
-  backgroundColor = '',
-  className = '',
-  onError,
-  native = false,
-}) => {
-  // En mobile usamos MP4 sin alpha — un <video> nativo en el DOM es suficiente
-  // y es el único enfoque que autoplay garantizado en iOS/Android.
-  const nativeRef = useRef(null)
-
-  useEffect(() => {
-    if (!native) return
-    const v = nativeRef.current
-    if (!v) return
-
-    const tryPlay = () => {
-      if (!v.paused) return
-      v.play().catch(() => {})
-    }
-
-    // Intenta play inmediato
-    tryPlay()
-
-    // Retry al cargar datos, al entrar en viewport y al volver a la pestaña
-    v.addEventListener('loadeddata', tryPlay)
-    v.addEventListener('canplay', tryPlay)
-    const onVisibility = () => { if (!document.hidden) tryPlay() }
-    document.addEventListener('visibilitychange', onVisibility)
-
-    const observer = new IntersectionObserver(
-      (entries) => { if (entries[0]?.isIntersecting) tryPlay() },
-      { threshold: 0.1 }
-    )
-    observer.observe(v)
-
-    return () => {
-      v.removeEventListener('loadeddata', tryPlay)
-      v.removeEventListener('canplay', tryPlay)
-      document.removeEventListener('visibilitychange', onVisibility)
-      observer.disconnect()
-    }
-  }, [native, src])
-
-  if (native) {
-    return (
-      <video
-        ref={nativeRef}
-        src={src}
-        autoPlay
-        muted
-        loop
-        playsInline
-        disablePictureInPicture
-        disableRemotePlayback
-        controls={false}
-        className={`hero-video ${className}`}
-        style={{ objectFit: fit }}
-        onError={onError}
-      />
-    )
-  }
+const CanvasVideo = ({ src, topCropPx = 0, fit = 'cover', backgroundColor = '', className = '', onError }) => {
   const canvasRef = useRef(null)
   const [ok, setOk] = useState(true)
   const key = useMemo(() => String(src || ''), [src])
@@ -140,21 +130,15 @@ export const HeroCanvasVideo = ({
     document.body.appendChild(video)
 
     const handleEnded = () => {
-      try {
-        video.currentTime = 0
-      } catch {
-        // ignore
-      }
+      try { video.currentTime = 0 } catch { /* ignore */ }
       video.play().catch(() => {})
     }
-
     video.addEventListener('ended', handleEnded)
 
     let rafId = 0
     let resizeObserver
     let viewportObserver
     let destroyed = false
-    let cancelVfc = null
 
     const tryPlay = () => {
       if (destroyed || !video.paused) return
@@ -194,20 +178,14 @@ export const HeroCanvasVideo = ({
           }
           const crop = Math.max(0, Number(topCropPx) || 0) * (dprRef.current || 1)
           drawFit(ctx, video, w, h, crop, fit)
-        } catch {
-          // ignore transient decode/draw errors
-        }
+        } catch { /* ignore */ }
       }
     }
 
     const start = async () => {
       try {
         await new Promise((resolve, reject) => {
-          // Video ya cargado desde caché — resolver inmediatamente sin esperar el evento.
-          if (video.readyState >= 3) {
-            resolve()
-            return
-          }
+          if (video.readyState >= 3) { resolve(); return }
 
           let settled = false
           let timeoutId
@@ -224,12 +202,9 @@ export const HeroCanvasVideo = ({
 
           const onReady = settle(resolve)
           const onErr = settle(reject)
-
-          // Fallback por si canplay/loadeddata no disparan (algunos browsers mobile).
           timeoutId = setTimeout(settle(resolve), 5000)
 
           video.addEventListener('canplay', onReady, { once: true })
-          // loadeddata: alternativa a canplay, más confiable en Safari/Firefox mobile.
           video.addEventListener('loadeddata', onReady, { once: true })
           video.addEventListener('error', onErr, { once: true })
         })
@@ -240,20 +215,14 @@ export const HeroCanvasVideo = ({
 
         await video.play().catch(() => {})
 
-        // IntersectionObserver: reintenta play cada vez que el canvas entra en viewport.
-        // Resuelve el rechazo silencioso de autoplay en mobile al primer scroll/interacción.
         viewportObserver = new IntersectionObserver(
-          (entries) => {
-            if (entries[0]?.isIntersecting) tryPlay()
-          },
+          (entries) => { if (entries[0]?.isIntersecting) tryPlay() },
           { threshold: 0.1 }
         )
         viewportObserver.observe(canvas)
 
-        // Reintenta play al volver a la pestaña (tab switch, lock screen, etc.)
         const onVisibility = () => { if (!document.hidden) tryPlay() }
         document.addEventListener('visibilitychange', onVisibility)
-        // Guardamos referencia para cleanup
         video._onVisibility = onVisibility
 
         const hasVfc = typeof video.requestVideoFrameCallback === 'function'
@@ -264,9 +233,6 @@ export const HeroCanvasVideo = ({
             video.requestVideoFrameCallback(loop)
           }
           video.requestVideoFrameCallback(loop)
-          cancelVfc = () => {
-            // destroyed flag detiene la recursión
-          }
           return
         }
 
@@ -285,47 +251,30 @@ export const HeroCanvasVideo = ({
 
     return () => {
       destroyed = true
+      try { window.cancelAnimationFrame(rafId) } catch { /* ignore */ }
+      try { resizeObserver?.disconnect() } catch { /* ignore */ }
+      try { viewportObserver?.disconnect() } catch { /* ignore */ }
       try {
-        window.cancelAnimationFrame(rafId)
-      } catch {
-        // ignore
-      }
-      try {
-        cancelVfc?.()
-      } catch {
-        // ignore
-      }
-      try {
-        resizeObserver?.disconnect()
-      } catch {
-        // ignore
-      }
-      try {
-        viewportObserver?.disconnect()
-      } catch {
-        // ignore
-      }
-      try {
-        if (video._onVisibility) {
+        if (video._onVisibility)
           document.removeEventListener('visibilitychange', video._onVisibility)
-        }
-      } catch {
-        // ignore
-      }
+      } catch { /* ignore */ }
       try {
         video.removeEventListener('ended', handleEnded)
         video.pause()
-      } catch {
-        // ignore
-      }
-      try {
-        video.remove()
-      } catch {
-        // ignore
-      }
+      } catch { /* ignore */ }
+      try { video.remove() } catch { /* ignore */ }
     }
   }, [ok, onError, src, key, topCropPx, fit])
 
   if (!ok) return null
   return <canvas ref={canvasRef} className={className} />
+}
+
+// ─── Exported component ───────────────────────────────────────────────────────
+
+export const HeroCanvasVideo = ({ src, topCropPx = 0, fit = 'cover', backgroundColor = '', className = '', onError, native = false }) => {
+  if (native) {
+    return <NativeVideo src={src} fit={fit} className={className} onError={onError} />
+  }
+  return <CanvasVideo src={src} topCropPx={topCropPx} fit={fit} backgroundColor={backgroundColor} className={className} onError={onError} />
 }
