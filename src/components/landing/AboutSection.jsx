@@ -54,6 +54,7 @@ export const AboutSection = ({ t }) => {
                       }
                       fit={useMobileLayout ? 'cover' : 'contain'}
                       topCropPx={useMobileLayout ? 14 : 0}
+                      native={useMobileLayout}
                       backgroundColor=""
                       className="pointer-events-none absolute inset-0 h-full w-full"
                     />

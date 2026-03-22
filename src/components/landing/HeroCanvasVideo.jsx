@@ -58,7 +58,26 @@ export const HeroCanvasVideo = ({
   backgroundColor = '',
   className = '',
   onError,
+  native = false,
 }) => {
+  // En mobile usamos MP4 sin alpha — un <video> nativo en el DOM es suficiente
+  // y es el único enfoque que autoplay garantizado en iOS/Android.
+  if (native) {
+    return (
+      <video
+        src={src}
+        autoPlay
+        muted
+        loop
+        playsInline
+        disablePictureInPicture
+        disableRemotePlayback
+        className={className}
+        style={{ objectFit: fit }}
+        onError={onError}
+      />
+    )
+  }
   const canvasRef = useRef(null)
   const [ok, setOk] = useState(true)
   const key = useMemo(() => String(src || ''), [src])
