@@ -1,0 +1,40 @@
+¿Qué es Relvo?
+
+Relvo es un sistema AI-native que transforma contratos complejos de revenue en una fuente única de verdad financiera.
+
+El problema:
+Empresas B2B con modelos de pricing complejos (SaaS, outsourcing, consultoría, etc.) tienen su revenue fragmentado entre contratos, métricas operativas, facturación y contabilidad.
+Esto genera:
+- Cierres manuales
+- Revenue poco confiable
+- Falta de visibilidad real de CxC y cashflow
+- Imposibilidad de escalar sin fricción operativa
+
+El usuario objetivo:
+CFOs y equipos financieros de empresas B2B en crecimiento (LATAM), con revenue recurrente o variable, donde el reconocimiento depende de uso, hitos o performance. :contentReference[oaicite:0]{index=0}
+
+Qué hace Relvo:
+1. Convierte contratos en reglas estructuradas (pricing + billable metrics).
+2. Conecta esas reglas con datos operativos reales.
+3. Automatiza:
+   - Revenue recognition
+   - Facturación
+   - Cuentas por cobrar
+4. Genera un sistema consistente y trazable desde contrato → revenue → cash.
+
+Resultado:
+- Revenue gestionable (no solo registrado)
+- Forecast confiable
+- Visibilidad en tiempo real de cobranza
+- Capacidad de optimizar pricing y revenue (A/B testing, iteración)
+
+Qué NO es:
+- No es un ERP tradicional
+- No es solo contabilidad
+- No es solo facturación
+- No es un dashboard
+
+Es:
+Un motor de revenue management basado en reglas + datos + AI que convierte el caos operativo en un sistema determinista y escalable.
+
+La web de Relvo es https://www.relvoerp.com/
