@@ -68,7 +68,7 @@ function App() {
                 <p className="mt-2 text-sm text-white/60">contacto@relvoerp.com</p>
               </div>
 
-              <div className="grid grid-cols-3 gap-8 text-sm">
+              <div className="grid grid-cols-2 gap-6 text-sm sm:grid-cols-3 sm:gap-8">
                 {footerColumns.map((column) => (
                   <div key={column.title} className="space-y-3">
                     <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/70">

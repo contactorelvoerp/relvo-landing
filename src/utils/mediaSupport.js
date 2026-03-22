@@ -1,7 +1,9 @@
 export const isMobileDevice = () => {
   if (typeof navigator === 'undefined') return false
   const ua = String(navigator.userAgent || '')
-  return /android|iphone|ipad|ipod|mobile|windows phone|webos|blackberry/i.test(ua)
+  if (/android|iphone|ipad|ipod|mobile|windows phone|webos|blackberry/i.test(ua)) return true
+  if (typeof window !== 'undefined' && window.innerWidth <= 768) return true
+  return false
 }
 
 export const canUseAlphaCanvasVideo = () => {

@@ -10,7 +10,7 @@ export const SocialProofSection = ({ t }) => {
           <h2 className="mx-auto mb-6 max-w-4xl text-center text-[clamp(1.75rem,2.35vw,2.35rem)] font-semibold leading-[1.14] tracking-[-0.035em] text-[var(--text-main)] sm:mb-8">
             {t.benefitsTitle}
           </h2>
-          <div className="rounded-[var(--radius-xl)] border border-black/[0.06] bg-[#776bd8] px-6 py-8 sm:px-10 sm:py-10">
+          <div className="rounded-[var(--radius-xl)] border border-white/[0.06] bg-[var(--surface-dark)] px-6 py-8 sm:px-10 sm:py-10">
             <div className="grid items-stretch gap-4 md:grid-cols-3">
               {benefits.map((benefit, idx) => (
                 <div

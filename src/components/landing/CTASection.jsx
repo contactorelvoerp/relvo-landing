@@ -119,7 +119,7 @@ export const CTASection = ({ ctaHref, t }) => {
                 <span className="relative inline-block px-1">
                   <span
                     aria-hidden="true"
-                    className="absolute inset-x-0 bottom-[0.12em] h-[0.52em] rounded-[2px] bg-[#f5bba2]"
+                    className="absolute inset-x-0 bottom-[0.12em] h-[0.52em] rounded-[2px] bg-[var(--brand-warm)]"
                   />
                   <span className="relative z-10">{highlight}</span>
                 </span>

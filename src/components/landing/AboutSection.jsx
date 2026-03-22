@@ -76,7 +76,7 @@ export const AboutSection = ({ t }) => {
               <h3 className="max-w-[16ch] font-display text-[clamp(1.75rem,2.35vw,2.35rem)] font-bold leading-[1.06] tracking-[-0.04em] text-[var(--text-main)]">
                 {feature.title}
               </h3>
-              <p className="mt-4 whitespace-pre-line text-[16px] leading-[1.4] tracking-[-0.01em] text-[#777777] sm:text-[18px]">
+              <p className="mt-4 whitespace-pre-line text-[16px] leading-[1.4] tracking-[-0.01em] text-[var(--text-soft)] sm:text-[18px]">
                 {feature.description}
               </p>
             </div>

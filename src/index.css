@@ -59,23 +59,37 @@
 @tailwind utilities;
 
 :root {
+  /* Surfaces */
   --bg-main: #ffffff;
   --surface-card: #ffffff;
   --surface-panel: #ffffff;
   --surface-subtle: #f6f7f8;
+  --surface-dark: #0f1115;
 
+  /* Text — light surfaces */
   --text-main: #0f1115;
-  --text-muted: rgba(15, 17, 21, 0.74);
-  --text-soft: rgba(15, 17, 21, 0.54);
+  --text-muted: rgba(15, 17, 21, 0.68);
+  --text-soft: rgba(15, 17, 21, 0.48);
 
-  --border-subtle: rgba(15, 17, 21, 0.06);
+  /* Text — dark surfaces */
+  --text-on-dark: rgba(255, 255, 255, 0.90);
+  --text-on-dark-muted: rgba(255, 255, 255, 0.55);
+
+  /* Borders — light surfaces */
+  --border-subtle: rgba(15, 17, 21, 0.05);
   --border-default: rgba(15, 17, 21, 0.08);
-  --border-strong: rgba(15, 17, 21, 0.12);
+  --border-strong: rgba(15, 17, 21, 0.14);
 
+  /* Borders — dark surfaces */
+  --border-on-dark: rgba(255, 255, 255, 0.08);
+
+  /* Brand */
   --focus-ring: rgba(37, 99, 235, 0.28);
   --brand-accent: #2563eb;
-  --brand-accent-soft: rgba(37, 99, 235, 0.1);
+  --brand-accent-soft: rgba(37, 99, 235, 0.08);
+  --brand-warm: #f5bba2;
 
+  /* Radii */
   --radius-sm: 0.75rem;
   --radius-md: 0.95rem;
   --radius-lg: 1.2rem;
@@ -104,7 +118,7 @@ body {
 }
 
 ::selection {
-  background: #f5bba2;
+  background: var(--brand-warm);
 }
 
 a {
