@@ -4,6 +4,7 @@ function createVideo(src) {
   const v = document.createElement('video')
   v.src = src
   v.autoplay = true
+  v.setAttribute('autoplay', '')
   v.controls = false
   v.removeAttribute('controls')
   v.muted = true
@@ -18,7 +19,7 @@ function createVideo(src) {
   v.disableRemotePlayback = true
 
   // iOS/Safari no procesa ni dispara canplay en elementos con display:none.
-  // Posicionamos off-screen en lugar de ocultarlo para que el browser cargue el video.
+  // Posicionamos off-screen para que el browser cargue y procese el video.
   Object.assign(v.style, {
     position: 'fixed',
     top: '-9999px',
@@ -95,8 +96,14 @@ export const HeroCanvasVideo = ({
 
     let rafId = 0
     let resizeObserver
+    let viewportObserver
     let destroyed = false
     let cancelVfc = null
+
+    const tryPlay = () => {
+      if (destroyed || !video.paused) return
+      video.play().catch(() => {})
+    }
 
     const fail = (e) => {
       if (destroyed) return
@@ -177,6 +184,22 @@ export const HeroCanvasVideo = ({
 
         await video.play().catch(() => {})
 
+        // IntersectionObserver: reintenta play cada vez que el canvas entra en viewport.
+        // Resuelve el rechazo silencioso de autoplay en mobile al primer scroll/interacción.
+        viewportObserver = new IntersectionObserver(
+          (entries) => {
+            if (entries[0]?.isIntersecting) tryPlay()
+          },
+          { threshold: 0.1 }
+        )
+        viewportObserver.observe(canvas)
+
+        // Reintenta play al volver a la pestaña (tab switch, lock screen, etc.)
+        const onVisibility = () => { if (!document.hidden) tryPlay() }
+        document.addEventListener('visibilitychange', onVisibility)
+        // Guardamos referencia para cleanup
+        video._onVisibility = onVisibility
+
         const hasVfc = typeof video.requestVideoFrameCallback === 'function'
         if (hasVfc) {
           const loop = () => {
@@ -218,6 +241,18 @@ export const HeroCanvasVideo = ({
       }
       try {
         resizeObserver?.disconnect()
+      } catch {
+        // ignore
+      }
+      try {
+        viewportObserver?.disconnect()
+      } catch {
+        // ignore
+      }
+      try {
+        if (video._onVisibility) {
+          document.removeEventListener('visibilitychange', video._onVisibility)
+        }
       } catch {
         // ignore
       }
