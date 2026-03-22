@@ -16,6 +16,19 @@ function createVideo(src) {
   v.preload = 'auto'
   v.disablePictureInPicture = true
   v.disableRemotePlayback = true
+
+  // iOS/Safari no procesa ni dispara canplay en elementos con display:none.
+  // Posicionamos off-screen en lugar de ocultarlo para que el browser cargue el video.
+  Object.assign(v.style, {
+    position: 'fixed',
+    top: '-9999px',
+    left: '-9999px',
+    width: '1px',
+    height: '1px',
+    opacity: '0',
+    pointerEvents: 'none',
+  })
+
   return v
 }
 
@@ -67,8 +80,6 @@ export const HeroCanvasVideo = ({
 
     const video = createVideo(src)
     video.className = 'hero-video'
-    video.style.display = 'none'
-    video.style.pointerEvents = 'none'
     document.body.appendChild(video)
 
     const handleEnded = () => {
@@ -129,19 +140,34 @@ export const HeroCanvasVideo = ({
     const start = async () => {
       try {
         await new Promise((resolve, reject) => {
-          const onCanPlay = () => {
-            cleanup()
+          // Video ya cargado desde caché — resolver inmediatamente sin esperar el evento.
+          if (video.readyState >= 3) {
             resolve()
+            return
           }
-          const onErr = (err) => {
-            cleanup()
-            reject(err)
-          }
-          const cleanup = () => {
-            video.removeEventListener('canplay', onCanPlay)
+
+          let settled = false
+          let timeoutId
+
+          const settle = (fn) => (...args) => {
+            if (settled) return
+            settled = true
+            clearTimeout(timeoutId)
+            video.removeEventListener('canplay', onReady)
+            video.removeEventListener('loadeddata', onReady)
             video.removeEventListener('error', onErr)
+            fn(...args)
           }
-          video.addEventListener('canplay', onCanPlay, { once: true })
+
+          const onReady = settle(resolve)
+          const onErr = settle(reject)
+
+          // Fallback por si canplay/loadeddata no disparan (algunos browsers mobile).
+          timeoutId = setTimeout(settle(resolve), 5000)
+
+          video.addEventListener('canplay', onReady, { once: true })
+          // loadeddata: alternativa a canplay, más confiable en Safari/Firefox mobile.
+          video.addEventListener('loadeddata', onReady, { once: true })
           video.addEventListener('error', onErr, { once: true })
         })
 
@@ -160,7 +186,7 @@ export const HeroCanvasVideo = ({
           }
           video.requestVideoFrameCallback(loop)
           cancelVfc = () => {
-            // no direct cancel API; destroyed flag stops recursion
+            // destroyed flag detiene la recursión
           }
           return
         }
@@ -212,4 +238,3 @@ export const HeroCanvasVideo = ({
   if (!ok) return null
   return <canvas ref={canvasRef} className={className} />
 }
-
