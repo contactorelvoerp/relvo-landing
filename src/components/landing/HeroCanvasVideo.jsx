@@ -62,9 +62,45 @@ export const HeroCanvasVideo = ({
 }) => {
   // En mobile usamos MP4 sin alpha — un <video> nativo en el DOM es suficiente
   // y es el único enfoque que autoplay garantizado en iOS/Android.
+  const nativeRef = useRef(null)
+
+  useEffect(() => {
+    if (!native) return
+    const v = nativeRef.current
+    if (!v) return
+
+    const tryPlay = () => {
+      if (!v.paused) return
+      v.play().catch(() => {})
+    }
+
+    // Intenta play inmediato
+    tryPlay()
+
+    // Retry al cargar datos, al entrar en viewport y al volver a la pestaña
+    v.addEventListener('loadeddata', tryPlay)
+    v.addEventListener('canplay', tryPlay)
+    const onVisibility = () => { if (!document.hidden) tryPlay() }
+    document.addEventListener('visibilitychange', onVisibility)
+
+    const observer = new IntersectionObserver(
+      (entries) => { if (entries[0]?.isIntersecting) tryPlay() },
+      { threshold: 0.1 }
+    )
+    observer.observe(v)
+
+    return () => {
+      v.removeEventListener('loadeddata', tryPlay)
+      v.removeEventListener('canplay', tryPlay)
+      document.removeEventListener('visibilitychange', onVisibility)
+      observer.disconnect()
+    }
+  }, [native, src])
+
   if (native) {
     return (
       <video
+        ref={nativeRef}
         src={src}
         autoPlay
         muted
@@ -72,7 +108,8 @@ export const HeroCanvasVideo = ({
         playsInline
         disablePictureInPicture
         disableRemotePlayback
-        className={className}
+        controls={false}
+        className={`hero-video ${className}`}
         style={{ objectFit: fit }}
         onError={onError}
       />
