@@ -1,5 +1,6 @@
 import { Reveal } from './Reveal'
 import { useEffect, useRef, useState } from 'react'
+import { trackScheduleDemo, trackLeadCapture } from '../../utils/analytics'
 
 const LEADS_STORAGE_KEY = 'relvo_leads_v1'
 
@@ -104,6 +105,7 @@ export const CTASection = ({ ctaHref, t }) => {
     })
 
     saveStoredLeads(nextLeads)
+    trackLeadCapture(normalizedEmail)
     setFeedback(t.ctaEmailSaved)
     setEmail('')
   }
@@ -135,6 +137,7 @@ export const CTASection = ({ ctaHref, t }) => {
               href={ctaHref}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackScheduleDemo('cta_section')}
               className="inline-flex h-11 items-center justify-center rounded-[var(--radius-button)] bg-[var(--text-main)] px-5 text-sm font-medium text-white shadow-[0_18px_40px_rgba(16,16,14,0.12)] transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
             >
               {t.ctaScheduleText}

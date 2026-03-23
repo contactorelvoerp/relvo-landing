@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { trackScheduleDemo } from '../../utils/analytics'
 
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
 
@@ -37,6 +38,7 @@ export const Navbar = ({ t }) => {
               href={calendlyHref}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackScheduleDemo('navbar')}
               className="inline-flex h-9 items-center justify-center rounded-[var(--radius-button)] bg-[var(--text-main)] px-4 text-xs font-medium text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:px-5 sm:text-sm"
             >
               {t.navCta}
