@@ -73,7 +73,7 @@ export const AboutSection = ({ t }) => {
           )
 
           const copy = (
-            <div className="mx-auto flex w-full max-w-[32ch] flex-col justify-center md:max-w-[30ch] lg:max-w-[32ch]">
+            <div className={`flex w-full flex-col justify-center ${useMobileLayout ? '' : 'mx-auto max-w-[32ch] md:max-w-[30ch] lg:max-w-[32ch]'}`}>
               <h3 className="max-w-[16ch] font-display text-[clamp(1.75rem,2.35vw,2.35rem)] font-bold leading-[1.06] tracking-[-0.04em] text-[var(--text-main)]">
                 {feature.title}
               </h3>
@@ -87,10 +87,23 @@ export const AboutSection = ({ t }) => {
             <Reveal
               key={`${idx}-${feature.title}`}
               delayMs={idx * 70}
-              className="grid items-start gap-10 md:grid-cols-2 md:items-center md:gap-12 lg:gap-16"
+              className={
+                useMobileLayout
+                  ? ''
+                  : 'grid items-start gap-10 md:grid-cols-2 md:items-center md:gap-12 lg:gap-16'
+              }
             >
-              <div className={imageLeft ? '' : 'md:order-2'}>{media}</div>
-              <div className={imageLeft ? '' : 'md:order-1'}>{copy}</div>
+              {useMobileLayout ? (
+                <div className="overflow-hidden rounded-[var(--radius-2xl)] bg-[var(--surface-subtle)] shadow-[0_12px_40px_rgba(15,17,21,0.04)]">
+                  <div className="px-5 pt-5 pb-4">{copy}</div>
+                  {media}
+                </div>
+              ) : (
+                <>
+                  <div className={imageLeft ? '' : 'md:order-2'}>{media}</div>
+                  <div className={imageLeft ? '' : 'md:order-1'}>{copy}</div>
+                </>
+              )}
             </Reveal>
           )
         })}
