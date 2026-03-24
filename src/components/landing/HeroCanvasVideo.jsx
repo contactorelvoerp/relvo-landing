@@ -14,7 +14,10 @@ export const NativeVideo = ({ src, fit = 'cover', className = '', onError }) => 
       v.play().catch(() => {})
     }
 
-    // Atributo requerido por Safari/iOS antiguo
+    // React no siempre sincroniza el atributo muted al DOM — setearlo imperativo
+    // es necesario para que autoplay funcione en browsers móviles
+    v.muted = true
+    v.setAttribute('muted', '')
     v.setAttribute('webkit-playsinline', '')
     tryPlay()
     v.addEventListener('loadeddata', tryPlay)
@@ -36,6 +39,11 @@ export const NativeVideo = ({ src, fit = 'cover', className = '', onError }) => 
     }
   }, [src])
 
+  const handleTap = () => {
+    const v = ref.current
+    if (v && v.paused) v.play().catch(() => {})
+  }
+
   return (
     <video
       ref={ref}
@@ -44,12 +52,14 @@ export const NativeVideo = ({ src, fit = 'cover', className = '', onError }) => 
       muted
       loop
       playsInline
+      preload="auto"
       controls={false}
       controlsList="nodownload noplaybackrate noremoteplayback nofullscreen"
       disablePictureInPicture
       disableRemotePlayback
       className={`hero-video ${className}`}
-      style={{ objectFit: fit, pointerEvents: 'none' }}
+      style={{ objectFit: fit }}
+      onClick={handleTap}
       onError={onError}
     />
   )

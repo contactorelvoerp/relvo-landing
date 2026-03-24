@@ -42,22 +42,24 @@ function App() {
                   {hasBridgeToHighlight ? (
                     <>
                       {bridgeTo.slice(0, bridgeToHighlightIndex)}
-                      <span className="relative inline-block px-1">
-                        <span
-                          aria-hidden="true"
-                          className="absolute inset-x-0 bottom-[0.12em] h-[0.52em] rounded-[2px] bg-[var(--brand-warm)]"
-                        />
-                        <span className="relative z-10">
-                          {hasBridgeToEmphasis ? (
-                            <>
-                              {bridgeToHighlight.slice(0, bridgeToEmphasisIndex)}
-                                  <em className="font-cursive-emphasis">{bridgeToEmphasis}</em>
-                              {bridgeToHighlight.slice(bridgeToEmphasisIndex + bridgeToEmphasis.length)}
-                            </>
-                          ) : (
-                            bridgeToHighlight
-                          )}
-                        </span>
+                      <span
+                        className="px-[0.18em]"
+                        style={{
+                          background: 'linear-gradient(transparent 48%, var(--brand-warm) 48%)',
+                          WebkitBoxDecorationBreak: 'clone',
+                          boxDecorationBreak: 'clone',
+                          borderRadius: '2px',
+                        }}
+                      >
+                        {hasBridgeToEmphasis ? (
+                          <>
+                            {bridgeToHighlight.slice(0, bridgeToEmphasisIndex)}
+                            <em className="font-cursive-emphasis">{bridgeToEmphasis}</em>
+                            {bridgeToHighlight.slice(bridgeToEmphasisIndex + bridgeToEmphasis.length)}
+                          </>
+                        ) : (
+                          bridgeToHighlight
+                        )}
                       </span>
                       {bridgeTo.slice(bridgeToHighlightIndex + bridgeToHighlight.length)}
                     </>
