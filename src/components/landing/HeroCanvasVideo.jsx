@@ -8,9 +8,11 @@ export const NativeVideo = ({ src, fit = 'cover', className = '', onError }) => 
   useEffect(() => {
     const v = ref.current
     if (!v) return
+    let destroyed = false
+    let retryTimer1, retryTimer2
 
     const tryPlay = () => {
-      if (!v.paused) return
+      if (destroyed || !v.paused) return
       v.play().catch(() => {})
     }
 
@@ -19,9 +21,17 @@ export const NativeVideo = ({ src, fit = 'cover', className = '', onError }) => 
     v.muted = true
     v.setAttribute('muted', '')
     v.setAttribute('webkit-playsinline', '')
+
     tryPlay()
+    // Retries diferidos por si el primer intento cae antes de que el video esté listo
+    retryTimer1 = setTimeout(tryPlay, 300)
+    retryTimer2 = setTimeout(tryPlay, 1000)
+
     v.addEventListener('loadeddata', tryPlay)
     v.addEventListener('canplay', tryPlay)
+    // Si el video se pausa por cualquier razón (browser policy, background, etc.), reintentar
+    v.addEventListener('pause', tryPlay)
+
     const onVisibility = () => { if (!document.hidden) tryPlay() }
     document.addEventListener('visibilitychange', onVisibility)
 
@@ -32,8 +42,12 @@ export const NativeVideo = ({ src, fit = 'cover', className = '', onError }) => 
     observer.observe(v)
 
     return () => {
+      destroyed = true
+      clearTimeout(retryTimer1)
+      clearTimeout(retryTimer2)
       v.removeEventListener('loadeddata', tryPlay)
       v.removeEventListener('canplay', tryPlay)
+      v.removeEventListener('pause', tryPlay)
       document.removeEventListener('visibilitychange', onVisibility)
       observer.disconnect()
     }
