@@ -86,8 +86,11 @@ export const text = {
     ],
     benefitsTitle: '¿Qué ganas con Relvo?',
     bridgeFrom: 'De Excel + apps desconectadas',
-    bridgeTo: 'a un sistema único de ingresos.',
-    bridgeSupport: 'Contrato comercial, facturación, recaudación y conciliación en el mismo flujo.\nMultiempresa y multimoneda.',
+    bridgeTo: 'a un sistema único de ingresos orquestado por y para agentes de IA.',
+    bridgeToHighlight: 'orquestado por y para agentes de IA.',
+    bridgeToEmphasis: 'por y para',
+    bridgeSupport:
+      'Diseñado para empresas B2B en crecimiento —SaaS, IA, consultoras, outsourcing y servicios— con modelos de precio que no caben en una planilla simple.',
     footerTagline: 'Infraestructura de ingresos con IA para B2B en LATAM',
 
     footerColumns: [
@@ -189,6 +192,8 @@ export const text = {
     benefitsTitle: 'What you gain with Relvo.',
     bridgeFrom: 'From disconnected spreadsheets and tools',
     bridgeTo: 'to one unified revenue system.',
+    bridgeToHighlight: '',
+    bridgeToEmphasis: '',
     bridgeSupport: 'Contract, billing, collections, and reconciliation in a single flow.',
     footerTagline: 'AI-powered revenue infrastructure for B2B in LATAM',
 

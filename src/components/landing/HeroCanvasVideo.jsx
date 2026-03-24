@@ -44,6 +44,8 @@ export const NativeVideo = ({ src, fit = 'cover', className = '', onError }) => 
       muted
       loop
       playsInline
+      controls={false}
+      controlsList="nodownload noplaybackrate noremoteplayback nofullscreen"
       disablePictureInPicture
       disableRemotePlayback
       className={`hero-video ${className}`}

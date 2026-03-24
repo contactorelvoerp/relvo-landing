@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { HeroCanvasVideo } from './HeroCanvasVideo'
 import { canUseAlphaCanvasVideo, isMobileDevice } from '../../utils/mediaSupport'
 
-export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
+const DESKTOP_HERO_SRC = '/Hero%20New.webm'
+const MOBILE_HERO_SRC = '/Hero%20new%20mobile.mov'
+
+export const HeroSection = ({ t, mediaSrc = DESKTOP_HERO_SRC }) => {
   const [mediaOk, setMediaOk] = useState(true)
   const showMedia = Boolean(mediaSrc) && mediaOk
   const supportsAlphaCanvas = canUseAlphaCanvasVideo()
   const useMobileLayout = isMobileDevice()
-  const mobileHeroSrc = '/Hero%20fondo%20blanco.mp4'
+  const mobileHeroSrc = MOBILE_HERO_SRC
 
   const lower = String(mediaSrc || '').toLowerCase()
   const isVideo =
@@ -88,8 +91,8 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
               </p>
             </div>
 
-            <div className="mt-0 -mx-6 w-auto sm:mt-9 sm:-mx-10">
-              <div className="aspect-video w-full">
+            <div className="mx-auto mt-6 w-full max-w-4xl sm:mt-8">
+              <div className="aspect-[16/7.2] w-full">
                 {showMedia ? (
                   isVideo ? (
                     <div className="relative h-full w-full">
@@ -118,7 +121,7 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
                         </>
                       ) : (
                         <HeroCanvasVideo
-                          src={mobileHeroSrc}
+                          src={mediaSrc}
                           fit="cover"
                           topCropPx={14}
                           className="absolute inset-0 h-full w-full"
