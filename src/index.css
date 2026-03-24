@@ -240,6 +240,13 @@ h3,
   min-width: 0;
 }
 
+.bg-hero {
+  background:
+    radial-gradient(ellipse 80% 70% at 5% 15%, rgba(37, 99, 235, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 65% at 92% 85%, rgba(37, 99, 235, 0.10) 0%, transparent 55%),
+    #0f1115;
+}
+
 @media (max-width: 1024px) {
   .hero-shell {
     min-height: auto;

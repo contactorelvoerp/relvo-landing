@@ -53,7 +53,7 @@ function App() {
 
       <footer className="bg-white pb-10 pt-16">
         <div className="section-shell">
-          <Reveal className="rounded-[var(--radius-2xl)] bg-black px-7 py-10 text-white shadow-[0_26px_60px_rgba(0,0,0,0.26)] sm:px-10 sm:py-12">
+          <Reveal className="bg-hero rounded-[var(--radius-2xl)] px-7 py-10 text-white shadow-[0_26px_60px_rgba(0,0,0,0.26)] sm:px-10 sm:py-12">
             <div className="grid gap-10 md:grid-cols-[1.2fr_1.8fr] md:items-start">
               <div>
                 <p className="font-display text-sm font-semibold tracking-[0.12em] text-white/90">

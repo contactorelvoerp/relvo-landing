@@ -7,9 +7,10 @@ export const text = {
       { label: 'Demos', href: '#demos' },
     ],
 
-    heroTitle: 'Tu pricing, bien ejecutado.',
+    heroBadge: 'Para empresas B2B',
+    heroTitle: 'Del cierre comercial al cobro, más rápido.',
     heroDescription:
-      'Relvo toma lo que negociaste con cada cliente y automatiza lo que viene después: facturación, recaudación y conciliación. Del cierre comercial a la plata en tu cuenta, más rápido.',
+      'Cuando tu negocio factura por uso, hitos o métricas de servicio, el camino del contrato al cobro es largo y manual. Relvo automatiza cada paso para acortar ese ciclo y liberar el flujo de caja que ya te pertenece.',
 
     heroGifAlt: 'Vista del producto (GIF)',
 

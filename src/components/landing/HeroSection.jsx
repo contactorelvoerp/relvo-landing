@@ -22,10 +22,15 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
         {useMobileLayout ? (
           <>
             <div className="mx-auto mb-5 max-w-3xl text-center">
+              {t.heroBadge && (
+                <div className="mb-4 flex justify-center">
+                  <span className="eyebrow-compact">{t.heroBadge}</span>
+                </div>
+              )}
               <h1 className="font-display text-[clamp(2rem,10.4vw,2.8rem)] font-semibold leading-[1.03] tracking-[-0.04em] text-[var(--text-main)]">
                 {t.heroTitle}
               </h1>
-              <p className="mt-4 whitespace-pre-line text-[22px] font-bold leading-[1] tracking-[-0.04em] text-[var(--text-soft)]">
+              <p className="mx-auto mt-4 max-w-[38ch] whitespace-pre-line text-[17px] font-medium leading-[1.45] tracking-[-0.02em] text-[var(--text-soft)]">
                 {t.heroDescription}
               </p>
             </div>
@@ -58,14 +63,27 @@ export const HeroSection = ({ t, mediaSrc = '/Video%20real%20v123.webm' }) => {
           </>
         ) : (
           <div
-            className="relative overflow-hidden rounded-[var(--radius-2xl)] bg-cover bg-center px-6 py-4 shadow-[0_10px_28px_rgba(16,16,14,0.08)] sm:px-10 sm:py-12"
-            style={{ backgroundImage: "url('/Fondo%20Hero.png')" }}
+            className="relative overflow-hidden rounded-[var(--radius-2xl)] px-6 py-4 shadow-[0_10px_28px_rgba(16,16,14,0.14)] sm:px-10 sm:py-12"
+            style={{
+              background:
+                'radial-gradient(ellipse 80% 70% at 5% 15%, rgba(37,99,235,0.22) 0%, transparent 60%), radial-gradient(ellipse 55% 65% at 92% 85%, rgba(37,99,235,0.10) 0%, transparent 55%), #0f1115',
+            }}
           >
             <div className="relative mx-auto max-w-3xl text-center">
+              {t.heroBadge && (
+                <div className="mb-4 flex justify-center">
+                  <span
+                    className="eyebrow-compact"
+                    style={{ color: 'rgba(255,255,255,0.50)', ['--brand-accent']: 'rgba(255,255,255,0.45)' }}
+                  >
+                    {t.heroBadge}
+                  </span>
+                </div>
+              )}
               <h1 className="font-display text-[clamp(2rem,4.1vw,3.05rem)] font-semibold leading-[1.03] tracking-[-0.04em] text-white">
                 {t.heroTitle}
               </h1>
-              <p className="mt-4 whitespace-pre-line text-[22px] font-bold leading-[1] tracking-[-0.04em] text-[#F2F4FF]">
+              <p className="mx-auto mt-4 max-w-[42ch] whitespace-pre-line text-[18px] font-medium leading-[1.45] tracking-[-0.02em] text-white/60">
                 {t.heroDescription}
               </p>
             </div>

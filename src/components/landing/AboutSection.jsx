@@ -26,12 +26,12 @@ export const AboutSection = ({ t }) => {
           const media = (
             <div
               className={`overflow-hidden rounded-[var(--radius-xl)] ${
-                mobileVideoOnly ? 'bg-transparent' : 'bg-black/[0.03]'
+                mobileVideoOnly ? 'bg-transparent' : 'bg-[var(--surface-subtle)]'
               }`}
             >
               <div className={`w-full ${aspectClass}`}>
                 <div className="relative h-full w-full">
-                  {feature.imageSrc && !mobileVideoOnly ? (
+                  {feature.imageSrc && !mobileVideoOnly && !feature.videoSrc ? (
                     <img
                       src={feature.imageSrc}
                       alt={feature.imageAlt ?? feature.title}
@@ -39,11 +39,7 @@ export const AboutSection = ({ t }) => {
                       loading="lazy"
                       draggable={false}
                     />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="h-20 w-20 rounded-[var(--radius-md)] bg-black/[0.05]" />
-                    </div>
-                  )}
+                  ) : null}
 
                   {feature.videoSrc ? (
                     <HeroCanvasVideo
