@@ -24,54 +24,44 @@ export const HeroSection = ({ t, mediaSrc = DESKTOP_HERO_SRC }) => {
       <div className="mx-auto max-w-7xl">
         {useMobileLayout ? (
           <div
-            className="relative overflow-hidden rounded-[var(--radius-2xl)] px-6 py-10 shadow-[0_10px_28px_rgba(16,16,14,0.14)]"
+            className="relative overflow-hidden rounded-[var(--radius-2xl)] px-6 py-10 shadow-[0_10px_28px_rgba(61,61,61,0.10)]"
             style={{
               background:
-                'radial-gradient(ellipse 80% 70% at 5% 15%, rgba(37,99,235,0.22) 0%, transparent 60%), radial-gradient(ellipse 55% 65% at 92% 85%, rgba(37,99,235,0.10) 0%, transparent 55%), #0f1115',
+                'linear-gradient(to top, rgba(200,255,92,0.80) 0%, rgba(255,212,154,0.75) 20%, #ffffff 40%)',
             }}
           >
             <div className="mx-auto max-w-3xl text-center">
               {t.heroBadge && (
                 <div className="mb-4 flex justify-center">
-                  <span
-                    className="eyebrow-compact"
-                    style={{ color: 'rgba(255,255,255,0.50)', ['--brand-accent']: 'rgba(255,255,255,0.45)' }}
-                  >
-                    {t.heroBadge}
-                  </span>
+                  <span className="eyebrow-compact">{t.heroBadge}</span>
                 </div>
               )}
-              <h1 className="font-display text-[clamp(2rem,10.4vw,2.8rem)] font-semibold leading-[1.03] tracking-[-0.04em] text-white">
+              <h1 className="font-display text-[clamp(2rem,10.4vw,2.8rem)] font-semibold leading-[1.03] tracking-[-0.04em] text-[var(--text-main)]">
                 {t.heroTitle}
               </h1>
-              <p className="mx-auto mt-4 max-w-[38ch] whitespace-pre-line text-[17px] font-medium leading-[1.45] tracking-[-0.02em] text-white/60">
+              <p className="mx-auto mt-4 max-w-[38ch] whitespace-pre-line text-[17px] font-medium leading-[1.45] tracking-[-0.02em] text-[var(--text-soft)]">
                 {t.heroDescription}
               </p>
             </div>
           </div>
         ) : (
           <div
-            className="relative overflow-hidden rounded-[var(--radius-2xl)] px-6 py-4 shadow-[0_10px_28px_rgba(16,16,14,0.14)] sm:px-10 sm:py-12"
+            className="relative overflow-hidden rounded-[var(--radius-2xl)] px-6 py-4 shadow-[0_10px_28px_rgba(61,61,61,0.10)] sm:px-10 sm:py-12"
             style={{
               background:
-                'radial-gradient(ellipse 80% 70% at 5% 15%, rgba(37,99,235,0.22) 0%, transparent 60%), radial-gradient(ellipse 55% 65% at 92% 85%, rgba(37,99,235,0.10) 0%, transparent 55%), #0f1115',
+                'linear-gradient(to top, rgba(200,255,92,0.80) 0%, rgba(255,212,154,0.75) 20%, #ffffff 40%)',
             }}
           >
             <div className="relative mx-auto max-w-3xl text-center">
               {t.heroBadge && (
                 <div className="mb-4 flex justify-center">
-                  <span
-                    className="eyebrow-compact"
-                    style={{ color: 'rgba(255,255,255,0.50)', ['--brand-accent']: 'rgba(255,255,255,0.45)' }}
-                  >
-                    {t.heroBadge}
-                  </span>
+                  <span className="eyebrow-compact">{t.heroBadge}</span>
                 </div>
               )}
-              <h1 className="font-display text-[clamp(2rem,4.1vw,3.05rem)] font-semibold leading-[1.03] tracking-[-0.04em] text-white">
+              <h1 className="font-display text-[clamp(2rem,4.1vw,3.05rem)] font-semibold leading-[1.03] tracking-[-0.04em] text-[var(--text-main)]">
                 {t.heroTitle}
               </h1>
-              <p className="mx-auto mt-4 max-w-[42ch] whitespace-pre-line text-[18px] font-medium leading-[1.45] tracking-[-0.02em] text-white/60">
+              <p className="mx-auto mt-4 max-w-[42ch] whitespace-pre-line text-[18px] font-medium leading-[1.45] tracking-[-0.02em] text-[var(--text-soft)]">
                 {t.heroDescription}
               </p>
             </div>

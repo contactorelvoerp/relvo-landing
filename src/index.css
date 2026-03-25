@@ -69,27 +69,29 @@
   --surface-dark: #0f1115;
 
   /* Text — light surfaces */
-  --text-main: #0f1115;
-  --text-muted: rgba(15, 17, 21, 0.68);
-  --text-soft: rgba(15, 17, 21, 0.48);
+  --text-main: #3d3d3d;
+  --text-muted: rgba(61, 61, 61, 0.70);
+  --text-soft: rgba(61, 61, 61, 0.50);
 
   /* Text — dark surfaces */
   --text-on-dark: rgba(255, 255, 255, 0.90);
   --text-on-dark-muted: rgba(255, 255, 255, 0.55);
 
   /* Borders — light surfaces */
-  --border-subtle: rgba(15, 17, 21, 0.05);
-  --border-default: rgba(15, 17, 21, 0.08);
-  --border-strong: rgba(15, 17, 21, 0.14);
+  --border-subtle: rgba(61, 61, 61, 0.05);
+  --border-default: rgba(61, 61, 61, 0.08);
+  --border-strong: rgba(61, 61, 61, 0.14);
 
   /* Borders — dark surfaces */
   --border-on-dark: rgba(255, 255, 255, 0.08);
 
   /* Brand */
-  --focus-ring: rgba(37, 99, 235, 0.28);
-  --brand-accent: #2563eb;
-  --brand-accent-soft: rgba(37, 99, 235, 0.08);
-  --brand-warm: #f5bba2;
+  --focus-ring: rgba(61, 61, 61, 0.22);
+  --brand-accent: #AADD00;
+  --brand-accent-soft: rgba(170, 221, 0, 0.18);
+  --brand-warm: #FFD49A;
+  --brand-lima: #C8FF5C;
+  --brand-damasco: #FFD49A;
 
   /* Radii */
   --radius-sm: 0.75rem;
@@ -252,10 +254,7 @@ h3,
 }
 
 .bg-hero {
-  background:
-    radial-gradient(ellipse 80% 70% at 5% 15%, rgba(37, 99, 235, 0.22) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 65% at 92% 85%, rgba(37, 99, 235, 0.10) 0%, transparent 55%),
-    #0f1115;
+  background: linear-gradient(to top, rgba(200, 255, 92, 0.80) 0%, rgba(255, 212, 154, 0.75) 20%, #ffffff 40%);
 }
 
 @media (max-width: 1024px) {

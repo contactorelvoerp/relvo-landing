@@ -88,34 +88,34 @@ function App() {
 
       <footer className="bg-white pb-10 pt-16">
         <div className="section-shell">
-          <Reveal className="bg-hero rounded-[var(--radius-2xl)] px-7 py-10 text-white shadow-[0_26px_60px_rgba(0,0,0,0.26)] sm:px-10 sm:py-12">
+          <Reveal className="bg-hero rounded-[var(--radius-2xl)] px-7 py-10 shadow-[0_20px_50px_rgba(61,61,61,0.10)] sm:px-10 sm:py-12">
             <div className="grid gap-10 md:grid-cols-[1.2fr_1.8fr] md:items-start">
               <div>
-                <p className="font-display text-sm font-semibold tracking-[0.12em] text-white/90">
+                <p className="font-display text-sm font-semibold tracking-[0.12em] text-[var(--text-main)]">
                   RELVO
                 </p>
-                <p className="mt-3 max-w-xs text-sm leading-6 text-white/70">
+                <p className="mt-3 max-w-xs text-sm leading-6 text-[var(--text-muted)]">
                   {t.footerTagline}
                 </p>
-                <p className="mt-3 text-sm leading-6 text-white/60">
+                <p className="mt-3 text-sm leading-6 text-[var(--text-soft)]">
                   © {new Date().getFullYear()} Relvo. {t.footerRights}
                 </p>
-                <p className="mt-2 text-sm text-white/60">contacto@relvoerp.com</p>
+                <p className="mt-2 text-sm text-[var(--text-soft)]">contacto@relvoerp.com</p>
               </div>
 
               <div className="grid grid-cols-2 gap-6 text-sm sm:grid-cols-3 sm:gap-8">
                 {footerColumns.map((column) => (
                   <div key={column.title} className="space-y-3">
-                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/70">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
                       {column.title}
                     </p>
-                    <div className="space-y-2 text-white/55">
+                    <div className="space-y-2 text-[var(--text-soft)]">
                       {column.links
                         ?.filter((link) => String(link?.label || '').trim().toLowerCase() !== 'link')
                         .map((link) => (
                         <a
                           key={`${column.title}-${link.label}`}
-                          className="block hover:text-white"
+                          className="block hover:text-[var(--text-main)]"
                           href={link.href}
                           target={link.external ? '_blank' : undefined}
                           rel={link.external ? 'noopener noreferrer' : undefined}
