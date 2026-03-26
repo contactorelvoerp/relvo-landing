@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { HeroSection } from './components/landing/HeroSection'
 import { AboutSection } from './components/landing/AboutSection'
 import { CTASection } from './components/landing/CTASection'
@@ -25,6 +26,11 @@ function App() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[var(--bg-main)] text-[var(--text-main)] antialiased">
+      <Helmet>
+        <title>Relvo — Revenue Management AI-native para empresas B2B en LATAM</title>
+        <meta name="description" content="Relvo automatiza el reconocimiento de ingresos, la facturación recurrente y las cuentas por cobrar para empresas B2B en LATAM. Convierte contratos complejos en una fuente única de verdad financiera." />
+        <link rel="canonical" href="https://www.relvoerp.com/" />
+      </Helmet>
       <Navbar t={t} />
 
       <main id="inicio" className="relative">

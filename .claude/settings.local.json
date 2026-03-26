@@ -5,7 +5,8 @@
       "mcp__stitch__generate_screen_from_text",
       "WebFetch(domain:www.relvoerp.com)",
       "mcp__stitch__list_screens",
-      "Bash(python -c \":*)"
+      "Bash(python -c \":*)",
+      "Bash(npm install:*)"
     ]
   }
 }
