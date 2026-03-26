@@ -3,7 +3,7 @@ import { trackScheduleDemo } from '../../utils/analytics'
 
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
 
-export const Navbar = ({ t }) => {
+export const Navbar = ({ t, navigate }) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   // Separa el último nav item (Demos/CTA) del resto
@@ -32,6 +32,14 @@ export const Navbar = ({ t }) => {
               {item.label}
             </a>
           ))}
+
+          <a
+            href="/login"
+            onClick={(e) => { e.preventDefault(); navigate?.('/login') }}
+            className="inline-flex h-9 cursor-pointer items-center justify-center rounded-[var(--radius-button)] border border-[var(--border-default)] bg-transparent px-4 text-xs font-medium text-[var(--text-main)] transition hover:bg-[var(--surface-subtle,#f6f7f8)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:px-5 sm:text-sm"
+          >
+            {t.navLogin ?? 'Login'}
+          </a>
 
           {ctaItem && (
             <a
@@ -80,6 +88,15 @@ export const Navbar = ({ t }) => {
               {item.label}
             </a>
           ))}
+          <div className="mt-2 border-t border-[var(--border-default)] pt-2">
+            <a
+              href="/login"
+              onClick={(e) => { e.preventDefault(); setMenuOpen(false); navigate?.('/login') }}
+              className="block cursor-pointer rounded-[var(--radius-sm)] px-2 py-2 text-sm font-medium text-[var(--text-muted)] transition hover:text-[var(--text-main)]"
+            >
+              {t.navLogin ?? 'Login'}
+            </a>
+          </div>
         </div>
       )}
     </header>

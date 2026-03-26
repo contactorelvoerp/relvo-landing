@@ -6,7 +6,8 @@
       "WebFetch(domain:www.relvoerp.com)",
       "mcp__stitch__list_screens",
       "Bash(python -c \":*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(python3 \"c:/Users/ricar/Desktop/RELVO/relvo-landing/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"saas coming soon minimal elegant\" --design-system -p \"Relvo Login\")"
     ]
   }
 }

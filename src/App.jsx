@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { HeroSection } from './components/landing/HeroSection'
 import { AboutSection } from './components/landing/AboutSection'
@@ -5,11 +6,27 @@ import { CTASection } from './components/landing/CTASection'
 import { Navbar } from './components/landing/Navbar'
 import { Reveal } from './components/landing/Reveal'
 import { SocialProofSection } from './components/landing/SocialProofSection'
+import { ComingSoon } from './pages/ComingSoon'
 import { text } from './i18n/text'
 
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
 
+function navigate(path) {
+  window.history.pushState({}, '', path)
+  window.dispatchEvent(new PopStateEvent('popstate'))
+}
+
 function App() {
+  const [pathname, setPathname] = useState(window.location.pathname)
+
+  useEffect(() => {
+    const handler = () => setPathname(window.location.pathname)
+    window.addEventListener('popstate', handler)
+    return () => window.removeEventListener('popstate', handler)
+  }, [])
+
+  if (pathname === '/login') return <ComingSoon navigate={navigate} />
+
   const lang = 'es'
   const t = text?.[lang] ?? text?.es ?? {}
   const bridgeTo = String(t.bridgeTo || '')
@@ -31,7 +48,7 @@ function App() {
         <meta name="description" content="Relvo acelera la recaudación de empresas B2B en LATAM automatizando desde el cierre comercial hasta el cobro con IA" />
         <link rel="canonical" href="https://relvoerp.com/" />
       </Helmet>
-      <Navbar t={t} />
+      <Navbar t={t} navigate={navigate} />
 
       <main id="inicio" className="relative">
         <section id="hero">
