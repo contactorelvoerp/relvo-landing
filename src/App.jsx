@@ -27,8 +27,8 @@ function App() {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[var(--bg-main)] text-[var(--text-main)] antialiased">
       <Helmet>
-        <title>Relvo — Infraestructura de Ingresos con IA para B2B en LATAM</title>
-        <meta name="description" content="Relvo automatiza el reconocimiento de ingresos, la facturación recurrente y las cuentas por cobrar para empresas B2B en LATAM. Convierte contratos complejos en una fuente única de verdad financiera." />
+        <title>Relvo | Infraestructura de Ingresos con IA para B2B en LATAM</title>
+        <meta name="description" content="Relvo acelera la recaudación de empresas B2B en LATAM automatizando desde el cierre comercial hasta el cobro con IA" />
         <link rel="canonical" href="https://relvoerp.com/" />
       </Helmet>
       <Navbar t={t} />
