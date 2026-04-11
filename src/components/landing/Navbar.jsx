@@ -12,7 +12,7 @@ export const Navbar = ({ t, navigate }) => {
   const regularItems = navItems.slice(0, -1)
 
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4 sm:px-6 sm:pt-5">
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 sm:pt-5">
       <nav className="nav-shell mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
         <a href="#inicio" className="px-2 py-1">
           <img src="/relvo-wordmark-dark.svg" alt="relvo" className="h-5 w-auto sm:h-6" />

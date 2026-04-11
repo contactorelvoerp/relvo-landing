@@ -1,54 +1,88 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * Hijacks scroll on page 1 (first viewport) to snap to page 2.
- * Once on page 2 or below, releases control — normal scrolling resumes.
- * Only snaps once per visit (scroll down from page 1 → page 2).
- * Scrolling back up past page 2 top re-engages the snap.
+ * Hijacks scroll across multiple snap pages.
+ * Each ref in the array is a snap target. Scrolling within the snap zone
+ * snaps to the nearest page boundary. Once past the last snap page,
+ * normal scrolling resumes.
+ *
+ * @param {React.RefObject[]} pageRefs - array of refs to snap-page elements
  */
-export function usePageSnap(targetRef) {
+export function usePageSnap(pageRefs) {
   const isSnapping = useRef(false)
-  const hasSnapped = useRef(false)
 
   useEffect(() => {
-    const target = targetRef?.current
-    if (!target) return
+    if (!pageRefs?.length) return
 
-    let lastScrollY = window.scrollY
+    const getPageTops = () =>
+      pageRefs.map((ref) => ref.current?.offsetTop ?? 0)
 
-    const handleWheel = (e) => {
-      const scrollY = window.scrollY
-      const viewportHeight = window.innerHeight
-      const targetTop = target.offsetTop
-
-      // Only hijack if we're in the first page (above page 2)
-      if (scrollY < targetTop - viewportHeight * 0.5 && e.deltaY > 0) {
-        // Scrolling down while on page 1
-        if (!isSnapping.current) {
-          e.preventDefault()
-          isSnapping.current = true
-          hasSnapped.current = true
-
-          target.scrollIntoView({ behavior: 'smooth' })
-
-          // Release after animation completes
-          setTimeout(() => {
-            isSnapping.current = false
-          }, 800)
-        } else {
-          e.preventDefault()
-        }
-      }
-
-      // Re-engage if scrolled back to very top
-      if (scrollY <= 10 && e.deltaY < 0) {
-        hasSnapped.current = false
-      }
-
-      lastScrollY = scrollY
+    const getLastSnapBottom = () => {
+      const last = pageRefs[pageRefs.length - 1]?.current
+      if (!last) return 0
+      return last.offsetTop + last.offsetHeight
     }
 
-    // Also handle touch for mobile
+    const findCurrentPage = (scrollY, pageTops) => {
+      const vh = window.innerHeight
+      for (let i = pageTops.length - 1; i >= 0; i--) {
+        if (scrollY >= pageTops[i] - vh * 0.3) return i
+      }
+      return 0
+    }
+
+    const snapTo = (target) => {
+      if (isSnapping.current) return
+      isSnapping.current = true
+      target.scrollIntoView({ behavior: 'smooth' })
+      setTimeout(() => {
+        isSnapping.current = false
+      }, 700)
+    }
+
+    const handleWheel = (e) => {
+      if (isSnapping.current) {
+        e.preventDefault()
+        return
+      }
+
+      const scrollY = window.scrollY
+      const lastSnapBottom = getLastSnapBottom()
+
+      // Past the snap zone — let normal scrolling happen
+      if (scrollY >= lastSnapBottom - window.innerHeight * 0.5 && e.deltaY > 0) {
+        return
+      }
+
+      const pageTops = getPageTops()
+      const currentPage = findCurrentPage(scrollY, pageTops)
+
+      if (e.deltaY > 0) {
+        // Scrolling down
+        const nextPage = currentPage + 1
+        if (nextPage < pageRefs.length && pageRefs[nextPage].current) {
+          e.preventDefault()
+          snapTo(pageRefs[nextPage].current)
+        } else if (nextPage >= pageRefs.length) {
+          // Snap zone ended, scroll freely
+          return
+        }
+      } else if (e.deltaY < 0) {
+        // Scrolling up
+        if (scrollY <= pageTops[0] + 10) return // already at top
+
+        // If we're in the snap zone, snap to previous page
+        if (scrollY < lastSnapBottom) {
+          const prevPage = Math.max(0, currentPage - 1)
+          if (pageRefs[prevPage].current) {
+            e.preventDefault()
+            snapTo(pageRefs[prevPage].current)
+          }
+        }
+      }
+    }
+
+    // Touch handling
     let touchStartY = 0
 
     const handleTouchStart = (e) => {
@@ -56,20 +90,39 @@ export function usePageSnap(targetRef) {
     }
 
     const handleTouchMove = (e) => {
+      if (isSnapping.current) {
+        e.preventDefault()
+        return
+      }
+
       const scrollY = window.scrollY
-      const viewportHeight = window.innerHeight
-      const targetTop = target.offsetTop
+      const lastSnapBottom = getLastSnapBottom()
       const deltaY = touchStartY - e.touches[0].clientY
 
-      if (scrollY < targetTop - viewportHeight * 0.5 && deltaY > 30) {
-        if (!isSnapping.current) {
-          e.preventDefault()
-          isSnapping.current = true
-          target.scrollIntoView({ behavior: 'smooth' })
-          setTimeout(() => {
-            isSnapping.current = false
-          }, 800)
+      if (scrollY >= lastSnapBottom - window.innerHeight * 0.5 && deltaY > 0) {
+        return
+      }
+
+      const pageTops = getPageTops()
+      const currentPage = findCurrentPage(scrollY, pageTops)
+
+      if (Math.abs(deltaY) > 30) {
+        if (deltaY > 0) {
+          const nextPage = currentPage + 1
+          if (nextPage < pageRefs.length && pageRefs[nextPage].current) {
+            e.preventDefault()
+            snapTo(pageRefs[nextPage].current)
+          }
+        } else {
+          if (scrollY < lastSnapBottom) {
+            const prevPage = Math.max(0, currentPage - 1)
+            if (pageRefs[prevPage].current) {
+              e.preventDefault()
+              snapTo(pageRefs[prevPage].current)
+            }
+          }
         }
+        touchStartY = e.touches[0].clientY
       }
     }
 
@@ -82,5 +135,5 @@ export function usePageSnap(targetRef) {
       window.removeEventListener('touchstart', handleTouchStart)
       window.removeEventListener('touchmove', handleTouchMove)
     }
-  }, [targetRef])
+  }, [pageRefs])
 }

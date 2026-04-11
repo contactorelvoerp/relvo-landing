@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { HeroSection } from './components/landing/HeroSection'
 import { AboutSection } from './components/landing/AboutSection'
@@ -42,6 +42,8 @@ function App() {
     return title && title !== 'feature'
   })
 
+  const page4Ref = useRef(null)
+
   return (
     <div className="relative min-h-screen overflow-x-hidden text-[var(--text-main)] antialiased">
       <ShaderBackground />
@@ -63,52 +65,9 @@ function App() {
       <Navbar t={t} navigate={navigate} />
 
       <main id="inicio" className="relative z-10">
-        <HeroSection t={t} />
+        <HeroSection t={t} page4Ref={page4Ref} />
 
-        <section aria-label="Mensaje de transición" className="py-20 sm:py-24">
-          <div className="section-shell">
-            <Reveal className="mx-auto max-w-5xl text-center">
-              <p className="text-[clamp(1.75rem,2.35vw,2.35rem)] font-semibold leading-[1.14] tracking-[-0.035em] text-[var(--text-main)]">
-                <span>{t.bridgeFrom}</span>
-                <span className="mx-3 text-[var(--text-soft)]">→</span>
-                <span>
-                  {hasBridgeToHighlight ? (
-                    <>
-                      {bridgeTo.slice(0, bridgeToHighlightIndex)}
-                      <span
-                        className="px-[0.18em]"
-                        style={{
-                          background: 'linear-gradient(transparent 48%, var(--brand-warm) 48%)',
-                          WebkitBoxDecorationBreak: 'clone',
-                          boxDecorationBreak: 'clone',
-                          borderRadius: '2px',
-                        }}
-                      >
-                        {hasBridgeToEmphasis ? (
-                          <>
-                            {bridgeToHighlight.slice(0, bridgeToEmphasisIndex)}
-                            <em className="font-cursive-emphasis">{bridgeToEmphasis}</em>
-                            {bridgeToHighlight.slice(bridgeToEmphasisIndex + bridgeToEmphasis.length)}
-                          </>
-                        ) : (
-                          bridgeToHighlight
-                        )}
-                      </span>
-                      {bridgeTo.slice(bridgeToHighlightIndex + bridgeToHighlight.length)}
-                    </>
-                  ) : (
-                    bridgeTo
-                  )}
-                </span>
-              </p>
-              <p className="mx-auto mt-7 max-w-3xl text-base leading-[1.55] text-[var(--text-soft)] sm:text-lg">
-                {t.bridgeSupport}
-              </p>
-            </Reveal>
-          </div>
-        </section>
-
-        <div>
+        <div ref={page4Ref}>
           <section id="producto">
             <AboutSection t={t} />
           </section>
