@@ -13,16 +13,17 @@ export const ShaderBackground = ({ className = '' }) => {
       style={{ height: '100%' }}
     >
       <RelvoGradient
-        speed={2.125}
+        speed={0.4}
         scale={1}
         rotation={-180}
         offsetX={0}
         offsetY={0}
         softness={0.35}
         intensity={0.58}
-        noise={0.03}
-        blobCount={3}
-        blobSize={0.55}
+        noise={0.008}
+        blobCount={6}
+        blobSize={0.80}
+        blobScale={1.0}
         colors={['#DFF4EB', '#D5F7C1', '#E3C0F2', '#3F28B2']}
         colorBack="#00000000"
         maxPixelCount={2560 * 1440 * 2}

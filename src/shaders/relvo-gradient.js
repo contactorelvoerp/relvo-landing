@@ -81,6 +81,7 @@ uniform float u_intensity;
 uniform float u_noise;
 uniform float u_blobCount;
 uniform float u_blobSize;
+uniform float u_blobScale;
 
 uniform float u_originX;
 uniform float u_originY;
@@ -161,22 +162,57 @@ void main() {
   grain_uv *= .7;
 
   // ── Multi-blob shape ──
-  // Coordinate system: top-anchored.
-  // suv is derived from v_objectUV, scaled by 0.6, y-shifted so 0 = top.
-  // Approximate ranges depend on aspect ratio and page height.
+  //
+  // COORDINATE SYSTEM: pixel-normalized, top-left origin.
+  //
+  // We use gl_FragCoord to get the pixel position, then normalize:
+  //   px.x = pixel / viewportWidth   → 0.0 = left, 1.0 = right
+  //   px.y = pixel / viewportWidth   → same UNIT for both axes (not height!)
+  //
+  // Using viewportWidth for BOTH axes means:
+  //   - Blobs are always circular (no aspect distortion)
+  //   - blobSize 0.3 = 30% of viewport width, always
+  //   - Positions are stable across zoom/resize
+  //   - y values > (height/width) are below the viewport
+  //
+  // On a 16:9 screen, visible y range is 0.0 to ~0.5625
+  // On a 16:10 screen, visible y range is 0.0 to ~0.625
+  //
+  // u_blobScale multiplies blobSize and drift uniformly.
+  // Use it to tune the overall feel for different screen sizes.
+  // 1.0 = designed size. 1.3 = 30% bigger blobs + wider drift.
 
   float shape = 0.;
-  float blobSz = max(u_blobSize, 0.15);
-  vec2 suv = shape_uv * 0.6;
-  // Shift y origin from center to top of page
-  suv.y += 0.5 * 0.6; // 0.6 is the shape_uv scaling factor
+  float sc = max(u_blobScale, 0.1);
+  float blobSz = max(u_blobSize, 0.01) * sc;
 
-  // ── Drift helper: multi-frequency chaotic motion, normalized ──
-  // 4 incommensurate golden-ratio frequencies → non-repeating orbits.
-  // Sum is bounded to [-1, 1] per axis. maxDrift scales the result.
+  // Pixel position normalized by viewport WIDTH (same unit both axes)
+  vec2 screenPos = gl_FragCoord.xy / u_resolution.x;
+  screenPos.x = 1.0 - screenPos.x; // flip X: mirror horizontally
+  screenPos.y = (u_resolution.y / u_resolution.x) - screenPos.y; // flip Y: 0 = top
 
+  // ┌──────────────────────────────────────────────────────────┐
+  // │  COORDINATE GUIDE (pixel-normalized, width-based)        │
+  // │                                                          │
+  // │  x:  0.0 = left edge        1.0 = right edge            │
+  // │  y:  0.0 = top edge         h/w = bottom edge            │
+  // │      (h/w ≈ 0.56 on 16:9,  ≈ 0.625 on 16:10)            │
+  // │                                                          │
+  // │  Both axes use the SAME unit (fraction of width).        │
+  // │  Blobs are always circular. No aspect distortion.        │
+  // │                                                          │
+  // │  Anchors outside 0–1 (x) or 0–h/w (y) = off-screen.     │
+  // │  These coords are STABLE across zoom and resize.         │
+  // │                                                          │
+  // │  blobSize: fraction of viewport width (before u_blobScale)│
+  // │  maxDrift: orbit radius, same units (before u_blobScale)  │
+  // │  u_blobScale: multiplies both. 1.0 = default.            │
+  // └──────────────────────────────────────────────────────────┘
+
+  // Drift helper: chaotic quasi-periodic motion, bounded to [-1,1].
+  // maxD is in width-fraction units, then scaled by u_blobScale.
   #define DRIFT(t, px, py, maxD) ( \
-    maxD * vec2( \
+    maxD * sc * vec2( \
       ( 0.40 * sin(1.0 * t + px)           \
       + 0.30 * sin(1.618 * t + px + 1.2)  \
       + 0.20 * sin(2.879 * t + px + 3.7)  \
@@ -190,67 +226,104 @@ void main() {
     ) \
   )
 
+  // Extra orbit wobble: adds high-frequency noise-based displacement
+  // to the drift so the trajectory feels less predictable.
+  #define ORBIT_WOBBLE(t, seed, amt) ( \
+    amt * vec2( \
+      snoise(vec2(3.7 * t + seed, seed * 1.3)), \
+      snoise(vec2(seed * 0.7, 4.1 * t + seed)) \
+    ) \
+  )
+
+  // Subtle shape wobble: deforms the blob edge slightly.
+  #define SHAPE_WOBBLE(sp, pos, t, amt) ( \
+    amt * snoise(vec2( \
+      atan(sp.y - pos.y, sp.x - pos.x) * 1.5, \
+      t * 0.15 \
+    )) \
+  )
+
   // ── BLOB A: top-left, off-screen ──
   if (u_blobCount > 0.5) {
-    vec2 anchor = vec2(-0.43, -0.68);
-    vec2 drift = DRIFT(t, 0.0, 0.5, 0.17);
-    float d = length(suv - anchor - drift);
+    vec2 anchor = vec2(-0.22, -0.10);
+    vec2 drift = DRIFT(t, 0.0, 0.5, 0.30)
+               + ORBIT_WOBBLE(t, 1.0, 0.08 * sc);
+    vec2 pos = anchor + drift;
+    float d = length(screenPos - pos)
+            + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
 
-  // ── BLOB B: right side, slightly off-screen ──
+  // ── BLOB B: right side, lower page ──
   if (u_blobCount > 1.5) {
-    vec2 anchor = vec2(0.55, -0.050);
-    vec2 drift = DRIFT(t, 2.1, 2.6, 0.06);
-    float d = length(suv - anchor - drift);
+    vec2 anchor = vec2(1.50, 0.75);
+    vec2 drift = DRIFT(t, 5.24, 5.74, 0.08)
+               + ORBIT_WOBBLE(t, 5.3, 0.04 * sc);
+    vec2 pos = anchor + drift;
+    float d = length(screenPos - pos)
+            + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
 
   // ── BLOB C: left side, lower page ──
   if (u_blobCount > 2.5) {
-    vec2 anchor = vec2(-0.63, 0.60);
-    vec2 drift = DRIFT(t, 4.2, 4.7, 0.07);
-    float d = length(suv - anchor - drift);
+    vec2 anchor = vec2(-0.40, 1.75);
+    vec2 drift = DRIFT(t, 4.2, 4.7, 0.08)
+               + ORBIT_WOBBLE(t, 9.7, 0.04 * sc);
+    vec2 pos = anchor + drift;
+    float d = length(screenPos - pos)
+            + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
 
-  // ── BLOB D: (unused, set blobCount=4 to enable) ──
+  // ── BLOB D: left side, continues zigzag ──
   if (u_blobCount > 3.5) {
-    vec2 anchor = vec2(0.55, 0.65);
-    vec2 drift = DRIFT(t, 6.3, 6.8, 0.07);
-    float d = length(suv - anchor - drift);
+    vec2 anchor = vec2(1.42, 2.45);
+    vec2 drift = DRIFT(t, 6.3, 6.8, 0.08)
+               + ORBIT_WOBBLE(t, 14.1, 0.04 * sc);
+    vec2 pos = anchor + drift;
+    float d = length(screenPos - pos)
+            + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
 
-  // ── BLOB E: (unused, set blobCount=5 to enable) ──
+  // ── BLOB E: right side, continues zigzag ──
   if (u_blobCount > 4.5) {
-    vec2 anchor = vec2(-0.55, 1.20);
-    vec2 drift = DRIFT(t, 8.4, 8.9, 0.07);
-    float d = length(suv - anchor - drift);
+    vec2 anchor = vec2(-0.30, 3.50);
+    vec2 drift = DRIFT(t, 8.4, 8.9, 0.08)
+               + ORBIT_WOBBLE(t, 18.5, 0.04 * sc);
+    vec2 pos = anchor + drift;
+    float d = length(screenPos - pos)
+            + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
 
-  // ── BLOB F: (unused, set blobCount=6 to enable) ──
+  // ── BLOB F: left side, continues zigzag ──
   if (u_blobCount > 5.5) {
-    vec2 anchor = vec2(0.55, 1.50);
-    vec2 drift = DRIFT(t, 10.5, 11.0, 0.07);
-    float d = length(suv - anchor - drift);
+    vec2 anchor = vec2(1.45, 4.65);
+    vec2 drift = DRIFT(t, 10.5, 11.0, 0.08)
+               + ORBIT_WOBBLE(t, 22.9, 0.04 * sc);
+    vec2 pos = anchor + drift;
+    float d = length(screenPos - pos)
+            + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
 
   // ── BLOB G: (unused, set blobCount=7 to enable) ──
   if (u_blobCount > 6.5) {
-    vec2 anchor = vec2(-0.55, 1.80);
-    vec2 drift = DRIFT(t, 12.6, 13.1, 0.07);
-    float d = length(suv - anchor - drift);
+    vec2 anchor = vec2(-0.06, 1.10);
+    vec2 drift = DRIFT(t, 12.6, 13.1, 0.08)
+               + ORBIT_WOBBLE(t, 27.3, 0.04 * sc);
+    float d = length(screenPos - anchor - drift);
     shape += smoothstep(blobSz, 0.0, d);
   }
 
   // ── BLOB H: (unused, set blobCount=8 to enable) ──
   if (u_blobCount > 7.5) {
-    vec2 anchor = vec2(0.55, 2.10);
-    vec2 drift = DRIFT(t, 14.7, 15.2, 0.07);
-    float d = length(suv - anchor - drift);
+    vec2 anchor = vec2(1.06, 1.08);
+    vec2 drift = DRIFT(t, 14.7, 15.2, 0.08)
+               + ORBIT_WOBBLE(t, 31.7, 0.04 * sc);
+    float d = length(screenPos - anchor - drift);
     shape += smoothstep(blobSz, 0.0, d);
   }
 

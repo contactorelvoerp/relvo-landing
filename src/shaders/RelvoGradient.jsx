@@ -30,6 +30,7 @@ export const RelvoGradient = memo(function RelvoGradientImpl({
   // Blob control
   blobCount = 6,
   blobSize = 0.45,
+  blobScale = 1.0,
   // Sizing
   fit = 'contain',
   scale = 1,
@@ -52,6 +53,7 @@ export const RelvoGradient = memo(function RelvoGradientImpl({
     u_noise: noise,
     u_blobCount: blobCount,
     u_blobSize: blobSize,
+    u_blobScale: blobScale,
     u_noiseTexture: noiseTexture,
     u_fit: ShaderFitOptions[fit],
     u_scale: scale,
@@ -62,7 +64,7 @@ export const RelvoGradient = memo(function RelvoGradientImpl({
     u_originY: originY,
     u_worldWidth: worldWidth,
     u_worldHeight: worldHeight,
-  }), [colorBack, colors, softness, intensity, noise, blobCount, blobSize,
+  }), [colorBack, colors, softness, intensity, noise, blobCount, blobSize, blobScale,
        fit, scale, rotation, originX, originY, offsetX, offsetY,
        worldWidth, worldHeight])
 
