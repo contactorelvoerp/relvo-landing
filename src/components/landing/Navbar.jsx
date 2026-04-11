@@ -12,13 +12,10 @@ export const Navbar = ({ t, navigate }) => {
   const regularItems = navItems.slice(0, -1)
 
   return (
-    <header className="relative z-50 px-4 pt-4 sm:px-6 sm:pt-5">
+    <header className="sticky top-0 z-50 px-4 pt-4 sm:px-6 sm:pt-5">
       <nav className="nav-shell mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
-        <a
-          href="#inicio"
-          className="rounded-[var(--radius-sm)] px-2 py-1 font-display text-base font-semibold tracking-[-0.01em] text-[var(--text-main)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:text-lg"
-        >
-          Relvo
+        <a href="#inicio" className="px-2 py-1">
+          <img src="/relvo-wordmark-dark.svg" alt="relvo" className="h-5 w-auto sm:h-6" />
         </a>
 
         {/* Desktop nav + CTA button + hamburger (mobile) */}
@@ -36,7 +33,7 @@ export const Navbar = ({ t, navigate }) => {
           <a
             href="/login"
             onClick={(e) => { e.preventDefault(); navigate?.('/login') }}
-            className="inline-flex h-9 cursor-pointer items-center justify-center rounded-[var(--radius-button)] border border-[var(--border-default)] bg-transparent px-4 text-xs font-medium text-[var(--text-main)] transition hover:bg-[var(--surface-subtle,#f6f7f8)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:px-5 sm:text-sm"
+            className="inline-flex h-9 cursor-pointer items-center justify-center rounded-full bg-white/50 px-5 text-xs font-medium text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:px-6 sm:text-sm"
           >
             {t.navLogin ?? 'Login'}
           </a>

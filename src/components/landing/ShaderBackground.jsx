@@ -6,6 +6,19 @@ import { RelvoGradient } from '../../shaders/RelvoGradient'
  * Uses our forked shader with configurable blob count — blobs distribute
  * evenly across the canvas at any aspect ratio, no stretching.
  */
+
+// ── Hypotrochoid figure config ──
+// All units in vw (viewport width) — stays pinned regardless of zoom.
+// size:    width in vw
+// x:       horizontal position in vw (0 = left edge, 100 = right edge)
+// y:       vertical position in vw (0 = top edge)
+// opacity: 0–1
+// Line width: edit stroke-width directly in the SVG file (public/figures/Asset 7.svg)
+const figures = [
+  { src: '/figures/Asset 7.svg', size: 100, x: -85, y: -30,  opacity: 0.30 },
+  { src: '/figures/Asset 7.svg', size: 35, x: 80,  y: 85,  opacity: 0.25 },
+]
+
 export const ShaderBackground = ({ className = '' }) => {
   return (
     <div
@@ -37,33 +50,22 @@ export const ShaderBackground = ({ className = '' }) => {
         }}
       />
 
-      {/* Hypotrochoid figure — top left */}
-      <img
-        src="/figures/Asset 5.svg"
-        alt=""
-        aria-hidden="true"
-        className="absolute opacity-30"
-        style={{
-          top: '-8%',
-          left: '-5%',
-          width: 'clamp(400px, 50vw, 800px)',
-          height: 'auto',
-        }}
-      />
-
-      {/* Hypotrochoid figure — bottom right */}
-      <img
-        src="/figures/Asset 7.svg"
-        alt=""
-        aria-hidden="true"
-        className="absolute opacity-25"
-        style={{
-          bottom: '5%',
-          right: '-3%',
-          width: 'clamp(300px, 35vw, 550px)',
-          height: 'auto',
-        }}
-      />
+      {figures.map((fig, i) => (
+        <img
+          key={i}
+          src={fig.src}
+          alt=""
+          aria-hidden="true"
+          className="absolute"
+          style={{
+            left: `${fig.x}vw`,
+            top: `${fig.y}vw`,
+            width: `${fig.size}vw`,
+            height: 'auto',
+            opacity: fig.opacity,
+          }}
+        />
+      ))}
     </div>
   )
 }

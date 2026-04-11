@@ -132,7 +132,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -219,6 +219,11 @@ h3,
 
 .page-glow {
   display: none;
+}
+
+/* ── Full-viewport page ── */
+.full-page {
+  min-height: 100vh;
 }
 
 .section-shell {

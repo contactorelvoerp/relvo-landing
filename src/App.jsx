@@ -62,10 +62,8 @@ function App() {
       </Helmet>
       <Navbar t={t} navigate={navigate} />
 
-      <main id="inicio" className="relative">
-        <section id="hero">
-          <HeroSection t={t} />
-        </section>
+      <main id="inicio" className="relative z-10">
+        <HeroSection t={t} />
 
         <section aria-label="Mensaje de transición" className="py-20 sm:py-24">
           <div className="section-shell">
@@ -110,18 +108,18 @@ function App() {
           </div>
         </section>
 
-        <section id="producto">
-          <AboutSection t={t} />
-        </section>
+        <div>
+          <section id="producto">
+            <AboutSection t={t} />
+          </section>
 
-        <SocialProofSection t={t} />
+          <SocialProofSection t={t} />
 
-        <section id="demos">
-          <CTASection ctaHref={calendlyHref} t={t} />
-        </section>
-      </main>
+          <section id="demos">
+            <CTASection ctaHref={calendlyHref} t={t} />
+          </section>
 
-      <footer className="pb-10 pt-16">
+          <footer className="pb-10 pt-16">
         <div className="section-shell">
           <Reveal className="rounded-[var(--radius-2xl)] bg-white/60 px-7 py-10 shadow-[0_20px_50px_rgba(61,61,61,0.10)] backdrop-blur-sm sm:px-10 sm:py-12">
             <div className="grid gap-10 md:grid-cols-[1.2fr_1.8fr] md:items-start">
@@ -165,7 +163,9 @@ function App() {
             </div>
           </Reveal>
         </div>
-      </footer>
+          </footer>
+        </div>
+      </main>
     </div>
   )
 }
