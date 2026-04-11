@@ -6,6 +6,7 @@ import { CTASection } from './components/landing/CTASection'
 import { Navbar } from './components/landing/Navbar'
 import { Reveal } from './components/landing/Reveal'
 import { SocialProofSection } from './components/landing/SocialProofSection'
+import { ShaderBackground } from './components/landing/ShaderBackground'
 import { ComingSoon } from './pages/ComingSoon'
 import { text } from './i18n/text'
 
@@ -42,7 +43,8 @@ function App() {
   })
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[var(--bg-main)] text-[var(--text-main)] antialiased">
+    <div className="relative min-h-screen overflow-x-hidden text-[var(--text-main)] antialiased">
+      <ShaderBackground />
       <Helmet>
         <title>Relvo | Infraestructura de Ingresos con IA para B2B en LATAM</title>
         <meta name="description" content="Relvo acelera la recaudación de empresas B2B en LATAM automatizando desde el cierre comercial hasta el cobro con IA" />
@@ -65,7 +67,7 @@ function App() {
           <HeroSection t={t} />
         </section>
 
-        <section aria-label="Mensaje de transición" className="bg-white py-20 sm:py-24">
+        <section aria-label="Mensaje de transición" className="py-20 sm:py-24">
           <div className="section-shell">
             <Reveal className="mx-auto max-w-5xl text-center">
               <p className="text-[clamp(1.75rem,2.35vw,2.35rem)] font-semibold leading-[1.14] tracking-[-0.035em] text-[var(--text-main)]">
@@ -119,9 +121,9 @@ function App() {
         </section>
       </main>
 
-      <footer className="bg-white pb-10 pt-16">
+      <footer className="pb-10 pt-16">
         <div className="section-shell">
-          <Reveal className="bg-hero rounded-[var(--radius-2xl)] px-7 py-10 shadow-[0_20px_50px_rgba(61,61,61,0.10)] sm:px-10 sm:py-12">
+          <Reveal className="rounded-[var(--radius-2xl)] bg-white/60 px-7 py-10 shadow-[0_20px_50px_rgba(61,61,61,0.10)] backdrop-blur-sm sm:px-10 sm:py-12">
             <div className="grid gap-10 md:grid-cols-[1.2fr_1.8fr] md:items-start">
               <div>
                 <p className="font-display text-sm font-semibold tracking-[0.12em] text-[var(--text-main)]">

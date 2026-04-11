@@ -15,7 +15,7 @@ export const AboutSection = ({ t }) => {
   const useMobileLayout = isMobileDevice()
 
   return (
-    <section className="section-shell bg-white py-20 sm:py-24 lg:py-28">
+    <section className="section-shell py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl space-y-14 sm:space-y-16 lg:space-y-20">
         {features.map((feature, idx) => {
           const imageLeft = feature.imageSide === 'left'

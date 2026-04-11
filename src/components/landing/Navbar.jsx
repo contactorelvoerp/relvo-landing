@@ -77,7 +77,7 @@ export const Navbar = ({ t, navigate }) => {
 
       {/* Mobile dropdown — solo muestra los items regulares, el CTA es visible en el nav */}
       {menuOpen && (
-        <div className="mx-auto mt-2 max-w-7xl rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-white px-4 py-3 shadow-[0_8px_24px_rgba(15,17,21,0.08)] sm:hidden">
+        <div className="mx-auto mt-2 max-w-7xl rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-white/80 px-4 py-3 shadow-[0_8px_24px_rgba(15,17,21,0.08)] backdrop-blur-md sm:hidden">
           {regularItems.map((item) => (
             <a
               key={item.label}

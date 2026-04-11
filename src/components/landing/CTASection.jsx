@@ -111,7 +111,7 @@ export const CTASection = ({ ctaHref, t }) => {
   }
 
   return (
-    <section className="bg-white py-28 sm:py-36">
+    <section className="py-28 sm:py-36">
       <div className="section-shell">
         <Reveal className="mx-auto max-w-3xl text-center">
           <h2 className="mx-auto max-w-2xl font-display text-3xl tracking-[-0.04em] text-[var(--text-main)] sm:text-5xl sm:leading-[1.05]">
@@ -150,7 +150,7 @@ export const CTASection = ({ ctaHref, t }) => {
             </p>
             <form
               onSubmit={handleSubmit}
-              className="rounded-[var(--radius-xl)] border border-black/[0.08] bg-white p-2 shadow-[0_20px_50px_rgba(16,16,14,0.06)]"
+              className="rounded-[var(--radius-xl)] border border-black/[0.08] bg-white/60 p-2 shadow-[0_20px_50px_rgba(16,16,14,0.06)] backdrop-blur-sm"
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
                 <label className="sr-only" htmlFor="cta-email">
@@ -164,7 +164,7 @@ export const CTASection = ({ ctaHref, t }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t.ctaEmailPlaceholder}
-                  className="h-11 w-full rounded-[var(--radius-button)] border border-black/[0.10] bg-white px-4 text-sm text-[var(--text-main)] outline-none placeholder:text-[var(--text-soft)] focus:border-black/[0.16] focus:ring-2 focus:ring-[var(--focus-ring)] sm:flex-1 sm:border-transparent sm:bg-transparent sm:focus:border-transparent"
+                  className="h-11 w-full rounded-[var(--radius-button)] border border-black/[0.10] bg-transparent px-4 text-sm text-[var(--text-main)] outline-none placeholder:text-[var(--text-soft)] focus:border-black/[0.16] focus:ring-2 focus:ring-[var(--focus-ring)] sm:flex-1 sm:border-transparent sm:focus:border-transparent"
                   autoComplete="work email"
                   inputMode="email"
                 />

@@ -4,10 +4,10 @@ export const SocialProofSection = ({ t }) => {
   const benefits = t.benefits ?? []
 
   return (
-    <section className="bg-white py-14 sm:py-16">
+    <section className="py-14 sm:py-16">
       <div className="section-shell">
         <Reveal className="mx-auto max-w-6xl">
-          <div className="bg-hero overflow-hidden rounded-[var(--radius-2xl)] px-6 py-10 shadow-[0_20px_50px_rgba(61,61,61,0.10)] sm:px-10 sm:py-12">
+          <div className="overflow-hidden rounded-[var(--radius-2xl)] px-6 py-10 shadow-[0_20px_50px_rgba(61,61,61,0.10)] sm:px-10 sm:py-12">
             <h2 className="mx-auto mb-6 max-w-4xl text-center text-[clamp(1.75rem,2.35vw,2.35rem)] font-semibold leading-[1.14] tracking-[-0.035em] text-[var(--text-main)] sm:mb-8">
               {t.benefitsTitle}
             </h2>
@@ -15,7 +15,7 @@ export const SocialProofSection = ({ t }) => {
               {benefits.map((benefit, idx) => (
                 <div
                   key={`${idx}-${benefit.title}`}
-                  className="flex h-full flex-col rounded-[var(--radius-lg)] border border-black/[0.06] bg-white p-5 sm:p-6"
+                  className="flex h-full flex-col rounded-[var(--radius-lg)] border border-black/[0.06] bg-white/60 p-5 sm:p-6 backdrop-blur-sm"
                 >
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-soft)]">
                     {String(idx + 1).padStart(2, '0')}
