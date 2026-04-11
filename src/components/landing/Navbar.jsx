@@ -1,10 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { trackScheduleDemo } from '../../utils/analytics'
 
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
 
-export const Navbar = ({ t, navigate }) => {
+export const Navbar = ({ t, navigate, scrollThreshold }) => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showBackdrop, setShowBackdrop] = useState(false)
+
+  useEffect(() => {
+    if (!scrollThreshold) return
+
+    const handleScroll = () => {
+      const threshold = typeof scrollThreshold === 'number'
+        ? scrollThreshold
+        : scrollThreshold.current?.offsetTop ?? Infinity
+      setShowBackdrop(window.scrollY > threshold - window.innerHeight * 0.5)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [scrollThreshold])
 
   // Separa el último nav item (Demos/CTA) del resto
   const navItems = t.navItems ?? []
@@ -12,7 +28,16 @@ export const Navbar = ({ t, navigate }) => {
   const regularItems = navItems.slice(0, -1)
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 sm:pt-5">
+    <header
+      className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 sm:pt-4"
+      style={{
+        paddingBottom: showBackdrop ? '2.5rem' : '0.75rem',
+        background: showBackdrop
+          ? 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 60%, rgba(255,255,255,0) 100%)'
+          : 'transparent',
+        transition: 'background 0.4s ease',
+      }}
+    >
       <nav className="nav-shell mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
         <a href="#inicio" className="px-2 py-1">
           <img src="/relvo-wordmark-dark.svg" alt="relvo" className="h-5 w-auto sm:h-6" />
@@ -72,7 +97,7 @@ export const Navbar = ({ t, navigate }) => {
         </div>
       </nav>
 
-      {/* Mobile dropdown — solo muestra los items regulares, el CTA es visible en el nav */}
+      {/* Mobile dropdown */}
       {menuOpen && (
         <div className="mx-auto mt-2 max-w-7xl rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-white/80 px-4 py-3 shadow-[0_8px_24px_rgba(15,17,21,0.08)] backdrop-blur-md sm:hidden">
           {regularItems.map((item) => (

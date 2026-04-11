@@ -62,7 +62,7 @@ function App() {
         <meta name="twitter:title" content="Relvo | Infraestructura de Ingresos con IA para B2B en LATAM" />
         <meta name="twitter:description" content="Relvo acelera la recaudación de empresas B2B en LATAM automatizando desde el cierre comercial hasta el cobro con IA" />
       </Helmet>
-      <Navbar t={t} navigate={navigate} />
+      <Navbar t={t} navigate={navigate} scrollThreshold={page4Ref} />
 
       <main id="inicio" className="relative z-10">
         <HeroSection t={t} page4Ref={page4Ref} />
