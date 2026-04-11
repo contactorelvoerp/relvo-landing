@@ -1,18 +1,21 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * Hijacks scroll across multiple snap pages.
- * Each ref in the array is a snap target. Scrolling within the snap zone
- * snaps to the nearest page boundary. Once past the last snap page,
- * normal scrolling resumes.
- *
- * @param {React.RefObject[]} pageRefs - array of refs to snap-page elements
+ * Snap-scroll between pages. Uses CSS scroll-behavior for the actual
+ * animation (letting the browser handle it natively) and just
+ * prevents default scroll + sets scrollTop to trigger it.
  */
-export function usePageSnap(pageRefs) {
+export function usePageSnap(pageRefs, exitRef) {
   const isSnapping = useRef(false)
+  const wheelAccum = useRef(0)
+  const wheelTimer = useRef(null)
 
   useEffect(() => {
     if (!pageRefs?.length) return
+
+    // Temporarily enable smooth scroll on html for our snaps
+    const html = document.documentElement
+    const origBehavior = html.style.scrollBehavior
 
     const getPageTops = () =>
       pageRefs.map((ref) => ref.current?.offsetTop ?? 0)
@@ -24,9 +27,8 @@ export function usePageSnap(pageRefs) {
     }
 
     const findCurrentPage = (scrollY, pageTops) => {
-      const vh = window.innerHeight
       for (let i = pageTops.length - 1; i >= 0; i--) {
-        if (scrollY >= pageTops[i] - vh * 0.3) return i
+        if (scrollY >= pageTops[i] - window.innerHeight * 0.3) return i
       }
       return 0
     }
@@ -34,10 +36,28 @@ export function usePageSnap(pageRefs) {
     const snapTo = (target) => {
       if (isSnapping.current) return
       isSnapping.current = true
-      target.scrollIntoView({ behavior: 'smooth' })
+
+      html.style.scrollBehavior = 'smooth'
+      window.scrollTo(0, target.offsetTop)
+
+      // Wait for scroll to finish, then release
+      const checkDone = () => {
+        const diff = Math.abs(window.scrollY - target.offsetTop)
+        if (diff < 2) {
+          html.style.scrollBehavior = origBehavior
+          setTimeout(() => { isSnapping.current = false }, 50)
+        } else {
+          requestAnimationFrame(checkDone)
+        }
+      }
+      // Start checking after a small delay to let scroll begin
+      setTimeout(() => requestAnimationFrame(checkDone), 50)
+
+      // Safety timeout
       setTimeout(() => {
+        html.style.scrollBehavior = origBehavior
         isSnapping.current = false
-      }, 700)
+      }, 1200)
     }
 
     const handleWheel = (e) => {
@@ -49,37 +69,51 @@ export function usePageSnap(pageRefs) {
       const scrollY = window.scrollY
       const lastSnapBottom = getLastSnapBottom()
 
-      // Past the snap zone — let normal scrolling happen
-      if (scrollY >= lastSnapBottom - window.innerHeight * 0.5 && e.deltaY > 0) {
+      // Well past the snap zone — free scrolling
+      if (scrollY > lastSnapBottom + window.innerHeight * 0.3) return
+
+      // Near boundary scrolling up — snap to last snap page
+      if (scrollY > lastSnapBottom - window.innerHeight * 0.2 && e.deltaY < 0) {
+        const lastPage = pageRefs.length - 1
+        if (pageRefs[lastPage].current) {
+          e.preventDefault()
+          snapTo(pageRefs[lastPage].current)
+        }
         return
       }
 
-      const pageTops = getPageTops()
-      const currentPage = findCurrentPage(scrollY, pageTops)
+      // Below snap zone scrolling down — free
+      if (scrollY > lastSnapBottom) return
 
-      if (e.deltaY > 0) {
-        // Scrolling down
-        const nextPage = currentPage + 1
-        if (nextPage < pageRefs.length && pageRefs[nextPage].current) {
-          e.preventDefault()
-          snapTo(pageRefs[nextPage].current)
-        } else if (nextPage >= pageRefs.length) {
-          // Snap zone ended, scroll freely
-          return
-        }
-      } else if (e.deltaY < 0) {
-        // Scrolling up
-        if (scrollY <= pageTops[0] + 10) return // already at top
+      // Accumulate wheel delta to avoid triggering on tiny scroll
+      e.preventDefault()
+      wheelAccum.current += e.deltaY
 
-        // If we're in the snap zone, snap to previous page
-        if (scrollY < lastSnapBottom) {
+      clearTimeout(wheelTimer.current)
+      wheelTimer.current = setTimeout(() => {
+        const delta = wheelAccum.current
+        wheelAccum.current = 0
+
+        if (Math.abs(delta) < 10) return
+
+        const pageTops = getPageTops()
+        const currentPage = findCurrentPage(window.scrollY, pageTops)
+
+        if (delta > 0) {
+          const nextPage = currentPage + 1
+          if (nextPage < pageRefs.length && pageRefs[nextPage].current) {
+            snapTo(pageRefs[nextPage].current)
+          } else if (nextPage >= pageRefs.length && exitRef?.current) {
+            snapTo(exitRef.current)
+          }
+        } else {
+          if (window.scrollY <= pageTops[0] + 10) return
           const prevPage = Math.max(0, currentPage - 1)
           if (pageRefs[prevPage].current) {
-            e.preventDefault()
             snapTo(pageRefs[prevPage].current)
           }
         }
-      }
+      }, 80)
     }
 
     // Touch handling
@@ -89,51 +123,52 @@ export function usePageSnap(pageRefs) {
       touchStartY = e.touches[0].clientY
     }
 
-    const handleTouchMove = (e) => {
-      if (isSnapping.current) {
-        e.preventDefault()
-        return
-      }
+    const handleTouchEnd = (e) => {
+      if (isSnapping.current) return
+
+      const deltaY = touchStartY - e.changedTouches[0].clientY
+      if (Math.abs(deltaY) < 40) return
 
       const scrollY = window.scrollY
       const lastSnapBottom = getLastSnapBottom()
-      const deltaY = touchStartY - e.touches[0].clientY
 
-      if (scrollY >= lastSnapBottom - window.innerHeight * 0.5 && deltaY > 0) {
+      if (scrollY > lastSnapBottom + window.innerHeight * 0.3) return
+
+      if (scrollY > lastSnapBottom - window.innerHeight * 0.2 && deltaY < 0) {
+        const lastPage = pageRefs.length - 1
+        if (pageRefs[lastPage].current) snapTo(pageRefs[lastPage].current)
         return
       }
+
+      if (scrollY > lastSnapBottom) return
 
       const pageTops = getPageTops()
       const currentPage = findCurrentPage(scrollY, pageTops)
 
-      if (Math.abs(deltaY) > 30) {
-        if (deltaY > 0) {
-          const nextPage = currentPage + 1
-          if (nextPage < pageRefs.length && pageRefs[nextPage].current) {
-            e.preventDefault()
-            snapTo(pageRefs[nextPage].current)
-          }
-        } else {
-          if (scrollY < lastSnapBottom) {
-            const prevPage = Math.max(0, currentPage - 1)
-            if (pageRefs[prevPage].current) {
-              e.preventDefault()
-              snapTo(pageRefs[prevPage].current)
-            }
-          }
+      if (deltaY > 0) {
+        const nextPage = currentPage + 1
+        if (nextPage < pageRefs.length && pageRefs[nextPage].current) {
+          snapTo(pageRefs[nextPage].current)
+        } else if (nextPage >= pageRefs.length && exitRef?.current) {
+          snapTo(exitRef.current)
         }
-        touchStartY = e.touches[0].clientY
+      } else {
+        if (scrollY <= pageTops[0] + 10) return
+        const prevPage = Math.max(0, currentPage - 1)
+        if (pageRefs[prevPage].current) snapTo(pageRefs[prevPage].current)
       }
     }
 
     window.addEventListener('wheel', handleWheel, { passive: false })
     window.addEventListener('touchstart', handleTouchStart, { passive: true })
-    window.addEventListener('touchmove', handleTouchMove, { passive: false })
+    window.addEventListener('touchend', handleTouchEnd, { passive: true })
 
     return () => {
       window.removeEventListener('wheel', handleWheel)
       window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchEnd)
+      html.style.scrollBehavior = origBehavior
+      clearTimeout(wheelTimer.current)
     }
-  }, [pageRefs])
+  }, [pageRefs, exitRef])
 }

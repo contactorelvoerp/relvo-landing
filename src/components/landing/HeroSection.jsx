@@ -5,7 +5,7 @@ export const HeroSection = ({ t, page4Ref }) => {
   const page1Ref = useRef(null)
   const page2Ref = useRef(null)
   const page3Ref = useRef(null)
-  usePageSnap([page1Ref, page2Ref, page3Ref, page4Ref])
+  usePageSnap([page1Ref, page2Ref, page3Ref], page4Ref)
 
   return (
     <>
