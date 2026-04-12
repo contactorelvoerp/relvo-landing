@@ -20,7 +20,7 @@ export const HeroSection = ({ t, page4Ref }) => {
       {/* ── PAGE 1: Welcome — Tagline + Wordmark + Headline ── */}
       <section
         ref={page1Ref}
-        className="full-page relative flex w-full flex-col items-center px-6 pb-12 pt-[5rem] sm:pt-[5.5rem]"
+        className="full-page relative flex w-full flex-col items-center px-4 pb-12 pt-[5rem] sm:px-6 sm:pt-[5.5rem]"
       >
         <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center text-center">
           {/* T1 Eyebrow */}
@@ -28,7 +28,7 @@ export const HeroSection = ({ t, page4Ref }) => {
             className="uppercase"
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: 'clamp(0.7rem, 0.9vw, 0.8rem)',
+              fontSize: 'clamp(0.55rem, 0.9vw, 0.8rem)',
               fontWeight: 400,
               color: '#585858',
               letterSpacing: '0.14em',
@@ -43,15 +43,15 @@ export const HeroSection = ({ t, page4Ref }) => {
               src="/relvo-wordmark-dark.svg"
               alt="relvo"
               className="h-auto"
-              style={{ width: 'clamp(220px, 30vw, 380px)' }}
+              style={{ width: 'clamp(180px, 30vw, 380px)' }}
             />
 
             {/* T2 Page headline */}
             <h1
-              className="mt-28 sm:mt-32"
+              className="mt-16 sm:mt-28 md:mt-32"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
+                fontSize: 'clamp(1.6rem, 4vw, 3.5rem)',
                 fontWeight: 300,
                 lineHeight: 1.15,
                 letterSpacing: '-0.02em',
@@ -69,7 +69,7 @@ export const HeroSection = ({ t, page4Ref }) => {
       {/* ── PAGE 2: Problem — Description + Animation + Bottom text ── */}
       <section
         ref={page2Ref}
-        className="full-page relative flex w-full flex-col items-center justify-center px-6"
+        className="full-page relative flex w-full flex-col items-center justify-center px-4 sm:px-6"
       >
         <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
           {/* T4 Body large */}
@@ -77,7 +77,7 @@ export const HeroSection = ({ t, page4Ref }) => {
             className="mx-auto max-w-3xl"
             style={{
               fontFamily: 'var(--font-ui)',
-              fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)',
+              fontSize: 'clamp(0.95rem, 1.6vw, 1.3rem)',
               fontWeight: 400,
               lineHeight: 1.55,
               color: '#626262',
@@ -89,7 +89,7 @@ export const HeroSection = ({ t, page4Ref }) => {
           </p>
 
           {/* Contract-to-cash animation */}
-          <div className="w-full max-w-6xl" style={{ marginTop: '-8%', marginBottom: '-12%' }}>
+          <div className="w-full max-w-6xl" style={{ marginTop: '-4%', marginBottom: '-8%' }}>
             <video
               autoPlay
               loop
@@ -104,10 +104,10 @@ export const HeroSection = ({ t, page4Ref }) => {
 
           {/* T3 Sub-headline */}
           <p
-            className="mx-auto mt-8 max-w-4xl sm:mt-12"
+            className="mx-auto mt-4 max-w-4xl sm:mt-8 md:mt-12"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+              fontSize: 'clamp(1.1rem, 2.5vw, 2rem)',
               fontWeight: 300,
               lineHeight: 1.3,
               color: '#000000',
@@ -123,7 +123,7 @@ export const HeroSection = ({ t, page4Ref }) => {
       {/* ── PAGE 3: Target Audience + Bridge ── */}
       <section
         ref={page3Ref}
-        className="full-page relative flex w-full flex-col items-center px-6"
+        className="full-page relative flex w-full flex-col items-center px-4 sm:px-6"
       >
         <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">
           {/* T1 Eyebrow */}
@@ -131,7 +131,7 @@ export const HeroSection = ({ t, page4Ref }) => {
             className="uppercase"
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: 'clamp(0.7rem, 0.9vw, 0.8rem)',
+              fontSize: 'clamp(0.55rem, 0.9vw, 0.8rem)',
               fontWeight: 400,
               color: '#585858',
               letterSpacing: '0.14em',
@@ -142,10 +142,10 @@ export const HeroSection = ({ t, page4Ref }) => {
 
           {/* T2 Page headline */}
           <h2
-            className="mt-8 sm:mt-10"
+            className="mt-6 sm:mt-8 md:mt-10"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
+              fontSize: 'clamp(1.6rem, 4vw, 3.5rem)',
               fontWeight: 300,
               lineHeight: 1.15,
               letterSpacing: '-0.02em',
@@ -159,20 +159,21 @@ export const HeroSection = ({ t, page4Ref }) => {
 
           {/* T3 Sub-headline — bridge statement */}
           <p
-            className="mx-auto mt-10 max-w-5xl sm:mt-14"
+            className="mx-auto mt-8 max-w-5xl sm:mt-10 md:mt-14"
             style={{
               fontFamily: 'var(--font-ui)',
-              fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+              fontSize: 'clamp(1rem, 2.5vw, 2rem)',
               fontWeight: 600,
               lineHeight: 1.25,
               color: 'var(--text-main)',
             }}
           >
             {t.bridgeFrom}
-            <span className="mx-2 inline-block align-middle" style={{ color: 'var(--text-soft)' }}>
-              <svg width="36" height="14" viewBox="0 0 36 14" fill="none" style={{ display: 'inline', verticalAlign: '0.1em' }}>
+            <span className="mx-1 inline-block align-middle sm:mx-2" style={{ color: 'var(--text-soft)' }}>
+              <svg width="24" height="12" viewBox="0 0 36 14" fill="none" className="hidden sm:inline" style={{ verticalAlign: '0.1em' }}>
                 <path d="M1 7h32M29 1l5 6-5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
+              <span className="sm:hidden">→</span>
             </span>
             {t.bridgeTo && (
               <>
@@ -207,10 +208,10 @@ export const HeroSection = ({ t, page4Ref }) => {
 
           {/* T5 Body — pinned to bottom */}
           <p
-            className="relative z-10 mx-auto mb-10 max-w-3xl text-center sm:mb-14"
+            className="relative z-10 mx-auto mb-8 max-w-3xl px-4 text-center sm:mb-10 md:mb-14"
             style={{
               fontFamily: 'var(--font-ui)',
-              fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)',
+              fontSize: 'clamp(0.8rem, 1.2vw, 1.05rem)',
               fontWeight: 400,
               lineHeight: 1.6,
               color: 'var(--text-soft)',

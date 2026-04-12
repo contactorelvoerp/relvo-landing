@@ -11,7 +11,7 @@ export const ComingSoon = ({ navigate }) => {
     <div className="relative flex min-h-screen flex-col overflow-hidden">
 
       {/* Top bar */}
-      <header className="relative z-10 flex items-center justify-between px-6 pt-6 sm:px-10 sm:pt-8">
+      <header className="relative z-10 flex items-center justify-between px-4 pt-5 sm:px-6 sm:pt-6 md:px-10 md:pt-8">
         <button
           onClick={handleBack}
           className="cursor-pointer rounded-[var(--radius-sm)] px-2 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
@@ -21,7 +21,7 @@ export const ComingSoon = ({ navigate }) => {
       </header>
 
       {/* Main content */}
-      <main className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-24 pt-8 text-center">
+      <main className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 pb-16 pt-8 text-center sm:px-6 sm:pb-24">
 
         {/* Eyebrow — Geist Mono */}
         <p

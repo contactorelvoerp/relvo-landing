@@ -111,7 +111,7 @@ export const CTASection = ({ ctaHref, t }) => {
   }
 
   return (
-    <section className="pt-40 pb-20 sm:pt-52 sm:pb-28">
+    <section className="px-4 pt-24 pb-16 sm:px-6 sm:pt-40 sm:pb-20 md:pt-52 md:pb-28">
       <div className="section-shell">
         <Reveal className="mx-auto max-w-6xl text-center">
           {/* Title — Fujiwara */}
@@ -119,7 +119,7 @@ export const CTASection = ({ ctaHref, t }) => {
             className="mx-auto"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
+              fontSize: 'clamp(1.6rem, 4vw, 3.5rem)',
               fontWeight: 300,
               lineHeight: 1.15,
               letterSpacing: '-0.02em',
@@ -184,10 +184,10 @@ export const CTASection = ({ ctaHref, t }) => {
             </p>
             <form
               onSubmit={handleSubmit}
-              className="rounded-full bg-white/50 p-1.5 backdrop-blur-sm"
+              className="rounded-2xl bg-white/50 p-1.5 backdrop-blur-sm sm:rounded-full"
               style={{ border: '1px solid rgba(19,19,30,0.06)' }}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <label className="sr-only" htmlFor="cta-email">
                   {t.ctaEmailPlaceholder}
                 </label>
@@ -209,7 +209,7 @@ export const CTASection = ({ ctaHref, t }) => {
                 />
                 <button
                   type="submit"
-                  className="h-10 shrink-0 rounded-full bg-[var(--text-main)] px-5 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+                  className="h-10 w-full shrink-0 rounded-full bg-[var(--text-main)] px-5 text-white sm:w-auto transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                   style={{
                     fontFamily: 'var(--font-mono)',
                     fontSize: '0.75rem',

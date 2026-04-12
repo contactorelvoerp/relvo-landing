@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { RelvoGradient } from '../../shaders/RelvoGradient'
 import { LoginGradient } from '../../shaders/LoginGradient'
 
@@ -11,9 +12,12 @@ import { LoginGradient } from '../../shaders/LoginGradient'
 const figures = [
   { src: '/figures/Asset 7.svg', size: 100, x: -85, y: -40,  opacity: 0.30 },
   { src: '/figures/Asset 8.svg', size: 35, x: 80,  y: 85,  opacity: 0.25 },
-  { src: '/figures/Asset 6.svg', size: 50, x: 75,  y: 220, opacity: 0.25 },
   { src: '/figures/Asset 9.svg', size: 75, x: -65, y: 130, opacity: 0.25 },
+  { src: '/figures/Asset 6.svg', size: 50, x: 75,  y: 220, opacity: 0.25 },
   { src: '/figures/Asset 11.svg', size: 50, x: -40, y: 310, opacity: 0.25 },
+  { src: '/figures/Asset 7.svg', size: 60, x: 70,  y: 400, opacity: 0.20 },
+  { src: '/figures/Asset 8.svg', size: 45, x: -50, y: 480, opacity: 0.20 },
+  { src: '/figures/Asset 6.svg', size: 55, x: 65,  y: 570, opacity: 0.20 },
 ]
 
 const shaderProps = {
@@ -38,6 +42,16 @@ const shaderProps = {
 
 export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
   const isLogin = variant === 'login'
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const blobSize = isMobile ? 0.63 : 0.80
+  const blobStretchY = isMobile ? 0.5 : 1.0
 
   return (
     <div
@@ -49,7 +63,7 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
           speed={0.65}
           rotation={-180}
           blobCount={2}
-          blobSize={0.80}
+          blobSize={blobSize}
           blobScale={1.0}
           {...shaderProps}
         />
@@ -58,8 +72,9 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
           speed={0.65}
           rotation={-180}
           blobCount={6}
-          blobSize={0.80}
+          blobSize={blobSize}
           blobScale={1.0}
+          blobStretchY={blobStretchY}
           {...shaderProps}
         />
       )}

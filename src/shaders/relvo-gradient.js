@@ -82,6 +82,7 @@ uniform float u_noise;
 uniform float u_blobCount;
 uniform float u_blobSize;
 uniform float u_blobScale;
+uniform float u_blobStretchY;
 
 uniform float u_originX;
 uniform float u_originY;
@@ -249,7 +250,7 @@ void main() {
     vec2 drift = DRIFT(t, 0.0, 0.5, 0.30)
                + ORBIT_WOBBLE(t, 1.0, 0.08 * sc);
     vec2 pos = anchor + drift;
-    float d = length(screenPos - pos)
+    float d = length((screenPos - pos) * vec2(1.0, u_blobStretchY))
             + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
@@ -260,7 +261,7 @@ void main() {
     vec2 drift = DRIFT(t, 5.24, 5.74, 0.08)
                + ORBIT_WOBBLE(t, 5.3, 0.04 * sc);
     vec2 pos = anchor + drift;
-    float d = length(screenPos - pos)
+    float d = length((screenPos - pos) * vec2(1.0, u_blobStretchY))
             + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
@@ -271,7 +272,7 @@ void main() {
     vec2 drift = DRIFT(t, 4.2, 4.7, 0.08)
                + ORBIT_WOBBLE(t, 9.7, 0.04 * sc);
     vec2 pos = anchor + drift;
-    float d = length(screenPos - pos)
+    float d = length((screenPos - pos) * vec2(1.0, u_blobStretchY))
             + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
@@ -282,7 +283,7 @@ void main() {
     vec2 drift = DRIFT(t, 6.3, 6.8, 0.08)
                + ORBIT_WOBBLE(t, 14.1, 0.04 * sc);
     vec2 pos = anchor + drift;
-    float d = length(screenPos - pos)
+    float d = length((screenPos - pos) * vec2(1.0, u_blobStretchY))
             + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
@@ -293,7 +294,7 @@ void main() {
     vec2 drift = DRIFT(t, 8.4, 8.9, 0.08)
                + ORBIT_WOBBLE(t, 18.5, 0.04 * sc);
     vec2 pos = anchor + drift;
-    float d = length(screenPos - pos)
+    float d = length((screenPos - pos) * vec2(1.0, u_blobStretchY))
             + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
@@ -304,7 +305,7 @@ void main() {
     vec2 drift = DRIFT(t, 10.5, 11.0, 0.08)
                + ORBIT_WOBBLE(t, 22.9, 0.04 * sc);
     vec2 pos = anchor + drift;
-    float d = length(screenPos - pos)
+    float d = length((screenPos - pos) * vec2(1.0, u_blobStretchY))
             + SHAPE_WOBBLE(screenPos, pos, t, 0.012 * sc);
     shape += smoothstep(blobSz, 0.0, d);
   }
@@ -314,7 +315,7 @@ void main() {
     vec2 anchor = vec2(-0.06, 1.10);
     vec2 drift = DRIFT(t, 12.6, 13.1, 0.08)
                + ORBIT_WOBBLE(t, 27.3, 0.04 * sc);
-    float d = length(screenPos - anchor - drift);
+    float d = length((screenPos - anchor - drift) * vec2(1.0, u_blobStretchY));
     shape += smoothstep(blobSz, 0.0, d);
   }
 
@@ -323,7 +324,7 @@ void main() {
     vec2 anchor = vec2(1.06, 1.08);
     vec2 drift = DRIFT(t, 14.7, 15.2, 0.08)
                + ORBIT_WOBBLE(t, 31.7, 0.04 * sc);
-    float d = length(screenPos - anchor - drift);
+    float d = length((screenPos - anchor - drift) * vec2(1.0, u_blobStretchY));
     shape += smoothstep(blobSz, 0.0, d);
   }
 

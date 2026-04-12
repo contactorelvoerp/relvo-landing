@@ -129,31 +129,49 @@ export function usePageSnap(pageRefs, exitRef) {
       }, 80)
     }
 
-    // Touch handling
+    // Touch handling — prevent default scroll in snap zone, snap on swipe
     let touchStartY = 0
+    let touchTriggered = false
 
     const handleTouchStart = (e) => {
       touchStartY = e.touches[0].clientY
+      touchTriggered = false
     }
 
-    const handleTouchEnd = (e) => {
-      if (isSnapping.current) return
-
-      const deltaY = touchStartY - e.changedTouches[0].clientY
-      if (Math.abs(deltaY) < 40) return
+    const handleTouchMove = (e) => {
+      if (isSnapping.current || touchTriggered) {
+        e.preventDefault()
+        return
+      }
 
       const scrollY = window.scrollY
       const lastSnapBottom = getLastSnapBottom()
+      const deltaY = touchStartY - e.touches[0].clientY
 
+      // Past snap zone — free scrolling
       if (scrollY > lastSnapBottom + window.innerHeight * 0.3) return
 
+      // At exit boundary scrolling down — free
+      if (scrollY >= lastSnapBottom - 10 && deltaY > 0) return
+
+      // Below snap zone — free
+      if (scrollY > lastSnapBottom) return
+
+      // Need a meaningful swipe
+      if (Math.abs(deltaY) < 50) {
+        e.preventDefault() // prevent partial scroll in snap zone
+        return
+      }
+
+      touchTriggered = true
+      e.preventDefault()
+
+      // Near boundary scrolling up — snap to last snap page
       if (scrollY > lastSnapBottom - window.innerHeight * 0.2 && deltaY < 0) {
         const lastPage = pageRefs.length - 1
         if (pageRefs[lastPage].current) snapTo(pageRefs[lastPage].current)
         return
       }
-
-      if (scrollY > lastSnapBottom) return
 
       const pageTops = getPageTops()
       const currentPage = findCurrentPage(scrollY, pageTops)
@@ -174,12 +192,12 @@ export function usePageSnap(pageRefs, exitRef) {
 
     window.addEventListener('wheel', handleWheel, { passive: false })
     window.addEventListener('touchstart', handleTouchStart, { passive: true })
-    window.addEventListener('touchend', handleTouchEnd, { passive: true })
+    window.addEventListener('touchmove', handleTouchMove, { passive: false })
 
     return () => {
       window.removeEventListener('wheel', handleWheel)
       window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchend', handleTouchEnd)
+      window.removeEventListener('touchmove', handleTouchMove)
       html.style.scrollBehavior = origBehavior
       clearTimeout(wheelTimer.current)
     }

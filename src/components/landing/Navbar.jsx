@@ -29,7 +29,7 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 sm:pt-4"
+      className="fixed inset-x-0 top-0 z-50 hidden px-4 pt-3 sm:block sm:px-6 sm:pt-4"
       style={{
         paddingBottom: showBackdrop ? '2.5rem' : '0.75rem',
         background: showBackdrop

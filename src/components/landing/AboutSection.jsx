@@ -1,9 +1,6 @@
 import { Reveal } from './Reveal'
 
 // Dead space in each animation as % of video width (1080x1080).
-// Used to apply negative margins so content sits flush with text.
-// For even idx (anim on right): eat right dead space.
-// For odd idx (anim on left): eat left dead space.
 const animDeadSpace = [
   { left: 11, right: 11, top: 24, bottom: 24 }, // complex-pricing
   { left: 7,  right: 8,  top: 31, bottom: 30 }, // inv-calculation
@@ -15,12 +12,12 @@ export const AboutSection = ({ t }) => {
   const features = t.features ?? []
 
   return (
-    <section className="section-shell py-20 sm:py-24 lg:py-28">
+    <section className="section-shell px-4 py-16 sm:px-6 sm:py-20 md:py-24 lg:py-28">
       <h2
-        className="mx-auto -mb-12 text-center sm:-mb-20"
+        className="mx-auto mb-16 text-center md:-mb-20"
         style={{
           fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
+          fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
           fontWeight: 300,
           lineHeight: 1.15,
           letterSpacing: '-0.02em',
@@ -29,27 +26,25 @@ export const AboutSection = ({ t }) => {
       >
         Nuestro Producto
       </h2>
-      <div className="mx-auto max-w-6xl [&>*+*]:-mt-40 sm:[&>*+*]:-mt-52 lg:[&>*+*]:-mt-60">
+      <div className="mx-auto max-w-6xl [&>*+*]:-mt-4 sm:[&>*+*]:-mt-12 md:[&>*+*]:-mt-40 lg:[&>*+*]:-mt-60">
         {features.map((feature, idx) => {
           const dead = animDeadSpace[idx] || { left: 0, right: 0, top: 0, bottom: 0 }
-          // Even idx: anim on right, eat right margin. Odd: anim on left, eat left margin.
-          const flushSide = idx % 2 === 0 ? 'right' : 'left'
 
           return (
             <Reveal
               key={`${idx}-${feature.title}`}
               delayMs={idx * 70}
-              className={`grid items-center gap-4 md:gap-4 lg:gap-5 ${idx === 1 ? '!-mt-52' : ''} ${idx === 2 ? '!-mt-52' : ''} ${idx === 3 ? '!-mt-52' : ''} ${
+              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? 'md:!-mt-52' : ''} ${idx === 2 ? 'md:!-mt-52' : ''} ${idx === 3 ? 'md:!-mt-52' : ''} ${
                 idx === 3 ? 'md:grid-cols-[5fr_7fr]' : idx === 2 ? 'md:grid-cols-[1fr_2fr]' : idx % 2 === 0 ? 'md:grid-cols-[2fr_3fr]' : 'md:grid-cols-[3fr_2fr]'
               }`}
             >
-              {/* Text — alternates sides */}
-              <div className={`flex w-full flex-col justify-center ${idx % 2 === 0 ? 'md:order-1' : 'md:order-2 md:items-end md:text-right'}`}>
+              {/* Text — stacks on mobile, alternates on desktop */}
+              <div className={`flex w-full flex-col justify-center px-2 sm:px-0 ${idx % 2 === 0 ? 'md:order-1' : 'md:order-2 md:items-end md:text-right'}`}>
                 <h3
                   className="max-w-[18ch]"
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+                    fontSize: 'clamp(1.3rem, 2.5vw, 2rem)',
                     fontWeight: 300,
                     lineHeight: 1.1,
                     letterSpacing: '-0.03em',
@@ -59,10 +54,10 @@ export const AboutSection = ({ t }) => {
                   {feature.title}
                 </h3>
                 <p
-                  className="mt-4 whitespace-pre-line"
+                  className="mt-3 whitespace-pre-line sm:mt-4"
                   style={{
                     fontFamily: 'var(--font-ui)',
-                    fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)',
+                    fontSize: 'clamp(0.85rem, 1.2vw, 1.05rem)',
                     lineHeight: 1.5,
                     color: 'var(--text-soft)',
                   }}
@@ -71,13 +66,10 @@ export const AboutSection = ({ t }) => {
                 </p>
               </div>
 
-              {/* Animation — alternates sides, negative margins eat dead space */}
+              {/* Animation — full width on mobile, alternates on desktop */}
               <div
-                className={`overflow-hidden ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
-                style={{
-                  overflow: 'hidden',
-                  // border: '2px solid red', // debug
-                }}
+                className={`-mt-6 overflow-hidden sm:-mt-4 md:mt-0 ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
+                style={{ overflow: 'hidden' }}
               >
                 <video
                   autoPlay
@@ -85,14 +77,11 @@ export const AboutSection = ({ t }) => {
                   muted
                   playsInline
                   ref={(el) => { if (el) el.playbackRate = 0.85 }}
+                  className="w-full"
                   style={{
                     background: 'transparent',
-                    width: '100%',
-                    // Even idx: anim on right → shift video right by right dead space
-                    // Odd idx: anim on left → shift video left by left dead space
                     marginLeft: idx === 3 ? '0' : idx % 2 === 0 ? `${dead.right}%` : `-${dead.left}%`,
                     marginRight: idx === 3 ? '0' : idx % 2 === 0 ? `-${dead.right}%` : `${dead.left}%`,
-                    // border: '2px solid blue', // debug
                   }}
                   src={feature.videoSrc}
                 />

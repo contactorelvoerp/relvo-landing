@@ -86,10 +86,10 @@ function App() {
             <CTASection ctaHref={calendlyHref} t={t} />
           </section>
 
-          <footer className="pb-10 pt-20 sm:pt-28">
+          <footer className="px-4 pb-10 pt-16 sm:px-6 sm:pt-20 md:pt-28">
             <div className="section-shell">
               <div
-                className="mx-auto max-w-6xl rounded-2xl bg-white/75 px-8 py-10 backdrop-blur-sm sm:px-12 sm:py-14"
+                className="mx-auto max-w-6xl rounded-2xl bg-white/75 px-5 py-8 backdrop-blur-sm sm:px-8 sm:py-10 md:px-12 md:py-14"
                 style={{ border: '1px solid rgba(19,19,30,0.06)' }}
               >
                 <div className="grid gap-10 md:grid-cols-[1.2fr_1.8fr] md:items-start">
