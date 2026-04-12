@@ -26,6 +26,10 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
   const navItems = t.navItems ?? []
   const ctaItem = navItems[navItems.length - 1]
   const regularItems = navItems.slice(0, -1)
+  const handleDocsClick = (event) => {
+    event.preventDefault()
+    navigate?.('/docs')
+  }
 
   return (
     <>
@@ -76,6 +80,7 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
             <a
               key={item.label}
               href={item.href}
+              onClick={item.href === '/docs' ? handleDocsClick : undefined}
               className="hidden rounded-[var(--radius-sm)] px-2 py-1 text-xs font-medium text-[var(--text-muted)] transition hover:text-[var(--text-main)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:inline-flex sm:text-sm"
             >
               {item.label}
@@ -131,7 +136,12 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
             <a
               key={item.label}
               href={item.href}
-              onClick={() => setMenuOpen(false)}
+              onClick={item.href === '/docs'
+                ? (event) => {
+                  handleDocsClick(event)
+                  setMenuOpen(false)
+                }
+                : () => setMenuOpen(false)}
               className="block rounded-[var(--radius-sm)] px-2 py-2 text-sm font-medium text-[var(--text-muted)] transition hover:text-[var(--text-main)]"
             >
               {item.label}

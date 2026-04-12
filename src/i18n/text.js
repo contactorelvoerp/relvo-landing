@@ -4,6 +4,7 @@ export const text = {
 
     navItems: [
       { label: 'Producto', href: '#producto' },
+      { label: 'Docs', href: '/docs' },
       { label: 'Demos', href: '#demos' },
     ],
 
@@ -115,6 +116,7 @@ export const text = {
 
     navItems: [
       { label: 'Product', href: '#producto' },
+      { label: 'Docs', href: '/docs' },
       { label: 'Demos', href: '#demos' },
     ],
 

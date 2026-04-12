@@ -28,8 +28,6 @@ export const AboutSection = ({ t }) => {
       </h2>
       <div className="mx-auto max-w-6xl [&>*+*]:-mt-4 sm:[&>*+*]:-mt-12 md:[&>*+*]:-mt-40 lg:[&>*+*]:-mt-60">
         {features.map((feature, idx) => {
-          const dead = animDeadSpace[idx] || { left: 0, right: 0, top: 0, bottom: 0 }
-
           return (
             <Reveal
               key={`${idx}-${feature.title}`}

@@ -53,10 +53,6 @@ export const CTASection = ({ ctaHref, t }) => {
   const [email, setEmail] = useState('')
   const [feedback, setFeedback] = useState('')
   const inputRef = useRef(null)
-  const title = String(t.ctaTitle || '')
-  const highlight = String(t.ctaTitleHighlight || '').trim()
-  const highlightIndex = highlight ? title.indexOf(highlight) : -1
-  const hasHighlight = highlightIndex >= 0
 
   useEffect(() => {
     if (typeof window === 'undefined') return
