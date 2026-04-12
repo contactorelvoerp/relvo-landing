@@ -245,7 +245,7 @@ void main() {
 
   // ── BLOB A: top-center, above viewport ──
   if (u_blobCount > 0.5) {
-    vec2 anchor = vec2(0.50, -0.15);
+    vec2 anchor = vec2(0.50, -0.30);
     vec2 drift = DRIFT(t, 0.0, 0.5, 0.15)
                + ORBIT_WOBBLE(t, 1.0, 0.06 * sc);
     vec2 pos = anchor + drift;
@@ -256,7 +256,7 @@ void main() {
 
   // ── BLOB B: bottom-center, below viewport ──
   if (u_blobCount > 1.5) {
-    vec2 anchor = vec2(0.50, 0.75);
+    vec2 anchor = vec2(0.50, 0.90);
     vec2 drift = DRIFT(t, 5.24, 5.74, 0.15)
                + ORBIT_WOBBLE(t, 5.3, 0.06 * sc);
     vec2 pos = anchor + drift;
