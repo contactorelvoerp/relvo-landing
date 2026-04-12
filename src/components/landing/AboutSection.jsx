@@ -84,6 +84,7 @@ export const AboutSection = ({ t }) => {
                   loop
                   muted
                   playsInline
+                  ref={(el) => { if (el) el.playbackRate = 0.85 }}
                   style={{
                     background: 'transparent',
                     width: '100%',

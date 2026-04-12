@@ -29,7 +29,7 @@ export const ShaderBackground = ({ className = '' }) => {
       style={{ height: '100%' }}
     >
       <RelvoGradient
-        speed={0.4}
+        speed={0.65}
         scale={1}
         rotation={-180}
         offsetX={0}
