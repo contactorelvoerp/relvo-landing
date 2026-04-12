@@ -8,49 +8,60 @@ export const ComingSoon = ({ navigate }) => {
   }
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-white">
-
-      {/* Background glow bottom */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-0 right-0 h-[60vh]"
-        style={{
-          background:
-            'radial-gradient(ellipse 120% 100% at 50% 100%, rgba(200,255,92,0.32) 0%, rgba(255,212,154,0.24) 45%, transparent 72%)',
-        }}
-      />
+    <div className="relative flex min-h-screen flex-col overflow-hidden">
 
       {/* Top bar */}
       <header className="relative z-10 flex items-center justify-between px-6 pt-6 sm:px-10 sm:pt-8">
         <button
           onClick={handleBack}
-          className="font-display text-base font-semibold tracking-[-0.01em] text-[var(--text-main)] sm:text-lg cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] rounded-[var(--radius-sm)]"
+          className="cursor-pointer rounded-[var(--radius-sm)] px-2 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
         >
-          Relvo
+          <img src="/relvo-wordmark-dark.svg" alt="relvo" className="h-5 w-auto sm:h-6" />
         </button>
       </header>
 
       {/* Main content */}
       <main className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-24 pt-8 text-center">
 
-        {/* Eyebrow */}
-        <span className="eyebrow-compact mb-10">Acceso a la plataforma</span>
-
-        {/* Heading */}
-        <h1
-          className="text-[clamp(3.2rem,9vw,7rem)] font-bold leading-[0.92] tracking-[-0.045em] text-[var(--text-main)]"
+        {/* Eyebrow — Geist Mono */}
+        <p
+          className="mb-10 uppercase"
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'clamp(0.7rem, 0.9vw, 0.8rem)',
+            fontWeight: 400,
+            color: '#585858',
+            letterSpacing: '0.14em',
+          }}
         >
-          Próxima&shy;mente
+          Acceso a la plataforma
+        </p>
+
+        {/* Heading — Fujiwara */}
+        <h1
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
+            fontWeight: 300,
+            lineHeight: 1.1,
+            letterSpacing: '-0.02em',
+            color: '#000000',
+          }}
+        >
+          Próximamente
         </h1>
 
-        {/* Accent underline */}
-        <div
-          className="mt-6 h-[5px] w-16 rounded-full"
-          style={{ background: 'var(--brand-accent)' }}
-        />
-
-        {/* Subtitle */}
-        <p className="mt-8 max-w-sm text-[0.95rem] leading-[1.7] text-[var(--text-soft)] sm:max-w-md sm:text-base">
+        {/* Subtitle — Instrument Sans */}
+        <p
+          className="mt-8 max-w-sm sm:max-w-md"
+          style={{
+            fontFamily: 'var(--font-ui)',
+            fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)',
+            fontWeight: 400,
+            lineHeight: 1.6,
+            color: 'var(--text-soft)',
+          }}
+        >
           Estamos construyendo el acceso a Relvo.
           <br />
           Muy pronto podrás ingresar desde aquí.
@@ -59,7 +70,13 @@ export const ComingSoon = ({ navigate }) => {
         {/* Contact chip */}
         <a
           href="mailto:contacto@relvoerp.com"
-          className="mt-5 inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-subtle,#f6f7f8)] px-4 py-1.5 text-xs font-medium text-[var(--text-muted)] transition hover:text-[var(--text-main)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-white/50 px-5 py-2 backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+          style={{
+            fontFamily: 'var(--font-ui)',
+            fontSize: '0.85rem',
+            color: 'var(--text-soft)',
+            border: '1px solid rgba(19,19,30,0.06)',
+          }}
         >
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <rect x="1" y="3" width="14" height="10" rx="2" />
@@ -68,10 +85,17 @@ export const ComingSoon = ({ navigate }) => {
           contacto@relvoerp.com
         </a>
 
-        {/* Back button */}
+        {/* Back button — pill style */}
         <button
           onClick={handleBack}
-          className="mt-12 inline-flex h-11 cursor-pointer items-center gap-2.5 rounded-[var(--radius-button)] border border-[var(--border-strong)] bg-white px-6 text-sm font-medium text-[var(--text-main)] transition hover:bg-[var(--surface-subtle,#f6f7f8)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+          className="mt-10 inline-flex h-11 cursor-pointer items-center gap-2.5 rounded-full bg-[var(--text-main)] px-6 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.75rem',
+            fontWeight: 500,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+          }}
         >
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <line x1="13" y1="8" x2="3" y2="8" />
@@ -81,9 +105,15 @@ export const ComingSoon = ({ navigate }) => {
         </button>
       </main>
 
-      {/* Bottom label */}
+      {/* Footer */}
       <footer className="relative z-10 pb-8 text-center">
-        <p className="text-[0.72rem] tracking-wide text-[var(--text-soft)]">
+        <p
+          style={{
+            fontFamily: 'var(--font-ui)',
+            fontSize: '0.75rem',
+            color: 'var(--text-muted)',
+          }}
+        >
           © {new Date().getFullYear()} Relvo
         </p>
       </footer>

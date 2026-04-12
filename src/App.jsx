@@ -13,8 +13,11 @@ import { text } from './i18n/text'
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
 
 function navigate(path) {
+  console.log('[navigate] pushing path:', path)
   window.history.pushState({}, '', path)
+  window.scrollTo(0, 0)
   window.dispatchEvent(new PopStateEvent('popstate'))
+  console.log('[navigate] done, pathname now:', window.location.pathname)
 }
 
 function App() {
@@ -26,7 +29,14 @@ function App() {
     return () => window.removeEventListener('popstate', handler)
   }, [])
 
-  if (pathname === '/login') return <ComingSoon navigate={navigate} />
+  const page4Ref = useRef(null)
+
+  if (pathname === '/login') return (
+    <div className="relative min-h-screen">
+      <ShaderBackground variant="login" />
+      <ComingSoon navigate={navigate} />
+    </div>
+  )
 
   const lang = 'es'
   const t = text?.[lang] ?? text?.es ?? {}
@@ -41,8 +51,6 @@ function App() {
     const title = String(column?.title || '').trim().toLowerCase()
     return title && title !== 'feature'
   })
-
-  const page4Ref = useRef(null)
 
   return (
     <div className="relative min-h-screen overflow-x-hidden text-[var(--text-main)] antialiased">
