@@ -1,6 +1,14 @@
 import { useRef } from 'react'
 import { usePageSnap } from '../../hooks/usePageSnap'
 
+// ── Typography hierarchy ──
+// T1 Eyebrow (Geist Mono):  clamp(0.7rem, 0.9vw, 0.8rem)
+// T2 Page title (Fujiwara):  clamp(2.2rem, 4vw, 3.5rem)
+// T3 Sub-headline (Fujiwara): clamp(1.4rem, 2.5vw, 2rem)
+// T4 Body large (Inst. Sans): clamp(1.1rem, 1.6vw, 1.3rem)
+// T5 Body (Inst. Sans):       clamp(0.9rem, 1.2vw, 1.05rem)
+// T6 Label (Geist Mono):      0.75rem
+
 export const HeroSection = ({ t, page4Ref }) => {
   const page1Ref = useRef(null)
   const page2Ref = useRef(null)
@@ -15,12 +23,12 @@ export const HeroSection = ({ t, page4Ref }) => {
         className="full-page relative flex w-full flex-col items-center px-6 pb-12 pt-[5rem] sm:pt-[5.5rem]"
       >
         <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center text-center">
-          {/* Tagline — Geist Mono */}
+          {/* T1 Eyebrow */}
           <p
             className="uppercase"
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: 'clamp(0.65rem, 1vw, 0.8rem)',
+              fontSize: 'clamp(0.7rem, 0.9vw, 0.8rem)',
               fontWeight: 400,
               color: '#585858',
               letterSpacing: '0.14em',
@@ -38,12 +46,12 @@ export const HeroSection = ({ t, page4Ref }) => {
               style={{ width: 'clamp(220px, 30vw, 380px)' }}
             />
 
-            {/* Headline — Fujiwara A */}
+            {/* T2 Page headline */}
             <h1
               className="mt-28 sm:mt-32"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.6rem, 3.5vw, 3rem)',
+                fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
                 fontWeight: 300,
                 lineHeight: 1.15,
                 letterSpacing: '-0.02em',
@@ -64,12 +72,12 @@ export const HeroSection = ({ t, page4Ref }) => {
         className="full-page relative flex w-full flex-col items-center justify-center px-6"
       >
         <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
-          {/* Description */}
+          {/* T4 Body large */}
           <p
             className="mx-auto max-w-3xl"
             style={{
               fontFamily: 'var(--font-ui)',
-              fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
+              fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)',
               fontWeight: 400,
               lineHeight: 1.55,
               color: '#626262',
@@ -94,12 +102,12 @@ export const HeroSection = ({ t, page4Ref }) => {
             </video>
           </div>
 
-          {/* Bottom text — Fujiwara A */}
+          {/* T3 Sub-headline */}
           <p
             className="mx-auto mt-8 max-w-4xl sm:mt-12"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.3rem, 2.8vw, 2rem)',
+              fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
               fontWeight: 300,
               lineHeight: 1.3,
               color: '#000000',
@@ -118,12 +126,12 @@ export const HeroSection = ({ t, page4Ref }) => {
         className="full-page relative flex w-full flex-col items-center px-6"
       >
         <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">
-          {/* Eyebrow */}
+          {/* T1 Eyebrow */}
           <p
             className="uppercase"
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: 'clamp(0.65rem, 1vw, 0.8rem)',
+              fontSize: 'clamp(0.7rem, 0.9vw, 0.8rem)',
               fontWeight: 400,
               color: '#585858',
               letterSpacing: '0.14em',
@@ -132,12 +140,12 @@ export const HeroSection = ({ t, page4Ref }) => {
             Para quién es Relvo
           </p>
 
-          {/* Headline */}
+          {/* T2 Page headline */}
           <h2
             className="mt-8 sm:mt-10"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.6rem, 3.2vw, 2.8rem)',
+              fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
               fontWeight: 300,
               lineHeight: 1.15,
               letterSpacing: '-0.02em',
@@ -149,12 +157,12 @@ export const HeroSection = ({ t, page4Ref }) => {
             más rápido que sus procesos.
           </h2>
 
-          {/* Bridge statement */}
+          {/* T3 Sub-headline — bridge statement */}
           <p
             className="mx-auto mt-10 max-w-5xl sm:mt-14"
             style={{
               fontFamily: 'var(--font-ui)',
-              fontSize: 'clamp(1.3rem, 2.6vw, 2rem)',
+              fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
               fontWeight: 600,
               lineHeight: 1.25,
               color: 'var(--text-main)',
@@ -197,12 +205,12 @@ export const HeroSection = ({ t, page4Ref }) => {
 
         </div>
 
-          {/* Audience description — pinned to bottom */}
+          {/* T5 Body — pinned to bottom */}
           <p
             className="relative z-10 mx-auto mb-10 max-w-3xl text-center sm:mb-14"
             style={{
               fontFamily: 'var(--font-ui)',
-              fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)',
+              fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)',
               fontWeight: 400,
               lineHeight: 1.6,
               color: 'var(--text-soft)',

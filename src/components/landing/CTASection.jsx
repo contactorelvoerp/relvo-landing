@@ -119,7 +119,7 @@ export const CTASection = ({ ctaHref, t }) => {
             className="mx-auto"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.8rem, 3.5vw, 3rem)',
+              fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
               fontWeight: 300,
               lineHeight: 1.15,
               letterSpacing: '-0.02em',
@@ -159,7 +159,7 @@ export const CTASection = ({ ctaHref, t }) => {
               className="inline-flex h-11 items-center justify-center rounded-full bg-[var(--text-main)] px-6 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.8rem',
+                fontSize: '0.75rem',
                 fontWeight: 500,
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
@@ -175,7 +175,7 @@ export const CTASection = ({ ctaHref, t }) => {
               className="mb-5 sm:mb-6"
               style={{
                 fontFamily: 'var(--font-ui)',
-                fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)',
+                fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)',
                 fontWeight: 500,
                 color: 'var(--text-main)',
               }}
@@ -212,7 +212,7 @@ export const CTASection = ({ ctaHref, t }) => {
                   className="h-10 shrink-0 rounded-full bg-[var(--text-main)] px-5 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                   style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.8rem',
+                    fontSize: '0.75rem',
                     fontWeight: 500,
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
@@ -226,7 +226,7 @@ export const CTASection = ({ ctaHref, t }) => {
               className="mt-3"
               style={{
                 fontFamily: 'var(--font-ui)',
-                fontSize: '0.75rem',
+                fontSize: 'clamp(0.8rem, 1vw, 0.9rem)',
                 color: 'var(--text-soft)',
               }}
             >

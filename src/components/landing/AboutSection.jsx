@@ -20,7 +20,7 @@ export const AboutSection = ({ t }) => {
         className="mx-auto mb-4 text-center sm:mb-6"
         style={{
           fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+          fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
           fontWeight: 300,
           lineHeight: 1.15,
           letterSpacing: '-0.02em',
@@ -50,7 +50,7 @@ export const AboutSection = ({ t }) => {
                   className="max-w-[18ch]"
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.5rem, 2.5vw, 2.2rem)',
+                    fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
                     fontWeight: 300,
                     lineHeight: 1.1,
                     letterSpacing: '-0.03em',

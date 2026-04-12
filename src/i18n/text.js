@@ -39,7 +39,7 @@ export const text = {
       {
         title: 'Recauda más rápido y concilia en tiempo real.',
         description:
-          'Con mensajería de cobranza automática, pagos y conciliación conectada a tus cuentas bancarias.',
+          'Con mensajería de cobranza automática, pagos y conciliación\nconectada a tus cuentas bancarias.',
         imageSide: 'right',
         videoSrc: '/animations/conciliation.webm',
       },
