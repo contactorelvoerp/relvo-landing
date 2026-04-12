@@ -78,50 +78,95 @@ function App() {
             <CTASection ctaHref={calendlyHref} t={t} />
           </section>
 
-          <footer className="pb-10 pt-16">
-        <div className="section-shell">
-          <Reveal className="rounded-[var(--radius-2xl)] bg-white/60 px-7 py-10 shadow-[0_20px_50px_rgba(61,61,61,0.10)] backdrop-blur-sm sm:px-10 sm:py-12">
-            <div className="grid gap-10 md:grid-cols-[1.2fr_1.8fr] md:items-start">
-              <div>
-                <p className="font-display text-sm font-semibold tracking-[0.12em] text-[var(--text-main)]">
-                  RELVO
-                </p>
-                <p className="mt-3 max-w-xs text-sm leading-6 text-[var(--text-muted)]">
-                  {t.footerTagline}
-                </p>
-                <p className="mt-3 text-sm leading-6 text-[var(--text-soft)]">
-                  © {new Date().getFullYear()} Relvo. {t.footerRights}
-                </p>
-                <p className="mt-2 text-sm text-[var(--text-soft)]">contacto@relvoerp.com</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-6 text-sm sm:grid-cols-3 sm:gap-8">
-                {footerColumns.map((column) => (
-                  <div key={column.title} className="space-y-3">
-                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
-                      {column.title}
+          <footer className="pb-10 pt-20 sm:pt-28">
+            <div className="section-shell">
+              <div
+                className="mx-auto max-w-6xl rounded-2xl bg-white/75 px-8 py-10 backdrop-blur-sm sm:px-12 sm:py-14"
+                style={{ border: '1px solid rgba(19,19,30,0.06)' }}
+              >
+                <div className="grid gap-10 md:grid-cols-[1.2fr_1.8fr] md:items-start">
+                  {/* Left — brand + tagline */}
+                  <div>
+                    <img
+                      src="/relvo-wordmark-dark.svg"
+                      alt="relvo"
+                      className="h-5 w-auto sm:h-6"
+                    />
+                    <p
+                      className="mt-4 max-w-xs"
+                      style={{
+                        fontFamily: 'var(--font-ui)',
+                        fontSize: '0.85rem',
+                        lineHeight: 1.6,
+                        color: 'var(--text-soft)',
+                      }}
+                    >
+                      {t.footerTagline}
                     </p>
-                    <div className="space-y-2 text-[var(--text-soft)]">
-                      {column.links
-                        ?.filter((link) => String(link?.label || '').trim().toLowerCase() !== 'link')
-                        .map((link) => (
-                        <a
-                          key={`${column.title}-${link.label}`}
-                          className="block hover:text-[var(--text-main)]"
-                          href={link.href}
-                          target={link.external ? '_blank' : undefined}
-                          rel={link.external ? 'noopener noreferrer' : undefined}
-                        >
-                          {link.label}
-                        </a>
-                        ))}
-                    </div>
+                    <p
+                      className="mt-4"
+                      style={{
+                        fontFamily: 'var(--font-ui)',
+                        fontSize: '0.8rem',
+                        color: 'var(--text-muted)',
+                      }}
+                    >
+                      © {new Date().getFullYear()} Relvo. {t.footerRights}
+                    </p>
+                    <p
+                      className="mt-1"
+                      style={{
+                        fontFamily: 'var(--font-ui)',
+                        fontSize: '0.8rem',
+                        color: 'var(--text-soft)',
+                      }}
+                    >
+                      contacto@relvoerp.com
+                    </p>
                   </div>
-                ))}
+
+                  {/* Right — nav columns */}
+                  <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8">
+                    {footerColumns.map((column) => (
+                      <div key={column.title} className="space-y-3">
+                        <p
+                          style={{
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.65rem',
+                            fontWeight: 500,
+                            letterSpacing: '0.12em',
+                            textTransform: 'uppercase',
+                            color: 'var(--text-muted)',
+                          }}
+                        >
+                          {column.title}
+                        </p>
+                        <div className="space-y-2">
+                          {column.links
+                            ?.filter((link) => String(link?.label || '').trim().toLowerCase() !== 'link')
+                            .map((link) => (
+                            <a
+                              key={`${column.title}-${link.label}`}
+                              className="block transition hover:text-[var(--text-main)]"
+                              href={link.href}
+                              target={link.external ? '_blank' : undefined}
+                              rel={link.external ? 'noopener noreferrer' : undefined}
+                              style={{
+                                fontFamily: 'var(--font-ui)',
+                                fontSize: '0.85rem',
+                                color: 'var(--text-soft)',
+                              }}
+                            >
+                              {link.label}
+                            </a>
+                            ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
-          </Reveal>
-        </div>
           </footer>
         </div>
       </main>

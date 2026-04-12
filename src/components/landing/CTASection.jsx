@@ -144,7 +144,7 @@ export const CTASection = ({ ctaHref, t }) => {
               src="/relvo-wordmark-dark.svg"
               alt="relvo"
               className="inline-block align-baseline"
-              style={{ height: '0.75em', marginBottom: '0.05em' }}
+              style={{ height: '0.75em', marginLeft: '0.15em', marginRight: '0.1em' }}
             />
             {'?'}
           </h2>

@@ -150,7 +150,7 @@ body {
 }
 
 ::selection {
-  background: var(--brand-warm);
+  background: rgba(244, 176, 142, 0.3);
 }
 
 a {
