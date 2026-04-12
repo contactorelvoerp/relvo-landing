@@ -165,6 +165,7 @@ const CanvasVideo = ({ src, topCropPx = 0, fit = 'cover', backgroundColor = '', 
     let resizeObserver
     let viewportObserver
     let destroyed = false
+    let isOnscreen = true
 
     const tryPlay = () => {
       if (destroyed || !video.paused) return
@@ -242,7 +243,12 @@ const CanvasVideo = ({ src, topCropPx = 0, fit = 'cover', backgroundColor = '', 
         await video.play().catch(() => {})
 
         viewportObserver = new IntersectionObserver(
-          (entries) => { if (entries[0]?.isIntersecting) tryPlay() },
+          (entries) => {
+            const visible = entries[0]?.isIntersecting ?? false
+            isOnscreen = visible
+            if (visible) tryPlay()
+            else { try { video.pause() } catch { /* ignore */ } }
+          },
           { threshold: 0.1 }
         )
         viewportObserver.observe(canvas)
@@ -255,7 +261,7 @@ const CanvasVideo = ({ src, topCropPx = 0, fit = 'cover', backgroundColor = '', 
         if (hasVfc) {
           const loop = () => {
             if (destroyed) return
-            draw()
+            if (isOnscreen) draw()
             video.requestVideoFrameCallback(loop)
           }
           video.requestVideoFrameCallback(loop)
@@ -264,7 +270,7 @@ const CanvasVideo = ({ src, topCropPx = 0, fit = 'cover', backgroundColor = '', 
 
         const tick = () => {
           if (destroyed) return
-          draw()
+          if (isOnscreen) draw()
           rafId = window.requestAnimationFrame(tick)
         }
         rafId = window.requestAnimationFrame(tick)
