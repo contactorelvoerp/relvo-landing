@@ -4,10 +4,10 @@ import { HeroSection } from './components/landing/HeroSection'
 import { AboutSection } from './components/landing/AboutSection'
 import { CTASection } from './components/landing/CTASection'
 import { Navbar } from './components/landing/Navbar'
-import { Reveal } from './components/landing/Reveal'
 import { SocialProofSection } from './components/landing/SocialProofSection'
 import { ShaderBackground } from './components/landing/ShaderBackground'
 import { ComingSoon } from './pages/ComingSoon'
+import { DocsPage } from './pages/DocsPage'
 import { text } from './i18n/text'
 
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
@@ -31,6 +31,10 @@ function App() {
 
   const page4Ref = useRef(null)
 
+  if (pathname === '/docs' || pathname.startsWith('/docs/')) return (
+    <DocsPage pathname={pathname} navigate={navigate} />
+  )
+
   if (pathname === '/login') return (
     <div className="relative min-h-screen">
       <ShaderBackground variant="login" />
@@ -40,13 +44,6 @@ function App() {
 
   const lang = 'es'
   const t = text?.[lang] ?? text?.es ?? {}
-  const bridgeTo = String(t.bridgeTo || '')
-  const bridgeToHighlight = String(t.bridgeToHighlight || '').trim()
-  const bridgeToHighlightIndex = bridgeToHighlight ? bridgeTo.indexOf(bridgeToHighlight) : -1
-  const hasBridgeToHighlight = bridgeToHighlightIndex >= 0
-  const bridgeToEmphasis = String(t.bridgeToEmphasis || '').trim()
-  const bridgeToEmphasisIndex = bridgeToEmphasis ? bridgeToHighlight.indexOf(bridgeToEmphasis) : -1
-  const hasBridgeToEmphasis = bridgeToEmphasisIndex >= 0
   const footerColumns = (t.footerColumns ?? []).filter((column) => {
     const title = String(column?.title || '').trim().toLowerCase()
     return title && title !== 'feature'

@@ -296,7 +296,7 @@ const CanvasVideo = ({ src, topCropPx = 0, fit = 'cover', backgroundColor = '', 
       } catch { /* ignore */ }
       try { video.remove() } catch { /* ignore */ }
     }
-  }, [ok, onError, src, key, topCropPx, fit])
+  }, [ok, onError, src, key, topCropPx, fit, backgroundColor])
 
   if (!ok) return null
   return <canvas ref={canvasRef} className={className} />
