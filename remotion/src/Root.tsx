@@ -1,6 +1,7 @@
 import { Composition } from "remotion";
 import { HelloWorld, myCompSchema } from "./HelloWorld";
 import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
+import { RelvoCoin, relvoCoinSchema } from "./RelvoCoin";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -28,6 +29,20 @@ export const RemotionRoot: React.FC = () => {
       />
 
       {/* Mount any React component to make it show up in the sidebar and work on it individually! */}
+      <Composition
+        id="RelvoCoin"
+        component={RelvoCoin}
+        durationInFrames={240}
+        fps={60}
+        width={1080}
+        height={1080}
+        schema={relvoCoinSchema}
+        defaultProps={{
+          background: "#ffffff",
+          coinColor: "#13121C",
+        }}
+      />
+
       <Composition
         id="OnlyLogo"
         component={Logo}
