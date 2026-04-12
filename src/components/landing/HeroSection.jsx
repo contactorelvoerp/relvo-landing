@@ -89,7 +89,7 @@ export const HeroSection = ({ t, page4Ref }) => {
           </p>
 
           {/* Contract-to-cash animation */}
-          <div className="w-full max-w-6xl" style={{ marginTop: '-4%', marginBottom: '-8%' }}>
+          <div className="w-[110%]" style={{ marginTop: '-4%', marginBottom: '-8%', marginLeft: '-5%', marginRight: '-5%' }}>
             <video
               autoPlay
               loop
