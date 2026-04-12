@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { RelvoGradient } from '../../shaders/RelvoGradient'
 import { LoginGradient } from '../../shaders/LoginGradient'
+import { BackgroundMobile } from './BackgroundMobile'
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 /**
  * Full-page animated grain gradient background.
@@ -44,15 +46,9 @@ const shaderProps = {
 
 export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
   const isLogin = variant === 'login'
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const isMobile = useIsMobile()
   const wrapperRef = useRef(null)
   const [isVisible, setIsVisible] = useState(true)
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   useEffect(() => {
     const el = wrapperRef.current
@@ -65,11 +61,12 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
     return () => io.disconnect()
   }, [])
 
-  const blobSize = isMobile ? 0.63 : 0.80
-  const blobStretchY = isMobile ? 0.5 : 1.0
-  const blobCount = isMobile ? 8 : 14
-  const minPixelRatio = isMobile ? 1 : 2
+  const blobSize = 0.80
+  const blobStretchY = 1.0
+  const blobCount = 14
+  const minPixelRatio = 2
   const activeSpeed = isVisible ? 0.65 : 0
+  const showMobileStatic = isMobile && !isLogin
 
   return (
     <div
@@ -77,7 +74,9 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
       className={`pointer-events-none absolute inset-x-0 top-0 z-0 overflow-hidden ${className}`}
       style={{ height: '100%' }}
     >
-      {isLogin ? (
+      {showMobileStatic ? (
+        <BackgroundMobile />
+      ) : isLogin ? (
         <LoginGradient
           speed={activeSpeed}
           rotation={-180}
