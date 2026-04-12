@@ -1,105 +1,102 @@
 import { Reveal } from './Reveal'
-import { HeroCanvasVideo } from './HeroCanvasVideo'
-import { canUseAlphaCanvasVideo, isMobileDevice } from '../../utils/mediaSupport'
 
-const MOBILE_FEATURE_VIDEO_SRC_BY_INDEX = [
-  '/Feature%201%20movil.mp4',
-  '/Feature%202%20movil.mp4',
-  '/Feature%203%20movil.mp4',
-  '/Feature%204%20movil.mp4',
+// Dead space in each animation as % of video width (1080x1080).
+// Used to apply negative margins so content sits flush with text.
+// For even idx (anim on right): eat right dead space.
+// For odd idx (anim on left): eat left dead space.
+const animDeadSpace = [
+  { left: 11, right: 11, top: 24, bottom: 24 }, // complex-pricing
+  { left: 7,  right: 8,  top: 31, bottom: 30 }, // inv-calculation
+  { left: 7,  right: 7,  top: 26, bottom: 26 }, // approvals
+  { left: 17, right: 17, top: 7,  bottom: 17 }, // conciliation
 ]
 
 export const AboutSection = ({ t }) => {
   const features = t.features ?? []
-  const supportsAlphaCanvas = canUseAlphaCanvasVideo()
-  const useMobileLayout = isMobileDevice()
 
   return (
     <section className="section-shell py-20 sm:py-24 lg:py-28">
-      <div className="mx-auto max-w-6xl space-y-14 sm:space-y-16 lg:space-y-20">
+      <h2
+        className="mx-auto mb-4 text-center sm:mb-6"
+        style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+          fontWeight: 300,
+          lineHeight: 1.15,
+          letterSpacing: '-0.02em',
+          color: '#000000',
+        }}
+      >
+        Nuestro Producto
+      </h2>
+      <div className="mx-auto max-w-6xl [&>*+*]:-mt-28 sm:[&>*+*]:-mt-36 lg:[&>*+*]:-mt-44">
         {features.map((feature, idx) => {
-          const imageLeft = feature.imageSide === 'left'
-          const aspectClass = 'aspect-square'
-
-          const mobileVideoOnly = useMobileLayout && Boolean(feature.videoSrc)
-
-          const media = (
-            <div
-              className={`overflow-hidden rounded-[var(--radius-xl)] ${
-                mobileVideoOnly ? 'bg-transparent' : 'bg-[var(--surface-subtle)]'
-              }`}
-            >
-              <div className={`w-full ${aspectClass}`}>
-                <div className="relative h-full w-full">
-                  {feature.imageSrc && !mobileVideoOnly && !feature.videoSrc ? (
-                    <img
-                      src={feature.imageSrc}
-                      alt={feature.imageAlt ?? feature.title}
-                      className="absolute inset-0 h-full w-full object-cover"
-                      loading="lazy"
-                      draggable={false}
-                    />
-                  ) : null}
-
-                  {feature.videoSrc ? (
-                    <HeroCanvasVideo
-                      src={
-                        useMobileLayout
-                          ? MOBILE_FEATURE_VIDEO_SRC_BY_INDEX[idx] || feature.videoSrc
-                          : feature.videoSrc
-                      }
-                      fit={useMobileLayout ? 'cover' : 'contain'}
-                      topCropPx={useMobileLayout ? 14 : 0}
-                      native={useMobileLayout}
-                      backgroundColor=""
-                      className="absolute inset-0 h-full w-full"
-                    />
-                  ) : null}
-
-                  {!feature.imageSrc && !feature.videoSrc ? (
-                    <>
-                      <div className="absolute left-[18%] top-[30%] h-28 w-28 rounded-full bg-black/[0.04]" />
-                      <div className="absolute right-[20%] bottom-[22%] h-24 w-24 rounded-full bg-black/[0.04]" />
-                      <div className="absolute inset-0 bg-gradient-to-b from-black/[0.02] via-transparent to-black/[0.05]" />
-                    </>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-          )
-
-          const copy = (
-            <div className={`flex w-full flex-col justify-center ${useMobileLayout ? '' : 'mx-auto max-w-[32ch] md:max-w-[30ch] lg:max-w-[32ch]'}`}>
-              <h3 className="max-w-[16ch] font-display text-[clamp(1.75rem,2.35vw,2.35rem)] font-bold leading-[1.06] tracking-[-0.04em] text-[var(--text-main)]">
-                {feature.title}
-              </h3>
-              <p className="mt-4 whitespace-pre-line text-[16px] leading-[1.4] tracking-[-0.01em] text-[var(--text-soft)] sm:text-[18px]">
-                {feature.description}
-              </p>
-            </div>
-          )
+          const dead = animDeadSpace[idx] || { left: 0, right: 0, top: 0, bottom: 0 }
+          // Even idx: anim on right, eat right margin. Odd: anim on left, eat left margin.
+          const flushSide = idx % 2 === 0 ? 'right' : 'left'
 
           return (
             <Reveal
               key={`${idx}-${feature.title}`}
               delayMs={idx * 70}
-              className={
-                useMobileLayout
-                  ? ''
-                  : 'grid items-start gap-10 md:grid-cols-2 md:items-center md:gap-12 lg:gap-16'
-              }
+              style={idx === 2 ? { marginTop: '-6rem' } : undefined}
+              className={`grid items-center gap-10 md:gap-12 lg:gap-16 ${
+                idx === 3 ? 'md:grid-cols-[5fr_7fr]' : idx === 2 ? 'md:grid-cols-[1fr_2fr]' : idx % 2 === 0 ? 'md:grid-cols-[2fr_3fr]' : 'md:grid-cols-[3fr_2fr]'
+              }`}
             >
-              {useMobileLayout ? (
-                <div className="overflow-hidden rounded-[var(--radius-2xl)] bg-[var(--surface-subtle)] shadow-[0_12px_40px_rgba(15,17,21,0.04)]">
-                  <div className="px-5 pt-5 pb-4">{copy}</div>
-                  {media}
-                </div>
-              ) : (
-                <>
-                  <div className={imageLeft ? '' : 'md:order-2'}>{media}</div>
-                  <div className={imageLeft ? '' : 'md:order-1'}>{copy}</div>
-                </>
-              )}
+              {/* Text — alternates sides */}
+              <div className={`flex w-full flex-col justify-center ${idx % 2 === 0 ? 'md:order-1' : 'md:order-2 md:items-end md:text-right'}`}>
+                <h3
+                  className="max-w-[18ch]"
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(1.5rem, 2.5vw, 2.2rem)',
+                    fontWeight: 300,
+                    lineHeight: 1.1,
+                    letterSpacing: '-0.03em',
+                    color: 'var(--text-main)',
+                  }}
+                >
+                  {feature.title}
+                </h3>
+                <p
+                  className="mt-4 whitespace-pre-line"
+                  style={{
+                    fontFamily: 'var(--font-ui)',
+                    fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)',
+                    lineHeight: 1.5,
+                    color: 'var(--text-soft)',
+                  }}
+                >
+                  {feature.description}
+                </p>
+              </div>
+
+              {/* Animation — alternates sides, negative margins eat dead space */}
+              <div
+                className={`overflow-hidden ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
+                style={{
+                  overflow: 'hidden',
+                  // border: '2px solid red', // debug
+                }}
+              >
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{
+                    background: 'transparent',
+                    width: '100%',
+                    // Even idx: anim on right → shift video right by right dead space
+                    // Odd idx: anim on left → shift video left by left dead space
+                    marginLeft: idx === 3 ? '0' : idx % 2 === 0 ? `${dead.right}%` : `-${dead.left}%`,
+                    marginRight: idx === 3 ? '0' : idx % 2 === 0 ? `-${dead.right}%` : `${dead.left}%`,
+                    // border: '2px solid blue', // debug
+                  }}
+                  src={feature.videoSrc}
+                />
+              </div>
             </Reveal>
           )
         })}

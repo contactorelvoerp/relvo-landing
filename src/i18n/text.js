@@ -20,36 +20,28 @@ export const text = {
         description:
           'Cargos fijos, recurrentes, variables, tiers, comisiones y más.\nSincroniza tus datos de clientes y sus contratos en una sola plataforma.',
         imageSide: 'right',
-        imageSrc: '/Feature%201.png',
-        imageAlt: 'Modela cualquier estructura de precios',
-        videoSrc: '/Feature%201.webm',
+        videoSrc: '/animations/complex-pricing.webm',
+      },
+      {
+        title: 'Calcula y factura automáticamente.',
+        description:
+          'Relvo emite facturas en base al consumo, se conecta a tu sistema, sin intervención humana, sin errores.',
+        imageSide: 'right',
+        videoSrc: '/animations/inv-calculation.webm',
       },
       {
         title: 'Flujos de aprobación en automático.',
         description:
           'Deja que la IA maneje de manera autónoma las solicitudes de OC y aprobaciones, acelerando el proceso de facturación y recaudación.',
-        imageSide: 'left',
-        imageSrc: '/Feature%202.png',
-        imageAlt: 'Flujos de aprobación',
-        videoSrc: '/Feature2%20aprobaciones.webm',
-      },
-      {
-        title: 'Calcula y factura automáticamente.',
-        description:
-          'Relvo emite facuras en base al consumo, se conecta a tu sistema, sin intervención humana, sin errores.',
         imageSide: 'right',
-        imageSrc: '/Feature%203.png',
-        imageAlt: 'Calcula y factura automáticamente',
-        videoSrc: '/Feature%203.webm',
+        videoSrc: '/animations/approvals.webm',
       },
       {
         title: 'Recauda más rápido y concilia en tiempo real.',
         description:
           'Con mensajería de cobranza automática, pagos y conciliación conectada a tus cuentas bancarias.',
-        imageSide: 'left',
-        imageSrc: '/Feature%204.png',
-        imageAlt: 'Recauda más rápido y concilia en tiempo real',
-        videoSrc: '/Feature%204.webm',
+        imageSide: 'right',
+        videoSrc: '/animations/conciliation.webm',
       },
     ],
 
