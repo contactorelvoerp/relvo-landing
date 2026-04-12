@@ -111,48 +111,83 @@ export const CTASection = ({ ctaHref, t }) => {
   }
 
   return (
-    <section className="py-28 sm:py-36">
+    <section className="pt-40 pb-20 sm:pt-52 sm:pb-28">
       <div className="section-shell">
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <h2 className="mx-auto max-w-2xl font-display text-3xl tracking-[-0.04em] text-[var(--text-main)] sm:text-5xl sm:leading-[1.05]">
-            {hasHighlight ? (
-              <>
-                {title.slice(0, highlightIndex)}
-                <span className="relative inline-block px-1">
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-x-0 bottom-[0.12em] h-[0.52em] rounded-[2px] bg-[var(--brand-warm)]"
-                  />
-                  <span className="relative z-10">{highlight}</span>
-                </span>
-                {title.slice(highlightIndex + highlight.length)}
-              </>
-            ) : (
-              title
-            )}
+        <Reveal className="mx-auto max-w-6xl text-center">
+          {/* Title — Fujiwara */}
+          <h2
+            className="mx-auto"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(1.8rem, 3.5vw, 3rem)',
+              fontWeight: 300,
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+              color: '#000000',
+            }}
+          >
+            {'Estamos buscando nuestros '}
+            <span
+              className="px-[0.18em]"
+              style={{
+                background: 'linear-gradient(transparent 48%, #F4B08E 48%)',
+                WebkitBoxDecorationBreak: 'clone',
+                boxDecorationBreak: 'clone',
+                borderRadius: '2px',
+              }}
+            >
+              early adopters,
+            </span>
+            <br />
+            {'¿te gustaría probar '}
+            <img
+              src="/relvo-wordmark-dark.svg"
+              alt="relvo"
+              className="inline-block align-baseline"
+              style={{ height: '0.75em', marginBottom: '0.05em' }}
+            />
+            {'?'}
           </h2>
 
-          <div className="mt-8 sm:mt-10">
+          {/* CTA button */}
+          <div className="mt-10 sm:mt-12">
             <a
               href={ctaHref}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackScheduleDemo('cta_section')}
-              className="inline-flex h-11 items-center justify-center rounded-[var(--radius-button)] bg-[var(--text-main)] px-5 text-sm font-medium text-white shadow-[0_18px_40px_rgba(16,16,14,0.12)] transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+              className="inline-flex h-11 items-center justify-center rounded-full bg-[var(--text-main)] px-6 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.8rem',
+                fontWeight: 500,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+              }}
             >
               {t.ctaScheduleText}
             </a>
           </div>
 
-          <div className="mx-auto mt-10 w-full max-w-2xl sm:mt-12">
-            <p className="mb-5 text-base font-medium text-[var(--text-main)] sm:mb-6">
+          {/* Email capture */}
+          <div className="mx-auto mt-10 w-full max-w-xl sm:mt-12">
+            <p
+              className="mb-5 sm:mb-6"
+              style={{
+                fontFamily: 'var(--font-ui)',
+                fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)',
+                fontWeight: 500,
+                color: 'var(--text-main)',
+              }}
+            >
               {t.ctaCaptureLabel}
             </p>
             <form
               onSubmit={handleSubmit}
-              className="rounded-[var(--radius-xl)] border border-black/[0.08] bg-white/60 p-2 shadow-[0_20px_50px_rgba(16,16,14,0.06)] backdrop-blur-sm"
+              className="rounded-full bg-white/50 p-1.5 backdrop-blur-sm"
+              style={{ border: '1px solid rgba(19,19,30,0.06)' }}
             >
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+              <div className="flex items-center gap-2">
                 <label className="sr-only" htmlFor="cta-email">
                   {t.ctaEmailPlaceholder}
                 </label>
@@ -164,19 +199,39 @@ export const CTASection = ({ ctaHref, t }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t.ctaEmailPlaceholder}
-                  className="h-11 w-full rounded-[var(--radius-button)] border border-black/[0.10] bg-transparent px-4 text-sm text-[var(--text-main)] outline-none placeholder:text-[var(--text-soft)] focus:border-black/[0.16] focus:ring-2 focus:ring-[var(--focus-ring)] sm:flex-1 sm:border-transparent sm:focus:border-transparent"
+                  className="h-10 w-full bg-transparent px-5 text-[var(--text-main)] outline-none placeholder:text-[var(--text-muted)]"
+                  style={{
+                    fontFamily: 'var(--font-ui)',
+                    fontSize: '0.9rem',
+                  }}
                   autoComplete="work email"
                   inputMode="email"
                 />
                 <button
                   type="submit"
-                  className="h-11 shrink-0 rounded-[var(--radius-button)] bg-[var(--text-main)] px-5 text-sm font-medium text-white shadow-[0_18px_40px_rgba(16,16,14,0.12)] transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+                  className="h-10 shrink-0 rounded-full bg-[var(--text-main)] px-5 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '0.8rem',
+                    fontWeight: 500,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                  }}
                 >
                   {t.ctaSubmit}
                 </button>
               </div>
             </form>
-            <p className="mt-3 text-xs text-[var(--text-soft)]">{feedback || t.ctaHelper}</p>
+            <p
+              className="mt-3"
+              style={{
+                fontFamily: 'var(--font-ui)',
+                fontSize: '0.75rem',
+                color: 'var(--text-soft)',
+              }}
+            >
+              {feedback || t.ctaHelper}
+            </p>
           </div>
         </Reveal>
       </div>
