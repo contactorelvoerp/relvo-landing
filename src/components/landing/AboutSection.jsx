@@ -17,7 +17,7 @@ export const AboutSection = ({ t }) => {
   return (
     <section className="section-shell py-20 sm:py-24 lg:py-28">
       <h2
-        className="mx-auto mb-4 text-center sm:mb-6"
+        className="mx-auto -mb-12 text-center sm:-mb-20"
         style={{
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
@@ -29,7 +29,7 @@ export const AboutSection = ({ t }) => {
       >
         Nuestro Producto
       </h2>
-      <div className="mx-auto max-w-6xl [&>*+*]:-mt-28 sm:[&>*+*]:-mt-36 lg:[&>*+*]:-mt-44">
+      <div className="mx-auto max-w-6xl [&>*+*]:-mt-40 sm:[&>*+*]:-mt-52 lg:[&>*+*]:-mt-60">
         {features.map((feature, idx) => {
           const dead = animDeadSpace[idx] || { left: 0, right: 0, top: 0, bottom: 0 }
           // Even idx: anim on right, eat right margin. Odd: anim on left, eat left margin.
@@ -39,8 +39,7 @@ export const AboutSection = ({ t }) => {
             <Reveal
               key={`${idx}-${feature.title}`}
               delayMs={idx * 70}
-              style={idx === 2 ? { marginTop: '-6rem' } : undefined}
-              className={`grid items-center gap-10 md:gap-12 lg:gap-16 ${
+              className={`grid items-center gap-4 md:gap-4 lg:gap-5 ${idx === 1 ? '!-mt-52' : ''} ${idx === 2 ? '!-mt-52' : ''} ${idx === 3 ? '!-mt-52' : ''} ${
                 idx === 3 ? 'md:grid-cols-[5fr_7fr]' : idx === 2 ? 'md:grid-cols-[1fr_2fr]' : idx % 2 === 0 ? 'md:grid-cols-[2fr_3fr]' : 'md:grid-cols-[3fr_2fr]'
               }`}
             >
