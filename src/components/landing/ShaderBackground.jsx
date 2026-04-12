@@ -15,8 +15,11 @@ import { RelvoGradient } from '../../shaders/RelvoGradient'
 // opacity: 0–1
 // Line width: edit stroke-width directly in the SVG file (public/figures/Asset 7.svg)
 const figures = [
-  { src: '/figures/Asset 7.svg', size: 100, x: -85, y: -30,  opacity: 0.30 },
-  { src: '/figures/Asset 7.svg', size: 35, x: 80,  y: 85,  opacity: 0.25 },
+  { src: '/figures/Asset 7.svg', size: 100, x: -85, y: -40,  opacity: 0.30 },
+  { src: '/figures/Asset 8.svg', size: 35, x: 80,  y: 85,  opacity: 0.25 },
+  { src: '/figures/Asset 6.svg', size: 50, x: 75,  y: 220, opacity: 0.25 },
+  { src: '/figures/Asset 9.svg', size: 75, x: -65, y: 130, opacity: 0.25 },
+  { src: '/figures/Asset 11.svg', size: 50, x: -40, y: 310, opacity: 0.25 },
 ]
 
 export const ShaderBackground = ({ className = '' }) => {
