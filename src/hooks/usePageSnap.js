@@ -12,6 +12,7 @@ export function usePageSnap(pageRefs, exitRef) {
 
   useEffect(() => {
     if (!pageRefs?.length) return
+    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches) return
 
     // Temporarily enable smooth scroll on html for our snaps
     const html = document.documentElement
