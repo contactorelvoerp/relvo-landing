@@ -68,7 +68,7 @@ export const AboutSection = ({ t }) => {
 
               {/* Animation — full width on mobile, alternates on desktop */}
               <div
-                className={`-mt-6 overflow-hidden sm:-mt-4 md:mt-0 ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
+                className={`${idx === 0 ? '-mt-[4rem]' : idx === 1 ? '-mt-20' : idx === 3 ? '-mt-4' : '-mt-14'} overflow-hidden sm:-mt-8 md:mt-0 ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
                 style={{ overflow: 'hidden' }}
               >
                 <video
@@ -77,12 +77,8 @@ export const AboutSection = ({ t }) => {
                   muted
                   playsInline
                   ref={(el) => { if (el) el.playbackRate = 0.85 }}
-                  className="w-full"
-                  style={{
-                    background: 'transparent',
-                    marginLeft: idx === 3 ? '0' : idx % 2 === 0 ? `${dead.right}%` : `-${dead.left}%`,
-                    marginRight: idx === 3 ? '0' : idx % 2 === 0 ? `-${dead.right}%` : `${dead.left}%`,
-                  }}
+                  className={`w-full ${idx === 2 ? 'scale-110 md:scale-100' : ''} flush-anim-${idx}`}
+                  style={{ background: 'transparent' }}
                   src={feature.videoSrc}
                 />
               </div>
@@ -90,6 +86,18 @@ export const AboutSection = ({ t }) => {
           )
         })}
       </div>
+
+      <style>{`
+        @media (min-width: 768px) {
+          ${features.map((_, idx) => {
+            const dead = animDeadSpace[idx] || { left: 0, right: 0 }
+            if (idx === 3) return ''
+            const ml = idx % 2 === 0 ? `${dead.right}%` : `-${dead.left}%`
+            const mr = idx % 2 === 0 ? `-${dead.right}%` : `${dead.left}%`
+            return `.flush-anim-${idx} { margin-left: ${ml}; margin-right: ${mr}; }`
+          }).join('\n          ')}
+        }
+      `}</style>
     </section>
   )
 }
