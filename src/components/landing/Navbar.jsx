@@ -28,6 +28,33 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
   const regularItems = navItems.slice(0, -1)
 
   return (
+    <>
+    {/* Mobile-only top bar with CTA */}
+    <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 pt-3 pb-2 sm:hidden">
+      <a href="#inicio" className="px-1 py-1">
+        <img src="/relvo-wordmark-dark.svg" alt="relvo" className="h-4 w-auto" />
+      </a>
+      {ctaItem && (
+        <a
+          href={calendlyHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackScheduleDemo('navbar_mobile')}
+          className="inline-flex h-8 items-center justify-center rounded-full bg-[var(--text-main)] px-4 text-white transition hover:opacity-90"
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.65rem',
+            fontWeight: 500,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+          }}
+        >
+          {t.navCta}
+        </a>
+      )}
+    </div>
+
+    {/* Desktop navbar */}
     <header
       className="fixed inset-x-0 top-0 z-50 hidden px-4 pt-3 sm:block sm:px-6 sm:pt-4"
       style={{
@@ -122,5 +149,6 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
         </div>
       )}
     </header>
+    </>
   )
 }

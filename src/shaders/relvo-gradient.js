@@ -310,20 +310,74 @@ void main() {
     shape += smoothstep(blobSz, 0.0, d);
   }
 
-  // ── BLOB G: (unused, set blobCount=7 to enable) ──
+  // ── BLOB G: right side, continues zigzag ──
   if (u_blobCount > 6.5) {
-    vec2 anchor = vec2(-0.06, 1.10);
+    vec2 anchor = vec2(-0.35, 5.50);
     vec2 drift = DRIFT(t, 12.6, 13.1, 0.08)
                + ORBIT_WOBBLE(t, 27.3, 0.04 * sc);
     float d = length((screenPos - anchor - drift) * vec2(1.0, u_blobStretchY));
     shape += smoothstep(blobSz, 0.0, d);
   }
 
-  // ── BLOB H: (unused, set blobCount=8 to enable) ──
+  // ── BLOB H: left side, continues zigzag ──
   if (u_blobCount > 7.5) {
-    vec2 anchor = vec2(1.06, 1.08);
+    vec2 anchor = vec2(1.40, 6.50);
     vec2 drift = DRIFT(t, 14.7, 15.2, 0.08)
                + ORBIT_WOBBLE(t, 31.7, 0.04 * sc);
+    float d = length((screenPos - anchor - drift) * vec2(1.0, u_blobStretchY));
+    shape += smoothstep(blobSz, 0.0, d);
+  }
+
+  // ── BLOB I ──
+  if (u_blobCount > 8.5) {
+    vec2 anchor = vec2(-0.30, 7.40);
+    vec2 drift = DRIFT(t, 16.8, 17.3, 0.08)
+               + ORBIT_WOBBLE(t, 35.1, 0.04 * sc);
+    float d = length((screenPos - anchor - drift) * vec2(1.0, u_blobStretchY));
+    shape += smoothstep(blobSz, 0.0, d);
+  }
+
+  // ── BLOB J ──
+  if (u_blobCount > 9.5) {
+    vec2 anchor = vec2(1.35, 8.30);
+    vec2 drift = DRIFT(t, 18.9, 19.4, 0.08)
+               + ORBIT_WOBBLE(t, 38.5, 0.04 * sc);
+    float d = length((screenPos - anchor - drift) * vec2(1.0, u_blobStretchY));
+    shape += smoothstep(blobSz, 0.0, d);
+  }
+
+  // ── BLOB K ──
+  if (u_blobCount > 10.5) {
+    vec2 anchor = vec2(-0.25, 9.20);
+    vec2 drift = DRIFT(t, 21.0, 21.5, 0.08)
+               + ORBIT_WOBBLE(t, 41.9, 0.04 * sc);
+    float d = length((screenPos - anchor - drift) * vec2(1.0, u_blobStretchY));
+    shape += smoothstep(blobSz, 0.0, d);
+  }
+
+  // ── BLOB L ──
+  if (u_blobCount > 11.5) {
+    vec2 anchor = vec2(1.45, 10.10);
+    vec2 drift = DRIFT(t, 23.1, 23.6, 0.08)
+               + ORBIT_WOBBLE(t, 45.3, 0.04 * sc);
+    float d = length((screenPos - anchor - drift) * vec2(1.0, u_blobStretchY));
+    shape += smoothstep(blobSz, 0.0, d);
+  }
+
+  // ── BLOB M ──
+  if (u_blobCount > 12.5) {
+    vec2 anchor = vec2(-0.35, 11.00);
+    vec2 drift = DRIFT(t, 25.2, 25.7, 0.08)
+               + ORBIT_WOBBLE(t, 48.7, 0.04 * sc);
+    float d = length((screenPos - anchor - drift) * vec2(1.0, u_blobStretchY));
+    shape += smoothstep(blobSz, 0.0, d);
+  }
+
+  // ── BLOB N ──
+  if (u_blobCount > 13.5) {
+    vec2 anchor = vec2(1.40, 11.90);
+    vec2 drift = DRIFT(t, 27.3, 27.8, 0.08)
+               + ORBIT_WOBBLE(t, 52.1, 0.04 * sc);
     float d = length((screenPos - anchor - drift) * vec2(1.0, u_blobStretchY));
     shape += smoothstep(blobSz, 0.0, d);
   }

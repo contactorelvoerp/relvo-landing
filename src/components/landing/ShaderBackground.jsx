@@ -18,6 +18,9 @@ const figures = [
   { src: '/figures/Asset 7.svg', size: 60, x: 70,  y: 400, opacity: 0.20 },
   { src: '/figures/Asset 8.svg', size: 45, x: -50, y: 480, opacity: 0.20 },
   { src: '/figures/Asset 6.svg', size: 55, x: 65,  y: 570, opacity: 0.20 },
+  { src: '/figures/Asset 9.svg', size: 65, x: -55, y: 660, opacity: 0.18 },
+  { src: '/figures/Asset 11.svg', size: 50, x: 72,  y: 750, opacity: 0.18 },
+  { src: '/figures/Asset 7.svg', size: 70, x: -60, y: 850, opacity: 0.15 },
 ]
 
 const shaderProps = {
@@ -71,7 +74,7 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
         <RelvoGradient
           speed={0.65}
           rotation={-180}
-          blobCount={6}
+          blobCount={14}
           blobSize={blobSize}
           blobScale={1.0}
           blobStretchY={blobStretchY}
