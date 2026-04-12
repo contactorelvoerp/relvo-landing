@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { RelvoGradient } from '../../shaders/RelvoGradient'
 import { LoginGradient } from '../../shaders/LoginGradient'
 
@@ -32,8 +32,7 @@ const shaderProps = {
   noise: 0.008,
   colors: ['#DFF4EB', '#D5F7C1', '#E3C0F2', '#3F28B2'],
   colorBack: '#00000000',
-  maxPixelCount: 2560 * 1440 * 2,
-  minPixelRatio: 2,
+  maxPixelCount: 2560 * 1440,
   style: {
     position: 'absolute',
     inset: 0,
@@ -46,6 +45,8 @@ const shaderProps = {
 export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
   const isLogin = variant === 'login'
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const wrapperRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768)
@@ -53,31 +54,48 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  useEffect(() => {
+    const el = wrapperRef.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      (entries) => setIsVisible(entries[0]?.isIntersecting ?? false),
+      { threshold: 0 }
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   const blobSize = isMobile ? 0.63 : 0.80
   const blobStretchY = isMobile ? 0.5 : 1.0
+  const blobCount = isMobile ? 8 : 14
+  const minPixelRatio = isMobile ? 1 : 2
+  const activeSpeed = isVisible ? 0.65 : 0
 
   return (
     <div
+      ref={wrapperRef}
       className={`pointer-events-none absolute inset-x-0 top-0 z-0 overflow-hidden ${className}`}
       style={{ height: '100%' }}
     >
       {isLogin ? (
         <LoginGradient
-          speed={0.65}
+          speed={activeSpeed}
           rotation={-180}
           blobCount={2}
           blobSize={blobSize}
           blobScale={1.0}
+          minPixelRatio={minPixelRatio}
           {...shaderProps}
         />
       ) : (
         <RelvoGradient
-          speed={0.65}
+          speed={activeSpeed}
           rotation={-180}
-          blobCount={14}
+          blobCount={blobCount}
           blobSize={blobSize}
           blobScale={1.0}
           blobStretchY={blobStretchY}
+          minPixelRatio={minPixelRatio}
           {...shaderProps}
         />
       )}
@@ -88,6 +106,8 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
           src={fig.src}
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
           className="absolute"
           style={{
             left: `${fig.x}vw`,
@@ -95,6 +115,7 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
             width: `${fig.size}vw`,
             height: 'auto',
             opacity: fig.opacity,
+            contentVisibility: 'auto',
           }}
         />
       ))}

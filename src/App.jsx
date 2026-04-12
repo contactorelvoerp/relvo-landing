@@ -76,17 +76,19 @@ function App() {
         <HeroSection t={t} page4Ref={page4Ref} />
 
         <div ref={page4Ref}>
-          <section id="producto">
+          <section id="producto" style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 1200px' }}>
             <AboutSection t={t} />
           </section>
 
-          <SocialProofSection t={t} />
+          <div style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 600px' }}>
+            <SocialProofSection t={t} />
+          </div>
 
-          <section id="demos">
+          <section id="demos" style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 800px' }}>
             <CTASection ctaHref={calendlyHref} t={t} />
           </section>
 
-          <footer className="px-4 pb-10 pt-16 sm:px-6 sm:pt-20 md:pt-28">
+          <footer className="px-4 pb-10 pt-16 sm:px-6 sm:pt-20 md:pt-28" style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 600px' }}>
             <div className="section-shell">
               <div
                 className="mx-auto max-w-6xl rounded-2xl bg-white/75 px-5 py-8 backdrop-blur-sm sm:px-8 sm:py-10 md:px-12 md:py-14"
