@@ -1,13 +1,19 @@
 /**
- * BackgroundMobile — static CSS gradient backdrop for phones.
+ * BackgroundStatic — static CSS gradient backdrop for the landing.
  *
- * Zero GPU shader, zero JS. Uses the same brand palette as the desktop
- * RelvoGradient but composed as layered radial-gradients so it reads as
- * atmosphere rather than a blocky blob. Decorative SVG figures are
- * still rendered on top by ShaderBackground (kept per user preference).
+ * Zero GPU shader, zero JS per frame. Layered radial-gradients using the
+ * brand palette. Originally built for mobile, now used on all devices
+ * after we decided the live RelvoGradient was too GPU-heavy on desktop
+ * and pre-rendered video didn't preserve the shader's feel.
+ *
+ * See ~/.claude/.../memory/project_shader_perf_exploration.md for the
+ * full story and the unvisited optimization (half-res blob + full-res
+ * grain shader split) that might let us revive the live shader later.
+ *
+ * Decorative SVG figures are still rendered on top by ShaderBackground.
  */
 
-export const BackgroundMobile = () => (
+export const BackgroundStatic = () => (
   <div
     aria-hidden="true"
     style={{
