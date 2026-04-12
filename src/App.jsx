@@ -7,6 +7,7 @@ import { Navbar } from './components/landing/Navbar'
 import { SocialProofSection } from './components/landing/SocialProofSection'
 import { ShaderBackground } from './components/landing/ShaderBackground'
 import { ComingSoon } from './pages/ComingSoon'
+import { ShaderOnly } from './pages/ShaderOnly'
 import { DocsPage } from './pages/DocsPage'
 import { text } from './i18n/text'
 
@@ -41,6 +42,8 @@ function App() {
       <ComingSoon navigate={navigate} />
     </div>
   )
+
+  if (pathname === '/shader-only') return <ShaderOnly />
 
   const lang = 'es'
   const t = text?.[lang] ?? text?.es ?? {}

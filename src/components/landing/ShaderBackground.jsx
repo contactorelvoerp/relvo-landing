@@ -1,8 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
-import { RelvoGradient } from '../../shaders/RelvoGradient'
+import { useEffect, useRef, useState } from 'react'
 import { LoginGradient } from '../../shaders/LoginGradient'
-import { BackgroundMobile } from './BackgroundMobile'
-import { useIsMobile } from '../../hooks/useIsMobile'
+import { BackgroundStatic } from './BackgroundStatic'
 
 /**
  * Full-page animated grain gradient background.
@@ -46,7 +44,6 @@ const shaderProps = {
 
 export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
   const isLogin = variant === 'login'
-  const isMobile = useIsMobile()
   const wrapperRef = useRef(null)
   const [isVisible, setIsVisible] = useState(true)
 
@@ -61,12 +58,7 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
     return () => io.disconnect()
   }, [])
 
-  const blobSize = 0.80
-  const blobStretchY = 1.0
-  const blobCount = 14
-  const minPixelRatio = 2
   const activeSpeed = isVisible ? 0.65 : 0
-  const showMobileStatic = isMobile && !isLogin
 
   return (
     <div
@@ -74,29 +66,18 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
       className={`pointer-events-none absolute inset-x-0 top-0 z-0 overflow-hidden ${className}`}
       style={{ height: '100%' }}
     >
-      {showMobileStatic ? (
-        <BackgroundMobile />
-      ) : isLogin ? (
+      {isLogin ? (
         <LoginGradient
           speed={activeSpeed}
           rotation={-180}
           blobCount={2}
-          blobSize={blobSize}
+          blobSize={0.80}
           blobScale={1.0}
-          minPixelRatio={minPixelRatio}
+          minPixelRatio={2}
           {...shaderProps}
         />
       ) : (
-        <RelvoGradient
-          speed={activeSpeed}
-          rotation={-180}
-          blobCount={blobCount}
-          blobSize={blobSize}
-          blobScale={1.0}
-          blobStretchY={blobStretchY}
-          minPixelRatio={minPixelRatio}
-          {...shaderProps}
-        />
+        <BackgroundStatic />
       )}
 
       {!isLogin && figures.map((fig, i) => (
