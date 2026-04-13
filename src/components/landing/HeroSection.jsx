@@ -58,7 +58,7 @@ export const HeroSection = ({ t, page4Ref }) => {
 
             {/* T4 Body large — intro */}
             <p
-              className="mx-auto mt-5 max-w-3xl sm:mt-7"
+              className="mx-auto mt-10 max-w-3xl sm:mt-7"
               style={{
                 fontFamily: 'var(--font-ui)',
                 fontSize: 'clamp(0.9rem, 1.4vw, 1.2rem)',
@@ -69,16 +69,20 @@ export const HeroSection = ({ t, page4Ref }) => {
             >
               Cuando tu negocio factura por uso, hitos o métricas de servicio,
               <br className="hidden sm:block" />
-              el camino del contrato al cobro es largo y manual...
+              {' '}el camino del contrato al cobro es largo y manual.
+              <span className="md:hidden">
+                {' '}Relvo automatiza cada paso para acortar ese ciclo y liberar el flujo de caja que ya te pertenece.
+              </span>
             </p>
           </div>
 
-          {/* Middle + bottom: contract2cash animation with the closing
+          {/* Desktop only: contract2cash animation with the closing
               sub-headline sitting on top of the video's transparent bottom
               padding. Absolutely positioned relative to the section so it
-              floats independently of block 1's flow. Adjust `bottom` to
-              move the whole block up/down. */}
-          <div className="absolute left-1/2 w-full max-w-5xl -translate-x-1/2 px-4 sm:px-6" style={{ bottom: '18vh' }}>
+              floats independently of block 1's flow. Hidden on mobile —
+              the mobile version drops the animation entirely and shows only
+              the sub-headline in natural flow (see next block). */}
+          <div className="absolute left-1/2 hidden w-full max-w-5xl -translate-x-1/2 px-4 md:block md:px-6" style={{ bottom: '18vh' }}>
             <video
               autoPlay
               loop
@@ -108,6 +112,7 @@ export const HeroSection = ({ t, page4Ref }) => {
               y liberar el flujo de caja que ya te pertenece.
             </p>
           </div>
+
         </div>
       </section>
 
@@ -197,9 +202,9 @@ export const HeroSection = ({ t, page4Ref }) => {
 
         </div>
 
-          {/* T5 Body — pinned to bottom */}
+          {/* T5 Body — pinned to bottom (lifted higher on mobile) */}
           <p
-            className="relative z-10 mx-auto mb-8 max-w-3xl px-4 text-center sm:mb-10 md:mb-14"
+            className="relative z-10 mx-auto mb-[22vh] max-w-3xl px-4 text-center sm:mb-10 md:mb-14"
             style={{
               fontFamily: 'var(--font-ui)',
               fontSize: 'clamp(0.8rem, 1.2vw, 1.05rem)',

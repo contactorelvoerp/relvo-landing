@@ -97,11 +97,10 @@ function App() {
                 <div className="grid gap-10 md:grid-cols-[1.2fr_1.8fr] md:items-start">
                   {/* Left — brand + tagline */}
                   <div>
-                    <img
-                      src="/relvo-wordmark-dark.svg"
-                      alt="relvo"
-                      className="h-5 w-auto sm:h-6"
-                    />
+                    <div className="flex items-center gap-2">
+                      <img src="/logo-mark-dark.svg" alt="" aria-hidden="true" className="h-5 w-auto sm:h-6" />
+                      <img src="/relvo-wordmark-dark.svg" alt="relvo" className="h-5 w-auto sm:h-6" />
+                    </div>
                     <p
                       className="mt-4 max-w-xs"
                       style={{

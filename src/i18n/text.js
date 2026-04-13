@@ -22,6 +22,7 @@ export const text = {
           'Cargos fijos, recurrentes, variables, tiers, comisiones y más.\nSincroniza tus datos de clientes y sus contratos en una sola plataforma.',
         imageSide: 'right',
         videoSrc: '/animations/complex-pricing.webm',
+        iosSrc: '/animations/complex-pricing_ios.mp4',
       },
       {
         title: 'Calcula y factura automáticamente.',
@@ -29,6 +30,7 @@ export const text = {
           'Relvo emite facturas en base al consumo, se conecta a tu sistema, sin intervención humana, sin errores.',
         imageSide: 'right',
         videoSrc: '/animations/inv-calculation.webm',
+        iosSrc: '/animations/inv-calculation_ios.mp4',
       },
       {
         title: 'Flujos de aprobación en automático.',
@@ -36,6 +38,7 @@ export const text = {
           'Deja que la IA maneje de manera autónoma las solicitudes de OC y aprobaciones, acelerando el proceso de facturación y recaudación.',
         imageSide: 'right',
         videoSrc: '/animations/approvals.webm',
+        iosSrc: '/animations/approvals_ios.mp4',
       },
       {
         title: 'Recauda más rápido y concilia en tiempo real.',
@@ -43,6 +46,7 @@ export const text = {
           'Con mensajería de cobranza automática, pagos y conciliación\nconectada a tus cuentas bancarias.',
         imageSide: 'right',
         videoSrc: '/animations/conciliation.webm',
+        iosSrc: '/animations/conciliation_ios.mp4',
       },
     ],
 

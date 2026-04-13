@@ -1,4 +1,5 @@
 import { Reveal } from './Reveal'
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 // Dead space in each animation as % of video width (1080x1080).
 const animDeadSpace = [
@@ -10,6 +11,7 @@ const animDeadSpace = [
 
 export const AboutSection = ({ t }) => {
   const features = t.features ?? []
+  const isMobile = useIsMobile()
 
   return (
     <section className="section-shell px-4 pb-32 pt-32 sm:px-6 sm:pb-40 sm:pt-40 md:pb-48 md:pt-48 lg:pb-56 lg:pt-56">
@@ -39,7 +41,7 @@ export const AboutSection = ({ t }) => {
             <Reveal
               key={`${idx}-${feature.title}`}
               delayMs={idx * 70}
-              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? 'md:!mt-4' : ''} ${idx === 2 ? 'md:!-mt-12' : ''} ${idx === 3 ? 'md:!-mt-4' : ''} ${gridCols}`}
+              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? '!mt-20 md:!mt-4' : ''} ${idx === 2 ? '!mt-20 md:!-mt-12' : ''} ${idx === 3 ? '!mt-20 md:!-mt-4' : ''} ${gridCols}`}
             >
               {/* Text — stacks on mobile, alternates on desktop */}
               <div className={`flex w-full flex-col justify-center px-2 sm:px-0 ${idx % 2 === 0 ? 'md:order-1' : 'md:order-2 md:items-end md:text-right'}`}>
@@ -71,18 +73,19 @@ export const AboutSection = ({ t }) => {
 
               {/* Animation — full width on mobile, alternates on desktop */}
               <div
-                className={`${idx === 0 ? '-mt-[4rem]' : idx === 1 ? '-mt-20' : idx === 3 ? '-mt-4' : '-mt-14'} overflow-hidden sm:-mt-8 md:mt-0 ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
+                className={`${idx === 3 ? '-mt-8' : 'mt-4'} overflow-hidden sm:-mt-8 md:mt-0 ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
                 style={{ overflow: 'hidden' }}
               >
                 <video
+                  key={isMobile ? feature.iosSrc : feature.videoSrc}
                   autoPlay
                   loop
                   muted
                   playsInline
                   ref={(el) => { if (el) el.playbackRate = 0.85 }}
-                  className={`w-full ${idx === 2 ? 'scale-110 md:scale-100' : ''} flush-anim-${idx}`}
+                  className={`w-full ${idx === 2 ? 'scale-95 md:scale-100' : ''} ${idx === 3 ? 'scale-75 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
                   style={{ background: 'transparent' }}
-                  src={feature.videoSrc}
+                  src={isMobile && feature.iosSrc ? feature.iosSrc : feature.videoSrc}
                 />
               </div>
             </Reveal>
