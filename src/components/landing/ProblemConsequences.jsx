@@ -121,40 +121,70 @@ const ConsequencesBlock = () => {
     if (!el) return
 
     const shader = document.getElementById('shader-background-root')
-    const origPosition = shader ? shader.style.position : ''
-    const origTop = shader ? shader.style.top : ''
-    const origHeight = shader ? shader.style.height : ''
-    let shaderPinned = false
+    const ORIG_POSITION = 'absolute'
+    const ORIG_HEIGHT = '100%'
 
-    // `capturedScrollY` = the scroll position at which we first locked the
-    // shader during this pin session. `offsetAccum` = the cumulative offset
-    // that's been "absorbed" by previous pin sessions. Post-pin we keep the
-    // shader shifted so the rest of the page sees a seamless continuation
-    // of the frozen slice.
-    let capturedScrollY = 0
-    let offsetAccum = 0
+    // Reset shader to clean state on mount in case a prior session (HMR,
+    // refresh mid-scroll) left inline styles behind.
+    if (shader) {
+      shader.style.position = ORIG_POSITION
+      shader.style.top = '0px'
+      shader.style.height = ORIG_HEIGHT
+    }
 
-    const pinShader = () => {
-      if (!shader || shaderPinned) return
-      capturedScrollY = window.scrollY
+    // Three states for the shader, derived purely from scroll position
+    // relative to the consequences section. No accumulators, no per-exit
+    // deltas — each state has a single canonical shader position.
+    //
+    //   'above'  → user is above the pin. Shader at top:0 (natural).
+    //   'pinned' → pin is engaged. Shader fixed at the slice that was
+    //              visible when the pin engaged (captured on transition).
+    //   'below'  → user is past the pin. Shader at top:PIN_RANGE where
+    //              PIN_RANGE is the fixed scroll distance of the pin.
+    //              Sections after the pin see a seamless continuation of
+    //              the frozen slice because the shader has been shifted
+    //              down by exactly the distance that was "skipped" during
+    //              the pin.
+    //
+    // PIN_RANGE is deterministic and fixed per mount/resize. Scrolling in
+    // and out of the section always produces the same shader positions.
+    let shaderState = 'above'
+    const getPinRange = () =>
+      Math.max(0, el.offsetHeight - window.innerHeight)
+
+    const setShaderAbove = () => {
+      if (!shader || shaderState === 'above') return
+      shader.style.position = ORIG_POSITION
+      shader.style.top = '0px'
+      shader.style.height = ORIG_HEIGHT
+      shaderState = 'above'
+    }
+    const setShaderBelow = () => {
+      if (!shader || shaderState === 'below') return
+      shader.style.position = ORIG_POSITION
+      shader.style.top = `${Math.round(getPinRange())}px`
+      shader.style.height = ORIG_HEIGHT
+      shaderState = 'below'
+    }
+    const setShaderPinned = () => {
+      if (!shader || shaderState === 'pinned') return
+      // Read current absolute top (0 from 'above', PIN_RANGE from 'below')
+      // and convert to the equivalent fixed position showing the same slice.
+      const currentTop = parseFloat(shader.style.top || '0') || 0
+      const scrollY = window.scrollY
       shader.style.height = `${document.documentElement.scrollHeight}px`
       shader.style.position = 'fixed'
-      shader.style.top = `${-capturedScrollY + offsetAccum}px`
-      shaderPinned = true
+      shader.style.top = `${-scrollY + currentTop}px`
+      shaderState = 'pinned'
     }
-    const unpinShader = () => {
-      if (!shader || !shaderPinned) return
-      // On exit, accumulate the scroll distance traversed during this pin.
-      // Post-pin, the shader is `position: absolute; top: offsetAccum` so
-      // that at the current scroll position, the same slice is visible.
-      // Round to integer pixels to avoid subpixel shimmer.
-      const releaseScrollY = Math.round(window.scrollY)
-      const delta = releaseScrollY - capturedScrollY
-      offsetAccum = Math.round(offsetAccum + delta)
-      shader.style.position = origPosition // absolute
-      shader.style.top = `${offsetAccum}px`
-      shader.style.height = origHeight
-      shaderPinned = false
+
+    // Initialize shader state from current scroll position on mount.
+    {
+      const r = el.getBoundingClientRect()
+      const vh = window.innerHeight
+      if (r.bottom <= vh) setShaderBelow()
+      else if (r.top <= 0 && r.bottom >= vh) setShaderPinned()
+      // default stays 'above'
     }
 
     let raf = 0
@@ -169,18 +199,23 @@ const ConsequencesBlock = () => {
       const b = Math.min(BEATS, Math.floor(t * (BEATS + 1)))
       setBeat(b)
 
-      // Pin the shader while the sticky stage is actually pinned. We add
-      // a release buffer (UNPIN_EARLY_PX) so the shader switches to its
-      // post-pin absolute position a few pixels before the sticky itself
-      // visually releases. At that moment both positions show the same
-      // slice, so the swap is invisible — and by the time the sticky
-      // actually releases on a slow-painting frame, the shader is
-      // already settled.
-      const UNPIN_EARLY_PX = 80
-      const isStickyPinned =
-        rect.top <= 2 && rect.bottom >= viewportH + UNPIN_EARLY_PX
-      if (isStickyPinned) pinShader()
-      else unpinShader()
+      // Derive the correct shader state from current scroll position. This
+      // is a pure function of scroll, not an incremental transition, so
+      // even a scrollbar-drag that skips hundreds of pixels lands in the
+      // correct state in a single frame.
+      //   - If section is entirely above the viewport → 'below' (user has
+      //     passed it)
+      //   - If section is entirely below the viewport → 'above' (user
+      //     hasn't reached it)
+      //   - Otherwise → 'pinned' (section overlaps viewport)
+      let target
+      if (rect.bottom <= viewportH) target = 'below'
+      else if (rect.top > 0) target = 'above'
+      else target = 'pinned'
+
+      if (target === 'above') setShaderAbove()
+      else if (target === 'below') setShaderBelow()
+      else setShaderPinned()
     }
 
     // Snap scroll to the nearest beat position after scroll goes idle.
@@ -222,7 +257,7 @@ const ConsequencesBlock = () => {
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
       if (snapTimer) clearTimeout(snapTimer)
-      unpinShader()
+      setShaderAbove()
     }
   }, [])
 
