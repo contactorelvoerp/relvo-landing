@@ -8,9 +8,8 @@ const PROBLEM_HEADLINE_HIGHLIGHT = 'lógicas de negocio, cálculos y detalles'
 const PROBLEM_HEADLINE_POST = 'se gestionan en planillas y herramientas desconectadas.'
 
 const PROBLEM_BODY_1 =
-  'Al principio funciona — un par de hojas, una rutina clara y alguien que mantiene todo. Hasta que comienzan los problemas.'
-const PROBLEM_BODY_2 =
-  'Los parches no escalan: necesitan mantenimiento constante, dependen de una persona y, peor aún, no crecen con la operación.'
+  'Los problemas empiezan cuando tu negocio comienza a escalar..'
+const PROBLEM_BODY_2 =' más clientes, países y modelos de cobro personalizados.'
 
 const CONSEQUENCES_EYEBROW = 'Consecuencias'
 const CONSEQUENCES_HEADLINE_PRE = '¿Cuánto cuesta '
@@ -20,34 +19,34 @@ const CONSEQUENCES_HEADLINE_POST = ' cada año?'
 const CONSEQUENCE_STAGES = [
   {
     id: 'cobras-tarde',
-    title: 'Cobras tarde.',
-    body: 'Ciclos de cobro hasta 2× más largos que el plazo acordado. El capital de trabajo se queda en CxC, no en tu operación.',
-    number: '+22',
-    numberUnit: 'd í a s',
-    numberLabel: 'sobre el plazo acordado',
+    title: 'Días calle',
+    body: 'Ciclo de cobro dos veces más largo que el benchmark global .',
+    number: '2x',
+    numberUnit: ' D S O',
+    numberLabel: '',
   },
   {
     id: 'facturas-menos',
-    title: 'Facturas menos.',
-    body: ' ~ 5% del ARR se escapa en servicios no facturados o mal calculados. Lo que ya ganaste no llega a tu balance.',
-    number: '-5% ',
-    numberUnit: '  del A R R',
-    numberLabel: 'menos revenue',
+    title: 'Menos Revenue',
+    body: ' Hasta 3% del revenue se pierde en servicios no facturados o mal calculados.',
+    number: '-3% ',
+    numberUnit: ' A R R',
+    numberLabel: '',
   },
   {
     id: 'quemas-horas',
-    title: 'Quemas HH.',
-    body: ' Dos o más personas en tiempo completo absorbidas por trabajo manual — tiempo que no se dedica a cerrar o crecer.',
+    title: 'En tareas repetitivas',
+    body: ' Dos o más personas en tiempo completo absorbidas por trabajo manual.',
     number: '2+',
     numberUnit: 'FTE',
-    numberLabel: 'atrapados en tareas manuales',
+    numberLabel: '',
   },
 ]
 
-const CLOSING_PRE = 'Y, con cada cliente nuevo — '
-const CLOSING_HIGHLIGHT = 'el problema se multiplica.'
+const CLOSING_PRE = 'Y con cada cliente nuevo.. '
+const CLOSING_HIGHLIGHT = 'el problema aumenta.'
 const CLOSING_BODY =
-  'No solo dejas dinero sobre la mesa hoy: pones un techo a lo que puedes crecer mañana.'
+  'La ejecución de ingresos no escala con la operación'
 
 // ── Shared style tokens ────────────────────────────────────────────────
 
@@ -71,9 +70,9 @@ const HEADLINE_STYLE = {
 
 const BODY_STYLE = {
   fontFamily: 'var(--font-ui)',
-  fontSize: 'clamp(0.9rem, 1.9vmin, 1.25rem)',
+  fontSize: 'clamp(1.3rem, 2vmin, 1.7rem)',
   fontWeight: 400,
-  lineHeight: 1.55,
+  lineHeight: 1,
   color: '#2a2a2a',
 }
 
@@ -96,7 +95,7 @@ const ProblemBlock = () => (
         {PROBLEM_HEADLINE_POST}
       </h2>
 
-      <div className="mt-[6vh] flex max-w-3xl flex-col gap-[2.5vh]" style={BODY_STYLE}>
+      <div className="mt-[3vh] flex max-w-3xl flex-col gap-[2vh]" style={BODY_STYLE}>
         <p>{PROBLEM_BODY_1}</p>
         <p>{PROBLEM_BODY_2}</p>
       </div>

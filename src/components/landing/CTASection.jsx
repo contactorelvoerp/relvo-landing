@@ -124,13 +124,7 @@ export const CTASection = ({ ctaHref, t }) => {
           >
             {'Tú decides tus modelos de cobro,'}
             <br />
-             {'deja que '}
-            <img
-              src="/relvo-wordmark-dark.svg"
-              alt="relvo"
-              className="inline-block align-baseline"
-              style={{ height: '0.9em', marginLeft: '0.15em', marginRight: '0.1em' }}
-            />
+             {'deja que  '}
             <span
               className="px-[0.18em]"
               style={{
@@ -140,7 +134,7 @@ export const CTASection = ({ ctaHref, t }) => {
                 borderRadius: '2px',
               }}
               >
-            los opere
+            Relvo los opere
             </span>
             <br />
           </h2>
