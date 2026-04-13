@@ -1,6 +1,7 @@
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" fill="#010101" />
-  <rect x="96" y="96" width="320" height="320" rx="60" fill="#FFFFFF" />
-  <rect x="176" y="176" width="160" height="160" rx="32" fill="#010101" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="122.20 83.96 375.58 362.08" fill="#13121C">
+  <ellipse cx="310.25" cy="165.28" rx="61.35" ry="61.32"/>
+  <ellipse cx="203.91" cy="262.46" rx="61.71" ry="51.83" transform="rotate(-161.58 203.91 262.46)"/>
+  <ellipse cx="413.59" cy="258.09" rx="64.19" ry="23.65" transform="rotate(164.12 413.59 258.09)"/>
+  <ellipse cx="373.30" cy="373.50" rx="63.71" ry="33.39" transform="rotate(51.88 373.30 373.50)"/>
+  <ellipse cx="242.15" cy="382.96" rx="63.34" ry="43.08" transform="rotate(129.29 242.15 382.96)"/>
 </svg>
-
