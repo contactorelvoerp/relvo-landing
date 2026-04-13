@@ -2,6 +2,7 @@ import { Composition } from "remotion";
 import { HelloWorld, myCompSchema } from "./HelloWorld";
 import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
 import { RelvoCoin, relvoCoinSchema } from "./RelvoCoin";
+import { HeroFlow, heroFlowSchema } from "./HeroFlow";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -40,6 +41,21 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           background: "#ffffff",
           coinColor: "#13121C",
+        }}
+      />
+
+      <Composition
+        id="HeroFlow"
+        component={HeroFlow}
+        durationInFrames={600}
+        fps={60}
+        width={1920}
+        height={320}
+        schema={heroFlowSchema}
+        defaultProps={{
+          color: "#000000",
+          seed: 8,
+          background: "transparent",
         }}
       />
 

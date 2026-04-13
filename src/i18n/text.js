@@ -1,6 +1,6 @@
 export const text = {
   es: {
-    navCta: 'Agendemos una demo',
+    navCta: 'Ir a demo',
 
     navItems: [
       { label: 'Producto', href: '#producto' },

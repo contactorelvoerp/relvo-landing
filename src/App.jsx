@@ -8,6 +8,7 @@ import { SocialProofSection } from './components/landing/SocialProofSection'
 import { ShaderBackground } from './components/landing/ShaderBackground'
 import { ComingSoon } from './pages/ComingSoon'
 import { ShaderOnly } from './pages/ShaderOnly'
+import { LinkedInBanner } from './pages/LinkedInBanner'
 import { DocsPage } from './pages/DocsPage'
 import { text } from './i18n/text'
 
@@ -44,6 +45,7 @@ function App() {
   )
 
   if (pathname === '/shader-only') return <ShaderOnly />
+  if (pathname === '/linkedin-banner') return <LinkedInBanner />
 
   const lang = 'es'
   const t = text?.[lang] ?? text?.es ?? {}

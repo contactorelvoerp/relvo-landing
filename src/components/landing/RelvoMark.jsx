@@ -1,39 +1,3 @@
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { z } from "zod";
-
-export const relvoCoinSchema = z.object({
-  background: z.string(),
-  coinColor: z.string(),
-});
-
-type RelvoCoinGraphicProps = {
-  coinColor: string;
-  frame: number;
-  durationInFrames: number;
-  mode?: "stamp-erase" | "erase-stamp";
-  holdFrames?: number;
-};
-
-export const RelvoMarkStatic: React.FC<{ coinColor: string }> = ({
-  coinColor,
-}) => {
-  return (
-    <svg width="1080" height="1080" viewBox="0 0 1080 1080">
-      {BASE_PETALS.map((p, i) => (
-        <ellipse
-          key={i}
-          cx={p.cx}
-          cy={p.cy}
-          rx={COIN_RX}
-          ry={p.ry}
-          fill={coinColor}
-          transform={`rotate(${p.rot} ${p.cx} ${p.cy})`}
-        />
-      ))}
-    </svg>
-  );
-};
-
 // Petals in travel order — natural clockwise sweep around the logo center.
 // Each petal's `ry` and `rot` are from the original logo; the stamped ghosts
 // always render these exact shapes regardless of the flying coin's own spin.
@@ -50,32 +14,20 @@ const COIN_RX = 115;
 const COIN_RY_MIN = 4; // never fully vanish — keep a visible sliver
 const LOGO_CENTER = { x: 537, y: 540 };
 
-// Convert a rotation (degrees) to the foreshortened ry for a coin spinning
-// around its minor axis. At rot = 0°, 180°, ... the coin is face-on
-// (ry = COIN_RX). At rot = 90°, 270°, ... it's edge-on (ry = COIN_RY_MIN).
-const ryFromRot = (rotDeg: number) => {
+const ryFromRot = (rotDeg) => {
   const c = Math.abs(Math.cos((rotDeg * Math.PI) / 180));
   return Math.max(COIN_RY_MIN, COIN_RX * c);
 };
 
-const easeInOutQuad = (t: number) =>
+const easeInOutQuad = (t) =>
   t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+const lerp = (a, b, t) => a + (b - a) * t;
 
-// How many extra full rotations the coin does on itself during a single
-// pass, on top of the baseline needed to land each waypoint at its
-// original orientation. The orbit around the logo center always sweeps
-// exactly once per pass — this only speeds up the *self* spin.
 const EXTRA_SPINS = 1;
 
-// Unwrap the rotation sequence so the coin spins monotonically in one
-// direction. Ellipses have 180° symmetry, so for each waypoint we pick
-// whichever of {raw, raw+180, raw-180, raw+360, ...} is closest to the
-// previous value while also being >= the previous value (forces CW spin).
-// Then we add EXTRA_SPINS full turns distributed evenly across the path.
-const UNWRAPPED_ROT: number[] = (() => {
-  const base: number[] = [];
+const UNWRAPPED_ROT = (() => {
+  const base = [];
   PATH.forEach((p, i) => {
     if (i === 0) {
       base.push(p.rot);
@@ -98,12 +50,8 @@ const UNWRAPPED_ROT: number[] = (() => {
   return base.map((v, i) => v + EXTRA_SPINS * 360 * (i / segCount));
 })();
 
-// Polar coords of each waypoint around the logo center, precomputed once.
-// Each angle is unwrapped to be the closest equivalent to the previous one
-// (shortest signed path, not forced clockwise). This means the coin takes
-// the shortest arc between adjacent petals, even if that goes backwards.
-const POLAR: { r: number; a: number }[] = (() => {
-  const out: { r: number; a: number }[] = [];
+const POLAR = (() => {
+  const out = [];
   let prev = 0;
   PATH.forEach((p, i) => {
     const dx = p.cx - LOGO_CENTER.x;
@@ -113,7 +61,6 @@ const POLAR: { r: number; a: number }[] = (() => {
     if (i === 0) {
       prev = a;
     } else {
-      // Pick the equivalent of `a` (modulo 2π) closest to `prev`.
       const delta = ((a - prev + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
       a = prev + delta;
       prev = a;
@@ -123,9 +70,7 @@ const POLAR: { r: number; a: number }[] = (() => {
   return out;
 })();
 
-// Walk the path at progress p in [0,1]. Returns the flying coin state,
-// interpolating in polar space for an arced trajectory.
-const coinAt = (p: number) => {
+const coinAt = (p) => {
   const segCount = PATH.length - 1;
   const sp = p * segCount;
   const idx = Math.min(segCount - 1, Math.floor(sp));
@@ -148,18 +93,34 @@ const coinAt = (p: number) => {
   };
 };
 
-export const RelvoCoinGraphic: React.FC<RelvoCoinGraphicProps> = ({
+export const RelvoMarkStatic = ({ coinColor }) => {
+  return (
+    <svg width="1080" height="1080" viewBox="0 0 1080 1080">
+      {BASE_PETALS.map((p, i) => (
+        <ellipse
+          key={i}
+          cx={p.cx}
+          cy={p.cy}
+          rx={COIN_RX}
+          ry={p.ry}
+          fill={coinColor}
+          transform={`rotate(${p.rot} ${p.cx} ${p.cy})`}
+        />
+      ))}
+    </svg>
+  );
+};
+
+export const RelvoCoinGraphic = ({
   coinColor,
   frame,
   durationInFrames,
   mode = "stamp-erase",
   holdFrames = 16,
 }) => {
-  // Timeline (in frames):
-  //   pass 1 (stamp)  |  hold  |  pass 2 (erase)  |  hold
   const passFrames = Math.floor((durationInFrames - 2 * holdFrames) / 2);
 
-  let phase: "stamp" | "hold1" | "erase" | "hold2" = "hold2";
+  let phase = "hold2";
   let passProgress = 1;
   if (frame < passFrames) {
     phase = "stamp";
@@ -177,30 +138,18 @@ export const RelvoCoinGraphic: React.FC<RelvoCoinGraphicProps> = ({
 
   const eased = easeInOutQuad(Math.min(1, Math.max(0, passProgress)));
 
-  // The flying coin walks path index 0..N-1 during a pass.
-  // During stamp: position = coinAt(eased).
-  // During erase: same path, different meaning (erasing behind it).
   const coin = coinAt(eased);
   const segCount = PATH.length - 1;
   const walkedTo = eased * segCount;
 
-  // Petal visibility:
-  // - stamp phase: petal i visible once coin has reached waypoint i+1
-  //   (i.e. walkedTo > i + ~1, meaning the segment ending at petal i is done)
-  //   Waypoint 0 (top) appears immediately on arrival at idx 0+1=1... but the
-  //   coin starts AT waypoint 0, so show petal 0 from the start.
-  // - erase phase: petal i disappears once coin has passed through it again,
-  //   i.e. walkedTo > i.
   const petalOpacities = BASE_PETALS.map((_, i) => {
     if (mode === "erase-stamp") {
       if (phase === "stamp") {
-        // First orbit removes the petals from the resting logo.
         if (i === 0) return walkedTo >= segCount ? 0 : 1;
         return walkedTo >= i ? 0 : 1;
       }
       if (phase === "hold1") return 0;
       if (phase === "erase") {
-        // Second orbit prints them back and leaves them in place.
         if (i === 0) return walkedTo >= segCount ? 1 : 0;
         return walkedTo >= i ? 1 : 0;
       }
@@ -219,7 +168,6 @@ export const RelvoCoinGraphic: React.FC<RelvoCoinGraphicProps> = ({
   });
 
   const showFlyingCoin = phase === "stamp" || phase === "erase" || phase === "hold1" || phase === "hold2";
-  // Park the coin at the top during holds.
   const restCoin = BASE_PETALS[0];
   const displayCoin =
     phase === "hold1" || phase === "hold2"
@@ -256,25 +204,5 @@ export const RelvoCoinGraphic: React.FC<RelvoCoinGraphicProps> = ({
         />
       )}
     </svg>
-  );
-};
-
-export const RelvoCoin: React.FC<z.infer<typeof relvoCoinSchema>> = ({
-  background,
-  coinColor,
-}) => {
-  const frame = useCurrentFrame();
-  const { durationInFrames } = useVideoConfig();
-
-  return (
-    <AbsoluteFill
-      style={{ backgroundColor: background, alignItems: "center", justifyContent: "center" }}
-    >
-      <RelvoCoinGraphic
-        coinColor={coinColor}
-        frame={frame}
-        durationInFrames={durationInFrames}
-      />
-    </AbsoluteFill>
   );
 };
