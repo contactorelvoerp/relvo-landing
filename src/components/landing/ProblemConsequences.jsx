@@ -147,9 +147,10 @@ const ConsequencesBlock = () => {
       // On exit, accumulate the scroll distance traversed during this pin.
       // Post-pin, the shader is `position: absolute; top: offsetAccum` so
       // that at the current scroll position, the same slice is visible.
-      const releaseScrollY = window.scrollY
+      // Round to integer pixels to avoid subpixel shimmer.
+      const releaseScrollY = Math.round(window.scrollY)
       const delta = releaseScrollY - capturedScrollY
-      offsetAccum += delta
+      offsetAccum = Math.round(offsetAccum + delta)
       shader.style.position = origPosition // absolute
       shader.style.top = `${offsetAccum}px`
       shader.style.height = origHeight
@@ -168,10 +169,16 @@ const ConsequencesBlock = () => {
       const b = Math.min(BEATS, Math.floor(t * (BEATS + 1)))
       setBeat(b)
 
-      // Pin the shader while the sticky stage is actually pinned. Use a
-      // generous tolerance so sub-pixel jitter during smooth scroll doesn't
-      // cause the pin to toggle (which would re-capture a new slice).
-      const isStickyPinned = rect.top <= 2 && rect.bottom >= viewportH - 2
+      // Pin the shader while the sticky stage is actually pinned. We add
+      // a release buffer (UNPIN_EARLY_PX) so the shader switches to its
+      // post-pin absolute position a few pixels before the sticky itself
+      // visually releases. At that moment both positions show the same
+      // slice, so the swap is invisible — and by the time the sticky
+      // actually releases on a slow-painting frame, the shader is
+      // already settled.
+      const UNPIN_EARLY_PX = 80
+      const isStickyPinned =
+        rect.top <= 2 && rect.bottom >= viewportH + UNPIN_EARLY_PX
       if (isStickyPinned) pinShader()
       else unpinShader()
     }
