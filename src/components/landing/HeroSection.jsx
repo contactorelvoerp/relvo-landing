@@ -12,43 +12,36 @@ import { usePageSnap } from '../../hooks/usePageSnap'
 export const HeroSection = ({ t, page4Ref }) => {
   const page1Ref = useRef(null)
   const page2Ref = useRef(null)
-  const page3Ref = useRef(null)
-  usePageSnap([page1Ref, page2Ref, page3Ref], page4Ref)
+  usePageSnap([page1Ref, page2Ref], page4Ref)
 
   return (
     <>
-      {/* ── PAGE 1: Welcome — Tagline + Wordmark + Headline ── */}
+      {/* ── PAGE 1: Hero — Headline + body + animation + close ── */}
       <section
         ref={page1Ref}
-        className="full-page relative flex w-full flex-col items-center px-4 pb-12 pt-[5rem] sm:px-6 sm:pt-[5.5rem]"
+        className="full-page relative flex w-full flex-col items-center px-4 pt-[4.5rem] pb-4 sm:px-6 sm:pt-[5rem]"
       >
         <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center text-center">
-          {/* T1 Eyebrow */}
-          <p
-            className="uppercase"
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: 'clamp(0.55rem, 0.9vw, 0.8rem)',
-              fontWeight: 400,
-              color: '#585858',
-              letterSpacing: '0.14em',
-            }}
-          >
-            Revenue-design para empresas B2B en LATAM
-          </p>
-
-          {/* Relvo wordmark + headline grouped */}
-          <div className="flex flex-1 flex-col items-center justify-center" style={{ marginTop: '3vh' }}>
-            <img
-              src="/relvo-wordmark-dark.svg"
-              alt="relvo"
-              className="h-auto"
-              style={{ width: 'clamp(180px, 30vw, 380px)' }}
-            />
+          {/* Top group: eyebrow stays pinned at top; headline + body
+              pushed down so they sit closer to the animation below. */}
+          <div className="flex w-full flex-col items-center">
+            {/* T1 Eyebrow */}
+            <p
+              className="uppercase"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'clamp(0.55rem, 0.9vw, 0.8rem)',
+                fontWeight: 400,
+                color: '#585858',
+                letterSpacing: '0.14em',
+              }}
+            >
+              Revenue-design para empresas B2B en LATAM
+            </p>
 
             {/* T2 Page headline */}
             <h1
-              className="mt-16 sm:mt-28 md:mt-32"
+              className="mt-[14vh] sm:mt-[16vh]"
               style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(1.6rem, 4vw, 3.5rem)',
@@ -62,67 +55,65 @@ export const HeroSection = ({ t, page4Ref }) => {
               <br />
               más rápido y sin fricción.
             </h1>
+
+            {/* T4 Body large — intro */}
+            <p
+              className="mx-auto mt-5 max-w-3xl sm:mt-7"
+              style={{
+                fontFamily: 'var(--font-ui)',
+                fontSize: 'clamp(0.9rem, 1.4vw, 1.2rem)',
+                fontWeight: 400,
+                lineHeight: 1.5,
+                color: '#626262',
+              }}
+            >
+              Cuando tu negocio factura por uso, hitos o métricas de servicio,
+              <br className="hidden sm:block" />
+              el camino del contrato al cobro es largo y manual...
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* ── PAGE 2: Problem — Description + Animation + Bottom text ── */}
-      <section
-        ref={page2Ref}
-        className="full-page relative flex w-full flex-col items-center justify-center px-4 sm:px-6"
-      >
-        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
-          {/* T4 Body large */}
-          <p
-            className="mx-auto max-w-3xl"
-            style={{
-              fontFamily: 'var(--font-ui)',
-              fontSize: 'clamp(0.95rem, 1.6vw, 1.3rem)',
-              fontWeight: 400,
-              lineHeight: 1.55,
-              color: '#626262',
-            }}
-          >
-            Cuando tu negocio factura por uso, hitos o métricas de servicio,
-            <br className="hidden sm:block" />
-            el camino del contrato al cobro es largo y manual...
-          </p>
-
-          {/* Contract-to-cash animation */}
-          <div className="w-[110%]" style={{ marginTop: '-4%', marginBottom: '-8%', marginLeft: '-5%', marginRight: '-5%' }}>
+          {/* Middle + bottom: contract2cash animation with the closing
+              sub-headline sitting on top of the video's transparent bottom
+              padding. Absolutely positioned relative to the section so it
+              floats independently of block 1's flow. Adjust `bottom` to
+              move the whole block up/down. */}
+          <div className="absolute left-1/2 w-full max-w-5xl -translate-x-1/2 px-4 sm:px-6" style={{ bottom: '18vh' }}>
             <video
               autoPlay
               loop
               muted
               playsInline
-              className="w-full"
+              className="block w-full"
             >
               <source src="/animations/contract2cash.webm" type="video/webm" />
               <source src="/animations/contract2cash.mov" type="video/quicktime" />
             </video>
+            {/* Sub-headline positioned over the video's lower transparent
+                strip. Cards end at ~68%, video ends at 100%, so we center
+                the text in the 68%–100% band = around 84% from top. */}
+            <p
+              className="absolute left-1/2 mx-auto w-full max-w-4xl -translate-x-1/2 px-4"
+              style={{
+                top: '76%',
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(1.1rem, 2.2vw, 1.7rem)',
+                fontWeight: 300,
+                lineHeight: 1.3,
+                color: '#000000',
+              }}
+            >
+              Relvo automatiza cada paso para acortar ese ciclo
+              <br className="hidden sm:block" />
+              y liberar el flujo de caja que ya te pertenece.
+            </p>
           </div>
-
-          {/* T3 Sub-headline */}
-          <p
-            className="mx-auto mt-4 max-w-4xl sm:mt-8 md:mt-12"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.1rem, 2.5vw, 2rem)',
-              fontWeight: 300,
-              lineHeight: 1.3,
-              color: '#000000',
-            }}
-          >
-            Relvo automatiza cada paso para acortar ese ciclo
-            <br className="hidden sm:block" />
-            y liberar el flujo de caja que ya te pertenece.
-          </p>
         </div>
       </section>
 
-      {/* ── PAGE 3: Target Audience + Bridge ── */}
+      {/* ── PAGE 2: Target Audience + Bridge ── */}
       <section
-        ref={page3Ref}
+        ref={page2Ref}
         className="full-page relative flex w-full flex-col items-center px-4 sm:px-6"
       >
         <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">

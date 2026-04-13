@@ -35,7 +35,8 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
     <>
     {/* Mobile-only top bar with CTA */}
     <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 pt-3 pb-2 sm:hidden">
-      <a href="#inicio" className="px-1 py-1">
+      <a href="#inicio" className="flex items-center gap-1.5 px-1 py-1">
+        <img src="/logo-mark-dark.svg" alt="" aria-hidden="true" className="h-4 w-auto" />
         <img src="/relvo-wordmark-dark.svg" alt="relvo" className="h-4 w-auto" />
       </a>
       {ctaItem && (
@@ -70,7 +71,8 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
       }}
     >
       <nav className="nav-shell mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
-        <a href="#inicio" className="px-2 py-1">
+        <a href="#inicio" className="flex items-center gap-2 px-2 py-1">
+          <img src="/logo-mark-dark.svg" alt="" aria-hidden="true" className="h-5 w-auto sm:h-6" />
           <img src="/relvo-wordmark-dark.svg" alt="relvo" className="h-5 w-auto sm:h-6" />
         </a>
 
