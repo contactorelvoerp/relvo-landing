@@ -63,6 +63,7 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
   return (
     <div
       ref={wrapperRef}
+      id="shader-background-root"
       className={`pointer-events-none absolute inset-x-0 top-0 z-0 overflow-hidden ${className}`}
       style={{ height: '100%' }}
     >
