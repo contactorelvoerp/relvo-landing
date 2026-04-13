@@ -68,13 +68,21 @@ export const HeroSection = ({ t, page4Ref }) => {
               className="mx-auto mt-[4vh] max-w-3xl lg:mt-[5vh]"
               style={{
                 fontFamily: 'var(--font-ui)',
-                fontSize: 'clamp(0.8rem, 1.8vmin, 1.2rem)',
+                fontSize: 'clamp(0.85rem, 2.1vmin, 1.45rem)',
                 fontWeight: 400,
                 lineHeight: 1.5,
-                color: '#626262',
+                color: '#2a2a2a',
               }}
             >
-              Cuando tus ingresos dependen de cobros por <em style={{ fontStyle: 'italic' }}>suscripciones, uso, hitos o métricas de servicio</em>, el camino del contrato al cobro es largo y manual. Relvo automatiza ese proceso de punta a punta, para que la facturación deje de ser un dolor de cabeza.
+              Cuando tus ingresos dependen de cobros por <span
+                className="px-[0.18em]"
+                style={{
+                  background: 'linear-gradient(transparent 48%, #F4B08E 48%)',
+                  WebkitBoxDecorationBreak: 'clone',
+                  boxDecorationBreak: 'clone',
+                  borderRadius: '2px',
+                }}
+              >suscripciones, uso, hitos o métricas de servicio</span>, el camino del contrato al cobro es largo y manual. Relvo automatiza ese proceso de punta a punta, para que la facturación deje de ser un dolor de cabeza.
             </p>
 
             <div className="relative mt-[12vh] w-full md:mt-[3vh] lg:mt-[10vh]" style={{ aspectRatio: '6 / 1' }}>
