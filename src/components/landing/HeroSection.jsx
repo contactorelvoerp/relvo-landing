@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { usePageSnap } from '../../hooks/usePageSnap'
+import { HeroFlowLive } from './HeroFlowLive'
 
 function goTo(path) {
   window.history.pushState({}, '', path)
@@ -36,7 +37,7 @@ export const HeroSection = ({ t, page4Ref }) => {
               className="uppercase"
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: 'clamp(0.55rem, 0.9vmin, 0.8rem)',
+                fontSize: 'clamp(0.65rem, 0.9vmin, 0.8rem)',
                 fontWeight: 400,
                 color: '#585858',
                 letterSpacing: '0.14em',
@@ -47,10 +48,10 @@ export const HeroSection = ({ t, page4Ref }) => {
 
             {/* T2 Page headline */}
             <h1
-              className="mt-[14vh] sm:mt-[16vh]"
+              className="mt-[10vh] lg:mt-[14vh]"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.6rem, 4.5vmin, 3.5rem)',
+                fontSize: 'clamp(1.3rem, 4.5vmin, 3.5rem)',
                 fontWeight: 300,
                 lineHeight: 1.15,
                 letterSpacing: '-0.02em',
@@ -64,10 +65,10 @@ export const HeroSection = ({ t, page4Ref }) => {
 
             {/* T4 Body large — intro */}
             <p
-              className="mx-auto mt-[3vh] max-w-3xl sm:mt-[2.5vh]"
+              className="mx-auto mt-[4vh] max-w-3xl lg:mt-[5vh]"
               style={{
                 fontFamily: 'var(--font-ui)',
-                fontSize: 'clamp(0.9rem, 1.6vmin, 1.2rem)',
+                fontSize: 'clamp(0.8rem, 1.8vmin, 1.2rem)',
                 fontWeight: 400,
                 lineHeight: 1.5,
                 color: '#626262',
@@ -76,19 +77,13 @@ export const HeroSection = ({ t, page4Ref }) => {
               Cuando tus ingresos dependen de cobros por <em style={{ fontStyle: 'italic' }}>suscripciones, uso, hitos o métricas de servicio</em>, el camino del contrato al cobro es largo y manual. Relvo automatiza ese proceso de punta a punta, para que la facturación deje de ser un dolor de cabeza.
             </p>
 
-            <div className="mt-[5vh] w-full sm:mt-[5.5vh]" style={{ maxWidth: 'min(80rem, 90vmin)' }}>
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="block w-full"
+            <div className="relative mt-[12vh] w-full md:mt-[3vh] lg:mt-[10vh]" style={{ aspectRatio: '6 / 1' }}>
+              <div
+                className="absolute left-1/2 top-1/2 block w-[165vw] max-w-none -translate-x-1/2 -translate-y-1/2 sm:w-full sm:max-w-[min(80rem,90vmin)]"
                 style={{ aspectRatio: '6 / 1' }}
               >
-                <source src="/animations/hero-flow.webm" type="video/webm" />
-                <source src="/animations/hero-flow.mp4" type="video/mp4" />
-              </video>
+                <HeroFlowLive className="block h-full w-full" />
+              </div>
             </div>
           </div>
 
@@ -136,14 +131,18 @@ export const HeroSection = ({ t, page4Ref }) => {
           )}
 
           {/* Hero CTAs — lower half */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-6 sm:gap-10" style={{ bottom: '14vh' }}>
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-[2vmin] sm:gap-10" style={{ bottom: '7vh' }}>
             <a
               href="#producto"
-              className="inline-flex h-12 min-w-[11rem] items-center justify-center rounded-full bg-white/50 px-8 text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:px-10"
+              className="inline-flex items-center justify-center rounded-full bg-white/50 text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
               style={{
                 fontFamily: 'var(--font-ui)',
-                fontSize: '0.95rem',
+                fontSize: 'clamp(0.7rem, 1.4vmin, 0.95rem)',
                 fontWeight: 500,
+                height: 'clamp(2.2rem, 5vmin, 3rem)',
+                minWidth: 'clamp(7rem, 18vmin, 11rem)',
+                paddingLeft: 'clamp(1rem, 3vmin, 2.5rem)',
+                paddingRight: 'clamp(1rem, 3vmin, 2.5rem)',
               }}
             >
               Ver producto
@@ -151,12 +150,16 @@ export const HeroSection = ({ t, page4Ref }) => {
             <a
               href="/login"
               onClick={(e) => { e.preventDefault(); goTo('/login') }}
-              className="inline-flex h-12 min-w-[11rem] cursor-pointer items-center justify-center rounded-full bg-[var(--text-main)] px-8 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:px-10"
+              className="inline-flex cursor-pointer items-center justify-center rounded-full bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.8rem',
+                fontSize: 'clamp(0.6rem, 1.2vmin, 0.8rem)',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
+                height: 'clamp(2.2rem, 5vmin, 3rem)',
+                minWidth: 'clamp(7rem, 18vmin, 11rem)',
+                paddingLeft: 'clamp(1rem, 3vmin, 2.5rem)',
+                paddingRight: 'clamp(1rem, 3vmin, 2.5rem)',
               }}
             >
               Ir a demo
