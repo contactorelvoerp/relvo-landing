@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { HeroSection } from './components/landing/HeroSection'
+import { ProblemConsequences } from './components/landing/ProblemConsequences'
 import { AboutSection } from './components/landing/AboutSection'
 import { CTASection } from './components/landing/CTASection'
 import { Navbar } from './components/landing/Navbar'
@@ -55,7 +56,7 @@ function App() {
   })
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden text-[var(--text-main)] antialiased">
+    <div className="relative min-h-screen overflow-x-clip text-[var(--text-main)] antialiased">
       <ShaderBackground />
       <Helmet>
         <title>Relvo | Infraestructura de Ingresos con IA para B2B en LATAM</title>
@@ -75,7 +76,9 @@ function App() {
       <Navbar t={t} navigate={navigate} scrollThreshold={page4Ref} />
 
       <main id="inicio" className="relative z-10">
-        <HeroSection t={t} page4Ref={page4Ref} />
+        <HeroSection />
+
+        <ProblemConsequences />
 
         <div ref={page4Ref}>
           <section id="producto" style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 1200px' }}>

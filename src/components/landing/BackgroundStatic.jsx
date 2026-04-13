@@ -15,14 +15,13 @@
  * The renders live in public/bg-slots/. Re-generate via:
  *   node scripts/shader-video-experiments/render-stills.mjs --final --frame=0 --scrollH=8000
  */
-
 import { useRef } from 'react'
 
 // Slot geometry — must mirror the stage-2 render. If you change scrollH,
 // slotH, or bleed in render-stills.mjs, update these in lockstep.
-const SLOT_HEIGHT = 1440    // logical viewport height per slot
-const BLEED = 200           // overlap between adjacent slots
-const SCROLL_H = 8000       // total landing scroll height rendered
+const SLOT_HEIGHT = 1440
+const BLEED = 200
+const SCROLL_H = 8000
 
 const SLOTS = (() => {
   const numSlots = Math.ceil(SCROLL_H / SLOT_HEIGHT)
@@ -34,9 +33,6 @@ const SLOTS = (() => {
 })()
 
 export const BackgroundStatic = () => {
-  // Load all slots eagerly — background is small and cascading observer
-  // misbehaves on narrow viewports with very tall content.
-  const loadedUpTo = SLOTS.length - 1
   const slotRefs = useRef([])
 
   return (
