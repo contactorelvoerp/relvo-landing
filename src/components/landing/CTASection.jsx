@@ -117,12 +117,20 @@ export const CTASection = ({ ctaHref, t }) => {
               fontFamily: 'var(--font-display)',
               fontSize: 'clamp(1.6rem, 4vw, 3.5rem)',
               fontWeight: 300,
-              lineHeight: 1.15,
+              lineHeight: 1.3,
               letterSpacing: '-0.02em',
               color: '#000000',
             }}
           >
-            {'Estamos buscando nuestros '}
+            {'Tú decides tus modelos de cobro,'}
+            <br />
+             {'deja que '}
+            <img
+              src="/relvo-wordmark-dark.svg"
+              alt="relvo"
+              className="inline-block align-baseline"
+              style={{ height: '0.9em', marginLeft: '0.15em', marginRight: '0.1em' }}
+            />
             <span
               className="px-[0.18em]"
               style={{
@@ -131,18 +139,10 @@ export const CTASection = ({ ctaHref, t }) => {
                 boxDecorationBreak: 'clone',
                 borderRadius: '2px',
               }}
-            >
-              early adopters,
+              >
+            los opere
             </span>
             <br />
-            {'¿te gustaría probar '}
-            <img
-              src="/relvo-wordmark-dark.svg"
-              alt="relvo"
-              className="inline-block align-baseline"
-              style={{ height: '0.75em', marginLeft: '0.15em', marginRight: '0.1em' }}
-            />
-            {'?'}
           </h2>
 
           {/* CTA button */}

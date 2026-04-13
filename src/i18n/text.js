@@ -53,7 +53,7 @@ export const text = {
     ctaTitle: 'Estamos buscando nuestros early adopters, ¿te gustaría probar Relvo?',
     ctaTitleHighlight: 'early adopters,',
     ctaScheduleText: 'Agenda un meet de 20 minutos con un Founder',
-    ctaCaptureLabel: 'O deja tu correo y te escribiremos cuando estemos listos ;)',
+    ctaCaptureLabel: 'O deja tu correo y te contactaremos a la brevedad ;)',
     ctaEmailPlaceholder: 'Tu email ',
     ctaSubmit: 'Guardar correo',
     ctaHelper: 'Quedamos en contacto!',

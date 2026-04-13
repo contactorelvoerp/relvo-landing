@@ -15,13 +15,13 @@ const PROBLEM_BODY_2 =
 const CONSEQUENCES_EYEBROW = 'Consecuencias'
 const CONSEQUENCES_HEADLINE_PRE = '¿Cuánto cuesta '
 const CONSEQUENCES_HEADLINE_HIGHLIGHT = 'este problema'
-const CONSEQUENCES_HEADLINE_POST = ' a la empresa cada año?'
+const CONSEQUENCES_HEADLINE_POST = ' cada año?'
 
 const CONSEQUENCE_STAGES = [
   {
     id: 'cobras-tarde',
     title: 'Cobras tarde.',
-    body: 'Ciclos de cobro hasta 2× más largos que el plazo acordado. El capital de trabajo se queda atrapado en cuentas por cobrar, no en tu operación.',
+    body: 'Ciclos de cobro hasta 2× más largos que el plazo acordado. El capital de trabajo se queda en CxC, no en tu operación.',
     number: '+22',
     numberUnit: 'd í a s',
     numberLabel: 'sobre el plazo acordado',
@@ -29,23 +29,23 @@ const CONSEQUENCE_STAGES = [
   {
     id: 'facturas-menos',
     title: 'Facturas menos.',
-    body: 'Hasta 5% del ARR se escapa en servicios no facturados o mal calculados. Lo que ya ganaste no llega a tu balance.',
-    number: '5%',
-    numberUnit: ' del  A R R',
-    numberLabel: 'facturado de menos',
+    body: ' ~ 5% del ARR se escapa en servicios no facturados o mal calculados. Lo que ya ganaste no llega a tu balance.',
+    number: '-5% ',
+    numberUnit: '  del A R R',
+    numberLabel: 'menos revenue',
   },
   {
     id: 'quemas-horas',
     title: 'Quemas HH.',
-    body: 'Dos o más personas en tiempo completo absorbidas por trabajo que debería estar automatizado — tiempo que no se dedica a cerrar o crecer.',
+    body: ' Dos o más personas en tiempo completo absorbidas por trabajo manual — tiempo que no se dedica a cerrar o crecer.',
     number: '2+',
     numberUnit: 'FTE',
     numberLabel: 'atrapados en tareas manuales',
   },
 ]
 
-const CLOSING_PRE = 'Y cada cliente nuevo no reduce el problema — '
-const CLOSING_HIGHLIGHT = 'lo multiplica.'
+const CLOSING_PRE = 'Y, con cada cliente nuevo — '
+const CLOSING_HIGHLIGHT = 'el problema se multiplica.'
 const CLOSING_BODY =
   'No solo dejas dinero sobre la mesa hoy: pones un techo a lo que puedes crecer mañana.'
 

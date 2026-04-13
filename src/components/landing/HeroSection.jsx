@@ -34,7 +34,7 @@ export const HeroSection = () => {
               className="uppercase"
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: 'clamp(0.65rem, 0.9vmin, 0.8rem)',
+                fontSize: 'clamp(1rem, 0.9vmin, 0.8rem)',
                 fontWeight: 400,
                 color: '#585858',
                 letterSpacing: '0.14em',
@@ -45,19 +45,19 @@ export const HeroSection = () => {
 
             {/* T2 Page headline */}
             <h1
-              className="mt-[10vh] lg:mt-[14vh]"
+              className="mt-[10vh] lg:mt-[15vh]"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.6rem, 5vmin, 3.6rem)',
-                fontWeight: 300,
+                fontSize: 'clamp(3rem, 7vmin, 7rem)',
+                fontWeight: 500,
                 lineHeight: 1.15,
                 letterSpacing: '-0.02em',
                 color: '#000000',
               }}
             >
-              Múltiples modelos de ingreso,
+              Cobra como quieras,
               <br />
-              una solución escalable.
+              opera en un sólo sistema.
             </h1>
 
             {/* T4 Body large — intro */}
@@ -65,7 +65,7 @@ export const HeroSection = () => {
               className="mx-auto mt-[4vh] max-w-3xl lg:mt-[5vh]"
               style={{
                 fontFamily: 'var(--font-ui)',
-                fontSize: 'clamp(0.85rem, 2.1vmin, 1.45rem)',
+                fontSize: 'clamp(1.2rem, 2.1vmin, 1.5rem)',
                 fontWeight: 400,
                 lineHeight: 1.5,
                 color: '#2a2a2a',
