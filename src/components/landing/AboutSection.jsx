@@ -12,9 +12,9 @@ export const AboutSection = ({ t }) => {
   const features = t.features ?? []
 
   return (
-    <section className="section-shell px-4 py-16 sm:px-6 sm:py-20 md:py-24 lg:py-28">
+    <section className="section-shell px-4 pb-32 pt-32 sm:px-6 sm:pb-40 sm:pt-40 md:pb-48 md:pt-48 lg:pb-56 lg:pt-56">
       <h2
-        className="mx-auto mb-16 text-center md:-mb-20"
+        className="mx-auto mb-16 text-center md:mb-8"
         style={{
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
@@ -26,15 +26,20 @@ export const AboutSection = ({ t }) => {
       >
         Nuestro Producto
       </h2>
-      <div className="mx-auto max-w-6xl [&>*+*]:-mt-4 sm:[&>*+*]:-mt-12 md:[&>*+*]:-mt-40 lg:[&>*+*]:-mt-60">
+      <div className="mx-auto max-w-6xl [&>*+*]:-mt-4 sm:[&>*+*]:-mt-12 md:[&>*+*]:-mt-20 lg:[&>*+*]:-mt-28">
         {features.map((feature, idx) => {
+          // Approval workflow (idx=2) gets a wider column for the animation
+          // since its content is inherently small. Other features (0, 1, 3)
+          // got tighter animation columns and more space for text.
+          const gridCols =
+            idx === 2 ? 'md:grid-cols-[1fr_2fr]' :
+            idx === 3 ? 'md:grid-cols-[2fr_5fr]' :
+            idx % 2 === 0 ? 'md:grid-cols-[3fr_2fr]' : 'md:grid-cols-[2fr_3fr]'
           return (
             <Reveal
               key={`${idx}-${feature.title}`}
               delayMs={idx * 70}
-              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? 'md:!-mt-52' : ''} ${idx === 2 ? 'md:!-mt-52' : ''} ${idx === 3 ? 'md:!-mt-52' : ''} ${
-                idx === 3 ? 'md:grid-cols-[5fr_7fr]' : idx === 2 ? 'md:grid-cols-[1fr_2fr]' : idx % 2 === 0 ? 'md:grid-cols-[2fr_3fr]' : 'md:grid-cols-[3fr_2fr]'
-              }`}
+              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? 'md:!mt-4' : ''} ${idx === 2 ? 'md:!-mt-12' : ''} ${idx === 3 ? 'md:!-mt-4' : ''} ${gridCols}`}
             >
               {/* Text — stacks on mobile, alternates on desktop */}
               <div className={`flex w-full flex-col justify-center px-2 sm:px-0 ${idx % 2 === 0 ? 'md:order-1' : 'md:order-2 md:items-end md:text-right'}`}>
@@ -42,7 +47,7 @@ export const AboutSection = ({ t }) => {
                   className="max-w-[18ch]"
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.3rem, 2.5vw, 2rem)',
+                    fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
                     fontWeight: 300,
                     lineHeight: 1.1,
                     letterSpacing: '-0.03em',
@@ -55,7 +60,7 @@ export const AboutSection = ({ t }) => {
                   className="mt-3 whitespace-pre-line sm:mt-4"
                   style={{
                     fontFamily: 'var(--font-ui)',
-                    fontSize: 'clamp(0.85rem, 1.2vw, 1.05rem)',
+                    fontSize: 'clamp(0.95rem, 1.4vw, 1.2rem)',
                     lineHeight: 1.5,
                     color: 'var(--text-soft)',
                   }}

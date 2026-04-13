@@ -86,7 +86,6 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
           src={fig.src}
           alt=""
           aria-hidden="true"
-          loading="lazy"
           decoding="async"
           className="absolute"
           style={{
@@ -95,7 +94,6 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
             width: `${fig.size}vw`,
             height: 'auto',
             opacity: fig.opacity,
-            contentVisibility: 'auto',
           }}
         />
       ))}

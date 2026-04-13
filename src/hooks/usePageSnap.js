@@ -77,7 +77,7 @@ export function usePageSnap(pageRefs, exitRef) {
       if (scrollY > lastSnapBottom + window.innerHeight * 0.3) return
 
       // Near boundary scrolling up — snap to last snap page
-      if (scrollY > lastSnapBottom - window.innerHeight * 0.2 && e.deltaY < 0) {
+      if (scrollY > lastSnapBottom && e.deltaY < 0) {
         const lastPage = pageRefs.length - 1
         if (pageRefs[lastPage].current) {
           e.preventDefault()
@@ -168,7 +168,7 @@ export function usePageSnap(pageRefs, exitRef) {
       e.preventDefault()
 
       // Near boundary scrolling up — snap to last snap page
-      if (scrollY > lastSnapBottom - window.innerHeight * 0.2 && deltaY < 0) {
+      if (scrollY > lastSnapBottom && deltaY < 0) {
         const lastPage = pageRefs.length - 1
         if (pageRefs[lastPage].current) snapTo(pageRefs[lastPage].current)
         return
