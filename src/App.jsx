@@ -59,18 +59,18 @@ function App() {
     <div className="relative min-h-screen overflow-x-clip text-[var(--text-main)] antialiased">
       <ShaderBackground />
       <Helmet>
-        <title>Relvo | Infraestructura de Ingresos con IA para B2B en LATAM</title>
+        <title>Relvo | Infraestructura de ingresos B2B para LATAM</title>
         <meta name="description" content="Relvo acelera la recaudación de empresas B2B en LATAM automatizando desde el cierre comercial hasta el cobro con IA" />
         <link rel="canonical" href="https://relvoerp.com/" />
         {/* Open Graph — controla previews en WhatsApp, Slack, iMessage, etc. */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://relvoerp.com/" />
-        <meta property="og:title" content="Relvo | Infraestructura de Ingresos con IA para B2B en LATAM" />
+        <meta property="og:title" content="Relvo | Infraestructura de ingresos B2B para LATAM" />
         <meta property="og:description" content="Relvo acelera la recaudación de empresas B2B en LATAM automatizando desde el cierre comercial hasta el cobro con IA" />
         <meta property="og:site_name" content="Relvo" />
         {/* Twitter/X card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Relvo | Infraestructura de Ingresos con IA para B2B en LATAM" />
+        <meta name="twitter:title" content="Relvo | Infraestructura de ingresos B2B para LATAM" />
         <meta name="twitter:description" content="Relvo acelera la recaudación de empresas B2B en LATAM automatizando desde el cierre comercial hasta el cobro con IA" />
       </Helmet>
       <Navbar t={t} navigate={navigate} scrollThreshold={page4Ref} />

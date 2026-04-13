@@ -88,7 +88,7 @@ export const text = {
     bridgeToEmphasis: 'por y para',
     bridgeSupport:
       'Diseñado para empresas B2B en crecimiento —SaaS, IA, consultoras, outsourcing y servicios— con modelos de precio que no caben en una planilla simple.',
-    footerTagline: 'Infraestructura de ingresos con IA para B2B en LATAM',
+    footerTagline: 'Infraestructura de ingresos B2B para LATAM',
 
     footerColumns: [
       {
