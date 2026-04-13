@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import { usePageSnap } from '../../hooks/usePageSnap'
 import { HeroFlowLive } from './HeroFlowLive'
 
 function goTo(path) {
@@ -16,10 +15,8 @@ function goTo(path) {
 // T5 Body (Inst. Sans):       clamp(0.9rem, 1.2vw, 1.05rem)
 // T6 Label (Geist Mono):      0.75rem
 
-export const HeroSection = ({ t, page4Ref }) => {
+export const HeroSection = () => {
   const page1Ref = useRef(null)
-  const page2Ref = useRef(null)
-  usePageSnap([page1Ref, page2Ref], page4Ref)
 
   return (
     <>
@@ -51,7 +48,7 @@ export const HeroSection = ({ t, page4Ref }) => {
               className="mt-[10vh] lg:mt-[14vh]"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.3rem, 4.5vmin, 3.5rem)',
+                fontSize: 'clamp(1.6rem, 5vmin, 3.6rem)',
                 fontWeight: 300,
                 lineHeight: 1.15,
                 letterSpacing: '-0.02em',
@@ -74,15 +71,7 @@ export const HeroSection = ({ t, page4Ref }) => {
                 color: '#2a2a2a',
               }}
             >
-              Cuando tus ingresos dependen de cobros por <span
-                className="px-[0.18em]"
-                style={{
-                  background: 'linear-gradient(transparent 48%, #F4B08E 48%)',
-                  WebkitBoxDecorationBreak: 'clone',
-                  boxDecorationBreak: 'clone',
-                  borderRadius: '2px',
-                }}
-              >suscripciones, uso, hitos o métricas de servicio</span>, el camino del contrato al cobro es largo y manual. Relvo automatiza ese proceso de punta a punta, para que la facturación deje de ser un dolor de cabeza.
+              Cuando tus ingresos dependen de cobros por suscripciones, uso, hitos o métricas de servicio, el camino del contrato al cobro es largo y manual. Relvo automatiza ese proceso de punta a punta, para que la facturación deje de ser un dolor de cabeza.
             </p>
 
             <div className="relative mt-[12vh] w-full md:mt-[3vh] lg:mt-[10vh]" style={{ aspectRatio: '6 / 1' }}>
@@ -177,106 +166,6 @@ export const HeroSection = ({ t, page4Ref }) => {
         </div>
       </section>
 
-      {/* ── PAGE 2: Target Audience + Bridge ── */}
-      <section
-        ref={page2Ref}
-        className="full-page relative flex w-full flex-col items-center px-4 sm:px-6"
-      >
-        <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">
-          {/* T1 Eyebrow */}
-          <p
-            className="uppercase"
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: 'clamp(0.55rem, 0.9vw, 0.8rem)',
-              fontWeight: 400,
-              color: '#585858',
-              letterSpacing: '0.14em',
-            }}
-          >
-            Para quién es Relvo
-          </p>
-
-          {/* T2 Page headline */}
-          <h2
-            className="mt-6 sm:mt-8 md:mt-10"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.6rem, 4vw, 3.5rem)',
-              fontWeight: 300,
-              lineHeight: 1.15,
-              letterSpacing: '-0.02em',
-              color: '#000000',
-            }}
-          >
-            Empresas B2B que crecen
-            <br />
-            más rápido que sus procesos.
-          </h2>
-
-          {/* T3 Sub-headline — bridge statement */}
-          <p
-            className="mx-auto mt-8 max-w-5xl sm:mt-10 md:mt-14"
-            style={{
-              fontFamily: 'var(--font-ui)',
-              fontSize: 'clamp(1rem, 2.5vw, 2rem)',
-              fontWeight: 600,
-              lineHeight: 1.25,
-              color: 'var(--text-main)',
-            }}
-          >
-            {t.bridgeFrom}
-            <span className="mx-1 inline-block align-middle sm:mx-2" style={{ color: 'var(--text-soft)' }}>
-              <svg width="24" height="12" viewBox="0 0 36 14" fill="none" className="hidden sm:inline" style={{ verticalAlign: '0.1em' }}>
-                <path d="M1 7h32M29 1l5 6-5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span className="sm:hidden">→</span>
-            </span>
-            {t.bridgeTo && (
-              <>
-                {'a un sistema único'}
-                <br className="hidden sm:block" />
-                {'de ingresos '}
-                <span
-                  className="px-[0.18em]"
-                  style={{
-                    background: 'linear-gradient(transparent 48%, #F4B08E 48%)',
-                    WebkitBoxDecorationBreak: 'clone',
-                    boxDecorationBreak: 'clone',
-                    borderRadius: '2px',
-                  }}
-                >
-                  {t.bridgeToHighlight && t.bridgeToEmphasis ? (
-                    <>
-                      {t.bridgeToHighlight.slice(0, t.bridgeToHighlight.indexOf(t.bridgeToEmphasis))}
-                      <em className="font-cursive-emphasis">{t.bridgeToEmphasis}</em>
-                      {t.bridgeToHighlight.slice(t.bridgeToHighlight.indexOf(t.bridgeToEmphasis) + t.bridgeToEmphasis.length)}
-                    </>
-                  ) : (
-                    t.bridgeToHighlight
-                  )}
-                </span>
-                {t.bridgeTo.slice((t.bridgeTo.indexOf(t.bridgeToHighlight || '') || 0) + (t.bridgeToHighlight || '').length)}
-              </>
-            )}
-          </p>
-
-        </div>
-
-          {/* T5 Body — pinned to bottom (lifted higher on mobile) */}
-          <p
-            className="relative z-10 mx-auto mb-[22vh] max-w-3xl px-4 text-center sm:mb-10 md:mb-14"
-            style={{
-              fontFamily: 'var(--font-ui)',
-              fontSize: 'clamp(0.8rem, 1.2vw, 1.05rem)',
-              fontWeight: 400,
-              lineHeight: 1.6,
-              color: 'var(--text-soft)',
-            }}
-          >
-            {t.bridgeSupport}
-          </p>
-      </section>
     </>
   )
 }
