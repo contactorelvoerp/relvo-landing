@@ -3,44 +3,41 @@ import { useEffect, useRef, useState } from 'react'
 // ── Copy ───────────────────────────────────────────────────────────────
 // All copy hardcoded for now. Moves to i18n once final.
 
-const PROBLEM_HEADLINE_PRE = 'Las empresas que cobran por '
-const PROBLEM_HEADLINE_HIGHLIGHT = 'suscripciones, uso, hitos o métricas'
-const PROBLEM_HEADLINE_POST = ' terminan operando en planillas de Excel y apps desconectadas.'
+const PROBLEM_HEADLINE_PRE = 'Operar los modelos de cobro no es fácil:'
+const PROBLEM_HEADLINE_HIGHLIGHT = 'lógicas de negocio, cálculos y detalles'
+const PROBLEM_HEADLINE_POST = 'se gestionan en planillas y herramientas desconectadas.'
 
 const PROBLEM_BODY_1 =
-  'Al principio funciona — un par de hojas, una rutina clara, alguien de finanzas que la mantiene viva. Hasta que deja de funcionar.'
+  'Al principio funciona — un par de hojas, una rutina clara y alguien que mantiene todo. Hasta que comienzan los problemas.'
 const PROBLEM_BODY_2 =
-  'Los parches internos no escalan: requieren mantenimiento constante, se rompen con cada cambio de modelo y dependen de que la persona que los construyó siga en el equipo.'
+  'Los parches no escalan: necesitan mantenimiento constante, dependen de una persona y, peor aún, no crecen con la operación.'
 
 const CONSEQUENCES_EYEBROW = 'Consecuencias'
-const CONSEQUENCES_HEADLINE_PRE = '¿Cuánto te cuesta '
+const CONSEQUENCES_HEADLINE_PRE = '¿Cuánto cuesta '
 const CONSEQUENCES_HEADLINE_HIGHLIGHT = 'este problema'
-const CONSEQUENCES_HEADLINE_POST = ' cada año?'
+const CONSEQUENCES_HEADLINE_POST = ' a la empresa cada año?'
 
 const CONSEQUENCE_STAGES = [
   {
     id: 'cobras-tarde',
-    pillTitle: 'Cobras tarde',
     title: 'Cobras tarde.',
     body: 'Ciclos de cobro hasta 2× más largos que el plazo acordado. El capital de trabajo se queda atrapado en cuentas por cobrar, no en tu operación.',
     number: '+22',
-    numberUnit: 'días',
+    numberUnit: 'd í a s',
     numberLabel: 'sobre el plazo acordado',
   },
   {
     id: 'facturas-menos',
-    pillTitle: 'Facturas menos',
     title: 'Facturas menos.',
     body: 'Hasta 5% del ARR se escapa en servicios no facturados o mal calculados. Lo que ya ganaste no llega a tu balance.',
     number: '5%',
-    numberUnit: 'del ARR',
+    numberUnit: ' del  A R R',
     numberLabel: 'facturado de menos',
   },
   {
     id: 'quemas-horas',
-    pillTitle: 'Quemas horas',
-    title: 'Quemas horas-hombre.',
-    body: 'Dos o más personas en tiempo completo absorbidas por trabajo que debería estar automatizado — tiempo que no se dedica a cerrar, cobrar o crecer.',
+    title: 'Quemas HH.',
+    body: 'Dos o más personas en tiempo completo absorbidas por trabajo que debería estar automatizado — tiempo que no se dedica a cerrar o crecer.',
     number: '2+',
     numberUnit: 'FTE',
     numberLabel: 'atrapados en tareas manuales',
