@@ -41,7 +41,7 @@ export const AboutSection = ({ t }) => {
             <Reveal
               key={`${idx}-${feature.title}`}
               delayMs={idx * 70}
-              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? '!mt-20 md:!mt-4' : ''} ${idx === 2 ? '!mt-20 md:!-mt-12' : ''} ${idx === 3 ? '!mt-20 md:!-mt-4' : ''} ${gridCols}`}
+              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? '!mt-20 md:!mt-4' : ''} ${idx === 2 ? '!mt-20 md:!-mt-12' : ''} ${idx === 3 ? '!mt-28 md:!-mt-4' : ''} ${gridCols}`}
             >
               {/* Text — stacks on mobile, alternates on desktop */}
               <div className={`flex w-full flex-col justify-center px-2 sm:px-0 ${idx % 2 === 0 ? 'md:order-1' : 'md:order-2 md:items-end md:text-right'}`}>
