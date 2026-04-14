@@ -9,9 +9,27 @@ const animDeadSpace = [
   { left: 17, right: 17, top: 7,  bottom: 17 }, // conciliation
 ]
 
+// Detect iOS devices (including iPads masquerading as Mac in iPadOS 13+).
+// Every browser on iOS uses the system WebKit, so VP9+alpha webm fails
+// regardless of the browser brand — we have to serve the mp4 fallback
+// whenever the device is iOS.
+const detectIsIOS = () => {
+  if (typeof navigator === 'undefined') return false
+  const ua = navigator.userAgent || ''
+  if (/iPad|iPhone|iPod/.test(ua)) return true
+  // iPadOS 13+ reports as "Mac" in UA but has touch input.
+  if (/Mac/.test(ua) && navigator.maxTouchPoints > 1) return true
+  return false
+}
+
 export const AboutSection = ({ t }) => {
   const features = t.features ?? []
   const isMobile = useIsMobile()
+  const isIOS = detectIsIOS()
+  // Whether to serve static stills instead of the animated videos.
+  // Currently: iOS devices (WebKit can't play transparent webm reliably).
+  // Future: also low-end devices where animated playback janks.
+  const useStills = isIOS
 
   return (
     <section className="section-shell px-4 pb-32 pt-32 sm:px-6 sm:pb-40 sm:pt-40 md:pb-48 md:pt-48 lg:pb-56 lg:pt-56">
@@ -94,19 +112,28 @@ export const AboutSection = ({ t }) => {
                     : {}),
                 }}
               >
-                <video
-                  key={feature.videoSrc}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  ref={(el) => { if (el) el.playbackRate = 0.85 }}
-                  className={`w-full ${idx === 0 || idx === 1 ? 'scale-[1.18] md:scale-100' : ''} ${idx === 3 ? 'scale-110 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
-                  style={{ background: 'transparent' }}
-                >
-                  <source src={feature.videoSrc} type="video/webm" />
-                  {feature.iosSrc && <source src={feature.iosSrc} type="video/mp4" />}
-                </video>
+                {useStills && feature.stillSrc ? (
+                  <img
+                    src={feature.stillSrc}
+                    alt=""
+                    className={`w-full ${idx === 0 || idx === 1 ? 'scale-[1.18] md:scale-100' : ''} ${idx === 3 ? 'scale-110 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
+                    style={{ background: 'transparent' }}
+                  />
+                ) : (
+                  <video
+                    key={feature.videoSrc}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    ref={(el) => { if (el) el.playbackRate = 0.85 }}
+                    className={`w-full ${idx === 0 || idx === 1 ? 'scale-[1.18] md:scale-100' : ''} ${idx === 3 ? 'scale-110 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
+                    style={{ background: 'transparent' }}
+                  >
+                    <source src={feature.videoSrc} type="video/webm" />
+                    {feature.iosSrc && <source src={feature.iosSrc} type="video/mp4" />}
+                  </video>
+                )}
               </div>
             </Reveal>
           )

@@ -23,6 +23,7 @@ export const text = {
         imageSide: 'right',
         videoSrc: '/animations/complex-pricing.webm',
         iosSrc: '/animations/complex-pricing_ios.mp4',
+        stillSrc: '/animations/stills_fallback/complex-pricing-still-3.067s.png',
       },
       {
         title: 'Calcula y factura automáticamente.',
@@ -31,6 +32,7 @@ export const text = {
         imageSide: 'right',
         videoSrc: '/animations/inv-calculation.webm',
         iosSrc: '/animations/inv-calculation_ios.mp4',
+        stillSrc: '/animations/stills_fallback/inv-calculation-still-3.067s.png',
       },
       {
         title: 'Flujos de aprobación en automático.',
@@ -39,6 +41,7 @@ export const text = {
         imageSide: 'right',
         videoSrc: '/animations/approvals_v2.webm',
         iosSrc: '/animations/approvals_ios.mp4',
+        stillSrc: '/animations/stills_fallback/approvals_v2-still-1.867s.png',
       },
       {
         title: 'Recauda más rápido y concilia en tiempo real.',
@@ -47,6 +50,7 @@ export const text = {
         imageSide: 'right',
         videoSrc: '/animations/conciliation.webm',
         iosSrc: '/animations/conciliation_ios.mp4',
+        stillSrc: '/animations/stills_fallback/conciliation-still-2.633s.png',
       },
     ],
 
