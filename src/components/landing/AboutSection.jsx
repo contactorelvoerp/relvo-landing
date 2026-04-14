@@ -79,7 +79,7 @@ export const AboutSection = ({ t }) => {
                 style={{ overflow: 'hidden' }}
               >
                 <video
-                  key={isMobile ? feature.iosSrc : feature.videoSrc}
+                  key={feature.videoSrc}
                   autoPlay
                   loop
                   muted
@@ -87,7 +87,7 @@ export const AboutSection = ({ t }) => {
                   ref={(el) => { if (el) el.playbackRate = 0.85 }}
                   className={`w-full ${idx === 2 ? 'scale-95 md:scale-100' : ''} ${idx === 3 ? 'scale-75 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
                   style={{ background: 'transparent' }}
-                  src={isMobile && feature.iosSrc ? feature.iosSrc : feature.videoSrc}
+                  src={feature.videoSrc}
                 />
               </div>
             </Reveal>
