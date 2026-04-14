@@ -71,12 +71,12 @@ async function handleEarlyBirdSubmit(event) {
         if (error) {
             // Si el error es por duplicado, mostrar mensaje amigable
             if (error.code === '23505') {
-                showMessage('¡Ya estás registrado! Te notificaremos cuando estemos listos.', 'success');
+                showMessage('¡Ya estás registrado! Te contactaremos a la brevedad.', 'success');
             } else {
                 throw error;
             }
         } else {
-            showMessage('¡Gracias! Te notificaremos cuando estemos listos.', 'success');
+            showMessage('¡Gracias! Te contactaremos a la brevedad.', 'success');
             emailInput.value = ''; // Limpiar el campo
         }
     } catch (error) {

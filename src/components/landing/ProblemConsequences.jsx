@@ -8,46 +8,45 @@ const PROBLEM_HEADLINE_HIGHLIGHT = 'lógicas de negocio, cálculos y detalles'
 const PROBLEM_HEADLINE_POST = 'se gestionan en planillas y herramientas desconectadas.'
 
 const PROBLEM_BODY_1 =
-  'Al principio funciona — un par de hojas, una rutina clara y alguien que mantiene todo. Hasta que comienzan los problemas.'
-const PROBLEM_BODY_2 =
-  'Los parches no escalan: necesitan mantenimiento constante, dependen de una persona y, peor aún, no crecen con la operación.'
+  'Los problemas empiezan cuando tu negocio comienza a escalar..'
+const PROBLEM_BODY_2 =' más clientes, países y modelos de cobro personalizados.'
 
 const CONSEQUENCES_EYEBROW = 'Consecuencias'
 const CONSEQUENCES_HEADLINE_PRE = '¿Cuánto cuesta '
 const CONSEQUENCES_HEADLINE_HIGHLIGHT = 'este problema'
-const CONSEQUENCES_HEADLINE_POST = ' a la empresa cada año?'
+const CONSEQUENCES_HEADLINE_POST = ' cada año?'
 
 const CONSEQUENCE_STAGES = [
   {
     id: 'cobras-tarde',
-    title: 'Cobras tarde.',
-    body: 'Ciclos de cobro hasta 2× más largos que el plazo acordado. El capital de trabajo se queda atrapado en cuentas por cobrar, no en tu operación.',
-    number: '+22',
-    numberUnit: 'd í a s',
-    numberLabel: 'sobre el plazo acordado',
+    title: 'Días calle',
+    body: 'Ciclo de cobro dos veces más largo que el benchmark global .',
+    number: '2x',
+    numberUnit: ' D S O',
+    numberLabel: '',
   },
   {
     id: 'facturas-menos',
-    title: 'Facturas menos.',
-    body: 'Hasta 5% del ARR se escapa en servicios no facturados o mal calculados. Lo que ya ganaste no llega a tu balance.',
-    number: '5%',
-    numberUnit: ' del  A R R',
-    numberLabel: 'facturado de menos',
+    title: 'Menos Revenue',
+    body: ' Hasta 3% del revenue se pierde en servicios no facturados o mal calculados.',
+    number: '-3% ',
+    numberUnit: ' A R R',
+    numberLabel: '',
   },
   {
     id: 'quemas-horas',
-    title: 'Quemas HH.',
-    body: 'Dos o más personas en tiempo completo absorbidas por trabajo que debería estar automatizado — tiempo que no se dedica a cerrar o crecer.',
+    title: 'En tareas repetitivas',
+    body: ' Dos o más personas en tiempo completo absorbidas por trabajo manual.',
     number: '2+',
     numberUnit: 'FTE',
-    numberLabel: 'atrapados en tareas manuales',
+    numberLabel: '',
   },
 ]
 
-const CLOSING_PRE = 'Y cada cliente nuevo no reduce el problema — '
-const CLOSING_HIGHLIGHT = 'lo multiplica.'
+const CLOSING_PRE = 'Y con cada cliente nuevo.. '
+const CLOSING_HIGHLIGHT = 'el problema aumenta.'
 const CLOSING_BODY =
-  'No solo dejas dinero sobre la mesa hoy: pones un techo a lo que puedes crecer mañana.'
+  'La ejecución de ingresos no escala con la operación'
 
 // ── Shared style tokens ────────────────────────────────────────────────
 
@@ -71,9 +70,9 @@ const HEADLINE_STYLE = {
 
 const BODY_STYLE = {
   fontFamily: 'var(--font-ui)',
-  fontSize: 'clamp(0.9rem, 1.9vmin, 1.25rem)',
+  fontSize: 'clamp(1.3rem, 2vmin, 1.7rem)',
   fontWeight: 400,
-  lineHeight: 1.55,
+  lineHeight: 1,
   color: '#2a2a2a',
 }
 
@@ -96,7 +95,7 @@ const ProblemBlock = () => (
         {PROBLEM_HEADLINE_POST}
       </h2>
 
-      <div className="mt-[6vh] flex max-w-3xl flex-col gap-[2.5vh]" style={BODY_STYLE}>
+      <div className="mt-[3vh] flex max-w-3xl flex-col gap-[2vh]" style={BODY_STYLE}>
         <p>{PROBLEM_BODY_1}</p>
         <p>{PROBLEM_BODY_2}</p>
       </div>
@@ -121,39 +120,70 @@ const ConsequencesBlock = () => {
     if (!el) return
 
     const shader = document.getElementById('shader-background-root')
-    const origPosition = shader ? shader.style.position : ''
-    const origTop = shader ? shader.style.top : ''
-    const origHeight = shader ? shader.style.height : ''
-    let shaderPinned = false
+    const ORIG_POSITION = 'absolute'
+    const ORIG_HEIGHT = '100%'
 
-    // `capturedScrollY` = the scroll position at which we first locked the
-    // shader during this pin session. `offsetAccum` = the cumulative offset
-    // that's been "absorbed" by previous pin sessions. Post-pin we keep the
-    // shader shifted so the rest of the page sees a seamless continuation
-    // of the frozen slice.
-    let capturedScrollY = 0
-    let offsetAccum = 0
+    // Reset shader to clean state on mount in case a prior session (HMR,
+    // refresh mid-scroll) left inline styles behind.
+    if (shader) {
+      shader.style.position = ORIG_POSITION
+      shader.style.top = '0px'
+      shader.style.height = ORIG_HEIGHT
+    }
 
-    const pinShader = () => {
-      if (!shader || shaderPinned) return
-      capturedScrollY = window.scrollY
+    // Three states for the shader, derived purely from scroll position
+    // relative to the consequences section. No accumulators, no per-exit
+    // deltas — each state has a single canonical shader position.
+    //
+    //   'above'  → user is above the pin. Shader at top:0 (natural).
+    //   'pinned' → pin is engaged. Shader fixed at the slice that was
+    //              visible when the pin engaged (captured on transition).
+    //   'below'  → user is past the pin. Shader at top:PIN_RANGE where
+    //              PIN_RANGE is the fixed scroll distance of the pin.
+    //              Sections after the pin see a seamless continuation of
+    //              the frozen slice because the shader has been shifted
+    //              down by exactly the distance that was "skipped" during
+    //              the pin.
+    //
+    // PIN_RANGE is deterministic and fixed per mount/resize. Scrolling in
+    // and out of the section always produces the same shader positions.
+    let shaderState = 'above'
+    const getPinRange = () =>
+      Math.max(0, el.offsetHeight - window.innerHeight)
+
+    const setShaderAbove = () => {
+      if (!shader || shaderState === 'above') return
+      shader.style.position = ORIG_POSITION
+      shader.style.top = '0px'
+      shader.style.height = ORIG_HEIGHT
+      shaderState = 'above'
+    }
+    const setShaderBelow = () => {
+      if (!shader || shaderState === 'below') return
+      shader.style.position = ORIG_POSITION
+      shader.style.top = `${Math.round(getPinRange())}px`
+      shader.style.height = ORIG_HEIGHT
+      shaderState = 'below'
+    }
+    const setShaderPinned = () => {
+      if (!shader || shaderState === 'pinned') return
+      // Read current absolute top (0 from 'above', PIN_RANGE from 'below')
+      // and convert to the equivalent fixed position showing the same slice.
+      const currentTop = parseFloat(shader.style.top || '0') || 0
+      const scrollY = window.scrollY
       shader.style.height = `${document.documentElement.scrollHeight}px`
       shader.style.position = 'fixed'
-      shader.style.top = `${-capturedScrollY + offsetAccum}px`
-      shaderPinned = true
+      shader.style.top = `${-scrollY + currentTop}px`
+      shaderState = 'pinned'
     }
-    const unpinShader = () => {
-      if (!shader || !shaderPinned) return
-      // On exit, accumulate the scroll distance traversed during this pin.
-      // Post-pin, the shader is `position: absolute; top: offsetAccum` so
-      // that at the current scroll position, the same slice is visible.
-      const releaseScrollY = window.scrollY
-      const delta = releaseScrollY - capturedScrollY
-      offsetAccum += delta
-      shader.style.position = origPosition // absolute
-      shader.style.top = `${offsetAccum}px`
-      shader.style.height = origHeight
-      shaderPinned = false
+
+    // Initialize shader state from current scroll position on mount.
+    {
+      const r = el.getBoundingClientRect()
+      const vh = window.innerHeight
+      if (r.bottom <= vh) setShaderBelow()
+      else if (r.top <= 0 && r.bottom >= vh) setShaderPinned()
+      // default stays 'above'
     }
 
     let raf = 0
@@ -168,12 +198,23 @@ const ConsequencesBlock = () => {
       const b = Math.min(BEATS, Math.floor(t * (BEATS + 1)))
       setBeat(b)
 
-      // Pin the shader while the sticky stage is actually pinned. Use a
-      // generous tolerance so sub-pixel jitter during smooth scroll doesn't
-      // cause the pin to toggle (which would re-capture a new slice).
-      const isStickyPinned = rect.top <= 2 && rect.bottom >= viewportH - 2
-      if (isStickyPinned) pinShader()
-      else unpinShader()
+      // Derive the correct shader state from current scroll position. This
+      // is a pure function of scroll, not an incremental transition, so
+      // even a scrollbar-drag that skips hundreds of pixels lands in the
+      // correct state in a single frame.
+      //   - If section is entirely above the viewport → 'below' (user has
+      //     passed it)
+      //   - If section is entirely below the viewport → 'above' (user
+      //     hasn't reached it)
+      //   - Otherwise → 'pinned' (section overlaps viewport)
+      let target
+      if (rect.bottom <= viewportH) target = 'below'
+      else if (rect.top > 0) target = 'above'
+      else target = 'pinned'
+
+      if (target === 'above') setShaderAbove()
+      else if (target === 'below') setShaderBelow()
+      else setShaderPinned()
     }
 
     // Snap scroll to the nearest beat position after scroll goes idle.
@@ -215,7 +256,7 @@ const ConsequencesBlock = () => {
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
       if (snapTimer) clearTimeout(snapTimer)
-      unpinShader()
+      setShaderAbove()
     }
   }, [])
 
@@ -241,9 +282,16 @@ const ConsequencesBlock = () => {
           is driven purely by scroll position relative to the outer — no
           wheel interception, no engagement math. */}
       <div
-        className="sticky top-0 h-screen w-full overflow-hidden"
+        className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden py-[8vh]"
       >
-        <div className="relative z-10 mx-auto grid h-full max-w-6xl items-center gap-[6vw] px-4 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <div
+          className="relative z-10 mx-4 grid h-full w-full max-w-7xl items-center gap-[4vw] rounded-2xl px-[3vw] py-[5vh] backdrop-blur-sm sm:mx-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+          style={{
+            backgroundColor: 'rgba(230, 240, 234, 0.15)',
+            border: '1px solid rgba(19,19,30,0.06)',
+            boxShadow: '0 2px 12px -4px rgba(19,19,30,0.08)',
+          }}
+        >
           {/* LEFT: headline */}
           <div className="flex flex-col">
             <h2 className="max-w-md" style={HEADLINE_STYLE}>
@@ -264,7 +312,7 @@ const ConsequencesBlock = () => {
                 return (
                   <div
                     key={`pill-${stage.id}`}
-                    className="flex items-baseline gap-3 transition-all duration-500"
+                    className="inline-flex items-baseline gap-3 self-start rounded-full bg-[var(--text-main)] px-4 py-2 transition-all duration-500"
                     style={{
                       opacity: stowed ? 1 : 0,
                       transform: stowed ? 'translateY(0)' : 'translateY(-8px)',
@@ -273,11 +321,11 @@ const ConsequencesBlock = () => {
                     <span
                       style={{
                         fontFamily: 'var(--font-display)',
-                        fontSize: 'clamp(1.4rem, 3vmin, 2rem)',
+                        fontSize: 'clamp(1.2rem, 2.6vmin, 1.7rem)',
                         fontWeight: 300,
                         lineHeight: 1,
                         letterSpacing: '-0.02em',
-                        color: '#000000',
+                        color: '#ffffff',
                       }}
                     >
                       {stage.number}
@@ -285,7 +333,7 @@ const ConsequencesBlock = () => {
                         style={{
                           fontSize: '0.5em',
                           marginLeft: '0.2em',
-                          color: '#585858',
+                          color: 'rgba(255,255,255,0.7)',
                         }}
                       >
                         {stage.numberUnit}
@@ -293,10 +341,12 @@ const ConsequencesBlock = () => {
                     </span>
                     <span
                       style={{
-                        fontFamily: 'var(--font-ui)',
-                        fontSize: 'clamp(0.75rem, 1.4vmin, 0.95rem)',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: 'clamp(0.7rem, 1.2vmin, 0.85rem)',
                         fontWeight: 500,
-                        color: '#585858',
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                        color: 'rgba(255,255,255,0.85)',
                       }}
                     >
                       {stage.pillTitle}

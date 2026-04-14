@@ -37,13 +37,13 @@ export const text = {
         description:
           'Deja que la IA maneje de manera autónoma las solicitudes de OC y aprobaciones, acelerando el proceso de facturación y recaudación.',
         imageSide: 'right',
-        videoSrc: '/animations/approvals.webm',
+        videoSrc: '/animations/approvals_v2.webm',
         iosSrc: '/animations/approvals_ios.mp4',
       },
       {
         title: 'Recauda más rápido y concilia en tiempo real.',
         description:
-          'Con mensajería de cobranza automática, pagos y conciliación\nconectada a tus cuentas bancarias.',
+          'Con mensajería de cobranza automática, pagos y\nconciliación conectada a tus cuentas bancarias.',
         imageSide: 'right',
         videoSrc: '/animations/conciliation.webm',
         iosSrc: '/animations/conciliation_ios.mp4',
@@ -53,7 +53,7 @@ export const text = {
     ctaTitle: 'Estamos buscando nuestros early adopters, ¿te gustaría probar Relvo?',
     ctaTitleHighlight: 'early adopters,',
     ctaScheduleText: 'Agenda un meet de 20 minutos con un Founder',
-    ctaCaptureLabel: 'O deja tu correo y te escribiremos cuando estemos listos ;)',
+    ctaCaptureLabel: 'O deja tu correo y te contactaremos a la brevedad ;)',
     ctaEmailPlaceholder: 'Tu email ',
     ctaSubmit: 'Guardar correo',
     ctaHelper: 'Quedamos en contacto!',
@@ -88,7 +88,7 @@ export const text = {
     bridgeToEmphasis: 'por y para',
     bridgeSupport:
       'Diseñado para empresas B2B en crecimiento —SaaS, IA, consultoras, outsourcing y servicios— con modelos de precio que no caben en una planilla simple.',
-    footerTagline: 'Infraestructura de ingresos con IA para B2B en LATAM',
+    footerTagline: 'Infraestructura de ingresos B2B para LATAM',
 
     footerColumns: [
       {

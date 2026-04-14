@@ -117,12 +117,14 @@ export const CTASection = ({ ctaHref, t }) => {
               fontFamily: 'var(--font-display)',
               fontSize: 'clamp(1.6rem, 4vw, 3.5rem)',
               fontWeight: 300,
-              lineHeight: 1.15,
+              lineHeight: 1.3,
               letterSpacing: '-0.02em',
               color: '#000000',
             }}
           >
-            {'Estamos buscando nuestros '}
+            {'Tú decides tus modelos de cobro,'}
+            <br />
+             {'deja que  '}
             <span
               className="px-[0.18em]"
               style={{
@@ -131,18 +133,10 @@ export const CTASection = ({ ctaHref, t }) => {
                 boxDecorationBreak: 'clone',
                 borderRadius: '2px',
               }}
-            >
-              early adopters,
+              >
+            Relvo los opere
             </span>
             <br />
-            {'¿te gustaría probar '}
-            <img
-              src="/relvo-wordmark-dark.svg"
-              alt="relvo"
-              className="inline-block align-baseline"
-              style={{ height: '0.75em', marginLeft: '0.15em', marginRight: '0.1em' }}
-            />
-            {'?'}
           </h2>
 
           {/* CTA button */}
@@ -152,10 +146,10 @@ export const CTASection = ({ ctaHref, t }) => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackScheduleDemo('cta_section')}
-              className="inline-flex h-11 items-center justify-center rounded-full bg-[var(--text-main)] px-6 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+              className="inline-flex h-14 items-center justify-center rounded-full bg-[var(--text-main)] px-8 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.75rem',
+                fontSize: 'clamp(0.85rem, 1.1vw, 1rem)',
                 fontWeight: 500,
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
@@ -171,7 +165,7 @@ export const CTASection = ({ ctaHref, t }) => {
               className="mb-5 sm:mb-6"
               style={{
                 fontFamily: 'var(--font-ui)',
-                fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)',
+                fontSize: 'clamp(1.3rem, 2vw, 1.6rem)',
                 fontWeight: 500,
                 color: 'var(--text-main)',
               }}
@@ -195,20 +189,20 @@ export const CTASection = ({ ctaHref, t }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t.ctaEmailPlaceholder}
-                  className="h-10 w-full bg-transparent px-5 text-[var(--text-main)] outline-none placeholder:text-[var(--text-muted)]"
+                  className="h-12 w-full bg-transparent px-5 text-[var(--text-main)] outline-none placeholder:text-[var(--text-muted)]"
                   style={{
                     fontFamily: 'var(--font-ui)',
-                    fontSize: '0.9rem',
+                    fontSize: 'clamp(1rem, 1.3vw, 1.15rem)',
                   }}
                   autoComplete="work email"
                   inputMode="email"
                 />
                 <button
                   type="submit"
-                  className="h-10 w-full shrink-0 rounded-full bg-[var(--text-main)] px-5 text-white sm:w-auto transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+                  className="h-12 w-full shrink-0 rounded-full bg-[var(--text-main)] px-6 text-white sm:w-auto transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                   style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.75rem',
+                    fontSize: 'clamp(0.85rem, 1vw, 0.95rem)',
                     fontWeight: 500,
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
