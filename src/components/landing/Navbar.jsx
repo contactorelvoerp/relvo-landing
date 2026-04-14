@@ -2,19 +2,16 @@ import { useState, useEffect } from 'react'
 import { trackScheduleDemo } from '../../utils/analytics'
 
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
+const clamp01 = (value) => Math.max(0, Math.min(1, value))
 
 export const Navbar = ({ t, navigate, scrollThreshold }) => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [showBackdrop, setShowBackdrop] = useState(false)
+  const [backdropProgress, setBackdropProgress] = useState(0)
 
   useEffect(() => {
-    if (!scrollThreshold) return
-
     const handleScroll = () => {
-      const threshold = typeof scrollThreshold === 'number'
-        ? scrollThreshold
-        : scrollThreshold.current?.offsetTop ?? Infinity
-      setShowBackdrop(window.scrollY > threshold - window.innerHeight * 0.5)
+      const fadeDistance = Math.max(window.innerHeight * 0.22, 120)
+      setBackdropProgress(clamp01(window.scrollY / fadeDistance))
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -34,7 +31,12 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
   return (
     <>
     {/* Mobile-only top bar with CTA */}
-    <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 pt-3 pb-2 sm:hidden">
+    <div
+      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 pt-3 pb-2 transition-[background] duration-300 sm:hidden"
+      style={{
+        background: `linear-gradient(to bottom, rgba(255,255,255,${0.94 * backdropProgress}) 0%, rgba(255,255,255,${0.9 * backdropProgress}) 62%, rgba(255,255,255,0) 100%)`,
+      }}
+    >
       <a href="#inicio" className="flex items-center gap-1.5 px-1 py-1">
         <img src="/logo-mark-dark.svg" alt="" aria-hidden="true" className="h-4 w-auto" />
         <img src="/relvo-wordmark-dark.svg" alt="relvo" className="h-4 w-auto" />
@@ -63,10 +65,8 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
     <header
       className="fixed inset-x-0 top-0 z-50 hidden px-4 pt-3 sm:block sm:px-6 sm:pt-4"
       style={{
-        paddingBottom: showBackdrop ? '2.5rem' : '0.75rem',
-        background: showBackdrop
-          ? 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 60%, rgba(255,255,255,0) 100%)'
-          : 'transparent',
+        paddingBottom: `${0.75 + 1.75 * backdropProgress}rem`,
+        background: `linear-gradient(to bottom, rgba(255,255,255,${backdropProgress}) 0%, rgba(255,255,255,${backdropProgress}) 60%, rgba(255,255,255,0) 100%)`,
         transition: 'background 0.4s ease',
       }}
     >
