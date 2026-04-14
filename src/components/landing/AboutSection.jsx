@@ -16,7 +16,7 @@ export const AboutSection = ({ t }) => {
   return (
     <section className="section-shell px-4 pb-32 pt-32 sm:px-6 sm:pb-40 sm:pt-40 md:pb-48 md:pt-48 lg:pb-56 lg:pt-56">
       <h2
-        className="mx-auto mb-16 text-center md:mb-8"
+        className="mx-auto mb-16 text-center md:mb-24 lg:mb-32"
         style={{
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
@@ -43,7 +43,7 @@ export const AboutSection = ({ t }) => {
             <Reveal
               key={`${idx}-${feature.title}`}
               delayMs={idx * 70}
-              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? '!mt-20 md:!-mt-6' : ''} ${idx === 2 ? '!mt-20 md:!-mt-4' : ''} ${idx === 3 ? '!mt-28 md:!mt-12' : ''} ${gridCols}`}
+              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? '!mt-20 md:!mt-40 lg:!mt-52' : ''} ${idx === 2 ? '!mt-20 md:!mt-40 lg:!mt-52' : ''} ${idx === 3 ? '!mt-28 md:!mt-32 lg:!mt-40' : ''} ${gridCols}`}
             >
               {/* Text — stacks on mobile, alternates on desktop */}
               <div className={`flex w-full flex-col justify-center px-2 sm:px-0 ${idx % 2 === 0 ? 'md:order-1' : 'md:order-2 md:items-end md:text-right'}`}>
@@ -78,12 +78,17 @@ export const AboutSection = ({ t }) => {
                   dead space above/below the animation with negative
                   margins sized in vw (scaled from animDeadSpace). */}
               <div
-                className={`${idx === 3 ? '-mt-12 sm:-mt-16 md:-mt-12' : ''} overflow-hidden ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
+                className={`${idx === 3 ? '-mt-4 sm:-mt-16 md:-mt-12' : ''} overflow-hidden ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
                 style={{
                   overflow: 'hidden',
                   ...(idx < 3
                     ? {
-                        marginTop: `-${animDeadSpace[idx].top * 0.7}vw`,
+                        // Mobile: less negative top for anims 1 & 2 so they
+                        // sit a bit lower (more breathing room above).
+                        marginTop:
+                          isMobile && idx <= 2
+                            ? `-${animDeadSpace[idx].top * 0.55}vw`
+                            : `-${animDeadSpace[idx].top * 0.7}vw`,
                         marginBottom: `-${animDeadSpace[idx].bottom * 0.7}vw`,
                       }
                     : {}),
@@ -96,7 +101,7 @@ export const AboutSection = ({ t }) => {
                   muted
                   playsInline
                   ref={(el) => { if (el) el.playbackRate = 0.85 }}
-                  className={`w-full ${idx === 2 ? 'scale-95 md:scale-100' : ''} ${idx === 3 ? 'scale-75 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
+                  className={`w-full ${idx === 0 || idx === 1 ? 'scale-[1.18] md:scale-100' : ''} ${idx === 3 ? 'scale-110 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
                   style={{ background: 'transparent' }}
                 >
                   <source src={feature.videoSrc} type="video/webm" />
