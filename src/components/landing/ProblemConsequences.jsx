@@ -42,7 +42,7 @@ const CONSEQUENCE_STAGES = [
   },
 ]
 
-const CLOSING_PRE = 'Y con cada cliente nuevo.. '
+const CLOSING_PRE = 'Y con cada cliente nuevo... '
 const CLOSING_HIGHLIGHT = 'el problema aumenta.'
 const CLOSING_BODY =
   'La ejecución de ingresos no escala con la operación'
@@ -411,7 +411,7 @@ const ConsequencesBlock = () => {
                   className="max-w-md"
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.4rem, 3.8vmin, 2.6rem)',
+                    fontSize: 'clamp(2rem, 4.9vmin, 3.5rem)',
                     fontWeight: 300,
                     lineHeight: 1.2,
                     letterSpacing: '-0.01em',
@@ -421,7 +421,13 @@ const ConsequencesBlock = () => {
                   {CLOSING_PRE}
                   <span style={HIGHLIGHT_STYLE}>{CLOSING_HIGHLIGHT}</span>
                 </p>
-                <p className="mt-[3vh] max-w-md" style={BODY_STYLE}>
+                <p
+                  className="mt-[3vh] max-w-md"
+                  style={{
+                    ...BODY_STYLE,
+                    fontSize: 'clamp(1.18rem, 2.25vmin, 1.56rem)',
+                  }}
+                >
                   {CLOSING_BODY}
                 </p>
               </div>
