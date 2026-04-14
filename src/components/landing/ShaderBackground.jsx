@@ -59,13 +59,16 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
   }, [])
 
   const activeSpeed = isVisible ? 0.65 : 0
+  const rootClassName = isLogin
+    ? `pointer-events-none absolute inset-x-0 top-0 z-0 overflow-hidden ${className}`
+    : `pointer-events-none fixed inset-0 z-0 overflow-hidden ${className}`
 
   return (
     <div
       ref={wrapperRef}
       id="shader-background-root"
-      className={`pointer-events-none absolute inset-x-0 top-0 z-0 overflow-hidden ${className}`}
-      style={{ height: '100%' }}
+      className={rootClassName}
+      style={{ height: isLogin ? '100%' : '100vh' }}
     >
       {isLogin ? (
         <LoginGradient
@@ -78,26 +81,36 @@ export const ShaderBackground = ({ className = '', variant = 'landing' }) => {
           {...shaderProps}
         />
       ) : (
-        <BackgroundStatic />
-      )}
-
-      {!isLogin && figures.map((fig, i) => (
-        <img
-          key={i}
-          src={fig.src}
-          alt=""
-          aria-hidden="true"
-          decoding="async"
-          className="absolute"
+        <div
+          id="shader-background-track"
           style={{
-            left: `${fig.x}vw`,
-            top: `${fig.y}vw`,
-            width: `${fig.size}vw`,
-            height: 'auto',
-            opacity: fig.opacity,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            willChange: 'transform',
           }}
-        />
-      ))}
+        >
+          <BackgroundStatic />
+          {figures.map((fig, i) => (
+            <img
+              key={i}
+              src={fig.src}
+              alt=""
+              aria-hidden="true"
+              decoding="async"
+              className="absolute"
+              style={{
+                left: `${fig.x}vw`,
+                top: `${fig.y}vw`,
+                width: `${fig.size}vw`,
+                height: 'auto',
+                opacity: fig.opacity,
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

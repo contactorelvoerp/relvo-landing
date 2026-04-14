@@ -11,7 +11,6 @@ const PROBLEM_BODY_1 =
   'Los problemas empiezan cuando tu negocio comienza a escalar…'
 const PROBLEM_BODY_2 =' más clientes, países y modelos de cobro personalizados.'
 
-const CONSEQUENCES_EYEBROW = 'Consecuencias'
 const CONSEQUENCES_HEADLINE_PRE = '¿Cuánto cuesta '
 const CONSEQUENCES_HEADLINE_HIGHLIGHT = 'este problema'
 const CONSEQUENCES_HEADLINE_POST = ' cada año?'
@@ -49,15 +48,6 @@ const CLOSING_BODY =
   'La ejecución de ingresos no escala con la operación'
 
 // ── Shared style tokens ────────────────────────────────────────────────
-
-const EYEBROW_STYLE = {
-  fontFamily: 'var(--font-mono)',
-  fontSize: 'clamp(0.65rem, 0.95vmin, 0.85rem)',
-  fontWeight: 400,
-  color: '#585858',
-  letterSpacing: '0.14em',
-  textTransform: 'uppercase',
-}
 
 const HEADLINE_STYLE = {
   fontFamily: 'var(--font-display)',
@@ -116,17 +106,20 @@ const ConsequencesBlock = () => {
     const el = wrapperRef.current
     if (!el) return
 
-    const shader = document.getElementById('shader-background-root')
-    const ORIG_POSITION = 'absolute'
-    const ORIG_HEIGHT = '100%'
+    const shaderTrack =
+      document.getElementById('shader-background-track') ??
+      document.getElementById('shader-background-root')
 
-    // Reset shader to clean state on mount in case a prior session (HMR,
-    // refresh mid-scroll) left inline styles behind.
-    if (shader) {
-      shader.style.position = ORIG_POSITION
-      shader.style.top = '0px'
-      shader.style.height = ORIG_HEIGHT
+    let currentOffset = -window.scrollY
+    let frozenOffset = currentOffset
+
+    const applyShaderOffset = (offset) => {
+      if (!shaderTrack) return
+      currentOffset = offset
+      shaderTrack.style.transform = `translate3d(0, ${Math.round(offset)}px, 0)`
     }
+
+    applyShaderOffset(currentOffset)
 
     // Three states for the shader, derived purely from scroll position
     // relative to the consequences section. No accumulators, no per-exit
@@ -149,28 +142,16 @@ const ConsequencesBlock = () => {
       Math.max(0, el.offsetHeight - window.innerHeight)
 
     const setShaderAbove = () => {
-      if (!shader || shaderState === 'above') return
-      shader.style.position = ORIG_POSITION
-      shader.style.top = '0px'
-      shader.style.height = ORIG_HEIGHT
+      applyShaderOffset(-window.scrollY)
       shaderState = 'above'
     }
     const setShaderBelow = () => {
-      if (!shader || shaderState === 'below') return
-      shader.style.position = ORIG_POSITION
-      shader.style.top = `${Math.round(getPinRange())}px`
-      shader.style.height = ORIG_HEIGHT
+      applyShaderOffset(-window.scrollY + getPinRange())
       shaderState = 'below'
     }
     const setShaderPinned = () => {
-      if (!shader || shaderState === 'pinned') return
-      // Read current absolute top (0 from 'above', PIN_RANGE from 'below')
-      // and convert to the equivalent fixed position showing the same slice.
-      const currentTop = parseFloat(shader.style.top || '0') || 0
-      const scrollY = window.scrollY
-      shader.style.height = `${document.documentElement.scrollHeight}px`
-      shader.style.position = 'fixed'
-      shader.style.top = `${-scrollY + currentTop}px`
+      if (shaderState !== 'pinned') frozenOffset = currentOffset
+      applyShaderOffset(frozenOffset)
       shaderState = 'pinned'
     }
 
@@ -253,7 +234,7 @@ const ConsequencesBlock = () => {
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
       if (snapTimer) clearTimeout(snapTimer)
-      setShaderAbove()
+      applyShaderOffset(-window.scrollY)
     }
   }, [])
 

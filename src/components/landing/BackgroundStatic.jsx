@@ -66,20 +66,14 @@ export const BackgroundStatic = () => {
     <div
       aria-hidden="true"
       style={{
-        position: 'absolute',
-        inset: 0,
+        position: 'relative',
         width: '100%',
-        height: '100%',
         backgroundColor: '#FFFFFF',
-        overflow: 'hidden',
       }}
     >
       <div
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
+          position: 'relative',
           display: 'flex',
           flexDirection: 'column',
         }}
