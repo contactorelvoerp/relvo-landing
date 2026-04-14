@@ -73,10 +73,21 @@ export const AboutSection = ({ t }) => {
                 </p>
               </div>
 
-              {/* Animation — full width on mobile, alternates on desktop */}
+              {/* Animation — full width on mobile, alternates on desktop.
+                  For features 1-3 (idx 0-2) collapse the transparent
+                  dead space above/below the animation with negative
+                  margins sized in vw (scaled from animDeadSpace). */}
               <div
-                className={`${idx === 3 ? '-mt-8' : 'mt-4'} overflow-hidden sm:-mt-8 md:mt-0 ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
-                style={{ overflow: 'hidden' }}
+                className={`${idx === 3 ? '-mt-12 sm:-mt-16 md:-mt-12' : ''} overflow-hidden ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
+                style={{
+                  overflow: 'hidden',
+                  ...(idx < 3
+                    ? {
+                        marginTop: `-${animDeadSpace[idx].top * 0.7}vw`,
+                        marginBottom: `-${animDeadSpace[idx].bottom * 0.7}vw`,
+                      }
+                    : {}),
+                }}
               >
                 <video
                   key={feature.videoSrc}
@@ -87,8 +98,10 @@ export const AboutSection = ({ t }) => {
                   ref={(el) => { if (el) el.playbackRate = 0.85 }}
                   className={`w-full ${idx === 2 ? 'scale-95 md:scale-100' : ''} ${idx === 3 ? 'scale-75 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
                   style={{ background: 'transparent' }}
-                  src={feature.videoSrc}
-                />
+                >
+                  <source src={feature.videoSrc} type="video/webm" />
+                  {feature.iosSrc && <source src={feature.iosSrc} type="video/mp4" />}
+                </video>
               </div>
             </Reveal>
           )

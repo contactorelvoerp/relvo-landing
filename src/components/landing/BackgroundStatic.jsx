@@ -76,6 +76,74 @@ export const BackgroundStatic = () => {
             }}
           />
         ))}
+        {/* Mirrored tail — flipped vertical copy of the full stack appended
+            below so the shader visually extends past its native height when
+            the page has grown (e.g., due to the scrolly pin). Seam is
+            hidden because the last row of the original stack mirrors onto
+            the first row of the flipped copy. */}
+        {[...SLOTS].reverse().map((slot, idx) => (
+          <img
+            key={`mirror-${slot.i}`}
+            src={`/bg-slots/slot-${slot.i}.webp`}
+            alt=""
+            draggable={false}
+            style={{
+              width: '100%',
+              height: 'auto',
+              aspectRatio: '16 / 17',
+              objectFit: 'fill',
+              display: 'block',
+              // Pass boundary: the mirror's first slot (the LAST real slot
+              // flipped) meets the original stack's last slot. Their edges
+              // are the same pixel row — butt them up with 0 margin and
+              // let scaleY(-1) mirror seam perfectly.
+              marginTop: idx === 0 ? '0' : `-${(BLEED / SLOT_HEIGHT) * 100}%`,
+              transform: 'scaleY(-1)',
+              userSelect: 'none',
+              pointerEvents: 'none',
+            }}
+          />
+        ))}
+        {/* Second pass — same orientation as the original, appended below
+            the mirror. Boundary row is slot 0 top = mirror's slot 0 bottom. */}
+        {SLOTS.map((slot, idx) => (
+          <img
+            key={`loop2-${slot.i}`}
+            src={`/bg-slots/slot-${slot.i}.webp`}
+            alt=""
+            draggable={false}
+            style={{
+              width: '100%',
+              height: 'auto',
+              aspectRatio: '16 / 17',
+              objectFit: 'fill',
+              display: 'block',
+              marginTop: idx === 0 ? '0' : `-${(BLEED / SLOT_HEIGHT) * 100}%`,
+              userSelect: 'none',
+              pointerEvents: 'none',
+            }}
+          />
+        ))}
+        {/* Third pass — mirror again. */}
+        {[...SLOTS].reverse().map((slot, idx) => (
+          <img
+            key={`mirror2-${slot.i}`}
+            src={`/bg-slots/slot-${slot.i}.webp`}
+            alt=""
+            draggable={false}
+            style={{
+              width: '100%',
+              height: 'auto',
+              aspectRatio: '16 / 17',
+              objectFit: 'fill',
+              display: 'block',
+              marginTop: idx === 0 ? '0' : `-${(BLEED / SLOT_HEIGHT) * 100}%`,
+              transform: 'scaleY(-1)',
+              userSelect: 'none',
+              pointerEvents: 'none',
+            }}
+          />
+        ))}
       </div>
     </div>
   )

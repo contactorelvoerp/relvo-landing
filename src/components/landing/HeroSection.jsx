@@ -25,62 +25,64 @@ export const HeroSection = () => {
         ref={page1Ref}
         className="full-page relative flex w-full flex-col items-center px-4 pt-[4.5rem] pb-4 sm:px-6 sm:pt-[5rem]"
       >
-        <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center text-center">
-          {/* Top group: eyebrow stays pinned at top; headline + body
-              pushed down so they sit closer to the animation below. */}
-          <div className="flex w-full flex-col items-center">
-            {/* T1 Eyebrow */}
-            <p
-              className="uppercase"
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: 'clamp(1rem, 0.9vmin, 0.8rem)',
-                fontWeight: 400,
-                color: '#585858',
-                letterSpacing: '0.14em',
-              }}
-            >
-              Revenue-design para empresas B2B en LATAM
-            </p>
+        <div className="relative z-10 mx-auto w-full max-w-5xl flex-1 text-center">
+          {/* T1 Eyebrow — anchored at 8vh from section top on mobile, 7vh on desktop */}
+          <p
+            className="absolute left-1/2 -translate-x-1/2 uppercase whitespace-nowrap top-0 lg:top-[6vh]"
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 'clamp(0.65rem, 1vmin, 0.85rem)',
+              fontWeight: 400,
+              color: '#585858',
+              letterSpacing: '0.14em',
+            }}
+          >
+            Revenue-design para empresas B2B en LATAM
+          </p>
 
-            {/* T2 Page headline */}
-            <h1
-              className="mt-[10vh] lg:mt-[15vh]"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(3rem, 7vmin, 7rem)',
-                fontWeight: 500,
-                lineHeight: 1.15,
-                letterSpacing: '-0.02em',
-                color: '#000000',
-              }}
-            >
-              Cobra como quieras,
-              <br />
-              opera en un sólo sistema.
-            </h1>
+          {/* T2 Page headline — anchored at 14vh mobile, 22vh desktop */}
+          <h1
+            className="absolute left-1/2 -translate-x-1/2 top-[7vh] lg:top-[20vh]"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(1.85rem, 6.5vmin, 5.5rem)',
+              fontWeight: 500,
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+              color: '#000000',
+              width: 'min(90vw, 64rem)',
+            }}
+          >
+            Cobra como quieras,
+            <br />
+            opera en un sólo sistema.
+          </h1>
 
-            {/* T4 Body large — intro */}
-            <p
-              className="mx-auto mt-[4vh] max-w-3xl lg:mt-[5vh]"
-              style={{
-                fontFamily: 'var(--font-ui)',
-                fontSize: 'clamp(1.2rem, 2.1vmin, 1.5rem)',
-                fontWeight: 400,
-                lineHeight: 1.5,
-                color: '#2a2a2a',
-              }}
-            >
-              Cuando tus ingresos dependen de cobros por suscripciones, uso, hitos o métricas de servicio, el camino del contrato al cobro es largo y manual. Relvo automatiza ese proceso de punta a punta, para que la facturación deje de ser un dolor de cabeza.
-            </p>
+          {/* T4 Body large — anchored at 36vh mobile, 40vh desktop */}
+          <p
+            className="absolute left-1/2 -translate-x-1/2 top-[27vh] lg:top-[38vh]"
+            style={{
+              fontFamily: 'var(--font-ui)',
+              fontSize: 'clamp(0.95rem, 2.2vmin, 1.55rem)',
+              fontWeight: 400,
+              lineHeight: 1.5,
+              color: '#2a2a2a',
+              width: 'min(85vw, 48rem)',
+            }}
+          >
+            Cuando tus ingresos dependen de cobros por suscripciones, uso, hitos o métricas de servicio, el camino del contrato al cobro es largo y manual. Relvo automatiza ese proceso de punta a punta, para que la facturación deje de ser un dolor de cabeza.
+          </p>
 
-            <div className="relative mt-[12vh] w-full md:mt-[3vh] lg:mt-[10vh]" style={{ aspectRatio: '6 / 1' }}>
-              <div
-                className="absolute left-1/2 top-1/2 block w-[165vw] max-w-none -translate-x-1/2 -translate-y-1/2 sm:w-full sm:max-w-[min(80rem,90vmin)]"
-                style={{ aspectRatio: '6 / 1' }}
-              >
-                <HeroFlowLive className="block h-full w-full" />
-              </div>
+          {/* HeroFlow animation — anchored at 57vh mobile, 55vh desktop */}
+          <div
+            className="absolute left-1/2 w-full -translate-x-1/2 top-[57vh] lg:top-[55vh]"
+            style={{ aspectRatio: '6 / 1' }}
+          >
+            <div
+              className="absolute left-1/2 top-1/2 block w-[165vw] max-w-none -translate-x-1/2 -translate-y-1/2 sm:w-full sm:max-w-[min(80rem,90vmin)]"
+              style={{ aspectRatio: '6 / 1' }}
+            >
+              <HeroFlowLive className="block h-full w-full" />
             </div>
           </div>
 
