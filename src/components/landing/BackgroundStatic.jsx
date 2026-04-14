@@ -22,6 +22,23 @@ import { useRef } from 'react'
 const SLOT_HEIGHT = 1440
 const BLEED = 200
 const SCROLL_H = 8000
+// Native rendered slot dimensions. Middle slots (1-4) are 2560×1840,
+// edge slots (0, 5) are shorter because the renderer truncates the
+// outer bleed at the document edges. We use these exact dimensions to
+// preserve the original aspect ratio when stretching to viewport width.
+const SLOT_NATIVE_W = 2560
+const SLOT_NATIVE_DIMS = {
+  0: { w: 2560, h: 1640 }, // hero edge — only bottom bleed
+  1: { w: 2560, h: 1840 },
+  2: { w: 2560, h: 1840 },
+  3: { w: 2560, h: 1840 },
+  4: { w: 2560, h: 1840 },
+  5: { w: 2560, h: 1000 }, // tail edge — truncated
+}
+// Adjacent slots share 2*BLEED pixels (each one carries the full bleed
+// region of the boundary). CSS margin percentage resolves against the
+// container's WIDTH, so we compute the overlap as a fraction of width.
+const BLEED_OVERLAP_PCT = (2 * BLEED / SLOT_NATIVE_W) * 100
 
 const SLOTS = (() => {
   const numSlots = Math.ceil(SCROLL_H / SLOT_HEIGHT)
@@ -31,6 +48,16 @@ const SLOTS = (() => {
     return { i, y0, y1, h: y1 - y0 }
   })
 })()
+
+// How many alternating passes to stack (original + mirror + original + …).
+// More passes = more vertical canvas. Each pass costs ~6 decoded images.
+const N_PASSES = 4
+
+// For a given pass index, return the slots in the order they should render
+// for that pass. Even passes (0, 2, 4…) are original; odd are reversed
+// (to be mirrored via scaleY(-1)).
+const passSlots = (passIdx) =>
+  passIdx % 2 === 0 ? SLOTS : [...SLOTS].reverse()
 
 export const BackgroundStatic = () => {
   const slotRefs = useRef([])
@@ -57,93 +84,41 @@ export const BackgroundStatic = () => {
           flexDirection: 'column',
         }}
       >
-        {SLOTS.map((slot) => (
-          <img
-            key={slot.i}
-            ref={(el) => (slotRefs.current[slot.i] = el)}
-            src={`/bg-slots/slot-${slot.i}.webp`}
-            alt=""
-            draggable={false}
-            style={{
-              width: '100%',
-              height: 'auto',
-              aspectRatio: '16 / 17',
-              objectFit: 'fill',
-              display: 'block',
-              marginTop: slot.i === 0 ? 0 : `-${(BLEED / SLOT_HEIGHT) * 100}%`,
-              userSelect: 'none',
-              pointerEvents: 'none',
-            }}
-          />
-        ))}
-        {/* Mirrored tail — flipped vertical copy of the full stack appended
-            below so the shader visually extends past its native height when
-            the page has grown (e.g., due to the scrolly pin). Seam is
-            hidden because the last row of the original stack mirrors onto
-            the first row of the flipped copy. */}
-        {[...SLOTS].reverse().map((slot, idx) => (
-          <img
-            key={`mirror-${slot.i}`}
-            src={`/bg-slots/slot-${slot.i}.webp`}
-            alt=""
-            draggable={false}
-            style={{
-              width: '100%',
-              height: 'auto',
-              aspectRatio: '16 / 17',
-              objectFit: 'fill',
-              display: 'block',
-              // Pass boundary: the mirror's first slot (the LAST real slot
-              // flipped) meets the original stack's last slot. Their edges
-              // are the same pixel row — butt them up with 0 margin and
-              // let scaleY(-1) mirror seam perfectly.
-              marginTop: idx === 0 ? '0' : `-${(BLEED / SLOT_HEIGHT) * 100}%`,
-              transform: 'scaleY(-1)',
-              userSelect: 'none',
-              pointerEvents: 'none',
-            }}
-          />
-        ))}
-        {/* Second pass — same orientation as the original, appended below
-            the mirror. Boundary row is slot 0 top = mirror's slot 0 bottom. */}
-        {SLOTS.map((slot, idx) => (
-          <img
-            key={`loop2-${slot.i}`}
-            src={`/bg-slots/slot-${slot.i}.webp`}
-            alt=""
-            draggable={false}
-            style={{
-              width: '100%',
-              height: 'auto',
-              aspectRatio: '16 / 17',
-              objectFit: 'fill',
-              display: 'block',
-              marginTop: idx === 0 ? '0' : `-${(BLEED / SLOT_HEIGHT) * 100}%`,
-              userSelect: 'none',
-              pointerEvents: 'none',
-            }}
-          />
-        ))}
-        {/* Third pass — mirror again. */}
-        {[...SLOTS].reverse().map((slot, idx) => (
-          <img
-            key={`mirror2-${slot.i}`}
-            src={`/bg-slots/slot-${slot.i}.webp`}
-            alt=""
-            draggable={false}
-            style={{
-              width: '100%',
-              height: 'auto',
-              aspectRatio: '16 / 17',
-              objectFit: 'fill',
-              display: 'block',
-              marginTop: idx === 0 ? '0' : `-${(BLEED / SLOT_HEIGHT) * 100}%`,
-              transform: 'scaleY(-1)',
-              userSelect: 'none',
-              pointerEvents: 'none',
-            }}
-          />
-        ))}
+        {Array.from({ length: N_PASSES }).map((_, passIdx) =>
+          passSlots(passIdx).map((slot, slotIdx) => {
+            const isMirrored = passIdx % 2 === 1
+            // Pass boundaries (first image of each pass after the first)
+            // get 0 margin so the last row of the previous pass matches
+            // the first row of this one (because it's the same image
+            const isPassBoundary = passIdx > 0 && slotIdx === 0
+            const isFirstSlot = passIdx === 0 && slotIdx === 0
+            const marginTop =
+              isPassBoundary || isFirstSlot ? '0' : `-${BLEED_OVERLAP_PCT}%`
+            const refCb =
+              passIdx === 0 ? (el) => (slotRefs.current[slot.i] = el) : undefined
+            const dims = SLOT_NATIVE_DIMS[slot.i] || { w: 2560, h: 1840 }
+            return (
+              <img
+                key={`p${passIdx}-${slot.i}`}
+                ref={refCb}
+                src={`/bg-slots/slot-${slot.i}.webp`}
+                alt=""
+                draggable={false}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  aspectRatio: `${dims.w} / ${dims.h}`,
+                  objectFit: 'fill',
+                  display: 'block',
+                  marginTop,
+                  transform: isMirrored ? 'scaleY(-1)' : undefined,
+                  userSelect: 'none',
+                  pointerEvents: 'none',
+                }}
+              />
+            )
+          }),
+        )}
       </div>
     </div>
   )
