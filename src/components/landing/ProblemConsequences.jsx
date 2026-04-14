@@ -282,9 +282,16 @@ const ConsequencesBlock = () => {
           is driven purely by scroll position relative to the outer — no
           wheel interception, no engagement math. */}
       <div
-        className="sticky top-0 h-screen w-full overflow-hidden"
+        className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden py-[8vh]"
       >
-        <div className="relative z-10 mx-auto grid h-full max-w-6xl items-center gap-[6vw] px-4 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <div
+          className="relative z-10 mx-4 grid h-full w-full max-w-7xl items-center gap-[4vw] rounded-2xl px-[3vw] py-[5vh] backdrop-blur-sm sm:mx-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+          style={{
+            backgroundColor: 'rgba(230, 240, 234, 0.15)',
+            border: '1px solid rgba(19,19,30,0.06)',
+            boxShadow: '0 2px 12px -4px rgba(19,19,30,0.08)',
+          }}
+        >
           {/* LEFT: headline */}
           <div className="flex flex-col">
             <h2 className="max-w-md" style={HEADLINE_STYLE}>
@@ -305,7 +312,7 @@ const ConsequencesBlock = () => {
                 return (
                   <div
                     key={`pill-${stage.id}`}
-                    className="flex items-baseline gap-3 transition-all duration-500"
+                    className="inline-flex items-baseline gap-3 self-start rounded-full bg-[var(--text-main)] px-4 py-2 transition-all duration-500"
                     style={{
                       opacity: stowed ? 1 : 0,
                       transform: stowed ? 'translateY(0)' : 'translateY(-8px)',
@@ -314,11 +321,11 @@ const ConsequencesBlock = () => {
                     <span
                       style={{
                         fontFamily: 'var(--font-display)',
-                        fontSize: 'clamp(1.4rem, 3vmin, 2rem)',
+                        fontSize: 'clamp(1.2rem, 2.6vmin, 1.7rem)',
                         fontWeight: 300,
                         lineHeight: 1,
                         letterSpacing: '-0.02em',
-                        color: '#000000',
+                        color: '#ffffff',
                       }}
                     >
                       {stage.number}
@@ -326,7 +333,7 @@ const ConsequencesBlock = () => {
                         style={{
                           fontSize: '0.5em',
                           marginLeft: '0.2em',
-                          color: '#585858',
+                          color: 'rgba(255,255,255,0.7)',
                         }}
                       >
                         {stage.numberUnit}
@@ -334,10 +341,12 @@ const ConsequencesBlock = () => {
                     </span>
                     <span
                       style={{
-                        fontFamily: 'var(--font-ui)',
-                        fontSize: 'clamp(0.75rem, 1.4vmin, 0.95rem)',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: 'clamp(0.7rem, 1.2vmin, 0.85rem)',
                         fontWeight: 500,
-                        color: '#585858',
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                        color: 'rgba(255,255,255,0.85)',
                       }}
                     >
                       {stage.pillTitle}
