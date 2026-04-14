@@ -37,13 +37,13 @@ export const text = {
         description:
           'Deja que la IA maneje de manera autónoma las solicitudes de OC y aprobaciones, acelerando el proceso de facturación y recaudación.',
         imageSide: 'right',
-        videoSrc: '/animations/approvals.webm',
+        videoSrc: '/animations/approvals_v2.webm',
         iosSrc: '/animations/approvals_ios.mp4',
       },
       {
         title: 'Recauda más rápido y concilia en tiempo real.',
         description:
-          'Con mensajería de cobranza automática, pagos y conciliación\nconectada a tus cuentas bancarias.',
+          'Con mensajería de cobranza automática, pagos y\nconciliación conectada a tus cuentas bancarias.',
         imageSide: 'right',
         videoSrc: '/animations/conciliation.webm',
         iosSrc: '/animations/conciliation_ios.mp4',

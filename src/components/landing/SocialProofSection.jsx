@@ -33,7 +33,7 @@ export const SocialProofSection = ({ t }) => {
                 <p
                   style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.75rem',
+                    fontSize: 'clamp(0.85rem, 1.1vw, 1rem)',
                     fontWeight: 400,
                     letterSpacing: '0.12em',
                     color: 'var(--text-muted)',
@@ -47,7 +47,7 @@ export const SocialProofSection = ({ t }) => {
                   className="mt-3 sm:mt-4"
                   style={{
                     fontFamily: 'var(--font-ui)',
-                    fontSize: 'clamp(1rem, 1.6vw, 1.3rem)',
+                    fontSize: 'clamp(1.2rem, 2vw, 1.6rem)',
                     fontWeight: 600,
                     lineHeight: 1.25,
                     letterSpacing: '-0.02em',
@@ -62,7 +62,7 @@ export const SocialProofSection = ({ t }) => {
                   className="mt-2 sm:mt-3"
                   style={{
                     fontFamily: 'var(--font-ui)',
-                    fontSize: 'clamp(0.85rem, 1.2vw, 1.05rem)',
+                    fontSize: 'clamp(1rem, 1.5vw, 1.3rem)',
                     fontWeight: 400,
                     lineHeight: 1.6,
                     color: 'var(--text-soft)',
