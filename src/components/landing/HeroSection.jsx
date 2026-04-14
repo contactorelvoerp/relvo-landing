@@ -22,6 +22,21 @@ const DESKTOP_HERO_RATIOS = {
   bottomGap: 0.028,
 }
 
+const MOBILE_HERO_RATIOS = {
+  navReserve: 0.075,
+  gapAfterNav: 0.008,
+  eyebrow: 0.03,
+  gapAfterEyebrow: 0.072,
+  headline: 0.145,
+  gapAfterHeadline: 0.032,
+  body: 0.13,
+  gapAfterBody: 0.022,
+  animation: 0.285,
+  gapAfterAnimation: 0.012,
+  cta: 0.075,
+  bottomGap: 0.028,
+}
+
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
 
 function buildDesktopComposition(viewportWidth, viewportHeight) {
@@ -88,6 +103,70 @@ function buildDesktopComposition(viewportWidth, viewportHeight) {
   }
 }
 
+function buildMobileComposition(viewportWidth, viewportHeight) {
+  const contentWidth = Math.max(viewportWidth - 32, 280)
+  const textWidth = clamp(contentWidth * 0.9, 304, contentWidth * 0.9)
+  const compositionScale = clamp(
+    Math.min(viewportHeight / 812, contentWidth / 390),
+    0.88,
+    1.12
+  )
+  const ratioSum = Object.values(MOBILE_HERO_RATIOS).reduce((sum, ratio) => sum + ratio, 0)
+  const unit = viewportHeight / ratioSum
+
+  const rows = {
+    navReserve: unit * MOBILE_HERO_RATIOS.navReserve,
+    gapAfterNav: unit * MOBILE_HERO_RATIOS.gapAfterNav,
+    eyebrow: unit * MOBILE_HERO_RATIOS.eyebrow,
+    gapAfterEyebrow: unit * MOBILE_HERO_RATIOS.gapAfterEyebrow,
+    headline: unit * MOBILE_HERO_RATIOS.headline,
+    gapAfterHeadline: unit * MOBILE_HERO_RATIOS.gapAfterHeadline,
+    body: unit * MOBILE_HERO_RATIOS.body,
+    gapAfterBody: unit * MOBILE_HERO_RATIOS.gapAfterBody,
+    animation: unit * MOBILE_HERO_RATIOS.animation,
+    gapAfterAnimation: unit * MOBILE_HERO_RATIOS.gapAfterAnimation,
+    cta: unit * MOBILE_HERO_RATIOS.cta,
+    bottomGap: unit * MOBILE_HERO_RATIOS.bottomGap,
+  }
+
+  const eyebrowFontSize = clamp(rows.eyebrow * 0.56 * compositionScale, 10, 13)
+  const headlineFontSize = clamp(
+    Math.min(rows.headline * 0.33 * compositionScale, contentWidth * 0.088),
+    21,
+    36
+  )
+  const bodyFontSize = clamp(
+    Math.min(rows.body * 0.232 * compositionScale, contentWidth * 0.047),
+    15,
+    20
+  )
+  const animationHeight = clamp(rows.animation * 1.04, 166, 280)
+  const animationWidth = Math.min(contentWidth * 2.45, animationHeight * 6.8)
+  const ctaHeight = clamp(rows.cta * 0.7, 38, 48)
+  const primaryButtonFontSize = clamp(rows.cta * 0.22, 13, 16)
+  const secondaryButtonFontSize = clamp(rows.cta * 0.19, 11, 13.5)
+  const buttonGap = clamp(contentWidth * 0.04, 14, 22)
+  const buttonWidth = clamp(contentWidth * 0.34, 112, 146)
+  const buttonPaddingX = clamp(contentWidth * 0.048, 16, 20)
+
+  return {
+    contentWidth,
+    textWidth,
+    rows,
+    eyebrowFontSize,
+    headlineFontSize,
+    bodyFontSize,
+    animationHeight,
+    animationWidth,
+    ctaHeight,
+    primaryButtonFontSize,
+    secondaryButtonFontSize,
+    buttonGap,
+    buttonWidth,
+    buttonPaddingX,
+  }
+}
+
 export const HeroSection = () => {
   const page1Ref = useRef(null)
   const [viewport, setViewport] = useState(() => ({
@@ -110,94 +189,127 @@ export const HeroSection = () => {
 
   const isDesktopComposition = viewport.width >= 768
   const desktopComposition = buildDesktopComposition(viewport.width, viewport.height)
+  const mobileComposition = buildMobileComposition(viewport.width, viewport.height)
 
   if (!isDesktopComposition) {
     return (
       <section
         ref={page1Ref}
-        className="full-page relative flex w-full flex-col items-center px-4 pb-5 pt-[4.5rem] sm:px-6"
+        className="full-page relative w-full px-4"
+        style={{ minHeight: `${viewport.height}px` }}
       >
-        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center">
+        <div
+          className="relative z-10 mx-auto grid w-full"
+          style={{
+            minHeight: `${viewport.height}px`,
+            gridTemplateColumns: 'minmax(0, 1fr)',
+            gridTemplateRows: [
+              `${mobileComposition.rows.navReserve}px`,
+              `${mobileComposition.rows.gapAfterNav}px`,
+              `${mobileComposition.rows.eyebrow}px`,
+              `${mobileComposition.rows.gapAfterEyebrow}px`,
+              `${mobileComposition.rows.headline}px`,
+              `${mobileComposition.rows.gapAfterHeadline}px`,
+              `${mobileComposition.rows.body}px`,
+              `${mobileComposition.rows.gapAfterBody}px`,
+              `${mobileComposition.rows.animation}px`,
+              `${mobileComposition.rows.gapAfterAnimation}px`,
+              `${mobileComposition.rows.cta}px`,
+              `${mobileComposition.rows.bottomGap}px`,
+            ].join(' '),
+          }}
+        >
           <div
-            className="flex w-full max-w-5xl flex-col items-center text-center"
-            style={{
-              paddingTop: 'clamp(0.25rem, 1.5vh, 1rem)',
-              gap: 'clamp(0.65rem, 1.8vh, 1.25rem)',
-            }}
+            className="flex w-full items-center justify-center text-center"
+            style={{ gridRow: '3' }}
           >
             <p
-              className="whitespace-nowrap uppercase"
+              className="uppercase"
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: 'clamp(0.58rem, 1.8vw, 0.78rem)',
+                fontSize: `${mobileComposition.eyebrowFontSize}px`,
                 fontWeight: 400,
                 color: '#585858',
                 letterSpacing: '0.14em',
+                width: `${mobileComposition.textWidth}px`,
+                textAlign: 'center',
               }}
             >
               Revenue-design para empresas B2B en LATAM
             </p>
-
+          </div>
+          <div
+            className="flex w-full items-center justify-center text-center"
+            style={{ gridRow: '5' }}
+          >
             <h1
               className="mx-auto"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.52rem, 7vw, 3rem)',
-                fontWeight: 500,
-                lineHeight: 1.04,
-                letterSpacing: '-0.02em',
-                color: '#000000',
-                width: 'min(92vw, 34rem)',
-              }}
-            >
+                fontSize: `${mobileComposition.headlineFontSize}px`,
+              fontWeight: 500,
+              lineHeight: 1.04,
+              letterSpacing: '-0.024em',
+              color: '#000000',
+              width: `${Math.min(mobileComposition.textWidth, mobileComposition.headlineFontSize * 10.4)}px`,
+              textAlign: 'center',
+            }}
+          >
               Cobra como quieras,
               <br />
               opera en un sólo sistema.
             </h1>
-
+          </div>
+          <div
+            className="flex w-full items-center justify-center text-center"
+            style={{ gridRow: '7' }}
+          >
             <p
               className="mx-auto"
               style={{
                 fontFamily: 'var(--font-ui)',
-                fontSize: 'clamp(0.86rem, 3.2vw, 1.05rem)',
-                fontWeight: 400,
-                lineHeight: 1.4,
-                color: '#2a2a2a',
-                width: 'min(92vw, 34rem)',
-              }}
-            >
+              fontSize: `${mobileComposition.bodyFontSize}px`,
+              fontWeight: 400,
+              lineHeight: 1.38,
+              color: '#2a2a2a',
+              width: `${Math.min(mobileComposition.textWidth, mobileComposition.bodyFontSize * 23)}px`,
+              textAlign: 'center',
+            }}
+          >
               Cuando tus ingresos dependen de cobros por suscripciones, uso, hitos o métricas de servicio, el camino del contrato al cobro es largo y manual. Relvo automatiza ese proceso de punta a punta, para que la facturación deje de ser un dolor de cabeza.
             </p>
           </div>
-
           <div
-            className="flex w-full flex-1 flex-col items-center justify-end"
-            style={{
-              marginTop: 'clamp(0.75rem, 3vh, 2rem)',
-              gap: 'clamp(0.8rem, 2vh, 1.2rem)',
-            }}
+            className="flex w-full items-center justify-center overflow-visible"
+            style={{ gridRow: '9' }}
           >
             <div
-              className="relative block w-[165vw] max-w-none sm:w-full sm:max-w-[min(74rem,86vw)]"
+              className="relative shrink-0"
               style={{
-                aspectRatio: '6 / 1',
-                marginBottom: 'clamp(-0.5rem, -0.8vh, -0.2rem)',
+                height: `${mobileComposition.animationHeight}px`,
+                width: `${mobileComposition.animationWidth}px`,
+                maxWidth: '165vw',
               }}
             >
               <HeroFlowLive className="block h-full w-full" />
             </div>
-            <div className="flex items-center gap-4">
+          </div>
+          <div
+            className="flex w-full items-center justify-center"
+            style={{ gridRow: '11' }}
+          >
+            <div className="flex items-center" style={{ gap: `${mobileComposition.buttonGap}px` }}>
               <a
                 href="#producto"
                 className="inline-flex items-center justify-center rounded-full bg-white/50 text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                 style={{
                   fontFamily: 'var(--font-ui)',
-                  fontSize: '0.86rem',
+                  fontSize: `${mobileComposition.primaryButtonFontSize}px`,
                   fontWeight: 500,
-                  height: '2.5rem',
-                  minWidth: '8rem',
-                  paddingLeft: '1.25rem',
-                  paddingRight: '1.25rem',
+                  height: `${mobileComposition.ctaHeight}px`,
+                  minWidth: `${mobileComposition.buttonWidth}px`,
+                  paddingLeft: `${mobileComposition.buttonPaddingX}px`,
+                  paddingRight: `${mobileComposition.buttonPaddingX}px`,
                 }}
               >
                 Ver producto
@@ -208,13 +320,13 @@ export const HeroSection = () => {
                 className="inline-flex cursor-pointer items-center justify-center rounded-full bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                 style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.72rem',
+                  fontSize: `${mobileComposition.secondaryButtonFontSize}px`,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  height: '2.5rem',
-                  minWidth: '8rem',
-                  paddingLeft: '1.25rem',
-                  paddingRight: '1.25rem',
+                  height: `${mobileComposition.ctaHeight}px`,
+                  minWidth: `${mobileComposition.buttonWidth}px`,
+                  paddingLeft: `${mobileComposition.buttonPaddingX}px`,
+                  paddingRight: `${mobileComposition.buttonPaddingX}px`,
                 }}
               >
                 Ir a demo

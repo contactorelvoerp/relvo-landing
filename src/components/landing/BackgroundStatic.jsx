@@ -51,7 +51,7 @@ const SLOTS = (() => {
 
 // How many alternating passes to stack (original + mirror + original + …).
 // More passes = more vertical canvas. Each pass costs ~6 decoded images.
-const N_PASSES = 4
+const N_PASSES = 6
 
 // For a given pass index, return the slots in the order they should render
 // for that pass. Even passes (0, 2, 4…) are original; odd are reversed
