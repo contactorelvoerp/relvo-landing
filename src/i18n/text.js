@@ -113,6 +113,7 @@ export const text = {
       {
         title: 'Contacto',
         links: [{ label: 'contacto@relvoerp.com', href: 'mailto:contacto@relvoerp.com' }],
+        address: 'San Patricio 4264,\nVitacura, Santiago, Chile',
       },
     ],
 
