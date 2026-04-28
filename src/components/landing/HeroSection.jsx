@@ -23,21 +23,32 @@ const DESKTOP_HERO_RATIOS = {
 }
 
 const MOBILE_HERO_RATIOS = {
-  navReserve: 0.075,
+  navReserve: 0.066,
   gapAfterNav: 0.008,
   eyebrow: 0.03,
-  gapAfterEyebrow: 0.072,
-  headline: 0.145,
-  gapAfterHeadline: 0.032,
-  body: 0.13,
+  gapAfterEyebrow: 0.046,
+  headline: 0.128,
+  gapAfterHeadline: 0.026,
+  body: 0.152,
   gapAfterBody: 0.022,
-  animation: 0.285,
+  animation: 0.245,
   gapAfterAnimation: 0.012,
-  cta: 0.075,
-  bottomGap: 0.028,
+  cta: 0.064,
+  bottomGap: 0.018,
 }
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
+
+function getViewportSnapshot() {
+  if (typeof window === 'undefined') {
+    return { width: 1440, height: 900 }
+  }
+
+  return {
+    width: Math.round(window.visualViewport?.width ?? window.innerWidth),
+    height: Math.round(window.visualViewport?.height ?? window.innerHeight),
+  }
+}
 
 function buildDesktopComposition(viewportWidth, viewportHeight) {
   const shellPadding = viewportWidth >= 640 ? 48 : 32
@@ -106,9 +117,10 @@ function buildDesktopComposition(viewportWidth, viewportHeight) {
 function buildMobileComposition(viewportWidth, viewportHeight) {
   const contentWidth = Math.max(viewportWidth - 32, 280)
   const textWidth = clamp(contentWidth * 0.9, 304, contentWidth * 0.9)
+  const shortViewportProgress = clamp((720 - viewportHeight) / 160, 0, 1)
   const compositionScale = clamp(
-    Math.min(viewportHeight / 812, contentWidth / 390),
-    0.88,
+    Math.min(viewportHeight / 760, contentWidth / 390),
+    0.82,
     1.12
   )
   const ratioSum = Object.values(MOBILE_HERO_RATIOS).reduce((sum, ratio) => sum + ratio, 0)
@@ -129,24 +141,24 @@ function buildMobileComposition(viewportWidth, viewportHeight) {
     bottomGap: unit * MOBILE_HERO_RATIOS.bottomGap,
   }
 
-  const eyebrowFontSize = clamp(rows.eyebrow * 0.56 * compositionScale, 10, 13)
+  const eyebrowFontSize = clamp(rows.eyebrow * 0.58 * compositionScale, 10, 13)
   const headlineFontSize = clamp(
-    Math.min(rows.headline * 0.33 * compositionScale, contentWidth * 0.088),
-    21,
+    Math.min(rows.headline * 0.31 * compositionScale, contentWidth * 0.08),
+    20,
     36
   )
   const bodyFontSize = clamp(
-    Math.min(rows.body * 0.232 * compositionScale, contentWidth * 0.047),
-    15,
+    Math.min(rows.body * 0.218 * compositionScale, contentWidth * 0.043),
+    14,
     20
   )
-  const animationHeight = clamp(rows.animation * 1.04, 166, 280)
+  const animationHeight = clamp(rows.animation * (0.96 - shortViewportProgress * 0.08), 128, 238)
   const animationWidth = Math.min(contentWidth * 2.45, animationHeight * 6.8)
-  const ctaHeight = clamp(rows.cta * 0.7, 38, 48)
+  const ctaHeight = clamp(rows.cta * 0.72, 36, 46)
   const primaryButtonFontSize = clamp(rows.cta * 0.22, 13, 16)
   const secondaryButtonFontSize = clamp(rows.cta * 0.19, 11, 13.5)
-  const buttonGap = clamp(contentWidth * 0.04, 14, 22)
-  const buttonWidth = clamp(contentWidth * 0.34, 112, 146)
+  const buttonGap = clamp(contentWidth * 0.035, 12, 20)
+  const buttonWidth = clamp(contentWidth * 0.32, 108, 140)
   const buttonPaddingX = clamp(contentWidth * 0.048, 16, 20)
 
   return {
@@ -169,22 +181,22 @@ function buildMobileComposition(viewportWidth, viewportHeight) {
 
 export const HeroSection = () => {
   const page1Ref = useRef(null)
-  const [viewport, setViewport] = useState(() => ({
-    width: typeof window !== 'undefined' ? window.innerWidth : 1440,
-    height: typeof window !== 'undefined' ? window.innerHeight : 900,
-  }))
+  const [viewport, setViewport] = useState(getViewportSnapshot)
 
   useEffect(() => {
     const updateViewport = () => {
-      setViewport({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      })
+      setViewport(getViewportSnapshot())
     }
 
     window.addEventListener('resize', updateViewport, { passive: true })
+    window.visualViewport?.addEventListener('resize', updateViewport, { passive: true })
+    window.visualViewport?.addEventListener('scroll', updateViewport, { passive: true })
     updateViewport()
-    return () => window.removeEventListener('resize', updateViewport)
+    return () => {
+      window.removeEventListener('resize', updateViewport)
+      window.visualViewport?.removeEventListener('resize', updateViewport)
+      window.visualViewport?.removeEventListener('scroll', updateViewport)
+    }
   }, [])
 
   const isDesktopComposition = viewport.width >= 768

@@ -1,18 +1,20 @@
 // Petals in travel order — natural clockwise sweep around the logo center.
-// Each petal's `ry` and `rot` are from the original logo; the stamped ghosts
-// always render these exact shapes regardless of the flying coin's own spin.
+// Geometry is normalized from `public/branding/1. Logotipo/SVG/Asset 18.svg`.
+// The stamped ghosts render these exact shapes regardless of the flying coin's own spin.
 const BASE_PETALS = [
-  { cx: 540.0, cy: 310.06, ry: 114.46, rot: 0 }, // top (face-on)
-  { cx: 732.9, cy: 483.31, ry: 44.15, rot: 164.12 }, // right (edge-on)
-  { cx: 657.69, cy: 698.74, ry: 62.33, rot: 51.88 }, // bottom-right
-  { cx: 412.88, cy: 716.4, ry: 80.42, rot: 129.29 }, // bottom-left
-  { cx: 341.5, cy: 491.47, ry: 96.75, rot: -161.58 }, // left
+  { cx: 539.08, cy: 197.61, rx: 197.73, ry: 197.61, rot: 0 }, // top
+  { cx: 879.02, cy: 497.82, rx: 206.87, ry: 102.55, rot: -15.88 }, // right
+  { cx: 758.67, cy: 899.16, rx: 138.83, ry: 204.13, rot: -39.29 }, // bottom-right
+  { cx: 319.49, cy: 899.16, rx: 204.13, ry: 138.83, rot: -50.71 }, // bottom-left
+  { cx: 195.98, cy: 510.82, rx: 167.04, ry: 198.87, rot: -71.58 }, // left
 ];
 const PATH = [...BASE_PETALS, BASE_PETALS[0]];
 
-const COIN_RX = 115;
-const COIN_RY_MIN = 4; // never fully vanish — keep a visible sliver
-const LOGO_CENTER = { x: 537, y: 540 };
+const COIN_RX = 197.73;
+const COIN_RY_MIN = 7; // never fully vanish — keep a visible sliver
+const LOGO_CENTER = { x: 540, y: 540 };
+const ANIMATION_MARK_SCALE = 0.65;
+const ANIMATION_MARK_OFFSET = (1080 * (1 - ANIMATION_MARK_SCALE)) / 2;
 
 const ryFromRot = (rotDeg) => {
   const c = Math.abs(Math.cos((rotDeg * Math.PI) / 180));
@@ -88,6 +90,7 @@ const coinAt = (p) => {
   return {
     cx,
     cy,
+    rx: COIN_RX,
     ry: ryFromRot(rot),
     rot,
   };
@@ -96,17 +99,19 @@ const coinAt = (p) => {
 export const RelvoMarkStatic = ({ coinColor }) => {
   return (
     <svg width="1080" height="1080" viewBox="0 0 1080 1080">
-      {BASE_PETALS.map((p, i) => (
-        <ellipse
-          key={i}
-          cx={p.cx}
-          cy={p.cy}
-          rx={COIN_RX}
-          ry={p.ry}
-          fill={coinColor}
-          transform={`rotate(${p.rot} ${p.cx} ${p.cy})`}
-        />
-      ))}
+      <g transform={`translate(${ANIMATION_MARK_OFFSET} ${ANIMATION_MARK_OFFSET}) scale(${ANIMATION_MARK_SCALE})`}>
+        {BASE_PETALS.map((p, i) => (
+          <ellipse
+            key={i}
+            cx={p.cx}
+            cy={p.cy}
+            rx={p.rx}
+            ry={p.ry}
+            fill={coinColor}
+            transform={`rotate(${p.rot} ${p.cx} ${p.cy})`}
+          />
+        ))}
+      </g>
     </svg>
   );
 };
@@ -174,6 +179,7 @@ export const RelvoCoinGraphic = ({
       ? {
           cx: restCoin.cx,
           cy: restCoin.cy,
+          rx: COIN_RX,
           ry: ryFromRot(restCoin.rot),
           rot: restCoin.rot,
         }
@@ -181,28 +187,30 @@ export const RelvoCoinGraphic = ({
 
   return (
     <svg width="1080" height="1080" viewBox="0 0 1080 1080">
-      {BASE_PETALS.map((p, i) => (
-        <ellipse
-          key={i}
-          cx={p.cx}
-          cy={p.cy}
-          rx={COIN_RX}
-          ry={p.ry}
-          fill={coinColor}
-          opacity={petalOpacities[i]}
-          transform={`rotate(${p.rot} ${p.cx} ${p.cy})`}
-        />
-      ))}
-      {showFlyingCoin && (
-        <ellipse
-          cx={displayCoin.cx}
-          cy={displayCoin.cy}
-          rx={COIN_RX}
-          ry={displayCoin.ry}
-          fill={coinColor}
-          transform={`rotate(${displayCoin.rot} ${displayCoin.cx} ${displayCoin.cy})`}
-        />
-      )}
+      <g transform={`translate(${ANIMATION_MARK_OFFSET} ${ANIMATION_MARK_OFFSET}) scale(${ANIMATION_MARK_SCALE})`}>
+        {BASE_PETALS.map((p, i) => (
+          <ellipse
+            key={i}
+            cx={p.cx}
+            cy={p.cy}
+            rx={p.rx}
+            ry={p.ry}
+            fill={coinColor}
+            opacity={petalOpacities[i]}
+            transform={`rotate(${p.rot} ${p.cx} ${p.cy})`}
+          />
+        ))}
+        {showFlyingCoin && (
+          <ellipse
+            cx={displayCoin.cx}
+            cy={displayCoin.cy}
+            rx={displayCoin.rx}
+            ry={displayCoin.ry}
+            fill={coinColor}
+            transform={`rotate(${displayCoin.rot} ${displayCoin.cx} ${displayCoin.cy})`}
+          />
+        )}
+      </g>
     </svg>
   );
 };
