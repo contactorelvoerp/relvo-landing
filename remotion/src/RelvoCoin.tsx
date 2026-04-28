@@ -51,7 +51,7 @@ const PATH = [...BASE_PETALS, BASE_PETALS[0]];
 const COIN_RX = 197.73;
 const COIN_RY_MIN = 7; // never fully vanish — keep a visible sliver
 const LOGO_CENTER = { x: 540, y: 540 };
-const ANIMATION_MARK_SCALE = 0.65;
+const ANIMATION_MARK_SCALE = 0.70;
 const ANIMATION_MARK_OFFSET = (1080 * (1 - ANIMATION_MARK_SCALE)) / 2;
 
 // Convert a rotation (degrees) to the foreshortened ry for a coin spinning
