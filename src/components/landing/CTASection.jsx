@@ -165,7 +165,7 @@ export const CTASection = ({ ctaHref, t }) => {
               className="mb-5 sm:mb-6"
               style={{
                 fontFamily: 'var(--font-ui)',
-                fontSize: 'clamp(1.3rem, 2vw, 1.6rem)',
+                fontSize: 'clamp(1.1rem, 1.7vw, 1.35rem)',
                 fontWeight: 500,
                 color: 'var(--text-main)',
               }}

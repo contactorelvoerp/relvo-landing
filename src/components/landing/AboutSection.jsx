@@ -9,14 +9,32 @@ const animDeadSpace = [
   { left: 17, right: 17, top: 7,  bottom: 17 }, // conciliation
 ]
 
+// Detect iOS devices (including iPads masquerading as Mac in iPadOS 13+).
+// Every browser on iOS uses the system WebKit, so VP9+alpha webm fails
+// regardless of the browser brand — we have to serve the mp4 fallback
+// whenever the device is iOS.
+const detectIsIOS = () => {
+  if (typeof navigator === 'undefined') return false
+  const ua = navigator.userAgent || ''
+  if (/iPad|iPhone|iPod/.test(ua)) return true
+  // iPadOS 13+ reports as "Mac" in UA but has touch input.
+  if (/Mac/.test(ua) && navigator.maxTouchPoints > 1) return true
+  return false
+}
+
 export const AboutSection = ({ t }) => {
   const features = t.features ?? []
   const isMobile = useIsMobile()
+  const isIOS = detectIsIOS()
+  // Whether to serve static stills instead of the animated videos.
+  // Currently: iOS devices (WebKit can't play transparent webm reliably).
+  // Future: also low-end devices where animated playback janks.
+  const useStills = isIOS
 
   return (
     <section className="section-shell px-4 pb-32 pt-32 sm:px-6 sm:pb-40 sm:pt-40 md:pb-48 md:pt-48 lg:pb-56 lg:pt-56">
       <h2
-        className="mx-auto mb-16 text-center md:mb-8"
+        className="mx-auto mb-16 text-center md:mb-24 lg:mb-32"
         style={{
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
@@ -43,7 +61,7 @@ export const AboutSection = ({ t }) => {
             <Reveal
               key={`${idx}-${feature.title}`}
               delayMs={idx * 70}
-              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? '!mt-20 md:!-mt-6' : ''} ${idx === 2 ? '!mt-20 md:!-mt-4' : ''} ${idx === 3 ? '!mt-28 md:!mt-12' : ''} ${gridCols}`}
+              className={`grid items-center gap-0 sm:gap-1 md:gap-4 lg:gap-5 ${idx === 1 ? '!mt-20 md:!mt-40 lg:!mt-52' : ''} ${idx === 2 ? '!mt-20 md:!mt-40 lg:!mt-52' : ''} ${idx === 3 ? '!mt-28 md:!mt-32 lg:!mt-40' : ''} ${gridCols}`}
             >
               {/* Text — stacks on mobile, alternates on desktop */}
               <div className={`flex w-full flex-col justify-center px-2 sm:px-0 ${idx % 2 === 0 ? 'md:order-1' : 'md:order-2 md:items-end md:text-right'}`}>
@@ -73,22 +91,49 @@ export const AboutSection = ({ t }) => {
                 </p>
               </div>
 
-              {/* Animation — full width on mobile, alternates on desktop */}
+              {/* Animation — full width on mobile, alternates on desktop.
+                  For features 1-3 (idx 0-2) collapse the transparent
+                  dead space above/below the animation with negative
+                  margins sized in vw (scaled from animDeadSpace). */}
               <div
-                className={`${idx === 3 ? '-mt-8' : 'mt-4'} overflow-hidden sm:-mt-8 md:mt-0 ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
-                style={{ overflow: 'hidden' }}
+                className={`${idx === 3 ? '-mt-4 sm:-mt-16 md:-mt-12' : ''} overflow-hidden ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
+                style={{
+                  overflow: 'hidden',
+                  ...(idx < 3
+                    ? {
+                        // Mobile: less negative top for anims 1 & 2 so they
+                        // sit a bit lower (more breathing room above).
+                        marginTop:
+                          isMobile && idx <= 2
+                            ? `-${animDeadSpace[idx].top * 0.55}vw`
+                            : `-${animDeadSpace[idx].top * 0.7}vw`,
+                        marginBottom: `-${animDeadSpace[idx].bottom * 0.7}vw`,
+                      }
+                    : {}),
+                }}
               >
-                <video
-                  key={isMobile ? feature.iosSrc : feature.videoSrc}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  ref={(el) => { if (el) el.playbackRate = 0.85 }}
-                  className={`w-full ${idx === 2 ? 'scale-95 md:scale-100' : ''} ${idx === 3 ? 'scale-75 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
-                  style={{ background: 'transparent' }}
-                  src={isMobile && feature.iosSrc ? feature.iosSrc : feature.videoSrc}
-                />
+                {useStills && feature.stillSrc ? (
+                  <img
+                    src={feature.stillSrc}
+                    alt=""
+                    className={`w-full ${idx === 0 || idx === 1 ? 'scale-[1.18] md:scale-100' : ''} ${idx === 3 ? 'scale-110 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
+                    style={{ background: 'transparent' }}
+                  />
+                ) : (
+                  <video
+                    key={feature.videoSrc}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    ref={(el) => { if (el) el.playbackRate = 0.85 }}
+                    className={`w-full ${idx === 0 || idx === 1 ? 'scale-[1.18] md:scale-100' : ''} ${idx === 3 ? 'scale-110 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
+                    style={{ background: 'transparent' }}
+                  >
+                    <source src={feature.videoSrc} type="video/webm" />
+                    {feature.iosSrc && <source src={feature.iosSrc} type="video/mp4" />}
+                  </video>
+                )}
               </div>
             </Reveal>
           )

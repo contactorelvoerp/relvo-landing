@@ -96,9 +96,30 @@ function App() {
           <footer className="px-4 pb-10 pt-16 sm:px-6 sm:pt-20 md:pt-28" style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 600px' }}>
             <div className="section-shell">
               <div
-                className="mx-auto max-w-6xl rounded-2xl bg-white/75 px-5 py-8 backdrop-blur-sm sm:px-8 sm:py-10 md:px-12 md:py-14"
+                className="relative mx-auto max-w-6xl rounded-2xl bg-white/75 px-5 py-8 backdrop-blur-sm sm:px-8 sm:py-10 md:px-12 md:py-14"
                 style={{ border: '1px solid rgba(19,19,30,0.06)' }}
               >
+                <a
+                  href="https://www.linkedin.com/company/relvoerp/posts/?feedView=all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Relvo en LinkedIn"
+                  className="absolute right-5 top-5 inline-block transition hover:scale-105 sm:right-8 sm:top-8 md:right-12 md:top-10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect width="24" height="24" rx="3" fill="#0A66C2" />
+                    <path
+                      d="M8.94 7.44a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0zM6.3 9.36h2.76v9.24H6.3V9.36zm4.44 0h2.64v1.26h.04c.37-.7 1.27-1.44 2.61-1.44 2.79 0 3.31 1.83 3.31 4.21v5.21h-2.76v-4.62c0-1.1-.02-2.52-1.54-2.52-1.54 0-1.78 1.2-1.78 2.44v4.7h-2.76V9.36z"
+                      fill="#ffffff"
+                    />
+                  </svg>
+                </a>
                 <div className="grid gap-10 md:grid-cols-[1.2fr_1.8fr] md:items-start">
                   {/* Left — brand + tagline */}
                   <div>
@@ -126,16 +147,6 @@ function App() {
                       }}
                     >
                       © {new Date().getFullYear()} Relvo. {t.footerRights}
-                    </p>
-                    <p
-                      className="mt-1"
-                      style={{
-                        fontFamily: 'var(--font-ui)',
-                        fontSize: '0.8rem',
-                        color: 'var(--text-soft)',
-                      }}
-                    >
-                      contacto@relvoerp.com
                     </p>
                   </div>
 
@@ -174,6 +185,19 @@ function App() {
                               {link.label}
                             </a>
                             ))}
+                          {column.address && (
+                            <p
+                              className="whitespace-pre-line pt-1"
+                              style={{
+                                fontFamily: 'var(--font-ui)',
+                                fontSize: '0.8rem',
+                                lineHeight: 1.5,
+                                color: 'var(--text-muted)',
+                              }}
+                            >
+                              {column.address}
+                            </p>
+                          )}
                         </div>
                       </div>
                     ))}

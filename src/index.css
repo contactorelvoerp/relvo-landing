@@ -132,6 +132,7 @@
 
 html {
   scroll-behavior: auto;
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -142,6 +143,7 @@ body {
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
 }
 
 * {

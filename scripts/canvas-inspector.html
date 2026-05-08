@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BackgroundStatic Canvas Inspector</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0e0e12;
+        --panel: #191921;
+        --border: #2a2a36;
+        --text: #e5e5ea;
+        --muted: #8a8a96;
+        --accent: #ff9566;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      body {
+        padding: 0;
+        min-height: 100vh;
+      }
+      .toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(14, 14, 18, 0.92);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 20px;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        font-size: 0.85rem;
+      }
+      .toolbar h1 {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+      .toolbar label {
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .toolbar input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+      .toolbar input[type="number"] {
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 4px 8px;
+        width: 60px;
+        font-family: inherit;
+      }
+      .stack-wrapper {
+        position: relative;
+        margin: 0 auto;
+        max-width: 1280px;
+      }
+      .stack {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+      .slot {
+        position: relative;
+        width: 100%;
+      }
+      .slot img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 17;
+        object-fit: fill;
+      }
+      .slot.mirrored img {
+        transform: scaleY(-1);
+      }
+      .slot .badge {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(14, 14, 18, 0.9);
+        color: var(--accent);
+        padding: 8px 16px;
+        border: 2px solid var(--accent);
+        border-radius: 8px;
+        font-family: ui-monospace, 'Geist Mono', monospace;
+        font-size: 1.2rem;
+        font-weight: 600;
+        pointer-events: none;
+        white-space: nowrap;
+        backdrop-filter: blur(4px);
+      }
+      .slot.mirrored .badge {
+        color: #66ddff;
+        border-color: #66ddff;
+      }
+      .slot .pass-marker {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--accent);
+        z-index: 5;
+        pointer-events: none;
+      }
+      .slot.mirrored .pass-marker {
+        background: #66ddff;
+      }
+      .slot .pass-label {
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        background: var(--accent);
+        color: #0e0e12;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-family: ui-monospace, monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        pointer-events: none;
+      }
+      .slot.mirrored .pass-label {
+        background: #66ddff;
+      }
+      .legend {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin: 16px 20px;
+        font-size: 0.8rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .legend strong {
+        color: var(--text);
+      }
+      .legend code {
+        background: rgba(255, 255, 255, 0.06);
+        padding: 1px 6px;
+        border-radius: 3px;
+        font-family: ui-monospace, monospace;
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toolbar">
+      <h1>BackgroundStatic Canvas Inspector</h1>
+      <label>
+        passes
+        <input type="number" id="passCount" min="1" max="12" value="4" />
+      </label>
+      <label>
+        <input type="checkbox" id="showLabels" checked />
+        labels
+      </label>
+      <label>
+        <input type="checkbox" id="showBoundaries" checked />
+        pass boundaries
+      </label>
+    </div>
+
+    <div class="legend">
+      <strong>How to read this:</strong> Every slot is labeled
+      <code>P{pass}-S{slot}</code> and tagged with its source PNG name.
+      <strong>Orange</strong> = original orientation,
+      <strong>blue</strong> = mirrored (scaleY -1).
+      The thick top stripe and right-side badge mark the start of each pass —
+      that's where pass boundaries live in the stack.
+      <br />
+      Tell me the labels (e.g. "white starts at P2-S3") and I'll know exactly
+      which slice is breaking.
+    </div>
+
+    <div class="stack-wrapper">
+      <div class="stack" id="stack"></div>
+    </div>
+
+    <script>
+      const N_SLOTS = 6
+      const SLOT_HEIGHT = 1440
+      const BLEED = 200
+      const SCROLL_H = 8000
+      const BLEED_PCT = (BLEED / SLOT_HEIGHT) * 100
+
+      // Build slot metadata identical to BackgroundStatic.jsx.
+      const SLOTS = (() => {
+        const numSlots = Math.ceil(SCROLL_H / SLOT_HEIGHT)
+        return Array.from({ length: numSlots }, (_, i) => {
+          const y0 = Math.max(0, i * SLOT_HEIGHT - BLEED)
+          const y1 = Math.min(SCROLL_H, (i + 1) * SLOT_HEIGHT + BLEED)
+          return { i, y0, y1, h: y1 - y0 }
+        })
+      })()
+
+      const passSlots = (passIdx) =>
+        passIdx % 2 === 0 ? SLOTS : [...SLOTS].reverse()
+
+      const stackEl = document.getElementById('stack')
+      const passCountInput = document.getElementById('passCount')
+      const showLabelsInput = document.getElementById('showLabels')
+      const showBoundariesInput = document.getElementById('showBoundaries')
+
+      const render = () => {
+        const passCount = parseInt(passCountInput.value, 10) || 4
+        const showLabels = showLabelsInput.checked
+        const showBoundaries = showBoundariesInput.checked
+
+        stackEl.innerHTML = ''
+
+        for (let passIdx = 0; passIdx < passCount; passIdx++) {
+          const slots = passSlots(passIdx)
+          const isMirrored = passIdx % 2 === 1
+          slots.forEach((slot, slotIdx) => {
+            const isPassBoundary = passIdx > 0 && slotIdx === 0
+            const isFirstSlot = passIdx === 0 && slotIdx === 0
+            const marginTop = isPassBoundary || isFirstSlot ? '0' : `-${BLEED_PCT}%`
+
+            const div = document.createElement('div')
+            div.className = 'slot' + (isMirrored ? ' mirrored' : '')
+            div.style.marginTop = marginTop
+
+            const img = document.createElement('img')
+            img.src = `/bg-slots/slot-${slot.i}.webp`
+            img.alt = ''
+            img.draggable = false
+            div.appendChild(img)
+
+            if (showBoundaries && (isPassBoundary || isFirstSlot)) {
+              const marker = document.createElement('div')
+              marker.className = 'pass-marker'
+              div.appendChild(marker)
+
+              const passLabel = document.createElement('div')
+              passLabel.className = 'pass-label'
+              passLabel.textContent = `PASS ${passIdx} START${isMirrored ? ' (mirror)' : ''}`
+              div.appendChild(passLabel)
+            }
+
+            if (showLabels) {
+              const badge = document.createElement('div')
+              badge.className = 'badge'
+              badge.textContent = `P${passIdx}-S${slot.i} · slot-${slot.i}.webp${isMirrored ? ' ↕' : ''}`
+              div.appendChild(badge)
+            }
+
+            stackEl.appendChild(div)
+          })
+        }
+      }
+
+      passCountInput.addEventListener('input', render)
+      showLabelsInput.addEventListener('change', render)
+      showBoundariesInput.addEventListener('change', render)
+
+      render()
+    </script>
+  </body>
+</html>
