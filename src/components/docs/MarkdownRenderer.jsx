@@ -67,6 +67,16 @@ const parseBlocks = (markdown) => {
       continue
     }
 
+    if (/^-\s+/.test(line)) {
+      const items = []
+      while (index < lines.length && /^-\s+/.test(lines[index])) {
+        items.push(lines[index].replace(/^-\s+/, '').trim())
+        index += 1
+      }
+      blocks.push({ type: 'ulist', items })
+      continue
+    }
+
     const paragraph = []
     while (index < lines.length) {
       const current = lines[index]
@@ -75,7 +85,8 @@ const parseBlocks = (markdown) => {
         current.startsWith('```') ||
         /^#{1,3}\s+/.test(current) ||
         /^>\s?/.test(current) ||
-        /^\d+\.\s+/.test(current)
+        /^\d+\.\s+/.test(current) ||
+        /^-\s+/.test(current)
       ) {
         break
       }
@@ -208,16 +219,36 @@ export const MarkdownRenderer = ({ markdown, currentDocPath, navigate }) => {
         }
 
         if (block.type === 'olist') {
+          const compactColumns = block.items.length > 6
           return (
             <ol
               key={`ol-${index}`}
-              className="mt-5 space-y-3 pl-6 text-[1rem] leading-7 text-[var(--text-soft)] marker:font-medium marker:text-[var(--text-main)]"
+              className={`mt-5 space-y-3 pl-6 text-[1rem] leading-7 text-[var(--text-soft)] marker:font-medium marker:text-[var(--text-main)] ${
+                compactColumns ? 'md:columns-2 md:gap-10 [&>li]:break-inside-avoid' : ''
+              }`}
               style={{ fontFamily: 'var(--font-ui)' }}
             >
               {block.items.map((item, itemIndex) => (
                 <li key={`item-${itemIndex}`}>{renderInline(item, currentDocPath, navigate)}</li>
               ))}
             </ol>
+          )
+        }
+
+        if (block.type === 'ulist') {
+          const compactColumns = block.items.length > 6
+          return (
+            <ul
+              key={`ul-${index}`}
+              className={`mt-5 list-disc space-y-3 pl-6 text-[1rem] leading-7 text-[var(--text-soft)] marker:font-medium marker:text-[var(--text-main)] ${
+                compactColumns ? 'md:columns-2 md:gap-10 [&>li]:break-inside-avoid' : ''
+              }`}
+              style={{ fontFamily: 'var(--font-ui)' }}
+            >
+              {block.items.map((item, itemIndex) => (
+                <li key={`item-${itemIndex}`}>{renderInline(item, currentDocPath, navigate)}</li>
+              ))}
+            </ul>
           )
         }
 

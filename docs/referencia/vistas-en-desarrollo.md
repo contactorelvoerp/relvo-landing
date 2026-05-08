@@ -2,7 +2,7 @@
 
 Algunas pantallas existen en el frontend actual, pero no se describen como flujos operativos completos. Esta página te ayuda a distinguir qué vistas sirven hoy como referencia funcional y cuáles dependen de backend parcial o futuro.
 
-> **Nota:** Esta funcionalidad está en desarrollo. Puedes verla en la interfaz pero aún no está completamente operativa.
+> **Nota:** Esta funcionalidad está en desarrollo. Puedes verla en la plataforma pero aún no está completamente operativa.
 
 ## Devengo
 

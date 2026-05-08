@@ -1,6 +1,6 @@
 # Cómo navegar Relvo
 
-Relvo repite varios patrones de interfaz a lo largo de la aplicación. Esta página te ayuda a reconocerlos para que puedas moverte entre módulos con menos fricción.
+Relvo repite varios patrones de plataforma a lo largo de la aplicación. Esta página te ayuda a reconocerlos para que puedas moverte entre módulos con menos fricción.
 
 ## Navegación principal
 
