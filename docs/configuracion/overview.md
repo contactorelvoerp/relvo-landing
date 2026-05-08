@@ -10,7 +10,7 @@ Usa `Configuración` al inicio de una implementación o cuando necesites ajustar
 
 La vista principal de configuración organiza tarjetas para empresa, usuarios, aprobaciones, plan de cuentas, preferencias de facturación e integraciones.
 
-> **Nota:** No todas las tarjetas visibles están operativas con backend completo. Puedes verlas en la interfaz, pero algunas siguen en borrador o dependen de desarrollo adicional.
+> **Nota:** No todas las tarjetas visibles están operativas con backend completo. Puedes verlas en la plataforma, pero algunas siguen en borrador o dependen de desarrollo adicional.
 
 ## En esta sección encuentras
 

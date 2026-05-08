@@ -10,7 +10,7 @@ Usa `Facturación` cuando necesites revisar el estado de un documento, procesar 
 
 En la bandeja de facturación puedes filtrar por estado de factura, estado del workflow, cliente, origen o necesidad de OC. También puedes abrir una preview draft y procesar facturación por contrato.
 
-> **Nota:** La creación manual de facturas aparece hoy en la interfaz como una capacidad futura. Puedes verla en la vista, pero no está descrita como un flujo operativo completo en la guía base.
+> **Nota:** La creación manual de facturas aparece hoy en la plataforma como una capacidad futura. Puedes verla en la vista, pero no está descrita como un flujo operativo completo en la guía base.
 
 ## En esta sección encuentras
 

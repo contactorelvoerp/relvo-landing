@@ -22,67 +22,65 @@ export const docsNavigation = [
   {
     title: 'Empezar',
     items: [
-      createItem('get-started/overview.md', 'Inicio', '/docs'),
-      createItem('get-started/como-funciona-relvo.md', 'Cómo funciona Relvo', '/docs/como-funciona-relvo'),
-      createItem('get-started/flujo-recomendado.md', 'Flujo recomendado', '/docs/flujo-recomendado'),
-      createItem('get-started/conceptos-clave.md', 'Conceptos clave', '/docs/conceptos-clave'),
+      createItem('get-started/overview.md', 'Qué es Relvo', '/docs'),
+      createItem('get-started/flujo-quote-to-cash.md', 'Flujo quote-to-cash', '/docs/flujo-quote-to-cash'),
+      createItem('get-started/conceptos-principales.md', 'Conceptos principales', '/docs/conceptos-principales'),
+      createItem('get-started/primeros-pasos.md', 'Primeros pasos', '/docs/primeros-pasos', [
+        createItem('get-started/crear-cliente.md', 'Crear cliente', '/docs/primeros-pasos/crear-cliente'),
+        createItem('get-started/cuenta-facturacion.md', 'Cuenta de facturación', '/docs/primeros-pasos/cuenta-facturacion'),
+        createItem('get-started/items-y-metricas.md', 'Items y métricas', '/docs/primeros-pasos/items-y-metricas'),
+        createItem('get-started/crear-plan.md', 'Crear plan', '/docs/primeros-pasos/crear-plan'),
+        createItem('get-started/crear-contrato.md', 'Crear contrato', '/docs/primeros-pasos/crear-contrato'),
+        createItem('get-started/registrar-uso.md', 'Registrar uso', '/docs/primeros-pasos/registrar-uso'),
+        createItem('get-started/importar-uso-csv.md', 'Importar uso CSV', '/docs/primeros-pasos/importar-uso-csv'),
+        createItem('get-started/revisar-cobros-facturacion.md', 'Cobros y facturación', '/docs/primeros-pasos/cobros-facturacion'),
+      ]),
+      createItem('get-started/para-quien-es-relvo.md', 'Para quién es Relvo', '/docs/para-quien-es-relvo'),
+      createItem('get-started/que-problema-resuelve.md', 'Qué problema resuelve', '/docs/que-problema-resuelve'),
+      createItem('get-started/que-puedes-hacer-despues.md', 'Qué puedes hacer después', '/docs/que-puedes-hacer-despues'),
     ],
   },
-  {
-    title: 'Revenue',
-    items: [
-      createItem('panel/overview.md', 'Panel', '/docs/panel'),
-      createItem('clientes/overview.md', 'Clientes', '/docs/clientes', [
-        createItem('clientes/crear-cliente.md', 'Crear cliente', '/docs/clientes/crear'),
-        createItem('clientes/detalle-cliente.md', 'Ver cliente', '/docs/clientes/ver'),
-      ]),
-      createItem('contratos/overview.md', 'Contratos', '/docs/contratos', [
-        createItem('contratos/crear-contrato.md', 'Crear contrato', '/docs/contratos/crear'),
-        createItem('contratos/detalle-contrato.md', 'Ver contrato', '/docs/contratos/ver'),
-        createItem('contratos/editar-contrato.md', 'Editar contrato', '/docs/contratos/editar'),
-      ]),
-      createItem('uso/overview.md', 'Uso', '/docs/uso', [
-        createItem('uso/agregar-evento.md', 'Agregar evento', '/docs/uso/agregar-evento'),
-        createItem('uso/importar-csv.md', 'Importar CSV', '/docs/uso/importar-csv'),
-      ]),
-      createItem('facturacion/overview.md', 'Facturación', '/docs/facturacion', [
-        createItem('facturacion/detalle-factura.md', 'Ver factura', '/docs/facturacion/ver'),
-      ]),
-      createItem('aprobaciones/overview.md', 'Aprobaciones', '/docs/aprobaciones'),
-      createItem('notificaciones/overview.md', 'Notificaciones', '/docs/notificaciones'),
-      createItem('pricing/overview.md', 'Pricing', '/docs/pricing', [
-        createItem('pricing/items.md', 'Items', '/docs/pricing/items'),
-        createItem('pricing/metricas.md', 'Métricas', '/docs/pricing/metricas'),
-        createItem('pricing/planes.md', 'Planes', '/docs/pricing/planes'),
-      ]),
-    ],
-  },
-  {
-    title: 'Organización',
-    items: [
-      createItem('configuracion/overview.md', 'Configuración', '/docs/configuracion', [
-        createItem('configuracion/politica-aprobaciones.md', 'Política de aprobaciones', '/docs/configuracion/politica-aprobaciones'),
-        createItem('configuracion/preferencias-facturacion.md', 'Preferencias de facturación', '/docs/configuracion/preferencias-facturacion'),
-      ]),
-    ],
-  },
-  {
-    title: 'Referencia',
-    items: [
-      createItem('referencia/navegacion.md', 'Navegación', '/docs/referencia/navegacion'),
-      createItem('referencia/vistas-en-desarrollo.md', 'Vistas en desarrollo', '/docs/referencia/vistas-en-desarrollo'),
-      createItem('referencia/reglas-practicas.md', 'Reglas prácticas', '/docs/referencia/reglas-practicas'),
-    ],
-  },
+]
+
+const hiddenDocs = [
+  createItem('get-started/como-funciona-relvo.md', 'Cómo funciona Relvo', '/docs/como-funciona-relvo'),
+  createItem('get-started/flujo-recomendado.md', 'Flujo recomendado', '/docs/flujo-recomendado'),
+  createItem('get-started/conceptos-clave.md', 'Conceptos clave', '/docs/conceptos-clave'),
+  createItem('panel/overview.md', 'Panel', '/docs/panel'),
+  createItem('clientes/overview.md', 'Clientes', '/docs/clientes'),
+  createItem('clientes/crear-cliente.md', 'Crear cliente', '/docs/clientes/crear'),
+  createItem('clientes/detalle-cliente.md', 'Ver cliente', '/docs/clientes/ver'),
+  createItem('contratos/overview.md', 'Contratos', '/docs/contratos'),
+  createItem('contratos/crear-contrato.md', 'Crear contrato', '/docs/contratos/crear'),
+  createItem('contratos/detalle-contrato.md', 'Ver contrato', '/docs/contratos/ver'),
+  createItem('contratos/editar-contrato.md', 'Editar contrato', '/docs/contratos/editar'),
+  createItem('uso/overview.md', 'Uso', '/docs/uso'),
+  createItem('uso/agregar-evento.md', 'Agregar evento', '/docs/uso/agregar-evento'),
+  createItem('uso/importar-csv.md', 'Importar CSV', '/docs/uso/importar-csv'),
+  createItem('facturacion/overview.md', 'Facturación', '/docs/facturacion'),
+  createItem('facturacion/detalle-factura.md', 'Ver factura', '/docs/facturacion/ver'),
+  createItem('aprobaciones/overview.md', 'Aprobaciones', '/docs/aprobaciones'),
+  createItem('notificaciones/overview.md', 'Notificaciones', '/docs/notificaciones'),
+  createItem('pricing/overview.md', 'Pricing', '/docs/pricing'),
+  createItem('pricing/items.md', 'Items', '/docs/pricing/items'),
+  createItem('pricing/metricas.md', 'Métricas', '/docs/pricing/metricas'),
+  createItem('pricing/planes.md', 'Planes', '/docs/pricing/planes'),
+  createItem('configuracion/overview.md', 'Configuración', '/docs/configuracion'),
+  createItem('configuracion/politica-aprobaciones.md', 'Política de aprobaciones', '/docs/configuracion/politica-aprobaciones'),
+  createItem('configuracion/preferencias-facturacion.md', 'Preferencias de facturación', '/docs/configuracion/preferencias-facturacion'),
+  createItem('referencia/navegacion.md', 'Navegación', '/docs/referencia/navegacion'),
+  createItem('referencia/vistas-en-desarrollo.md', 'Vistas en desarrollo', '/docs/referencia/vistas-en-desarrollo'),
+  createItem('referencia/reglas-practicas.md', 'Reglas prácticas', '/docs/referencia/reglas-practicas'),
 ]
 
 const flattenItems = (items) =>
   items.flatMap((item) => [item, ...flattenItems(item.children ?? [])])
 
 const allDocs = docsNavigation.flatMap((section) => flattenItems(section.items))
+const routedDocs = [...allDocs, ...hiddenDocs]
 
-const routeToDocPath = new Map(allDocs.map((item) => [item.slug, item.docPath]))
-const docPathToRoute = new Map(allDocs.map((item) => [item.docPath, item.slug]))
+const routeToDocPath = new Map(routedDocs.map((item) => [item.slug, item.docPath]))
+const docPathToRoute = new Map(routedDocs.map((item) => [item.docPath, item.slug]))
 
 export const getRouteForDocPath = (docPath) => docPathToRoute.get(docPath) || '/docs'
 

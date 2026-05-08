@@ -1,27 +1,21 @@
-# Conceptos clave de Relvo
+# Conceptos clave
 
-Relvo usa algunos conceptos que se repiten en casi todos los módulos. Esta página te ayuda a interpretarlos de forma consistente antes de entrar a cada vista.
+Esta página se mantiene para compatibilidad con enlaces existentes.
 
-## Cliente
+La documentación inicial ahora usa la página [Conceptos principales](./conceptos-principales.md), donde se explican los objetos base de Relvo y el flujo mental completo de la plataforma.
 
-El cliente es la cuenta comercial a la que le vendes. Desde este concepto se organiza la relación principal y se conectan contratos, uso y facturación.
+## Conceptos base
 
-## Cuenta de facturación
+1. Cliente.
+2. Contrato.
+3. Item.
+4. Billable Metric o BM.
+5. Plan.
+6. Charge o Cargo.
+7. Usage o Uso.
+8. Prefactura.
+9. Approval flow.
+10. Factura.
+11. Conciliación.
 
-La cuenta de facturación es la configuración legal y operativa con la que emites documentos. Puede existir dentro del contexto de un cliente y es una pieza importante para saber si esa cuenta ya está lista para facturar.
-
-## Contrato
-
-El contrato es el acuerdo comercial que define fechas, cargos, moneda, facturación y aprobaciones. Es el punto de referencia cuando necesitas operar un acuerdo puntual o entender por qué una factura sigue cierto workflow.
-
-## Uso
-
-El uso corresponde a los eventos de consumo que después se transforman en cobros. Puedes registrarlo manualmente o importarlo en lote, según el volumen y el origen de la información.
-
-## Facturación
-
-Facturación es la bandeja operativa donde revisas y procesas documentos. Desde ahí sigues estados, workflows, previews y relaciones con clientes y contratos.
-
-## Aprobaciones
-
-Aprobaciones es la cola de trabajo donde se valida lo que no puede emitirse automáticamente. Aquí se resuelven pasos internos, requerimientos de OC y estados ya cerrados.
+Para ver las definiciones completas, continúa en [Conceptos principales](./conceptos-principales.md).
