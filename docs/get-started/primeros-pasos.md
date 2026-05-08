@@ -10,9 +10,10 @@ Esta guía es el recorrido operativo para setear Relvo desde cero. Mantiene el m
 2. [Crear una cuenta de facturación](./cuenta-facturacion.md).
 3. [Crear items y métricas de cobro](./items-y-metricas.md).
 4. [Crear un plan](./crear-plan.md), si vas a reutilizar pricing.
-5. [Crear un contrato](./crear-contrato.md).
-6. [Registrar uso](./registrar-uso.md) o [importar uso por CSV](./importar-uso-csv.md).
-7. [Revisar cobros y facturación](./revisar-cobros-facturacion.md).
+5. [Entender fases y cargos](./fases-y-cargos.md).
+6. [Crear un contrato](./crear-contrato.md).
+7. [Registrar uso](./registrar-uso.md) o [importar uso por CSV](./importar-uso-csv.md).
+8. [Revisar cobros y facturación](./revisar-cobros-facturacion.md).
 
 ## Qué necesitas antes de empezar
 

@@ -30,6 +30,7 @@ export const docsNavigation = [
         createItem('get-started/cuenta-facturacion.md', 'Cuenta de facturación', '/docs/primeros-pasos/cuenta-facturacion'),
         createItem('get-started/items-y-metricas.md', 'Items y métricas', '/docs/primeros-pasos/items-y-metricas'),
         createItem('get-started/crear-plan.md', 'Crear plan', '/docs/primeros-pasos/crear-plan'),
+        createItem('get-started/fases-y-cargos.md', 'Fases y cargos', '/docs/primeros-pasos/fases-y-cargos'),
         createItem('get-started/crear-contrato.md', 'Crear contrato', '/docs/primeros-pasos/crear-contrato'),
         createItem('get-started/registrar-uso.md', 'Registrar uso', '/docs/primeros-pasos/registrar-uso'),
         createItem('get-started/importar-uso-csv.md', 'Importar uso CSV', '/docs/primeros-pasos/importar-uso-csv'),

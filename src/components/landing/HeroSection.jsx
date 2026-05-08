@@ -145,8 +145,7 @@ export const HeroSection = () => {
               Ver producto
             </a>
             <a
-              href="/login"
-              onClick={(e) => { e.preventDefault(); goTo('/login') }}
+              href="http://app.relvoerp.com"
               className="inline-flex cursor-pointer items-center justify-center rounded-full bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
               style={{
                 fontFamily: 'var(--font-mono)',
