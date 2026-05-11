@@ -33,7 +33,11 @@ const LEFT_ENTRY_EXTENSION = 72;
 const CIRCUIT_X_SHIFT = 60;
 const EDGE_FADE_WIDTH = 120;
 const NECK_CIRCLE_RADIUS = 32;
-const COIN_ANIMATION_FRAMES = 56;
+const COIN_ANIMATION_BASE_FRAMES = 56;
+const COIN_SPEED_MULTIPLIER = 1;
+const COIN_ANIMATION_FRAMES = Math.round(
+  COIN_ANIMATION_BASE_FRAMES * 1.4 / COIN_SPEED_MULTIPLIER
+);
 
 const BASE_SPEED = 3.5;
 const FUNNEL_SYNC_WINDOW = 20;
@@ -333,10 +337,6 @@ const buildRails = (seed) => {
 };
 
 const clamp01 = (t) => Math.max(0, Math.min(1, t));
-const wrapDelta = (value, period) => {
-  const half = period / 2;
-  return ((((value + half) % period) + period) % period) - half;
-};
 
 const funnelDistanceAt = (length, duration, elapsed, boundarySpeed) => {
   if (duration <= 0) return length;
@@ -476,11 +476,10 @@ export const HeroFlowLive = ({ className, style }) => {
       : Math.max(...rails.map((rail) => rail.leadInLen / rail.baseSpeed + rail.funnelExitFrame));
   const neckCenterFrame = (earliestEntryFrame + latestExitFrame) / 2;
   const coinWavePeriod = loopFrames / DOTS_PER_RAIL;
-  const coinDelta = wrapDelta(loopFrame - neckCenterFrame, coinWavePeriod);
-  const showCoin = Math.abs(coinDelta) <= COIN_ANIMATION_FRAMES / 2;
-  const visibleCoinFrame = showCoin
-    ? coinDelta + COIN_ANIMATION_FRAMES / 2
-    : 0;
+  const coinStartFrame = neckCenterFrame - COIN_ANIMATION_BASE_FRAMES / 2;
+  const coinElapsed = (((loopFrame - coinStartFrame) % coinWavePeriod) + coinWavePeriod) % coinWavePeriod;
+  const showCoin = coinElapsed <= COIN_ANIMATION_FRAMES;
+  const visibleCoinFrame = showCoin ? coinElapsed : 0;
 
   return (
     <svg

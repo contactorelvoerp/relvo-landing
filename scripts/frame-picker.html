@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Frame Picker</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0e0e12;
+        --panel: #191921;
+        --border: #2a2a36;
+        --text: #e5e5ea;
+        --muted: #8a8a96;
+        --accent: #ff9566;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      body {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-height: 100vh;
+      }
+      h1 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+      }
+      .row {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      input[type="file"],
+      button,
+      input[type="number"] {
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 0.9rem;
+        font-family: inherit;
+        cursor: pointer;
+      }
+      button:hover { border-color: var(--accent); }
+      button:disabled { opacity: 0.4; cursor: not-allowed; }
+      button.primary {
+        background: var(--accent);
+        color: #0e0e12;
+        border-color: var(--accent);
+        font-weight: 600;
+      }
+      input[type="range"] {
+        flex: 1;
+        min-width: 200px;
+      }
+      input[type="number"] {
+        width: 120px;
+      }
+      .stage {
+        background:
+          linear-gradient(45deg, #1e1e26 25%, transparent 25%),
+          linear-gradient(-45deg, #1e1e26 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, #1e1e26 75%),
+          linear-gradient(-45deg, transparent 75%, #1e1e26 75%);
+        background-size: 24px 24px;
+        background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+        background-color: #2a2a36;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 400px;
+      }
+      .stage canvas,
+      .stage video {
+        max-width: 100%;
+        max-height: 70vh;
+        display: block;
+      }
+      .stage video { display: none; }
+      .info {
+        display: flex;
+        gap: 20px;
+        font-size: 0.85rem;
+        color: var(--muted);
+        font-family: ui-monospace, 'Geist Mono', monospace;
+      }
+      .info strong {
+        color: var(--text);
+        font-weight: 500;
+      }
+      label {
+        font-size: 0.8rem;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .kbd {
+        display: inline-block;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-size: 0.7rem;
+        font-family: ui-monospace, monospace;
+      }
+      .help {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Frame Picker — transparent webm → PNG</h1>
+
+    <div class="row">
+      <label>
+        WebM file
+        <input type="file" id="file" accept="video/webm" />
+      </label>
+      <span class="help">or drop a .webm on the page</span>
+    </div>
+
+    <div class="stage" id="stage">
+      <video id="video" playsinline muted></video>
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <div class="row">
+      <button id="prevFrame" disabled>◀︎ prev frame</button>
+      <input type="range" id="scrubber" min="0" max="100" step="0.01" value="0" disabled />
+      <button id="nextFrame" disabled>next frame ▶︎</button>
+    </div>
+
+    <div class="row">
+      <label>
+        time (s)
+        <input type="number" id="timeInput" step="0.01" min="0" value="0" disabled />
+      </label>
+      <label>
+        frame
+        <input type="number" id="frameInput" step="1" min="0" value="0" disabled />
+      </label>
+      <button id="download" class="primary" disabled>Download PNG</button>
+    </div>
+
+    <div class="info" id="info">
+      <span>duration: <strong id="duration">—</strong></span>
+      <span>size: <strong id="size">—</strong></span>
+      <span>fps: <strong id="fps">—</strong></span>
+      <span>current: <strong id="current">—</strong></span>
+    </div>
+
+    <div class="help">
+      keys: <span class="kbd">←</span> <span class="kbd">→</span> step 1 frame ·
+      <span class="kbd">Shift</span>+arrows step 10 frames ·
+      <span class="kbd">Space</span> play/pause ·
+      <span class="kbd">D</span> download
+    </div>
+
+    <script>
+      const FPS_FALLBACK = 30
+      const video = document.getElementById('video')
+      const canvas = document.getElementById('canvas')
+      const ctx = canvas.getContext('2d')
+      const fileInput = document.getElementById('file')
+      const scrubber = document.getElementById('scrubber')
+      const prevBtn = document.getElementById('prevFrame')
+      const nextBtn = document.getElementById('nextFrame')
+      const downloadBtn = document.getElementById('download')
+      const timeInput = document.getElementById('timeInput')
+      const frameInput = document.getElementById('frameInput')
+      const durationEl = document.getElementById('duration')
+      const sizeEl = document.getElementById('size')
+      const fpsEl = document.getElementById('fps')
+      const currentEl = document.getElementById('current')
+
+      let currentFile = null
+      let fps = FPS_FALLBACK
+
+      const loadFile = (file) => {
+        if (!file || !file.name.toLowerCase().endsWith('.webm')) return
+        currentFile = file
+        const url = URL.createObjectURL(file)
+        video.src = url
+      }
+
+      fileInput.addEventListener('change', (e) => {
+        loadFile(e.target.files[0])
+      })
+
+      // Drop target
+      window.addEventListener('dragover', (e) => {
+        e.preventDefault()
+      })
+      window.addEventListener('drop', (e) => {
+        e.preventDefault()
+        const file = e.dataTransfer.files[0]
+        if (file) loadFile(file)
+      })
+
+      video.addEventListener('loadedmetadata', () => {
+        const { videoWidth: w, videoHeight: h, duration } = video
+        canvas.width = w
+        canvas.height = h
+        scrubber.max = duration
+        scrubber.step = 1 / fps
+        scrubber.value = 0
+        timeInput.max = duration
+        frameInput.max = Math.round(duration * fps)
+        durationEl.textContent = duration.toFixed(2) + 's'
+        sizeEl.textContent = `${w}×${h}`
+        fpsEl.textContent = `${fps}`
+        ;[scrubber, prevBtn, nextBtn, downloadBtn, timeInput, frameInput].forEach((el) => {
+          el.disabled = false
+        })
+        video.currentTime = 0
+      })
+
+      video.addEventListener('seeked', () => {
+        draw()
+      })
+      video.addEventListener('timeupdate', () => {
+        draw()
+      })
+
+      const draw = () => {
+        if (!video.videoWidth) return
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.drawImage(video, 0, 0)
+        const t = video.currentTime
+        scrubber.value = t
+        timeInput.value = t.toFixed(3)
+        frameInput.value = Math.round(t * fps)
+        currentEl.textContent = `${t.toFixed(3)}s (frame ${Math.round(t * fps)})`
+      }
+
+      const setTime = (t) => {
+        if (t < 0) t = 0
+        if (t > video.duration) t = video.duration
+        video.currentTime = t
+      }
+
+      scrubber.addEventListener('input', (e) => setTime(parseFloat(e.target.value)))
+      timeInput.addEventListener('change', (e) => setTime(parseFloat(e.target.value)))
+      frameInput.addEventListener('change', (e) => setTime(parseInt(e.target.value, 10) / fps))
+
+      const stepFrames = (n) => setTime(video.currentTime + n / fps)
+
+      prevBtn.addEventListener('click', () => stepFrames(-1))
+      nextBtn.addEventListener('click', () => stepFrames(1))
+
+      const download = () => {
+        if (!currentFile) return
+        canvas.toBlob((blob) => {
+          if (!blob) return
+          const a = document.createElement('a')
+          const base = currentFile.name.replace(/\.webm$/i, '')
+          const t = video.currentTime.toFixed(3)
+          a.download = `${base}-still-${t}s.png`
+          a.href = URL.createObjectURL(blob)
+          a.click()
+          URL.revokeObjectURL(a.href)
+        }, 'image/png')
+      }
+      downloadBtn.addEventListener('click', download)
+
+      window.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT') return
+        const step = e.shiftKey ? 10 : 1
+        if (e.key === 'ArrowLeft') {
+          stepFrames(-step)
+          e.preventDefault()
+        } else if (e.key === 'ArrowRight') {
+          stepFrames(step)
+          e.preventDefault()
+        } else if (e.key === ' ') {
+          if (video.paused) video.play()
+          else video.pause()
+          e.preventDefault()
+        } else if (e.key === 'd' || e.key === 'D') {
+          download()
+          e.preventDefault()
+        }
+      })
+
+      // Try to detect fps from the video track once metadata is loaded.
+      // Not reliably available in browsers, so fall back to 30.
+      video.addEventListener('play', () => {
+        // Some browsers expose getVideoPlaybackQuality; we skip it and
+        // just trust FPS_FALLBACK.
+      })
+    </script>
+  </body>
+</html>

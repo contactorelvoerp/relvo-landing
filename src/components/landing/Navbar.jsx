@@ -3,10 +3,11 @@ import { trackScheduleDemo } from '../../utils/analytics'
 
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
 const appHref = 'http://app.relvoerp.com'
+const clamp01 = (value) => Math.max(0, Math.min(1, value))
 
 export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBackdrop = false }) => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [showBackdrop, setShowBackdrop] = useState(false)
+  const [backdropProgress, setBackdropProgress] = useState(0)
 
   useEffect(() => {
     if (forceBackdrop) {
@@ -17,10 +18,8 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
     if (!scrollThreshold) return
 
     const handleScroll = () => {
-      const threshold = typeof scrollThreshold === 'number'
-        ? scrollThreshold
-        : scrollThreshold.current?.offsetTop ?? Infinity
-      setShowBackdrop(window.scrollY > threshold - window.innerHeight * 0.5)
+      const fadeDistance = Math.max(window.innerHeight * 0.22, 120)
+      setBackdropProgress(clamp01(window.scrollY / fadeDistance))
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -90,10 +89,8 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
     <header
       className="fixed inset-x-0 top-0 z-50 hidden px-4 pt-3 sm:block sm:px-6 sm:pt-4"
       style={{
-        paddingBottom: showBackdrop ? '2.5rem' : '0.75rem',
-        background: showBackdrop
-          ? 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 60%, rgba(255,255,255,0) 100%)'
-          : 'transparent',
+        paddingBottom: `${0.75 + 1.75 * backdropProgress}rem`,
+        background: `linear-gradient(to bottom, rgba(255,255,255,${backdropProgress}) 0%, rgba(255,255,255,${backdropProgress}) 60%, rgba(255,255,255,0) 100%)`,
         transition: 'background 0.4s ease',
       }}
     >
