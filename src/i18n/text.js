@@ -3,7 +3,7 @@ export const text = {
     navCta: 'Ir a demo',
 
     navItems: [
-      { label: 'Producto', href: '#producto' },
+      { label: 'Sobre Relvo', href: '/about-us' },
       { label: 'Docs', href: '/docs' },
       { label: 'Demos', href: '#demos' },
     ],
@@ -124,7 +124,7 @@ export const text = {
     navCta: 'Book a demo',
 
     navItems: [
-      { label: 'Product', href: '#producto' },
+      { label: 'About Us', href: '/about-us' },
       { label: 'Docs', href: '/docs' },
       { label: 'Demos', href: '#demos' },
     ],

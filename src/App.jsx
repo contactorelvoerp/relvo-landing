@@ -11,6 +11,7 @@ import { LoginRedirect } from './pages/LoginRedirect'
 import { ShaderOnly } from './pages/ShaderOnly'
 import { LinkedInBanner } from './pages/LinkedInBanner'
 import { DocsPage } from './pages/DocsPage'
+import { AboutPage } from './pages/AboutPage'
 import { text } from './i18n/text'
 
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
@@ -33,9 +34,15 @@ function App() {
   }, [])
 
   const page4Ref = useRef(null)
+  const lang = 'es'
+  const t = text?.[lang] ?? text?.es ?? {}
 
   if (pathname === '/docs' || pathname.startsWith('/docs/')) return (
-    <DocsPage pathname={pathname} navigate={navigate} />
+    <DocsPage pathname={pathname} navigate={navigate} t={t} />
+  )
+
+  if (pathname === '/about-us') return (
+    <AboutPage navigate={navigate} t={t} />
   )
 
   if (pathname === '/login') return (
@@ -45,8 +52,6 @@ function App() {
   if (pathname === '/shader-only') return <ShaderOnly />
   if (pathname === '/linkedin-banner') return <LinkedInBanner />
 
-  const lang = 'es'
-  const t = text?.[lang] ?? text?.es ?? {}
   const footerColumns = (t.footerColumns ?? []).filter((column) => {
     const title = String(column?.title || '').trim().toLowerCase()
     return title && title !== 'feature'

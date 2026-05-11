@@ -12,6 +12,7 @@ import {
   Receipt,
 } from 'lucide-react'
 import { MarkdownRenderer } from '../components/docs/MarkdownRenderer'
+import { Navbar } from '../components/landing/Navbar'
 import {
   docsNavigation,
   getDocEntry,
@@ -112,7 +113,7 @@ const DocsSidebar = ({ currentDocPath, navigate, mobile = false, onNavigate }) =
   </nav>
 )
 
-export const DocsPage = ({ pathname, navigate }) => {
+export const DocsPage = ({ pathname, navigate, t }) => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const entry = useMemo(() => getDocEntry(pathname), [pathname])
   const toc = useMemo(() => getTableOfContents(entry.content), [entry.content])
@@ -144,65 +145,22 @@ export const DocsPage = ({ pathname, navigate }) => {
         }}
       />
 
-      <header className="sticky top-0 z-40 border-b border-[rgba(19,19,30,0.06)] bg-[rgba(252,252,248,0.84)] backdrop-blur-xl">
-        <div className="section-shell flex items-center justify-between gap-4 py-4">
-          <div className="flex items-center gap-4">
-            <a
-              href="/"
-              onClick={(event) => {
-                event.preventDefault()
-                navigate?.('/')
-              }}
-              className="flex items-center gap-3"
-            >
-              <img src="/relvo-wordmark-dark.svg" alt="relvo" className="h-5 w-auto sm:h-6" />
-              <span
-                className="hidden rounded-full border border-[rgba(19,19,30,0.08)] bg-white/75 px-3 py-1 sm:inline-flex"
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.68rem',
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  color: 'var(--text-soft)',
-                }}
-              >
-                Docs
-              </span>
-            </a>
+      <Navbar t={t} navigate={navigate} activePath="/docs" forceBackdrop />
 
-            <button
-              type="button"
-              onClick={() => setMobileNavOpen((value) => !value)}
-              className="inline-flex items-center rounded-full border border-[rgba(19,19,30,0.08)] bg-white/80 px-4 py-2 lg:hidden"
-              style={{
-                fontFamily: 'var(--font-ui)',
-                fontSize: '0.92rem',
-                fontWeight: 500,
-              }}
-            >
-              Navegación
-            </button>
-          </div>
-
-          <a
-            href="/"
-            onClick={(event) => {
-              event.preventDefault()
-              navigate?.('/')
-            }}
-            className="inline-flex h-10 items-center justify-center rounded-full bg-[var(--text-main)] px-5 text-white transition hover:opacity-90"
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.72rem',
-              fontWeight: 500,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-            }}
-          >
-            Volver al sitio
-          </a>
-        </div>
-      </header>
+      <div className="section-shell relative z-30 pt-20 lg:hidden">
+        <button
+          type="button"
+          onClick={() => setMobileNavOpen((value) => !value)}
+          className="inline-flex items-center rounded-full border border-[rgba(19,19,30,0.08)] bg-white/80 px-4 py-2 backdrop-blur-sm"
+          style={{
+            fontFamily: 'var(--font-ui)',
+            fontSize: '0.92rem',
+            fontWeight: 500,
+          }}
+        >
+          Navegación
+        </button>
+      </div>
 
       {mobileNavOpen && (
         <div className="section-shell relative z-30 pt-4 lg:hidden">
@@ -217,7 +175,7 @@ export const DocsPage = ({ pathname, navigate }) => {
         </div>
       )}
 
-      <main className="section-shell relative z-10 py-8 sm:py-10">
+      <main className="section-shell relative z-10 py-8 sm:py-10 lg:pt-28">
         <div className="grid gap-8 lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)_220px]">
           <aside className="hidden lg:block">
             <div className="sticky top-24 rounded-[var(--radius-2xl)] border border-[rgba(19,19,30,0.06)] bg-white/72 p-5 backdrop-blur-xl">
