@@ -7,7 +7,7 @@ import { CTASection } from './components/landing/CTASection'
 import { Navbar } from './components/landing/Navbar'
 import { SocialProofSection } from './components/landing/SocialProofSection'
 import { ShaderBackground } from './components/landing/ShaderBackground'
-import { ComingSoon } from './pages/ComingSoon'
+import { LoginRedirect } from './pages/LoginRedirect'
 import { ShaderOnly } from './pages/ShaderOnly'
 import { LinkedInBanner } from './pages/LinkedInBanner'
 import { DocsPage } from './pages/DocsPage'
@@ -39,10 +39,7 @@ function App() {
   )
 
   if (pathname === '/login') return (
-    <div className="relative min-h-screen">
-      <ShaderBackground variant="login" />
-      <ComingSoon navigate={navigate} />
-    </div>
+    <LoginRedirect />
   )
 
   if (pathname === '/shader-only') return <ShaderOnly />

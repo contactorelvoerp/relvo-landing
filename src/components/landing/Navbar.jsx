@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { trackScheduleDemo } from '../../utils/analytics'
 
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
-const appHref = 'http://app.relvoerp.com'
+const loginHref = 'https://app.relvoerp.com/login'
 const clamp01 = (value) => Math.max(0, Math.min(1, value))
 
 export const Navbar = ({ t, navigate, scrollThreshold }) => {
@@ -91,7 +91,7 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
           ))}
 
           <a
-            href={appHref}
+            href={loginHref}
             className="inline-flex h-9 cursor-pointer items-center justify-center rounded-full bg-white/50 px-5 text-xs font-medium text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:px-6 sm:text-sm"
           >
             {t.navLogin ?? 'Login'}
@@ -158,7 +158,7 @@ export const Navbar = ({ t, navigate, scrollThreshold }) => {
           ))}
           <div className="mt-2 border-t border-[var(--border-default)] pt-2">
             <a
-              href={appHref}
+              href={loginHref}
               onClick={() => setMenuOpen(false)}
               className="block cursor-pointer rounded-[var(--radius-sm)] px-2 py-2 text-sm font-medium text-[var(--text-muted)] transition hover:text-[var(--text-main)]"
             >

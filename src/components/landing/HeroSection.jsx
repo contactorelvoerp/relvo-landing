@@ -1,11 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { HeroFlowLive } from './HeroFlowLive'
 
-function goTo(path) {
-  window.history.pushState({}, '', path)
-  window.scrollTo(0, 0)
-  window.dispatchEvent(new PopStateEvent('popstate'))
-}
+const loginUrl = 'https://app.relvoerp.com/login'
 
 const DESKTOP_HERO_RATIOS = {
   navReserve: 0.095,
@@ -327,8 +323,7 @@ export const HeroSection = () => {
                 Ver producto
               </a>
               <a
-                href="/login"
-                onClick={(e) => { e.preventDefault(); goTo('/login') }}
+                href={loginUrl}
                 className="inline-flex cursor-pointer items-center justify-center rounded-full bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                 style={{
                   fontFamily: 'var(--font-mono)',
@@ -472,7 +467,7 @@ export const HeroSection = () => {
               Ver producto
             </a>
             <a
-              href="http://app.relvoerp.com"
+              href={loginUrl}
               className="inline-flex cursor-pointer items-center justify-center rounded-full bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
               style={{
                 fontFamily: 'var(--font-mono)',
