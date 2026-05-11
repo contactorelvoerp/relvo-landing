@@ -11,7 +11,7 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
 
   useEffect(() => {
     if (forceBackdrop) {
-      setShowBackdrop(true)
+      setBackdropProgress(1)
       return
     }
 
