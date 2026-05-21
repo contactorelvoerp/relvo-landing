@@ -112,11 +112,12 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
                 onClick={item.href?.startsWith('/')
                   ? (event) => handleRouteClick(event, item.href)
                   : (event) => handleAnchorClick(event, item.href)}
-                className={`hidden rounded-full border px-3 py-1.5 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:inline-flex sm:text-sm ${
+                className={`hidden px-1 py-1 text-sm transition-colors duration-150 focus-visible:outline-none sm:inline-flex ${
                   active
-                    ? 'border-[var(--border-default)] bg-white/70 text-[var(--text-main)] shadow-[0_8px_22px_rgba(15,17,21,0.05)]'
-                    : 'border-transparent text-[var(--text-muted)] hover:bg-white/40 hover:text-[var(--text-main)]'
+                    ? 'font-semibold text-[var(--text-main)]'
+                    : 'font-medium text-[var(--text-soft)] hover:text-[var(--text-main)]'
                 }`}
+                style={{ fontFamily: 'var(--font-ui)' }}
               >
                 {item.label}
               </a>
@@ -125,7 +126,8 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
 
           <a
             href={loginHref}
-            className="inline-flex h-9 cursor-pointer items-center justify-center rounded-full bg-white/50 px-5 text-xs font-medium text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:px-6 sm:text-sm"
+            className="hidden h-8 cursor-pointer items-center justify-center rounded-md border border-[var(--border-default)] px-4 text-sm font-medium text-[var(--text-soft)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-main)] sm:inline-flex"
+            style={{ fontFamily: 'var(--font-ui)' }}
           >
             {t.navLogin ?? 'Login'}
           </a>
@@ -136,10 +138,10 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackScheduleDemo('navbar')}
-              className="inline-flex h-9 items-center justify-center rounded-[var(--radius-button)] bg-[var(--text-main)] px-4 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 sm:px-5"
+              className="inline-flex h-8 items-center justify-center rounded-md bg-[var(--text-main)] px-4 text-white transition hover:opacity-85 focus-visible:outline-none sm:px-5"
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.7rem',
+                fontSize: '0.68rem',
                 fontWeight: 500,
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
@@ -173,7 +175,7 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
 
       {/* Mobile dropdown */}
       {menuOpen && (
-        <div className="mx-auto mt-2 max-w-7xl rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-white/80 px-4 py-3 shadow-[0_8px_24px_rgba(15,17,21,0.08)] backdrop-blur-md sm:hidden">
+        <div className="mx-auto mt-2 max-w-7xl rounded-lg border border-[var(--border-default)] bg-white px-3 py-2 shadow-[0_4px_16px_rgba(15,17,21,0.06)] sm:hidden">
           {regularItems.map((item) => {
             const active = isActiveItem(item.href)
             return (
@@ -190,19 +192,21 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
                     handleAnchorClick(event, item.href)
                     setMenuOpen(false)
                   }}
-                className={`block rounded-[var(--radius-sm)] px-2 py-2 text-sm font-medium transition hover:text-[var(--text-main)] ${
-                  active ? 'bg-[rgba(19,19,30,0.05)] text-[var(--text-main)]' : 'text-[var(--text-muted)]'
+                className={`block px-2 py-2 text-sm transition-colors hover:text-[var(--text-main)] ${
+                  active ? 'font-semibold text-[var(--text-main)]' : 'font-medium text-[var(--text-soft)]'
                 }`}
+                style={{ fontFamily: 'var(--font-ui)' }}
               >
                 {item.label}
               </a>
             )
           })}
-          <div className="mt-2 border-t border-[var(--border-default)] pt-2">
+          <div className="mt-1 border-t border-[var(--border-subtle)] pt-1">
             <a
               href={loginHref}
               onClick={() => setMenuOpen(false)}
-              className="block cursor-pointer rounded-[var(--radius-sm)] px-2 py-2 text-sm font-medium text-[var(--text-muted)] transition hover:text-[var(--text-main)]"
+              className="block cursor-pointer px-2 py-2 text-sm font-medium text-[var(--text-soft)] transition-colors hover:text-[var(--text-main)]"
+              style={{ fontFamily: 'var(--font-ui)' }}
             >
               {t.navLogin ?? 'Login'}
             </a>

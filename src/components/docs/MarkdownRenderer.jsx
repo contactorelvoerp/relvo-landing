@@ -256,7 +256,7 @@ export const MarkdownRenderer = ({ markdown, currentDocPath, navigate }) => {
           return (
             <blockquote
               key={`quote-${index}`}
-              className="mt-6 rounded-[var(--radius-lg)] border border-[rgba(19,19,30,0.08)] bg-[rgba(208,255,11,0.12)] px-5 py-4 text-[0.98rem] leading-7 text-[var(--text-main)]"
+              className="mt-6 border-l-2 border-[var(--brand-accent)] pl-4 py-1 text-[0.95rem] leading-7 text-[var(--text-soft)]"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
               {renderInline(block.text, currentDocPath, navigate)}
@@ -268,7 +268,7 @@ export const MarkdownRenderer = ({ markdown, currentDocPath, navigate }) => {
           return (
             <pre
               key={`code-${index}`}
-              className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-[rgba(19,19,30,0.08)] bg-[var(--surface-dark)] px-5 py-4 text-[0.88rem] leading-6 text-[var(--text-on-dark)]"
+              className="mt-6 overflow-x-auto rounded-lg border border-[rgba(19,19,30,0.08)] bg-[var(--surface-dark)] px-5 py-4 text-[0.88rem] leading-6 text-[var(--text-on-dark)]"
             >
               <code style={{ fontFamily: 'var(--font-mono)' }}>{block.content}</code>
             </pre>
