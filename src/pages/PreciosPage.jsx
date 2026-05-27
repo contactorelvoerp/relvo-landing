@@ -485,10 +485,10 @@ export const PreciosPage = ({ navigate }) => {
 
       <Navbar t={t} navigate={navigate} activePath="/precios" forceBackdrop />
 
-      <main className="relative z-10 mx-auto max-w-5xl px-4 pb-24 pt-28 sm:px-6">
+      <main className="relative z-10 mx-auto max-w-5xl px-4 pb-24 pt-36 sm:px-6 sm:pt-44">
 
         {/* ── Page header ── */}
-        <div className="mb-12 text-center">
+        <div className="mb-20 text-center">
           <p
             className="mb-3 uppercase"
             style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.16em', color: 'var(--text-muted)' }}
@@ -497,7 +497,7 @@ export const PreciosPage = ({ navigate }) => {
           </p>
           <h1
             className="mb-4"
-            style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(1.8rem,4vw,2.8rem)', fontWeight: 300, letterSpacing: '-0.02em', color: 'var(--text-main)', lineHeight: 1.1 }}
+            style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(1.8rem,4vw,3.5rem)', fontWeight: 300, letterSpacing: '-0.02em', color: 'var(--text-main)', lineHeight: 1.1 }}
           >
             Infraestructura financiera para empresas que crecen.
           </h1>

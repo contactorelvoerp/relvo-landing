@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Reveal } from './Reveal'
 import { trackScheduleDemo } from '../../utils/analytics'
 import { supabase } from '@/lib/supabase'
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -34,9 +33,10 @@ export const CTASection = ({ ctaHref, t }) => {
     const errors = validate()
     if (Object.keys(errors).length > 0) { setFormErrors(errors); return }
     setFormStatus('loading')
+    setFormErrors({})
     const payload = { ...formData, url_origen: window.location.href, fuente: 'cta' }
     const { error } = await supabase.from('leads').insert([payload])
-    if (error) { console.error('[CTASection] supabase error:', error); setFormStatus('idle'); return }
+    if (error) { console.error('[CTASection] supabase error:', error); setFormStatus('error'); return }
     setFormStatus('success')
   }
 
@@ -174,12 +174,17 @@ export const CTASection = ({ ctaHref, t }) => {
                     className="resize-y"
                   />
                 </div>
+                {formStatus === 'error' && (
+                  <p className="text-center text-sm text-red-600" style={{ fontFamily: 'var(--font-ui)' }}>
+                    Hubo un error al enviar. Intenta de nuevo o escríbenos directamente.
+                  </p>
+                )}
                 <Button
                   type="submit"
                   disabled={formStatus === 'loading'}
                   className="w-full h-auto py-3 text-sm font-semibold rounded-md bg-[var(--text-main)] text-white hover:opacity-85 disabled:opacity-60"
                 >
-                  {formStatus === 'loading' ? 'Enviando...' : 'Enviar'}
+                  {formStatus === 'loading' ? 'Enviando...' : formStatus === 'error' ? 'Reintentar' : 'Enviar'}
                 </Button>
               </form>
             )}

@@ -77,18 +77,20 @@ const TeamPhoto = ({ member }) => (
 )
 
 export const CompanyAboutSection = () => (
-  <section id="about-us" className="px-4 pb-24 pt-10 sm:px-6 sm:pb-32 sm:pt-14 md:pb-40 md:pt-16">
+  <section id="about-us" className="px-4 pb-24 pt-36 sm:px-6 sm:pb-32 sm:pt-44 md:pb-40">
     <div className="section-shell space-y-10 sm:space-y-12">
 
       {/* ── Bloque principal ── */}
-      <Reveal
-        className="rounded-lg bg-white/65 px-5 py-8 backdrop-blur-sm sm:px-8 sm:py-10 md:px-10 md:py-12 lg:px-12 lg:py-14"
-        style={{ border: '1px solid var(--border-default)', boxShadow: '0 18px 44px rgba(15,17,21,0.05)' }}
-      >
-        {/* Eyebrow + Título */}
-        <p className="eyebrow-compact text-center">Sobre Relvo</p>
+      <Reveal className="px-2 sm:px-4">
+        {/* Eyebrow */}
+        <p
+          className="mb-3 text-center uppercase"
+          style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.16em', color: 'var(--text-muted)' }}
+        >
+          Nosotros
+        </p>
         <h2
-          className="mx-auto mt-4 max-w-3xl text-center"
+          className="mx-auto max-w-3xl text-center"
           style={{
             fontFamily: 'var(--font-ui)',
             fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
@@ -116,7 +118,7 @@ export const CompanyAboutSection = () => (
         </p>
 
         {/* Tarjetas */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        <div className="mt-16 grid gap-4 sm:grid-cols-3 sm:mt-20">
           {insightCards.map((card) => (
             <div
               key={card.eyebrow}
