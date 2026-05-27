@@ -18,12 +18,13 @@ import { text } from './i18n/text'
 
 const calendlyHref = 'https://calendar.app.google/GbBM26VivFQHGzyL9'
 
-function navigate(path) {
-  console.log('[navigate] pushing path:', path)
+let _pendingScroll = null
+
+function navigate(path, scrollAfter = null) {
+  _pendingScroll = scrollAfter
   window.history.pushState({}, '', path)
   window.scrollTo(0, 0)
   window.dispatchEvent(new PopStateEvent('popstate'))
-  console.log('[navigate] done, pathname now:', window.location.pathname)
 }
 
 function App() {
@@ -38,6 +39,21 @@ function App() {
   useEffect(() => {
     if (typeof window.gtag === 'function') {
       window.gtag('event', 'page_view', { page_path: pathname })
+    }
+  }, [pathname])
+
+  useEffect(() => {
+    if (_pendingScroll && pathname === '/') {
+      const id = _pendingScroll
+      _pendingScroll = null
+      const timer = setTimeout(() => {
+        const el = document.getElementById(id)
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.scrollY
+          window.scrollTo({ top: y, behavior: 'smooth' })
+        }
+      }, 100)
+      return () => clearTimeout(timer)
     }
   }, [pathname])
 
@@ -90,15 +106,15 @@ function App() {
         <ProblemConsequences />
 
         <div ref={page4Ref}>
-          <section id="producto" style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 1200px' }}>
+          <section id="producto">
             <AboutSection t={t} />
           </section>
 
-          <div style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 600px' }}>
+          <div>
             <SocialProofSection t={t} />
           </div>
 
-          <section id="demos" style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 800px' }}>
+          <section id="demos">
             <CTASection ctaHref={calendlyHref} t={t} />
           </section>
 

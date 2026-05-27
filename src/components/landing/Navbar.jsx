@@ -60,12 +60,13 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
     event.preventDefault()
     trackScheduleDemo(source)
     if (!isPage) {
-      document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const el = document.getElementById('contacto')
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY
+        window.scrollTo({ top: y, behavior: 'smooth' })
+      }
     } else {
-      navigate?.('/')
-      window.setTimeout(() => {
-        document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }, 120)
+      navigate?.('/', 'contacto')
     }
   }
 

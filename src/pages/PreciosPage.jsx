@@ -718,7 +718,7 @@ export const PreciosPage = ({ navigate }) => {
         {/* ── Contact form ── */}
         <div ref={formRef} id="form-contacto" className="scroll-mt-28">
           <div className="mx-auto max-w-xl">
-            <div className="mb-8">
+            <div className="mb-8 text-center">
               <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: '1.5rem', fontWeight: 300, letterSpacing: '-0.02em', color: 'var(--text-main)', marginBottom: 6 }}>
                 Cuéntanos sobre tu empresa
               </h2>
