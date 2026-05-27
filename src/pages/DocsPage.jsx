@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { Menu, ArrowLeft, ArrowRight } from 'lucide-react'
 import { MarkdownRenderer } from '../components/docs/MarkdownRenderer'
 import { Navbar } from '../components/landing/Navbar'
+import { FooterSection } from '../components/landing/FooterSection'
 import {
   docsNavigation,
   getDocEntry,
@@ -100,7 +101,8 @@ export const DocsPage = ({ pathname, navigate, t }) => {
   }, [entry.docPath])
 
   return (
-    <div className="min-h-screen bg-white text-[var(--text-main)]">
+    <div className="relative min-h-screen overflow-hidden bg-[#fcfcf8] text-[var(--text-main)]">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(circle at top left, rgba(208,255,11,0.14), transparent 28%), radial-gradient(circle at top right, rgba(255,149,102,0.18), transparent 24%), linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98))' }} />
       <Helmet>
         <title>{entry.title} | Relvo Docs</title>
         <meta
@@ -295,6 +297,7 @@ export const DocsPage = ({ pathname, navigate, t }) => {
           </aside>
         </div>
       </main>
+      <FooterSection t={t} navigate={navigate} />
     </div>
   )
 }

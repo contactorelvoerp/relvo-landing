@@ -419,3 +419,20 @@ h3,
     font-family: 'Instrument Sans', system-ui, sans-serif;
   }
 }
+
+/* ── AI badge dot ── */
+.ai-badge-dot {
+  display: inline-block;
+  width: 0.52em;
+  height: 0.52em;
+  border-radius: 50%;
+  background: rgba(208,255,11,1);
+  box-shadow: 0 0 5px rgba(208,255,11,0.9), 0 0 10px rgba(208,255,11,0.4);
+  flex-shrink: 0;
+  animation: ai-dot-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes ai-dot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.25; transform: scale(0.75); }
+}

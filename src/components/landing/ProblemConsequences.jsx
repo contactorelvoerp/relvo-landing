@@ -19,7 +19,7 @@ const CONSEQUENCE_STAGES = [
   {
     id: 'cobras-tarde',
     title: 'Días calle',
-    body: 'Ciclo de cobro dos veces más largo que el benchmark global .',
+    body: 'Ciclo de cobro dos veces más largo que el benchmark global.',
     number: '2x',
     numberUnit: ' D S O',
     numberLabel: '',
@@ -27,7 +27,7 @@ const CONSEQUENCE_STAGES = [
   {
     id: 'facturas-menos',
     title: 'Menos Revenue',
-    body: ' Hasta 3% del revenue se pierde en servicios no facturados o mal calculados.',
+    body: 'Hasta 3% del revenue se pierde en servicios no facturados o mal calculados.',
     number: '-3% ',
     numberUnit: ' A R R',
     numberLabel: '',
@@ -35,7 +35,7 @@ const CONSEQUENCE_STAGES = [
   {
     id: 'quemas-horas',
     title: 'En tareas repetitivas',
-    body: ' Dos o más personas en tiempo completo absorbidas por trabajo manual.',
+    body: 'Dos o más personas en tiempo completo absorbidas por trabajo manual.',
     number: '2+',
     numberUnit: 'FTE',
     numberLabel: '',
@@ -50,7 +50,7 @@ const CLOSING_BODY =
 // ── Shared style tokens ────────────────────────────────────────────────
 
 const HEADLINE_STYLE = {
-  fontFamily: 'var(--font-display)',
+  fontFamily: 'var(--font-ui)',
   fontSize: 'clamp(1.45rem, 4.85vmin, 3.75rem)',
   fontWeight: 300,
   lineHeight: 1.15,
@@ -297,7 +297,7 @@ const ConsequencesBlock = () => {
                   >
                     <span
                       style={{
-                        fontFamily: 'var(--font-display)',
+                        fontFamily: 'var(--font-ui)',
                         fontSize: 'clamp(1.2rem, 2.6vmin, 1.7rem)',
                         fontWeight: 300,
                         lineHeight: 1,
@@ -348,7 +348,7 @@ const ConsequencesBlock = () => {
                   >
                     <div
                       style={{
-                        fontFamily: 'var(--font-display)',
+                        fontFamily: 'var(--font-ui)',
                         fontSize: 'clamp(3.5rem, 12vmin, 9rem)',
                         fontWeight: 300,
                         lineHeight: 0.9,
@@ -382,7 +382,7 @@ const ConsequencesBlock = () => {
                     <h3
                       className="mt-[3vh]"
                       style={{
-                        fontFamily: 'var(--font-display)',
+                        fontFamily: 'var(--font-ui)',
                         fontSize: 'clamp(1.4rem, 3.6vmin, 2.4rem)',
                         fontWeight: 300,
                         lineHeight: 1.1,
@@ -410,7 +410,7 @@ const ConsequencesBlock = () => {
                 <p
                   className="max-w-md"
                   style={{
-                    fontFamily: 'var(--font-display)',
+                    fontFamily: 'var(--font-ui)',
                     fontSize: 'clamp(2rem, 4.9vmin, 3.5rem)',
                     fontWeight: 300,
                     lineHeight: 1.2,

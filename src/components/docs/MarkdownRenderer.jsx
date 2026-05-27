@@ -169,7 +169,7 @@ export const MarkdownRenderer = ({ markdown, currentDocPath, navigate }) => {
             <h1
               key={`h1-${index}`}
               className="text-[clamp(2.2rem,4vw,3.9rem)] font-normal leading-[1.02] tracking-[-0.04em] text-[var(--text-main)]"
-              style={{ fontFamily: 'var(--font-display)' }}
+              style={{ fontFamily: 'var(--font-ui)' }}
             >
               {block.text}
             </h1>

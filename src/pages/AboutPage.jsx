@@ -1,12 +1,13 @@
 import { Helmet } from 'react-helmet-async'
 import { CompanyAboutSection } from '../components/landing/CompanyAboutSection'
 import { Navbar } from '../components/landing/Navbar'
+import { FooterSection } from '../components/landing/FooterSection'
 
 export const AboutPage = ({ navigate, t }) => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#fcfcf8] text-[var(--text-main)]">
       <Helmet>
-        <title>Sobre Relvo | Infraestructura de revenue B2B para LATAM</title>
+        <title>Nosotros | Relvo</title>
         <meta
           name="description"
           content="Relvo construye una capa financiera AI-native para automatizar el flujo quote-to-cash de empresas B2B en LATAM."
@@ -30,6 +31,7 @@ export const AboutPage = ({ navigate, t }) => {
       <main className="relative z-10 pt-16 sm:pt-20">
         <CompanyAboutSection />
       </main>
+      <FooterSection t={t} navigate={navigate} />
     </div>
   )
 }

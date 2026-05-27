@@ -231,20 +231,28 @@ export const HeroSection = () => {
             className="flex w-full items-center justify-center text-center"
             style={{ gridRow: '3' }}
           >
-            <p
-              className="uppercase"
+            <span
               style={{
-                fontFamily: 'var(--font-mono)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.55em',
+                fontFamily: 'var(--font-ui)',
                 fontSize: `${mobileComposition.eyebrowFontSize}px`,
-                fontWeight: 400,
-                color: '#585858',
-                letterSpacing: '0.14em',
-                width: `${mobileComposition.textWidth}px`,
-                textAlign: 'center',
+                fontWeight: 500,
+                letterSpacing: '0.1em',
+                color: 'rgba(255,255,255,0.88)',
+                border: '1px solid rgba(208,255,11,0.45)',
+                borderRadius: '100px',
+                padding: '0.42em 1em',
+                background: 'rgba(13,13,18,0.88)',
+                backdropFilter: 'blur(10px)',
+                boxShadow: '0 0 20px rgba(208,255,11,0.1), inset 0 1px 0 rgba(255,255,255,0.06)',
+                whiteSpace: 'nowrap',
               }}
             >
-              Revenue-design para empresas B2B en LATAM
-            </p>
+              <span className="ai-badge-dot" />
+              AI Billing para B2B's en Latam
+            </span>
           </div>
           <div
             className="flex w-full items-center justify-center text-center"
@@ -309,7 +317,7 @@ export const HeroSection = () => {
             <div className="flex items-center" style={{ gap: `${mobileComposition.buttonGap}px` }}>
               <a
                 href="#producto"
-                className="inline-flex items-center justify-center rounded-full bg-white/50 text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center rounded-md bg-white/50 text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                 style={{
                   fontFamily: 'var(--font-ui)',
                   fontSize: `${mobileComposition.primaryButtonFontSize}px`,
@@ -324,7 +332,7 @@ export const HeroSection = () => {
               </a>
               <a
                 href={loginUrl}
-                className="inline-flex cursor-pointer items-center justify-center rounded-full bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+                className="inline-flex cursor-pointer items-center justify-center rounded-md bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                 style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: `${mobileComposition.secondaryButtonFontSize}px`,
@@ -336,7 +344,7 @@ export const HeroSection = () => {
                   paddingRight: `${mobileComposition.buttonPaddingX}px`,
                 }}
               >
-                Ir a demo
+                Agenda una demo
               </a>
             </div>
           </div>
@@ -375,18 +383,28 @@ export const HeroSection = () => {
           className="flex items-center justify-center text-center"
           style={{ gridRow: '3' }}
         >
-          <p
-            className="whitespace-nowrap uppercase"
+          <span
             style={{
-              fontFamily: 'var(--font-mono)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.55em',
+              fontFamily: 'var(--font-ui)',
               fontSize: `${desktopComposition.eyebrowFontSize}px`,
-              fontWeight: 400,
-              color: '#585858',
-              letterSpacing: '0.14em',
+              fontWeight: 500,
+              letterSpacing: '0.1em',
+              color: 'rgba(255,255,255,0.88)',
+              border: '1px solid rgba(208,255,11,0.45)',
+              borderRadius: '100px',
+              padding: '0.42em 1em',
+              background: 'rgba(13,13,18,0.88)',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 0 20px rgba(208,255,11,0.1), inset 0 1px 0 rgba(255,255,255,0.06)',
+              whiteSpace: 'nowrap',
             }}
           >
-            Revenue-design para empresas B2B en LATAM
-          </p>
+            <span className="ai-badge-dot" />
+            AI Billing para B2B's en Latam
+          </span>
         </div>
 
         <div
@@ -453,7 +471,7 @@ export const HeroSection = () => {
           <div className="flex items-center" style={{ gap: `${desktopComposition.buttonGap}px` }}>
             <a
               href="#producto"
-              className="inline-flex items-center justify-center rounded-full bg-white/50 text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+              className="inline-flex items-center justify-center rounded-md bg-white/50 text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
               style={{
                 fontFamily: 'var(--font-ui)',
                 fontSize: `${desktopComposition.primaryButtonFontSize}px`,
@@ -468,7 +486,7 @@ export const HeroSection = () => {
             </a>
             <a
               href={loginUrl}
-              className="inline-flex cursor-pointer items-center justify-center rounded-full bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+              className="inline-flex cursor-pointer items-center justify-center rounded-md bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
               style={{
                 fontFamily: 'var(--font-mono)',
                 fontSize: `${desktopComposition.secondaryButtonFontSize}px`,
@@ -480,7 +498,7 @@ export const HeroSection = () => {
                 paddingRight: `${desktopComposition.buttonPaddingX}px`,
               }}
             >
-              Ir a demo
+              Agenda una demo
             </a>
           </div>
         </div>

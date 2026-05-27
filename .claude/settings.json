@@ -1,4 +1,19 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\ricar\\\\Desktop\\\\RELVO\\\\relvo-landing\\\\src\" -Recurse -Directory)",
+      "Bash(Select-Object FullName)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\ricar\\\\Desktop\\\\RELVO\\\\relvo-landing\\\\src\" -Recurse -Filter \"*.jsx\")",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Select-Object FullName, Length)",
+      "Bash(Format-Table -AutoSize)",
+      "Read(//c/Users/ricar/.claude/projects/c--Users-ricar-Desktop-RELVO-relvo-landing/memory/**)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\ricar\\Desktop\\RELVO\\relvo-blog",
+      "c:\\Users\\ricar\\.claude\\projects\\c--Users-ricar-Desktop-RELVO-relvo-landing\\memory"
+    ]
+  },
   "enabledPlugins": {
     "ui-ux-pro-max@ui-ux-pro-max-skill": true
   }

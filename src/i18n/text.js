@@ -1,10 +1,12 @@
 export const text = {
   es: {
-    navCta: 'Ir a demo',
+    navCta: 'Agenda una demo',
 
     navItems: [
-      { label: 'Sobre Relvo', href: '/about-us' },
+      { label: 'Nosotros', href: '/about-us' },
+      { label: 'Precios', href: '/precios' },
       { label: 'Docs', href: '/docs' },
+      { label: 'Blog', href: 'https://blog.relvoerp.com' },
       { label: 'Demos', href: '#demos' },
     ],
 
@@ -56,17 +58,7 @@ export const text = {
 
     ctaTitle: 'Estamos buscando nuestros early adopters, ¿te gustaría probar Relvo?',
     ctaTitleHighlight: 'early adopters,',
-    ctaScheduleText: 'Agenda un meet de 20 minutos con un Founder',
-    ctaCaptureLabel: 'O deja tu correo y te contactaremos a la brevedad ;)',
-    ctaEmailPlaceholder: 'Tu email ',
-    ctaSubmit: 'Guardar correo',
-    ctaHelper: 'Quedamos en contacto!',
-    ctaEmailRequired: 'Ingresa tu email de trabajo.',
-    ctaEmailInvalid: 'Ingresa un email válido.',
-    ctaEmailExists: 'Este email ya fue registrado.',
-    ctaEmailSaved: 'Email guardado con éxito.',
-    ctaStoredCountLabel: 'Correos guardados:',
-    ctaDownloadCsv: 'Descargar CSV',
+    ctaScheduleText: 'Agenda una demo de 30 minutos con un founder',
 
     benefits: [
       {
@@ -96,8 +88,14 @@ export const text = {
 
     footerColumns: [
       {
-        title: 'Producto',
-        links: [{ label: 'Ver producto', href: '#producto' }],
+        title: 'Páginas',
+        links: [
+          { label: 'Inicio', href: '/' },
+          { label: 'Nosotros', href: '/about-us' },
+          { label: 'Precios', href: '/precios' },
+          { label: 'Docs', href: '/docs' },
+          { label: 'Blog', href: 'https://blog.relvoerp.com', external: true },
+        ],
       },
       {
         title: 'Demo',
@@ -107,7 +105,7 @@ export const text = {
             href: 'https://calendar.app.google/GbBM26VivFQHGzyL9',
             external: true,
           },
-          { label: 'Dejar correo', href: '#demos' },
+          { label: 'Contactar', href: '/#contacto' },
         ],
       },
       {
@@ -126,6 +124,7 @@ export const text = {
     navItems: [
       { label: 'About Us', href: '/about-us' },
       { label: 'Docs', href: '/docs' },
+      { label: 'Blog', href: 'https://blog.relvoerp.com' },
       { label: 'Demos', href: '#demos' },
     ],
 
@@ -164,16 +163,6 @@ export const text = {
     ctaTitle: 'Ready to automate your revenue?',
     ctaTitleHighlight: 'automate your revenue',
     ctaScheduleText: 'Book a meeting to try the system',
-    ctaCaptureLabel: 'Or leave your email and we will reach out:',
-    ctaEmailPlaceholder: 'Work email',
-    ctaSubmit: 'Save email',
-    ctaHelper: 'No commitment. We’ll reach out within 24 hours.',
-    ctaEmailRequired: 'Please enter your work email.',
-    ctaEmailInvalid: 'Please enter a valid email.',
-    ctaEmailExists: 'This email is already saved.',
-    ctaEmailSaved: 'Email saved successfully.',
-    ctaStoredCountLabel: 'Stored emails:',
-    ctaDownloadCsv: 'Download CSV',
 
     benefits: [
       {
@@ -202,8 +191,14 @@ export const text = {
 
     footerColumns: [
       {
-        title: 'Product',
-        links: [{ label: 'View product', href: '#producto' }],
+        title: 'Pages',
+        links: [
+          { label: 'Home', href: '/' },
+          { label: 'About Us', href: '/about-us' },
+          { label: 'Pricing', href: '/precios' },
+          { label: 'Docs', href: '/docs' },
+          { label: 'Blog', href: 'https://blog.relvoerp.com', external: true },
+        ],
       },
       {
         title: 'Demo',
@@ -213,7 +208,7 @@ export const text = {
             href: 'https://calendar.app.google/GbBM26VivFQHGzyL9',
             external: true,
           },
-          { label: 'Leave email', href: '#demos' },
+          { label: 'Contact us', href: '/#contacto' },
         ],
       },
       {

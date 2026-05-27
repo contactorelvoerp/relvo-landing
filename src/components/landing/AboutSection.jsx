@@ -36,7 +36,7 @@ export const AboutSection = ({ t }) => {
       <h2
         className="mx-auto mb-16 text-center md:mb-24 lg:mb-32"
         style={{
-          fontFamily: 'var(--font-display)',
+          fontFamily: 'var(--font-ui)',
           fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
           fontWeight: 300,
           lineHeight: 1.15,
@@ -68,7 +68,7 @@ export const AboutSection = ({ t }) => {
                 <h3
                   className="max-w-[18ch]"
                   style={{
-                    fontFamily: 'var(--font-display)',
+                    fontFamily: 'var(--font-ui)',
                     fontSize: 'clamp(1.9rem, 3.8vw, 3.2rem)',
                     fontWeight: 300,
                     lineHeight: 1.1,

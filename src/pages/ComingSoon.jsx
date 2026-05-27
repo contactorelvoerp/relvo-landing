@@ -40,7 +40,7 @@ export const ComingSoon = ({ navigate }) => {
         {/* Heading — Fujiwara */}
         <h1
           style={{
-            fontFamily: 'var(--font-display)',
+            fontFamily: 'var(--font-ui)',
             fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
             fontWeight: 300,
             lineHeight: 1.1,
