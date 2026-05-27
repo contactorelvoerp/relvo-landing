@@ -28,7 +28,7 @@ export const AboutPage = ({ navigate, t }) => {
 
       <Navbar t={t} navigate={navigate} activePath="/about-us" forceBackdrop />
 
-      <main className="relative z-10 pt-16 sm:pt-20">
+      <main className="relative z-10">
         <CompanyAboutSection />
       </main>
       <FooterSection t={t} navigate={navigate} />
