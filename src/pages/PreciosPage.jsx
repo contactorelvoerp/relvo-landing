@@ -196,8 +196,8 @@ const TABLE_SECTIONS = [
       {
         feature: 'Integraciones de cobranza y cobro con tarjetas',
         startup: T.dash(),
-        opera: T.integrations(['Toku', 'Fintoc', 'Rebill']),
-        escala: T.integrations(['Toku', 'Fintoc', 'Rebill']),
+        opera: T.integrations(['Toku', 'Fintoc']),
+        escala: T.integrations(['Toku', 'Fintoc']),
       },
     ],
   },
