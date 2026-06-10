@@ -32,6 +32,7 @@ export const CTASection = ({ ctaHref, t }) => {
     e.preventDefault()
     const errors = validate()
     if (Object.keys(errors).length > 0) { setFormErrors(errors); return }
+    if (!supabase) { console.warn('[CTASection] Supabase is not configured in this environment.'); setFormStatus('error'); return }
     setFormStatus('loading')
     setFormErrors({})
     const payload = { ...formData, url_origen: window.location.href, fuente: 'cta' }

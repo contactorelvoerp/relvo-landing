@@ -22,10 +22,21 @@ const detectIsIOS = () => {
   return false
 }
 
+const detectSafariDesktop = () => {
+  if (typeof navigator === 'undefined') return false
+  const ua = navigator.userAgent || ''
+  const vendor = navigator.vendor || ''
+  const isAppleVendor = /Apple/i.test(vendor)
+  const isDesktop = navigator.maxTouchPoints <= 1
+  const isSafariLike = /Safari/i.test(ua) && !/Chrome|Chromium|CriOS|FxiOS|Edg|OPR/i.test(ua)
+  return isAppleVendor && isDesktop && isSafariLike
+}
+
 export const AboutSection = ({ t }) => {
   const features = t.features ?? []
   const isMobile = useIsMobile()
   const isIOS = detectIsIOS()
+  const isSafariDesktop = detectSafariDesktop()
   // Whether to serve static stills instead of the animated videos.
   // Currently: iOS devices (WebKit can't play transparent webm reliably).
   // Future: also low-end devices where animated playback janks.
@@ -121,7 +132,7 @@ export const AboutSection = ({ t }) => {
                   />
                 ) : (
                   <video
-                    key={feature.videoSrc}
+                    key={isSafariDesktop && feature.iosSrc ? feature.iosSrc : feature.videoSrc}
                     autoPlay
                     loop
                     muted
@@ -130,8 +141,14 @@ export const AboutSection = ({ t }) => {
                     className={`w-full ${idx === 0 || idx === 1 ? 'scale-[1.18] md:scale-100' : ''} ${idx === 3 ? 'scale-110 md:scale-100' : ''} ${isMobile ? '' : `flush-anim-${idx}`}`}
                     style={{ background: 'transparent' }}
                   >
-                    <source src={feature.videoSrc} type="video/webm" />
-                    {feature.iosSrc && <source src={feature.iosSrc} type="video/mp4" />}
+                    {isSafariDesktop && feature.iosSrc ? (
+                      <source src={feature.iosSrc} type="video/mp4" />
+                    ) : (
+                      <>
+                        <source src={feature.videoSrc} type="video/webm" />
+                        {feature.iosSrc && <source src={feature.iosSrc} type="video/mp4" />}
+                      </>
+                    )}
                   </video>
                 )}
               </div>
