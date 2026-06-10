@@ -1,5 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 
+const detectSafariDesktop = () => {
+  if (typeof navigator === 'undefined') return false
+  const ua = navigator.userAgent || ''
+  const vendor = navigator.vendor || ''
+  const isAppleVendor = /Apple/i.test(vendor)
+  const isDesktop = navigator.maxTouchPoints <= 1
+  const isSafariLike = /Safari/i.test(ua) && !/Chrome|Chromium|CriOS|FxiOS|Edg|OPR/i.test(ua)
+  return isAppleVendor && isDesktop && isSafariLike
+}
+
 // ── Copy ───────────────────────────────────────────────────────────────
 // All copy hardcoded for now. Moves to i18n once final.
 
@@ -101,6 +111,7 @@ const BEATS = 5
 const ConsequencesBlock = () => {
   const wrapperRef = useRef(null)
   const [beat, setBeat] = useState(0)
+  const isSafariDesktop = detectSafariDesktop()
 
   useEffect(() => {
     const el = wrapperRef.current
@@ -245,7 +256,7 @@ const ConsequencesBlock = () => {
   //    2:     card 0 stowed, card 1 visible
   //    3:     cards 0+1 stowed, card 2 visible
   //    4:     all 3 stowed, closing punchline visible
-  const activeBeat = Math.max(0, beat)
+  const activeBeat = Math.max(isSafariDesktop ? 1 : 0, beat)
   const activeCardIndex = activeBeat - 1 // -1 (nothing) | 0 | 1 | 2 | 3 (punchline)
   const isClosing = activeCardIndex >= CONSEQUENCE_STAGES.length
 
