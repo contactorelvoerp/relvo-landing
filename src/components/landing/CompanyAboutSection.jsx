@@ -89,19 +89,19 @@ export const CompanyAboutSection = () => (
         >
           Nosotros
         </p>
-        <h2
+        <h1
           className="mx-auto max-w-3xl text-center"
           style={{
             fontFamily: 'var(--font-ui)',
-            fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
-            fontWeight: 300,
-            lineHeight: 1.1,
-            letterSpacing: '-0.02em',
+            fontSize: 'clamp(1.8rem, 4vw, 3.25rem)',
+            fontWeight: 500,
+            lineHeight: 1.08,
+            letterSpacing: '-0.03em',
             color: 'var(--text-main)',
           }}
         >
           Construimos la infraestructura de revenue para empresas B2B en LATAM
-        </h2>
+        </h1>
 
         {/* Subtítulo */}
         <p
@@ -122,7 +122,7 @@ export const CompanyAboutSection = () => (
           {insightCards.map((card) => (
             <div
               key={card.eyebrow}
-              className="rounded-md bg-white/75 p-5"
+              className="rounded-[var(--radius-lg)] bg-white/75 p-5"
               style={{ border: '1px solid var(--border-default)', boxShadow: '0 10px 30px rgba(15,17,21,0.04)' }}
             >
               <p
@@ -142,9 +142,9 @@ export const CompanyAboutSection = () => (
                 style={{
                   fontFamily: 'var(--font-ui)',
                   fontSize: 'clamp(1rem, 1.4vw, 1.2rem)',
-                  fontWeight: 300,
-                  lineHeight: 1.25,
-                  letterSpacing: '-0.02em',
+                  fontWeight: 500,
+                  lineHeight: 1.2,
+                  letterSpacing: '-0.025em',
                   color: 'var(--text-main)',
                 }}
               >
@@ -166,7 +166,7 @@ export const CompanyAboutSection = () => (
 
           {/* Flujo conectado */}
           <div
-            className="rounded-md bg-[var(--text-main)] p-5"
+            className="rounded-[var(--radius-lg)] bg-[var(--text-main)] p-5"
             style={{ boxShadow: '0 18px 44px rgba(19,19,30,0.16)' }}
           >
             <p
@@ -227,10 +227,10 @@ export const CompanyAboutSection = () => (
           className="mx-auto mt-4 max-w-xl text-center"
           style={{
             fontFamily: 'var(--font-ui)',
-            fontSize: 'clamp(1.8rem, 3.5vw, 3rem)',
-            fontWeight: 300,
+            fontSize: 'clamp(1.75rem, 3.2vw, 2.75rem)',
+            fontWeight: 500,
             lineHeight: 1.1,
-            letterSpacing: '-0.02em',
+            letterSpacing: '-0.03em',
             color: 'var(--text-main)',
           }}
         >
@@ -255,7 +255,7 @@ export const CompanyAboutSection = () => (
           {teamMembers.map((member) => (
             <article
               key={member.name}
-              className="overflow-hidden rounded-md bg-white/75"
+              className="overflow-hidden rounded-[var(--radius-lg)] bg-white/75"
               style={{ border: '1px solid var(--border-default)', boxShadow: '0 10px 30px rgba(15,17,21,0.04)' }}
             >
               <TeamPhoto member={member} />
@@ -264,7 +264,7 @@ export const CompanyAboutSection = () => (
                   style={{
                     fontFamily: 'var(--font-ui)',
                     fontSize: '1rem',
-                    fontWeight: 400,
+                    fontWeight: 500,
                     lineHeight: 1.2,
                     letterSpacing: '-0.01em',
                     color: 'var(--text-main)',

@@ -131,7 +131,7 @@ const renderInline = (text, currentDocPath, navigate) => {
       tokens.push(
         <code
           key={`${match.index}-${match[4]}`}
-          className="rounded-md bg-[rgba(19,19,30,0.06)] px-1.5 py-0.5 font-[var(--font-mono)] text-[0.9em] text-[var(--text-main)]"
+          className="rounded-[var(--radius-sm)] bg-[rgba(19,19,30,0.06)] px-1.5 py-0.5 font-[var(--font-mono)] text-[0.9em] text-[var(--text-main)]"
         >
           {match[4]}
         </code>,
@@ -168,7 +168,7 @@ export const MarkdownRenderer = ({ markdown, currentDocPath, navigate }) => {
           return (
             <h1
               key={`h1-${index}`}
-              className="text-[clamp(2.2rem,4vw,3.9rem)] font-normal leading-[1.02] tracking-[-0.04em] text-[var(--text-main)]"
+              className="text-[clamp(2.2rem,4vw,3.5rem)] font-medium leading-[1.04] tracking-[-0.035em] text-[var(--text-main)]"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
               {block.text}
@@ -181,7 +181,7 @@ export const MarkdownRenderer = ({ markdown, currentDocPath, navigate }) => {
             <h2
               key={`h2-${index}`}
               id={slugifyHeading(block.text)}
-              className="mt-14 scroll-mt-28 text-[1.55rem] font-semibold tracking-[-0.03em] text-[var(--text-main)]"
+              className="mt-14 scroll-mt-28 text-[1.55rem] font-medium tracking-[-0.03em] text-[var(--text-main)]"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
               {block.text}
@@ -193,7 +193,7 @@ export const MarkdownRenderer = ({ markdown, currentDocPath, navigate }) => {
           return (
             <h3
               key={`h3-${index}`}
-              className="mt-10 text-[1.1rem] font-semibold tracking-[-0.02em] text-[var(--text-main)]"
+              className="mt-10 text-[1.1rem] font-medium tracking-[-0.02em] text-[var(--text-main)]"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
               {block.text}
@@ -268,7 +268,7 @@ export const MarkdownRenderer = ({ markdown, currentDocPath, navigate }) => {
           return (
             <pre
               key={`code-${index}`}
-              className="mt-6 overflow-x-auto rounded-lg border border-[rgba(19,19,30,0.08)] bg-[var(--surface-dark)] px-5 py-4 text-[0.88rem] leading-6 text-[var(--text-on-dark)]"
+              className="mt-6 overflow-x-auto rounded-[var(--radius-lg)] border border-[rgba(19,19,30,0.08)] bg-[var(--surface-dark)] px-5 py-4 text-[0.88rem] leading-6 text-[var(--text-on-dark)]"
             >
               <code style={{ fontFamily: 'var(--font-mono)' }}>{block.content}</code>
             </pre>

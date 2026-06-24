@@ -101,7 +101,7 @@ export const DocsPage = ({ pathname, navigate, t }) => {
   }, [entry.docPath])
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#fcfcf8] text-[var(--text-main)]">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--bg-main)] text-[var(--text-main)]">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(circle at top left, rgba(208,255,11,0.14), transparent 28%), radial-gradient(circle at top right, rgba(255,149,102,0.18), transparent 24%), linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98))' }} />
       <Helmet>
         <title>{entry.title} | Relvo Docs</title>
@@ -114,12 +114,12 @@ export const DocsPage = ({ pathname, navigate, t }) => {
       <Navbar t={t} navigate={navigate} activePath="/docs" forceBackdrop />
 
       {/* Mobile nav */}
-      <div className="section-shell relative z-30 flex items-center gap-3 pt-20 lg:hidden">
+      <div className="section-shell relative z-30 flex items-center gap-3 pt-20 md:hidden">
         <Sheet>
           <SheetTrigger asChild>
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-md border border-[var(--border-default)] bg-white px-3 py-2 text-[0.875rem] text-[var(--text-soft)] transition-colors hover:text-[var(--text-main)] cursor-pointer"
+              className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-[var(--radius-button)] border border-[var(--border-default)] bg-white px-3 py-2 text-[0.875rem] text-[var(--text-soft)] transition-colors duration-200 hover:text-[var(--text-main)]"
               style={{ fontFamily: 'var(--font-ui)', fontWeight: 500 }}
             >
               <Menu size={15} strokeWidth={1.8} />
@@ -150,11 +150,11 @@ export const DocsPage = ({ pathname, navigate, t }) => {
         </span>
       </div>
 
-      <main className="section-shell relative z-10 py-10 lg:pt-28">
-        <div className="grid gap-10 lg:grid-cols-[230px_minmax(0,1fr)] xl:grid-cols-[230px_minmax(0,1fr)_190px]">
+      <main className="section-shell relative z-10 py-10 md:pt-28">
+        <div className="grid gap-10 md:grid-cols-[210px_minmax(0,1fr)] xl:grid-cols-[230px_minmax(0,1fr)_190px]">
 
           {/* Left sidebar */}
-          <aside className="hidden lg:block self-start sticky top-24">
+          <aside className="hidden self-start sticky top-24 md:block">
             <ScrollArea className="max-h-[calc(100vh-7rem)] pr-2">
               <DocsSidebar currentDocPath={entry.docPath} navigate={navigate} />
             </ScrollArea>
@@ -190,7 +190,7 @@ export const DocsPage = ({ pathname, navigate, t }) => {
                       event.preventDefault()
                       navigate?.(getRouteForDocPath(entry.previous.docPath))
                     }}
-                    className="group flex flex-col gap-1.5 rounded-lg border border-[var(--border-default)] px-5 py-4 transition-colors hover:border-[var(--border-strong)] hover:bg-[rgba(19,19,30,0.02)] cursor-pointer"
+                    className="group flex cursor-pointer flex-col gap-1.5 rounded-[var(--radius-lg)] border border-[var(--border-default)] px-5 py-4 transition-colors duration-200 hover:border-[var(--border-strong)] hover:bg-[rgba(19,19,30,0.02)]"
                   >
                     <span
                       className="flex items-center gap-1.5 uppercase"
@@ -224,7 +224,7 @@ export const DocsPage = ({ pathname, navigate, t }) => {
                       event.preventDefault()
                       navigate?.(getRouteForDocPath(entry.next.docPath))
                     }}
-                    className="group flex flex-col gap-1.5 rounded-lg border border-[var(--border-default)] bg-[rgba(208,255,11,0.06)] px-5 py-4 text-left transition-colors hover:bg-[rgba(208,255,11,0.12)] cursor-pointer"
+                    className="group flex cursor-pointer flex-col gap-1.5 rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[rgba(208,255,11,0.06)] px-5 py-4 text-left transition-colors duration-200 hover:bg-[rgba(208,255,11,0.12)]"
                   >
                     <span
                       className="flex items-center justify-end gap-1.5 uppercase"

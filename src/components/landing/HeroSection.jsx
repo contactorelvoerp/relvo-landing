@@ -266,7 +266,7 @@ export const HeroSection = () => {
               fontWeight: 500,
               lineHeight: 1.04,
               letterSpacing: '-0.024em',
-              color: '#000000',
+              color: 'var(--text-main)',
               width: `${Math.min(mobileComposition.textWidth, mobileComposition.headlineFontSize * 10.4)}px`,
               textAlign: 'center',
             }}
@@ -287,7 +287,7 @@ export const HeroSection = () => {
               fontSize: `${mobileComposition.bodyFontSize}px`,
               fontWeight: 400,
               lineHeight: 1.38,
-              color: '#2a2a2a',
+              color: 'var(--text-soft)',
               width: `${Math.min(mobileComposition.textWidth, mobileComposition.bodyFontSize * 23)}px`,
               textAlign: 'center',
             }}
@@ -316,35 +316,35 @@ export const HeroSection = () => {
           >
             <div className="flex items-center" style={{ gap: `${mobileComposition.buttonGap}px` }}>
               <a
-                href="#producto"
-                className="inline-flex items-center justify-center rounded-md bg-white/50 text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
-                style={{
-                  fontFamily: 'var(--font-ui)',
-                  fontSize: `${mobileComposition.primaryButtonFontSize}px`,
-                  fontWeight: 500,
-                  height: `${mobileComposition.ctaHeight}px`,
-                  minWidth: `${mobileComposition.buttonWidth}px`,
-                  paddingLeft: `${mobileComposition.buttonPaddingX}px`,
-                  paddingRight: `${mobileComposition.buttonPaddingX}px`,
-                }}
-              >
-                Ver producto
-              </a>
-              <a
                 href={loginUrl}
-                className="inline-flex cursor-pointer items-center justify-center rounded-md bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+                className="inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-button)] bg-[var(--text-main)] text-white transition-colors duration-200 hover:bg-[rgba(19,19,30,0.88)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                 style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: `${mobileComposition.secondaryButtonFontSize}px`,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  height: `${mobileComposition.ctaHeight}px`,
+                  height: `${Math.max(mobileComposition.ctaHeight, 44)}px`,
                   minWidth: `${mobileComposition.buttonWidth}px`,
                   paddingLeft: `${mobileComposition.buttonPaddingX}px`,
                   paddingRight: `${mobileComposition.buttonPaddingX}px`,
                 }}
               >
                 Agenda una demo
+              </a>
+              <a
+                href="#producto"
+                className="inline-flex items-center justify-center rounded-[var(--radius-button)] border border-[rgba(19,19,30,0.18)] bg-white/70 text-[var(--text-main)] backdrop-blur-sm transition-colors duration-200 hover:border-[rgba(19,19,30,0.3)] hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+                style={{
+                  fontFamily: 'var(--font-ui)',
+                  fontSize: `${mobileComposition.primaryButtonFontSize}px`,
+                  fontWeight: 500,
+                  height: `${Math.max(mobileComposition.ctaHeight, 44)}px`,
+                  minWidth: `${mobileComposition.buttonWidth}px`,
+                  paddingLeft: `${mobileComposition.buttonPaddingX}px`,
+                  paddingRight: `${mobileComposition.buttonPaddingX}px`,
+                }}
+              >
+                Ver producto
               </a>
             </div>
           </div>
@@ -419,7 +419,7 @@ export const HeroSection = () => {
               fontWeight: 500,
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
-              color: '#000000',
+              color: 'var(--text-main)',
               width: `min(100%, ${Math.min(desktopComposition.contentWidth * 0.88, desktopComposition.headlineFontSize * 11.8)}px)`,
             }}
           >
@@ -440,7 +440,7 @@ export const HeroSection = () => {
               fontSize: `${desktopComposition.bodyFontSize}px`,
               fontWeight: 400,
               lineHeight: 1.38,
-              color: '#2a2a2a',
+              color: 'var(--text-soft)',
               width: `min(100%, ${Math.min(desktopComposition.contentWidth * 0.82, desktopComposition.bodyFontSize * 34)}px)`,
             }}
           >
@@ -470,23 +470,8 @@ export const HeroSection = () => {
         >
           <div className="flex items-center" style={{ gap: `${desktopComposition.buttonGap}px` }}>
             <a
-              href="#producto"
-              className="inline-flex items-center justify-center rounded-md bg-white/50 text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
-              style={{
-                fontFamily: 'var(--font-ui)',
-                fontSize: `${desktopComposition.primaryButtonFontSize}px`,
-                fontWeight: 500,
-                height: `${desktopComposition.ctaHeight}px`,
-                minWidth: `${desktopComposition.buttonWidth}px`,
-                paddingLeft: `${desktopComposition.buttonPaddingX}px`,
-                paddingRight: `${desktopComposition.buttonPaddingX}px`,
-              }}
-            >
-              Ver producto
-            </a>
-            <a
               href={loginUrl}
-              className="inline-flex cursor-pointer items-center justify-center rounded-md bg-[var(--text-main)] text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+              className="inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-button)] bg-[var(--text-main)] text-white transition-colors duration-200 hover:bg-[rgba(19,19,30,0.88)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
               style={{
                 fontFamily: 'var(--font-mono)',
                 fontSize: `${desktopComposition.secondaryButtonFontSize}px`,
@@ -499,6 +484,21 @@ export const HeroSection = () => {
               }}
             >
               Agenda una demo
+            </a>
+            <a
+              href="#producto"
+              className="inline-flex items-center justify-center rounded-[var(--radius-button)] border border-[rgba(19,19,30,0.18)] bg-white/70 text-[var(--text-main)] backdrop-blur-sm transition-colors duration-200 hover:border-[rgba(19,19,30,0.3)] hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+              style={{
+                fontFamily: 'var(--font-ui)',
+                fontSize: `${desktopComposition.primaryButtonFontSize}px`,
+                fontWeight: 500,
+                height: `${desktopComposition.ctaHeight}px`,
+                minWidth: `${desktopComposition.buttonWidth}px`,
+                paddingLeft: `${desktopComposition.buttonPaddingX}px`,
+                paddingRight: `${desktopComposition.buttonPaddingX}px`,
+              }}
+            >
+              Ver producto
             </a>
           </div>
         </div>

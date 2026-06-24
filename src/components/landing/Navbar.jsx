@@ -84,14 +84,14 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
             <a
               href="/#contacto"
               onClick={(e) => handleCtaClick(e, 'navbar_mobile')}
-              className="inline-flex h-9 items-center justify-center rounded-md bg-[var(--text-main)] px-4 text-white transition hover:opacity-90"
+              className="inline-flex h-11 items-center justify-center rounded-[var(--radius-button)] bg-[var(--text-main)] px-4 text-white transition-colors duration-200 hover:bg-[rgba(19,19,30,0.88)]"
               style={{ fontFamily: 'var(--font-mono)', fontSize: '0.63rem', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase' }}
             >
               {t.navCta}
             </a>
           )}
           <button
-            className="flex h-9 w-9 items-center justify-center rounded-md text-[var(--text-muted)] transition hover:text-[var(--text-main)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+            className="flex h-11 w-11 items-center justify-center rounded-[var(--radius-button)] text-[var(--text-muted)] transition-colors duration-200 hover:text-[var(--text-main)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
             aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)}
@@ -185,7 +185,7 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
 
           <a
             href={loginHref}
-            className="h-8 cursor-pointer items-center justify-center rounded-md border border-[var(--border-default)] px-4 text-sm font-medium text-[var(--text-soft)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-main)] inline-flex"
+            className="inline-flex h-10 cursor-pointer items-center justify-center rounded-[var(--radius-button)] border border-[var(--border-default)] px-4 text-sm font-medium text-[var(--text-soft)] transition-colors duration-200 hover:border-[var(--border-strong)] hover:text-[var(--text-main)]"
             style={{ fontFamily: 'var(--font-ui)' }}
           >
             {t.navLogin ?? 'Login'}
@@ -195,7 +195,7 @@ export const Navbar = ({ t, navigate, scrollThreshold, activePath = '', forceBac
             <a
               href="/#contacto"
               onClick={(e) => handleCtaClick(e, 'navbar')}
-              className="inline-flex h-8 items-center justify-center rounded-md bg-[var(--text-main)] px-4 text-white transition hover:opacity-85 focus-visible:outline-none sm:px-5"
+              className="inline-flex h-10 items-center justify-center rounded-[var(--radius-button)] bg-[var(--text-main)] px-4 text-white transition-colors duration-200 hover:bg-[rgba(19,19,30,0.88)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] sm:px-5"
               style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase' }}
             >
               {t.navCta}

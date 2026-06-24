@@ -7,16 +7,16 @@ export const SocialProofSection = ({ t }) => {
     <section className="px-4 py-16 sm:px-6 sm:py-20 md:py-28">
       <div className="section-shell">
         <Reveal className="mx-auto max-w-6xl">
-          {/* Title — Fujiwara */}
+          {/* Title */}
           <h2
             className="mx-auto mb-10 max-w-4xl text-center sm:mb-12 md:mb-16"
             style={{
               fontFamily: 'var(--font-ui)',
-              fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
-              fontWeight: 300,
-              lineHeight: 1.15,
-              letterSpacing: '-0.02em',
-              color: '#000000',
+              fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)',
+              fontWeight: 500,
+              lineHeight: 1.12,
+              letterSpacing: '-0.03em',
+              color: 'var(--text-main)',
             }}
           >
             {t.benefitsTitle}
@@ -26,16 +26,16 @@ export const SocialProofSection = ({ t }) => {
             {benefits.map((benefit, idx) => (
               <div
                 key={`${idx}-${benefit.title}`}
-                className="flex h-full flex-col rounded-md bg-white/50 p-5 backdrop-blur-sm sm:p-6 md:p-8"
-                style={{ border: '1px solid rgba(19,19,30,0.06)' }}
+                className="flex h-full flex-col rounded-[var(--radius-lg)] bg-white p-5 transition-shadow duration-200 hover:shadow-[0_4px_20px_rgba(19,19,30,0.07)] sm:p-6 md:p-8"
+                style={{ border: '1px solid rgba(19,19,30,0.1)', boxShadow: '0 1px 4px rgba(19,19,30,0.04)' }}
               >
                 {/* Number — Geist Mono */}
                 <p
                   style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.65rem',
+                    fontSize: '0.62rem',
                     fontWeight: 500,
-                    letterSpacing: '0.12em',
+                    letterSpacing: '0.14em',
                     color: 'var(--text-muted)',
                   }}
                 >
@@ -48,9 +48,9 @@ export const SocialProofSection = ({ t }) => {
                   style={{
                     fontFamily: 'var(--font-ui)',
                     fontSize: 'clamp(1rem, 1.4vw, 1.2rem)',
-                    fontWeight: 300,
-                    lineHeight: 1.25,
-                    letterSpacing: '-0.02em',
+                    fontWeight: 500,
+                    lineHeight: 1.2,
+                    letterSpacing: '-0.025em',
                     color: 'var(--text-main)',
                   }}
                 >
@@ -64,7 +64,7 @@ export const SocialProofSection = ({ t }) => {
                     fontFamily: 'var(--font-ui)',
                     fontSize: '0.9rem',
                     fontWeight: 400,
-                    lineHeight: 1.6,
+                    lineHeight: 1.65,
                     color: 'var(--text-soft)',
                   }}
                 >

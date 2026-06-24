@@ -37,14 +37,14 @@ export const AboutSection = ({ t }) => {
         className="mx-auto mb-16 text-center md:mb-24 lg:mb-32"
         style={{
           fontFamily: 'var(--font-ui)',
-          fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
-          fontWeight: 300,
-          lineHeight: 1.15,
-          letterSpacing: '-0.02em',
-          color: '#000000',
+          fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)',
+          fontWeight: 500,
+          lineHeight: 1.1,
+          letterSpacing: '-0.03em',
+          color: 'var(--text-main)',
         }}
       >
-        Nuestro Producto
+        El producto
       </h2>
       <div className="mx-auto max-w-6xl [&>*+*]:-mt-4 sm:[&>*+*]:-mt-12 md:[&>*+*]:-mt-20 lg:[&>*+*]:-mt-28">
         {features.map((feature, idx) => {
@@ -69,10 +69,10 @@ export const AboutSection = ({ t }) => {
                   className="max-w-[18ch]"
                   style={{
                     fontFamily: 'var(--font-ui)',
-                    fontSize: 'clamp(1.9rem, 3.8vw, 3.2rem)',
-                    fontWeight: 300,
-                    lineHeight: 1.1,
-                    letterSpacing: '-0.03em',
+                    fontSize: 'clamp(1.55rem, 2.8vw, 2.35rem)',
+                    fontWeight: 500,
+                    lineHeight: 1.12,
+                    letterSpacing: '-0.028em',
                     color: 'var(--text-main)',
                   }}
                 >

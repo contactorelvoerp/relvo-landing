@@ -5,7 +5,7 @@ import { FooterSection } from '../components/landing/FooterSection'
 
 export const AboutPage = ({ navigate, t }) => {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#fcfcf8] text-[var(--text-main)]">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--bg-main)] text-[var(--text-main)]">
       <Helmet>
         <title>Nosotros | Relvo</title>
         <meta

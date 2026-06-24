@@ -52,22 +52,22 @@ const CLOSING_BODY =
 const HEADLINE_STYLE = {
   fontFamily: 'var(--font-ui)',
   fontSize: 'clamp(1.45rem, 4.85vmin, 3.75rem)',
-  fontWeight: 300,
-  lineHeight: 1.15,
-  letterSpacing: '-0.02em',
-  color: '#000000',
+  fontWeight: 500,
+  lineHeight: 1.12,
+  letterSpacing: '-0.028em',
+  color: 'var(--text-main)',
 }
 
 const BODY_STYLE = {
   fontFamily: 'var(--font-ui)',
   fontSize: 'clamp(1.15rem, 1.85vmin, 1.55rem)',
   fontWeight: 400,
-  lineHeight: 1,
-  color: '#2a2a2a',
+  lineHeight: 1.55,
+  color: 'var(--text-soft)',
 }
 
 const HIGHLIGHT_STYLE = {
-  background: 'linear-gradient(transparent 48%, #F4B08E 48%)',
+  background: 'linear-gradient(transparent 52%, rgba(208,255,11,0.55) 52%)',
   WebkitBoxDecorationBreak: 'clone',
   boxDecorationBreak: 'clone',
   borderRadius: '2px',
@@ -77,7 +77,7 @@ const HIGHLIGHT_STYLE = {
 // ── Problem sub-block ─────────────────────────────────────────────────
 
 const ProblemBlock = () => (
-  <section className="relative flex w-full flex-col items-center px-4 py-[18vh] sm:px-6">
+  <section className="relative flex w-full flex-col items-center px-4 pb-[16vh] pt-[8vh] sm:px-6">
     <div className="mx-auto flex w-full max-w-4xl flex-col items-start text-left">
       <h2 style={HEADLINE_STYLE}>
         {PROBLEM_HEADLINE_PRE}
@@ -252,7 +252,7 @@ const ConsequencesBlock = () => {
   return (
     <div
       ref={wrapperRef}
-      className="relative h-[280vh] w-full md:h-[200vh]"
+      className="relative h-[360vh] w-full md:h-[420vh]"
     >
       {/* Inner stage is position:sticky so the browser pins it to viewport
           top for the full scroll distance of the outer wrapper. Beat state
@@ -262,7 +262,7 @@ const ConsequencesBlock = () => {
         className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden py-[8vh]"
       >
         <div
-          className="relative z-10 mx-4 grid h-full w-full max-w-7xl items-center gap-[4vw] rounded-2xl px-[3vw] py-[5vh] backdrop-blur-sm sm:mx-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+          className="relative z-10 mx-4 grid h-full w-full max-w-7xl items-center gap-[4vw] rounded-lg px-[3vw] py-[5vh] backdrop-blur-sm sm:mx-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
           style={{
             backgroundColor: 'rgba(230, 240, 234, 0.15)',
             border: '1px solid rgba(19,19,30,0.06)',
@@ -326,7 +326,7 @@ const ConsequencesBlock = () => {
                         color: 'rgba(255,255,255,0.85)',
                       }}
                     >
-                      {stage.pillTitle}
+                      {stage.pillTitle ?? stage.title}
                     </span>
                   </div>
                 )
@@ -353,7 +353,7 @@ const ConsequencesBlock = () => {
                         fontWeight: 300,
                         lineHeight: 0.9,
                         letterSpacing: '-0.04em',
-                        color: '#000000',
+                        color: 'var(--text-main)',
                       }}
                     >
                       {stage.number}
@@ -361,33 +361,21 @@ const ConsequencesBlock = () => {
                         style={{
                           fontSize: '0.35em',
                           marginLeft: '0.15em',
-                          color: '#585858',
+                          color: 'var(--text-soft)',
                         }}
                       >
                         {stage.numberUnit}
                       </span>
                     </div>
-                    <p
-                      className="mt-[1.5vh]"
-                      style={{
-                        fontFamily: 'var(--font-ui)',
-                        fontSize: 'clamp(0.8rem, 1.5vmin, 1rem)',
-                        fontWeight: 400,
-                        lineHeight: 1.4,
-                        color: '#585858',
-                      }}
-                    >
-                      {stage.numberLabel}
-                    </p>
                     <h3
                       className="mt-[3vh]"
                       style={{
                         fontFamily: 'var(--font-ui)',
                         fontSize: 'clamp(1.4rem, 3.6vmin, 2.4rem)',
-                        fontWeight: 300,
+                        fontWeight: 500,
                         lineHeight: 1.1,
-                        letterSpacing: '-0.02em',
-                        color: '#000000',
+                        letterSpacing: '-0.025em',
+                        color: 'var(--text-main)',
                       }}
                     >
                       {stage.title}
@@ -412,10 +400,10 @@ const ConsequencesBlock = () => {
                   style={{
                     fontFamily: 'var(--font-ui)',
                     fontSize: 'clamp(2rem, 4.9vmin, 3.5rem)',
-                    fontWeight: 300,
-                    lineHeight: 1.2,
-                    letterSpacing: '-0.01em',
-                    color: '#000000',
+                    fontWeight: 500,
+                    lineHeight: 1.15,
+                    letterSpacing: '-0.025em',
+                    color: 'var(--text-main)',
                   }}
                 >
                   {CLOSING_PRE}

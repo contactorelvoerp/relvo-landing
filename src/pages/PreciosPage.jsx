@@ -298,7 +298,7 @@ const INDUSTRIAS = [
 
 const CheckIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <path d="M3 8l3.5 3.5L13 5" stroke="#22c55e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3 8l3.5 3.5L13 5" stroke="var(--brand-verde)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
 
@@ -339,7 +339,7 @@ function PlanFeatureCell({ cell }) {
     case 'soon':
       return (
         <TableCell className="text-center">
-          <span className={chip("bg-[rgba(255,149,102,0.1)] text-[#b85a24]")}>
+          <span className={chip("bg-[rgba(255,149,102,0.12)] text-[var(--brand-warm)]")}>
             próximamente
           </span>
         </TableCell>
@@ -349,7 +349,7 @@ function PlanFeatureCell({ cell }) {
         <TableCell className="text-center">
           <span className="inline-flex flex-wrap justify-center gap-1">
             {cell.chips.map((c) => (
-              <span key={c} className={chip("bg-[rgba(114,221,170,0.12)] text-[#2a7a55]")}>
+              <span key={c} className={chip("bg-[rgba(114,221,170,0.14)] text-[var(--brand-negro)]")}>
                 {c}
               </span>
             ))}
@@ -365,10 +365,10 @@ function PlanFeatureCell({ cell }) {
                 key={label}
                 className={chip(
                   "gap-0.5",
-                  active ? "bg-[rgba(114,221,170,0.12)] text-[#2a7a55]" : "bg-[rgba(19,19,30,0.04)] text-[var(--text-muted)]"
+                  active ? "bg-[rgba(114,221,170,0.14)] text-[var(--brand-negro)]" : "bg-[rgba(19,19,30,0.04)] text-[var(--text-muted)]"
                 )}
               >
-                <span>{flag}</span>
+                <span className="sr-only">{flag}</span>
                 <span>{label}</span>
               </span>
             ))}
@@ -377,6 +377,44 @@ function PlanFeatureCell({ cell }) {
       )
     default:
       return <TableCell className="text-center">{cell.text}</TableCell>
+  }
+}
+
+function PlanFeatureValue({ cell }) {
+  if (!cell) return <DashIcon />
+
+  switch (cell.type) {
+    case 'check':
+      return <CheckIcon />
+    case 'dash':
+      return <DashIcon />
+    case 'limit':
+      return <span className={chip("bg-[rgba(19,19,30,0.04)] text-[var(--text-soft)]")}>{cell.text}</span>
+    case 'soon':
+      return <span className={chip("bg-[rgba(255,149,102,0.12)] text-[var(--brand-warm)]")}>próximamente</span>
+    case 'integrations':
+      return (
+        <span className="inline-flex flex-wrap justify-end gap-1">
+          {cell.chips.map((c) => (
+            <span key={c} className={chip("bg-[rgba(114,221,170,0.14)] text-[var(--brand-negro)]")}>{c}</span>
+          ))}
+        </span>
+      )
+    case 'flags':
+      return (
+        <span className="inline-flex flex-wrap justify-end gap-1">
+          {cell.items.map(({ label, active }) => (
+            <span
+              key={label}
+              className={chip(active ? "bg-[rgba(114,221,170,0.14)] text-[var(--brand-negro)]" : "bg-[rgba(19,19,30,0.04)] text-[var(--text-muted)]")}
+            >
+              {label}
+            </span>
+          ))}
+        </span>
+      )
+    default:
+      return <span>{cell.text}</span>
   }
 }
 
@@ -476,7 +514,7 @@ export const PreciosPage = ({ navigate }) => {
   const operaPrice = anual ? 424 : 499
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#fcfcf8] text-[var(--text-main)]">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--bg-main)] text-[var(--text-main)]">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(circle at top left, rgba(208,255,11,0.14), transparent 28%), radial-gradient(circle at top right, rgba(255,149,102,0.18), transparent 24%), linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98))' }} />
       <Helmet>
         <title>Precios | Relvo</title>
@@ -497,7 +535,7 @@ export const PreciosPage = ({ navigate }) => {
           </p>
           <h1
             className="mb-4"
-            style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(1.8rem,4vw,3.5rem)', fontWeight: 300, letterSpacing: '-0.02em', color: 'var(--text-main)', lineHeight: 1.1 }}
+            style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(1.8rem,4vw,3.25rem)', fontWeight: 500, letterSpacing: '-0.03em', color: 'var(--text-main)', lineHeight: 1.08 }}
           >
             Infraestructura financiera para empresas que crecen.
           </h1>
@@ -525,7 +563,7 @@ export const PreciosPage = ({ navigate }) => {
           {anual && (
             <span
               className="rounded-sm px-2 py-[3px] font-mono text-[0.65rem] font-semibold leading-none"
-              style={{ background: 'rgba(208,255,11,0.25)', color: '#4a6600' }}
+              style={{ background: 'rgba(208,255,11,0.25)', color: 'var(--text-main)' }}
             >
               −15%
             </span>
@@ -541,15 +579,15 @@ export const PreciosPage = ({ navigate }) => {
             return (
               <div
                 key={plan.id}
-                className="relative flex flex-col rounded-md p-6"
+                className="relative flex flex-col rounded-[var(--radius-lg)] p-6"
                 style={{
                   border: isOpera ? '2px solid var(--brand-accent)' : '1px solid var(--border-default)',
-                  background: '#fff',
+                  background: 'var(--surface-card)',
                 }}
               >
                 {/* Badge */}
                 {plan.badge && (
-                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 h-auto rounded-md px-2.5 py-0.5 font-mono text-[0.62rem] font-semibold tracking-[0.08em] bg-[var(--brand-accent)] text-[var(--text-main)] border-none">
+                  <Badge className="absolute -top-3 left-1/2 h-auto -translate-x-1/2 rounded-[var(--radius-sm)] border-none bg-[var(--brand-accent)] px-2.5 py-0.5 font-mono text-[0.62rem] font-semibold tracking-[0.08em] text-[var(--text-main)]">
                     {plan.badge}
                   </Badge>
                 )}
@@ -562,22 +600,22 @@ export const PreciosPage = ({ navigate }) => {
                 {/* Price */}
                 <div className="mb-2 flex items-end gap-1.5">
                   {plan.priceMonthly === null ? (
-                    <span style={{ fontFamily: 'var(--font-ui)', fontSize: '1.5rem', fontWeight: 300, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
+                    <span style={{ fontFamily: 'var(--font-ui)', fontSize: '1.5rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
                       Hablemos
                     </span>
                   ) : plan.priceMonthly === 0 ? (
-                    <span style={{ fontFamily: 'var(--font-ui)', fontSize: '2rem', fontWeight: 300, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
+                    <span style={{ fontFamily: 'var(--font-ui)', fontSize: '2rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
                       Gratis
                     </span>
                   ) : (
                     <>
                       <div className="flex items-start gap-1">
                         {anual && (
-                          <span style={{ fontFamily: 'var(--font-ui)', fontSize: '1rem', fontWeight: 300, color: 'var(--text-muted)', textDecoration: 'line-through', paddingTop: 6 }}>
+                          <span style={{ fontFamily: 'var(--font-ui)', fontSize: '1rem', fontWeight: 400, color: 'var(--text-muted)', textDecoration: 'line-through', paddingTop: 6 }}>
                             $499
                           </span>
                         )}
-                        <span style={{ fontFamily: 'var(--font-ui)', fontSize: '2rem', fontWeight: 300, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
+                        <span style={{ fontFamily: 'var(--font-ui)', fontSize: '2rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
                           ${price}
                         </span>
                       </div>
@@ -600,7 +638,7 @@ export const PreciosPage = ({ navigate }) => {
                     lineHeight: 1.45,
                     background: isOpera ? 'rgba(208,255,11,0.18)' : 'rgba(19,19,30,0.05)',
                     border: isOpera ? '1px solid rgba(208,255,11,0.5)' : '1px solid var(--border-strong)',
-                    color: isOpera ? '#3d5500' : 'var(--text-soft)',
+                    color: isOpera ? 'var(--text-main)' : 'var(--text-soft)',
                   }}
                 >
                   {plan.range}
@@ -611,10 +649,10 @@ export const PreciosPage = ({ navigate }) => {
                   type="button"
                   onClick={() => handleCtaClick(plan)}
                   className={cn(
-                    "mb-6 w-full h-auto py-2.5 text-sm font-semibold rounded-md transition-opacity hover:opacity-85",
+                    "mb-6 min-h-11 w-full rounded-[var(--radius-button)] py-2.5 text-sm font-semibold transition-colors duration-200",
                     isOpera
-                      ? "bg-[var(--text-main)] text-white border-none"
-                      : "bg-transparent text-[var(--text-main)] border border-[var(--border-strong)]"
+                      ? "bg-[var(--text-main)] text-white border-none hover:bg-[rgba(19,19,30,0.88)]"
+                      : "bg-transparent text-[var(--text-main)] border border-[var(--border-strong)] hover:bg-[rgba(19,19,30,0.04)]"
                   )}
                 >
                   {plan.cta.label}
@@ -638,12 +676,12 @@ export const PreciosPage = ({ navigate }) => {
         <div className="mb-20">
           <h2
             className="mb-6 text-center"
-            style={{ fontFamily: 'var(--font-ui)', fontSize: '1.2rem', fontWeight: 400, letterSpacing: '-0.01em', color: 'var(--text-main)' }}
+            style={{ fontFamily: 'var(--font-ui)', fontSize: '1.35rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--text-main)' }}
           >
             Comparar planes
           </h2>
 
-          <div className="overflow-x-auto rounded-md border border-[var(--border-default)]">
+          <div className="hidden overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--border-default)] md:block">
             <Table>
               <TableHeader>
                 <TableRow style={{ borderBottom: '1px solid var(--border-default)' }}>
@@ -673,8 +711,8 @@ export const PreciosPage = ({ navigate }) => {
                           {section.title}
                         </span>
                         {section.soon && (
-                          <span className="ml-2 inline-flex items-center gap-1 font-mono text-[0.6rem] text-[#b85a24]">
-                            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#b85a24] opacity-70" />
+                          <span className="ml-2 inline-flex items-center gap-1 font-mono text-[0.6rem] text-[var(--brand-warm)]">
+                            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--brand-warm)] opacity-70" />
                             próximamente
                           </span>
                         )}
@@ -697,8 +735,8 @@ export const PreciosPage = ({ navigate }) => {
                           </span>
                           {row.tooltip && <InfoTooltip content={row.tooltip} />}
                           {row.featureBadge === 'soon' && (
-                            <span className="ml-2 inline-flex items-center gap-1 font-mono text-[0.6rem] text-[#b85a24]">
-                              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#b85a24] opacity-70" />
+                            <span className="ml-2 inline-flex items-center gap-1 font-mono text-[0.6rem] text-[var(--brand-warm)]">
+                              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--brand-warm)] opacity-70" />
                               próximamente
                             </span>
                           )}
@@ -713,13 +751,67 @@ export const PreciosPage = ({ navigate }) => {
               </TableBody>
             </Table>
           </div>
+
+          <div className="space-y-4 md:hidden">
+            {TABLE_SECTIONS.map((section) => (
+              <section
+                key={section.title}
+                className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-white p-4"
+              >
+                <div className="mb-3 flex flex-wrap items-center gap-2">
+                  <h3
+                    style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-soft)' }}
+                  >
+                    {section.title}
+                  </h3>
+                  {section.soon && (
+                    <span className="inline-flex items-center gap-1 font-mono text-[0.6rem] text-[var(--brand-warm)]">
+                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--brand-warm)] opacity-70" />
+                      próximamente
+                    </span>
+                  )}
+                </div>
+
+                <div className="space-y-4">
+                  {section.rows.map((row, rowIndex) => (
+                    <div
+                      key={`${section.title}-mobile-${rowIndex}`}
+                      className="border-t border-[var(--border-subtle)] pt-4 first:border-t-0 first:pt-0"
+                    >
+                      <p style={{ fontFamily: 'var(--font-ui)', fontSize: '0.9rem', fontWeight: 500, color: 'var(--text-main)', lineHeight: 1.45 }}>
+                        {row.feature}
+                        {row.featureBadge === 'soon' && (
+                          <span className="ml-2 inline-flex items-center gap-1 font-mono text-[0.6rem] text-[var(--brand-warm)]">
+                            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--brand-warm)] opacity-70" />
+                            próximamente
+                          </span>
+                        )}
+                      </p>
+                      <div className="mt-3 space-y-2">
+                        {PLANS.map((plan) => (
+                          <div key={`${row.feature}-${plan.id}`} className="flex items-center justify-between gap-3">
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.64rem', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                              {plan.name}
+                            </span>
+                            <span className="flex min-h-5 items-center justify-end text-right">
+                              <PlanFeatureValue cell={row[plan.id]} />
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
         </div>
 
         {/* ── Contact form ── */}
         <div ref={formRef} id="form-contacto" className="scroll-mt-28">
           <div className="mx-auto max-w-xl">
             <div className="mb-8 text-center">
-              <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: '1.5rem', fontWeight: 300, letterSpacing: '-0.02em', color: 'var(--text-main)', marginBottom: 6 }}>
+              <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: '1.5rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--text-main)', marginBottom: 6 }}>
                 Cuéntanos sobre tu empresa
               </h2>
               <p style={{ fontFamily: 'var(--font-ui)', fontSize: '0.9rem', color: 'var(--text-soft)' }}>
@@ -729,7 +821,7 @@ export const PreciosPage = ({ navigate }) => {
 
             {formStatus === 'success' ? (
               <div
-                className="rounded-md px-6 py-8 text-center"
+                className="rounded-[var(--radius-lg)] px-6 py-8 text-center"
                 style={{ border: '1px solid rgba(114,221,170,0.4)', background: 'rgba(114,221,170,0.08)' }}
               >
                 <p style={{ fontFamily: 'var(--font-ui)', fontSize: '1rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: 4 }}>
@@ -837,7 +929,7 @@ export const PreciosPage = ({ navigate }) => {
                 <Button
                   type="submit"
                   disabled={formStatus === 'loading'}
-                  className="w-full h-auto py-3 text-sm font-semibold rounded-md bg-[var(--text-main)] text-white hover:opacity-85 disabled:opacity-60"
+                  className="min-h-12 w-full rounded-[var(--radius-button)] bg-[var(--text-main)] py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[rgba(19,19,30,0.88)] disabled:opacity-60"
                 >
                   {formStatus === 'loading' ? 'Enviando...' : 'Enviar'}
                 </Button>

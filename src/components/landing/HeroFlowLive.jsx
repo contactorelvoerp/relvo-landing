@@ -436,7 +436,7 @@ const sampleAt = (rail, s) => {
 };
 
 // ---- Component -------------------------------------------------------------
-const COLOR = "#000000";
+const COLOR = "#13131E";
 const SEED = 8;
 const DURATION_IN_FRAMES = 600;
 const FRAME_MS = 1000 / 60;

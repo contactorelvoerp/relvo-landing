@@ -46,33 +46,32 @@ export const CTASection = ({ ctaHref, t }) => {
     <section id="contacto" className="px-4 pt-24 pb-16 sm:px-6 sm:pt-40 sm:pb-20 md:pt-52 md:pb-28">
       <div className="section-shell">
         <Reveal className="mx-auto max-w-6xl text-center">
-          {/* Title — Fujiwara */}
+          {/* Title */}
           <h2
             className="mx-auto"
             style={{
               fontFamily: 'var(--font-ui)',
               fontSize: 'clamp(1.6rem, 4vw, 3.5rem)',
-              fontWeight: 300,
-              lineHeight: 1.3,
-              letterSpacing: '-0.02em',
-              color: '#000000',
+              fontWeight: 500,
+              lineHeight: 1.15,
+              letterSpacing: '-0.03em',
+              color: 'var(--text-main)',
             }}
           >
-            {'Tú decides tus modelos de cobro,'}
+            {'Tú decides cómo cobrar,'}
             <br />
-             {'deja que '}
+            {'deja que '}
             <span
               className="px-[0.18em]"
               style={{
-                background: 'linear-gradient(transparent 48%, #F4B08E 48%)',
+                background: 'linear-gradient(transparent 52%, rgba(208,255,11,0.6) 52%)',
                 WebkitBoxDecorationBreak: 'clone',
                 boxDecorationBreak: 'clone',
                 borderRadius: '2px',
               }}
-              >
-            Relvo los opere
+            >
+              Relvo lo opere
             </span>
-            <br />
           </h2>
 
           {/* CTA button */}
@@ -82,7 +81,7 @@ export const CTASection = ({ ctaHref, t }) => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackScheduleDemo('cta_section')}
-              className="inline-flex h-14 items-center justify-center rounded-md bg-[var(--text-main)] px-8 text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+              className="inline-flex min-h-12 items-center justify-center rounded-[var(--radius-button)] bg-[var(--text-main)] px-8 py-3 text-white transition-colors duration-200 hover:bg-[rgba(19,19,30,0.88)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
               style={{
                 fontFamily: 'var(--font-mono)',
                 fontSize: 'clamp(0.85rem, 1.1vw, 1rem)',
@@ -96,29 +95,21 @@ export const CTASection = ({ ctaHref, t }) => {
           </div>
 
           {/* Contact form */}
-          <div className="mx-auto mt-16 w-full max-w-xl text-left sm:mt-20">
-            <div className="mb-8 text-center">
-              <p
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.65rem',
-                  fontWeight: 600,
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'var(--text-muted)',
-                  marginBottom: 12,
-                }}
-              >
-                O cuéntanos sobre tu empresa
-              </p>
-              <p style={{ fontFamily: 'var(--font-ui)', fontSize: '0.875rem', color: 'var(--text-soft)' }}>
-                Te contactamos en menos de 24 horas.
-              </p>
+          <div className="mx-auto mt-14 w-full max-w-xl text-left sm:mt-16">
+            <div className="mb-8 flex items-center gap-4">
+              <div className="h-px flex-1 bg-[var(--border-default)]" />
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                O cuéntanos tu caso
+              </span>
+              <div className="h-px flex-1 bg-[var(--border-default)]" />
             </div>
+            <p className="mb-6 text-center" style={{ fontFamily: 'var(--font-ui)', fontSize: '0.875rem', lineHeight: 1.55, color: 'var(--text-soft)' }}>
+              Te contactamos en menos de 24 horas.
+            </p>
 
             {formStatus === 'success' ? (
               <div
-                className="rounded-md px-6 py-8 text-center"
+                className="rounded-[var(--radius-lg)] px-6 py-8 text-center"
                 style={{ border: '1px solid rgba(114,221,170,0.4)', background: 'rgba(114,221,170,0.08)' }}
               >
                 <p style={{ fontFamily: 'var(--font-ui)', fontSize: '1rem', fontWeight: 500, color: 'var(--text-main)', marginBottom: 4 }}>
@@ -182,7 +173,7 @@ export const CTASection = ({ ctaHref, t }) => {
                 <Button
                   type="submit"
                   disabled={formStatus === 'loading'}
-                  className="w-full h-auto py-3 text-sm font-semibold rounded-md bg-[var(--text-main)] text-white hover:opacity-85 disabled:opacity-60"
+                  className="min-h-12 w-full rounded-[var(--radius-button)] bg-[var(--text-main)] py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[rgba(19,19,30,0.88)] disabled:opacity-60"
                 >
                   {formStatus === 'loading' ? 'Enviando...' : formStatus === 'error' ? 'Reintentar' : 'Enviar'}
                 </Button>

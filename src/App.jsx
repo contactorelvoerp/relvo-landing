@@ -7,6 +7,7 @@ import { CTASection } from './components/landing/CTASection'
 import { Navbar } from './components/landing/Navbar'
 import { FooterSection } from './components/landing/FooterSection'
 import { SocialProofSection } from './components/landing/SocialProofSection'
+import { TrustBar } from './components/landing/TrustBar'
 import { ShaderBackground } from './components/landing/ShaderBackground'
 import { LoginRedirect } from './pages/LoginRedirect'
 import { ShaderOnly } from './pages/ShaderOnly'
@@ -102,6 +103,8 @@ function App() {
 
       <main id="inicio" className="relative z-10">
         <HeroSection />
+
+        <TrustBar />
 
         <ProblemConsequences />
 
