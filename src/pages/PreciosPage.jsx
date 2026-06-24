@@ -494,7 +494,8 @@ export const PreciosPage = ({ navigate }) => {
       setFormErrors(errors)
       return
     }
-
+    if (!supabase) { console.warn('[PreciosPage] Supabase is not configured in this environment.'); setFormStatus('idle'); return }
+  
     setFormStatus('loading')
 
     const payload = {
