@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async'
 import { CompanyAboutSection } from '../components/landing/CompanyAboutSection'
-import { Navbar } from '../components/landing/Navbar'
-import { FooterSection } from '../components/landing/FooterSection'
+import { Nav } from '../components/v2/Nav'
+import { Footer } from '../components/v2/Footer'
 
-export const AboutPage = ({ navigate, t }) => {
+export const AboutPage = ({ v2 }) => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-[var(--bg-main)] text-[var(--text-main)]">
       <Helmet>
@@ -14,24 +14,12 @@ export const AboutPage = ({ navigate, t }) => {
         />
       </Helmet>
 
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: `
-            radial-gradient(circle at top left, rgba(208,255,11,0.14), transparent 28%),
-            radial-gradient(circle at top right, rgba(255,149,102,0.18), transparent 24%),
-            linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98))
-          `,
-        }}
-      />
-
-      <Navbar t={t} navigate={navigate} activePath="/about-us" forceBackdrop />
+      <Nav lang={v2.lang} t={v2.t} navigate={v2.navigate} pathname={v2.pathname} />
 
       <main className="relative z-10">
         <CompanyAboutSection />
       </main>
-      <FooterSection t={t} navigate={navigate} />
+      <Footer lang={v2.lang} t={v2.t} navigate={v2.navigate} pathname={v2.pathname} />
     </div>
   )
 }

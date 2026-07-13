@@ -2,8 +2,8 @@ import { useEffect, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Menu, ArrowLeft, ArrowRight } from 'lucide-react'
 import { MarkdownRenderer } from '../components/docs/MarkdownRenderer'
-import { Navbar } from '../components/landing/Navbar'
-import { FooterSection } from '../components/landing/FooterSection'
+import { Nav } from '../components/v2/Nav'
+import { Footer } from '../components/v2/Footer'
 import {
   docsNavigation,
   getDocEntry,
@@ -92,7 +92,7 @@ const DocsSidebar = ({ currentDocPath, navigate, onNavigate }) => (
   </nav>
 )
 
-export const DocsPage = ({ pathname, navigate, t }) => {
+export const DocsPage = ({ pathname, navigate, v2 }) => {
   const entry = useMemo(() => getDocEntry(pathname), [pathname])
   const toc = useMemo(() => getTableOfContents(entry.content), [entry.content])
 
@@ -111,7 +111,7 @@ export const DocsPage = ({ pathname, navigate, t }) => {
         />
       </Helmet>
 
-      <Navbar t={t} navigate={navigate} activePath="/docs" forceBackdrop />
+      <Nav lang={v2.lang} t={v2.t} navigate={v2.navigate} pathname={v2.pathname} />
 
       {/* Mobile nav */}
       <div className="section-shell relative z-30 flex items-center gap-3 pt-20 md:hidden">
@@ -297,7 +297,7 @@ export const DocsPage = ({ pathname, navigate, t }) => {
           </aside>
         </div>
       </main>
-      <FooterSection t={t} navigate={navigate} />
+      <Footer lang={v2.lang} t={v2.t} navigate={v2.navigate} pathname={v2.pathname} />
     </div>
   )
 }
