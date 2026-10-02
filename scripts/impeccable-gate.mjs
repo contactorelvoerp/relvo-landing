@@ -2,7 +2,7 @@
 // renderizada en un navegador (el análisis estático no resuelve clamp() ni cqi).
 // Falla con cualquier finding. Única excepción aprobada (Ricardo, 2026-10-02):
 // Instrument Sans y Geist Mono son las tipografías del manual de marca, así que
-// "overused-font" no cuenta para ellas. Los avisos "advisory" se listan pero no bloquean.
+// "overused-font" no cuenta para ellas. Y el carrusel de logos del hero (marquee) está aprobado. Los avisos "advisory" se listan pero no bloquean.
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import http from 'node:http'
@@ -57,7 +57,9 @@ try {
   process.exit(1)
 }
 
-const relevant = findings.filter((f) => !(f.antipattern === 'overused-font' && BRAND_FONTS.test(f.snippet)))
+const approved = (f) => (f.antipattern === 'overused-font' && BRAND_FONTS.test(f.snippet))
+  || (f.antipattern === 'marquee' && f.snippet.includes('logo-strip__track'))
+const relevant = findings.filter((f) => !approved(f))
 const blocking = relevant.filter((f) => !f.advisory)
 const advisories = relevant.filter((f) => f.advisory)
 

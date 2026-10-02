@@ -22,7 +22,7 @@ export function Footer({ t, locale }) {
     <footer className="footer">
       <div className="footer__grid">
         <div className="footer__brand">
-          <img src="/logo-logotype-dark.svg" alt="Relvo" width="86" height="22" />
+          <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
           <p className="footer__tagline">{t.footer.tagline}</p>
         </div>
         {columns.map((c) => (

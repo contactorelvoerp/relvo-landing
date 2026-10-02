@@ -1,21 +1,59 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SHOW_PENDING } from '../../env'
 import { hrefFor } from '../../routes'
 import { Texture } from '../../components/Texture'
 import { FeatureCard } from '../../components/FeatureCard'
 import { ThreeLayers } from './ThreeLayers'
 import { Integrations } from './Integrations'
+import { DsoDti, MrrUsageChart, MrrWaterfall } from './Charts'
 import { copy } from './copy'
 import './home.css'
 
-// Menos de 8 logos: fila estática (LogoStrip "auto" del DS); el carrusel entra al llegar a 8.
-// Logos recortados a su contenido; el alto iguala el peso óptico (OpticalLogo del DS, base 26).
+// Logos de la versión anterior del sitio, recortados a su contenido. El alto iguala el peso
+// óptico (OpticalLogo del DS, base 30). Carrusel aprobado por Ricardo (2026-10-02).
 const LOGOS = [
-  { src: '/logos/clients/tgp.webp', alt: 'TGP', width: 86, height: 24 },
-  { src: '/logos/clients/bulk.webp', alt: 'Bulk', width: 36, height: 35 },
-  { src: '/logos/clients/lidz.webp', alt: 'Lidz', width: 93, height: 22 },
-  { src: '/logos/clients/relif.webp', alt: 'Relif', width: 71, height: 29 },
+  { src: '/logos/clients/tgp.webp', alt: 'TGP', width: 99, height: 27 },
+  { src: '/logos/clients/lidz.webp', alt: 'Lidz', width: 107, height: 25 },
+  { src: '/logos/clients/relif.webp', alt: 'Relif', width: 81, height: 33 },
+  { src: '/logos/clients/bulk.webp', alt: 'Bulk', width: 41, height: 40 },
+  { src: '/logos/clients/skyward.webp', alt: 'Skyward', width: 128, height: 21 },
 ]
+// Cada mitad del carrusel repite los logos hasta tener al menos 8 celdas.
+const REPEAT = Math.ceil(8 / LOGOS.length)
+const SET = Array.from({ length: REPEAT }, () => LOGOS).flat()
+const CHARTS = [MrrUsageChart, DsoDti, MrrWaterfall]
+
+function LogoStrip({ label }) {
+  const ref = useRef(null)
+  // El carrusel se detiene fuera de pantalla.
+  useEffect(() => {
+    const el = ref.current
+    const io = new IntersectionObserver(([e]) => el.classList.toggle('logo-strip--offscreen', !e.isIntersecting))
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+  return (
+    <div ref={ref} className="logo-strip">
+      <p className="logo-strip__label">{label}</p>
+      <div className="logo-strip__window">
+        <div className="logo-strip__track">
+          {[0, 1].map((group) => (
+            <div key={group} className="logo-strip__group" aria-hidden={group === 1 ? 'true' : undefined}>
+              {SET.map((logo, i) => {
+                const repeat = group === 1 || i >= LOGOS.length
+                return (
+                  <div key={i} className={`logo-strip__cell${i >= LOGOS.length ? ' logo-strip__cell--repeat' : ''}`}>
+                    <img src={logo.src} alt={repeat ? '' : logo.alt} width={logo.width} height={logo.height} draggable="false" />
+                  </div>
+                )
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
 function Pending({ label, children }) {
   return <p className="pending-note"><span className="pending-note__tag">{label}</span>{children && <span>{children}</span>}</p>
 }
@@ -49,16 +87,7 @@ export function HomePage({ locale }) {
             </div>
           </div>
         </div>
-        <div className="logo-strip">
-          <p className="logo-strip__label">{c.hero.logos}</p>
-          <div className="logo-strip__logos">
-            {LOGOS.map((logo) => (
-              <div key={logo.alt} className="logo-strip__cell">
-                <img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} loading="lazy" />
-              </div>
-            ))}
-          </div>
-        </div>
+        <LogoStrip label={c.hero.logos} />
       </section>
 
       {SHOW_PENDING && (
@@ -131,10 +160,9 @@ export function HomePage({ locale }) {
                 ))}
               </div>
               <div className="panel-tabs__panel" role="tabpanel" id="intel-panel" aria-labelledby={`intel-tab-${tab}`}>
-                <div className="panel-tabs__card">
-                  <span className="panel-tabs__desc">{c.intel.tabs[tab].desc}</span>
-                  {SHOW_PENDING && <Pending label="[PENDIENTE]">{c.intel.tabs[tab].pendingVisual}</Pending>}
-                </div>
+                <p className="panel-tabs__desc">{c.intel.tabs[tab].desc}</p>
+                {(() => { const Chart = CHARTS[tab]; return <Chart c={c.charts} /> })()}
+                <span className="example-tag panel-tabs__example">{c.example}</span>
               </div>
             </div>
           </div>
@@ -204,8 +232,9 @@ export function HomePage({ locale }) {
 
       <section className="section">
         <div className="rule">
-          <Integrations c={c.integrations} />
+          <h2 className="h2">{c.integrations.title}</h2>
         </div>
+        <Integrations c={c.integrations} />
       </section>
 
       <section className="section">
