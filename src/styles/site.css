@@ -68,7 +68,7 @@ img,svg{display:block;max-width:100%}
 }
 
 /* Footer */
-.footer{padding:48px 32px 28px;background:var(--paper)}
+.footer{margin-top:clamp(64px,6cqi,96px);padding:48px 32px 28px;background:var(--paper)}
 .footer__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:32px 24px}
 .footer__brand{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
 .footer__tagline{max-width:28ch;margin:0;font-size:14px;line-height:1.5;color:var(--text-soft)}
