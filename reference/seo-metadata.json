@@ -1,0 +1,323 @@
+{
+  "site": "https://getrelvo.ai",
+  "defaultLocale": "es",
+  "locales": [
+    "es",
+    "en"
+  ],
+  "notas": [
+    "404: noindex",
+    "Caso TGP: title y description pendientes hasta tener datos (5.3)",
+    "Previews de Vercel: noindex"
+  ],
+  "pages": [
+    {
+      "id": "home",
+      "pagina": "Home",
+      "es": {
+        "url": "/",
+        "title": "Relvo | Revenue Engine para SaaS e IA",
+        "description": "Relvo convierte tu pricing en ingresos: calcula, factura, cobra y concilia planes fijos, seats y uso en un solo sistema. Para SaaS e IA en LatAm."
+      },
+      "en": {
+        "url": "/en",
+        "title": "Relvo | Revenue Engine for SaaS and AI",
+        "description": "Relvo turns your pricing into revenue: it calculates, invoices, collects and reconciles fixed plans, seats and usage in one system. For LatAm SaaS and AI."
+      }
+    },
+    {
+      "id": "contratos",
+      "pagina": "Producto · Contratos y pricing",
+      "es": {
+        "url": "/producto/contratos-y-pricing",
+        "title": "Contratos y pricing para SaaS | Relvo",
+        "description": "Convierte planes fijos, seats, uso, fases, descuentos y reajustes en reglas exactas. Relvo calcula cada cobro igual, todos los meses."
+      },
+      "en": {
+        "url": "/en/product/contracts-and-pricing",
+        "title": "Contracts and pricing for SaaS | Relvo",
+        "description": "Turn fixed plans, seats, usage, phases, discounts and price adjustments into exact rules. Relvo calculates every charge the same way, every month."
+      }
+    },
+    {
+      "id": "medicion",
+      "pagina": "Producto · Medición del consumo",
+      "es": {
+        "url": "/producto/medicion-del-consumo",
+        "title": "Medición del consumo para cobro por uso | Relvo",
+        "description": "Envía el uso de tus clientes por API y Relvo lo cruza con su plan o contrato: tokens, llamadas o la métrica que definas, listo para cobrar."
+      },
+      "en": {
+        "url": "/en/product/usage-metering",
+        "title": "Usage metering and usage-based billing | Relvo",
+        "description": "Send your customers' usage through the API and Relvo matches it to their plan or contract: tokens, API calls or any metric, ready to bill."
+      }
+    },
+    {
+      "id": "aprobaciones",
+      "pagina": "Producto · Aprobaciones y OCs",
+      "es": {
+        "url": "/producto/aprobaciones-y-ordenes-de-compra",
+        "title": "Aprobaciones y órdenes de compra | Relvo",
+        "description": "Relvo prepara la pre-factura, asocia la orden de compra o HES que tu cliente exige y emite solo cuando todo cuadra. Sin facturas rechazadas."
+      },
+      "en": {
+        "url": "/en/product/approvals-and-purchase-orders",
+        "title": "Approvals and purchase orders | Relvo",
+        "description": "Relvo prepares the pre-invoice, matches the purchase order your customer requires and issues the invoice only when everything checks out."
+      }
+    },
+    {
+      "id": "cxc",
+      "pagina": "Producto · Cuentas por cobrar",
+      "es": {
+        "url": "/producto/cuentas-por-cobrar",
+        "title": "Facturación, cobranza y conciliación | Relvo",
+        "description": "Facturación electrónica en Chile y México, cobranza por correo o automática vía Toku, Fintoc y Stripe, y conciliación bancaria con pagos parciales."
+      },
+      "en": {
+        "url": "/en/product/accounts-receivable",
+        "title": "Invoicing, collections and reconciliation | Relvo",
+        "description": "E-invoicing in Chile and Mexico, email collections or automatic payments via Toku, Fintoc and Stripe, and bank reconciliation with partial payments."
+      }
+    },
+    {
+      "id": "agentes",
+      "pagina": "Producto · Agentes",
+      "es": {
+        "url": "/producto/agentes",
+        "title": "Agentes de IA para facturación y cobranza | Relvo",
+        "description": "Agentes que leen órdenes de compra, siguen correos y avisan a tu equipo en Slack, sobre rieles exactos. Los montos los calcula el motor, no la IA."
+      },
+      "en": {
+        "url": "/en/product/agents",
+        "title": "AI agents for billing and collections | Relvo",
+        "description": "Agents that read purchase orders, follow up on emails and alert your team in Slack, on exact rails. The engine calculates amounts, not the AI."
+      }
+    },
+    {
+      "id": "reporteria",
+      "pagina": "Producto · Reportería SaaS/IA",
+      "es": {
+        "url": "/producto/reporteria",
+        "title": "Métricas SaaS: MRR, ARR, DSO y más | Relvo",
+        "description": "MRR y ARR waterfall, MRR vs. consumo, DSO, días en facturar e ingresos bajo IFRS 15, con los mismos datos con que facturas y cobras."
+      },
+      "en": {
+        "url": "/en/product/reporting",
+        "title": "SaaS metrics: MRR, ARR, DSO and more | Relvo",
+        "description": "MRR and ARR waterfall, MRR vs. usage, DSO, days to invoice and IFRS 15 revenue recognition, built from the same data you invoice and collect with."
+      }
+    },
+    {
+      "id": "planes",
+      "pagina": "Casos de uso · Planes recurrentes",
+      "es": {
+        "url": "/soluciones/planes-recurrentes",
+        "title": "Cobro de suscripciones y planes recurrentes | Relvo",
+        "description": "Cobra planes fijos y suscripciones cada mes o cada año, con tarjeta, link de pago o transferencia. Facturas, recordatorios y conciliación automáticos."
+      },
+      "en": {
+        "url": "/en/solutions/recurring-plans",
+        "title": "Subscription billing for recurring plans | Relvo",
+        "description": "Collect fixed plans and subscriptions monthly or yearly by card, payment link or bank transfer, with automatic invoicing, reminders and reconciliation."
+      }
+    },
+    {
+      "id": "hibrido",
+      "pagina": "Casos de uso · Contratos con pricing híbrido",
+      "es": {
+        "url": "/soluciones/contratos-con-pricing-hibrido",
+        "title": "Facturación de contratos con pricing híbrido | Relvo",
+        "description": "Fijo, uso e hitos en un mismo contrato. Relvo calcula cada cobro, gestiona órdenes de compra, divide facturas entre sociedades y cobra."
+      },
+      "en": {
+        "url": "/en/solutions/hybrid-pricing-contracts",
+        "title": "Billing for hybrid pricing contracts | Relvo",
+        "description": "Fixed fees, usage and milestones in one contract. Relvo calculates each charge, handles purchase orders, splits invoices across entities and collects."
+      }
+    },
+    {
+      "id": "uso",
+      "pagina": "Casos de uso · Empezando a cobrar por uso",
+      "es": {
+        "url": "/soluciones/empezar-a-cobrar-por-uso",
+        "title": "Cómo empezar a cobrar por uso | Relvo",
+        "description": "Suma un componente por uso a tus planes sin cambiar de sistema: envía el consumo por API y Relvo lo convierte en cobros exactos cada período."
+      },
+      "en": {
+        "url": "/en/solutions/start-usage-based-billing",
+        "title": "How to start usage-based billing | Relvo",
+        "description": "Add usage-based pricing to your plans without switching systems: send usage through the API and Relvo turns it into exact charges every period."
+      }
+    },
+    {
+      "id": "saas",
+      "pagina": "Industrias · SaaS/IA",
+      "es": {
+        "url": "/soluciones/saas-e-ia",
+        "title": "Facturación y cobro para empresas SaaS e IA | Relvo",
+        "description": "Seats, uso, tokens o planes fijos: Relvo calcula, factura, cobra y concilia el revenue de empresas SaaS e IA en Chile, México y LatAm."
+      },
+      "en": {
+        "url": "/en/solutions/saas-and-ai",
+        "title": "Billing for SaaS and AI companies | Relvo",
+        "description": "Seats, usage, tokens or fixed plans: Relvo calculates, invoices, collects and reconciles revenue for SaaS and AI companies in Chile, Mexico and LatAm."
+      }
+    },
+    {
+      "id": "agencias",
+      "pagina": "Industrias · Agencias",
+      "es": {
+        "url": "/soluciones/agencias",
+        "title": "Facturación para agencias con fee variable | Relvo",
+        "description": "Fee mensual más un variable por resultados: Relvo calcula el monto de cada cliente, gestiona sus órdenes de compra, factura y cobra cada mes."
+      },
+      "en": {
+        "url": "/en/solutions/agencies",
+        "title": "Billing for agencies with variable fees | Relvo",
+        "description": "Monthly retainer plus a performance-based fee: Relvo calculates each client's amount, handles purchase orders, invoices and collects every month."
+      }
+    },
+    {
+      "id": "revops",
+      "pagina": "Para equipos · Revenue Ops (ola 2)",
+      "es": {
+        "url": "/soluciones/revenue-ops",
+        "title": "Relvo para equipos de Revenue Ops",
+        "description": "Opera el ciclo del contrato al cobro sin planillas: reglas de pricing exactas, agentes que hacen el trabajo manual y métricas que siempre cuadran."
+      },
+      "en": {
+        "url": "/en/solutions/revenue-ops",
+        "title": "Relvo for Revenue Ops teams",
+        "description": "Run the contract-to-cash cycle without spreadsheets: exact pricing rules, agents that handle the manual work and metrics that always reconcile."
+      }
+    },
+    {
+      "id": "finanzas",
+      "pagina": "Para equipos · Finanzas (ola 2)",
+      "es": {
+        "url": "/soluciones/finanzas",
+        "title": "Relvo para equipos de finanzas",
+        "description": "Cierra el mes con cada factura emitida, cada pago conciliado y tus cuentas por cobrar al día, con reconocimiento de ingresos bajo IFRS 15."
+      },
+      "en": {
+        "url": "/en/solutions/finance",
+        "title": "Relvo for finance teams",
+        "description": "Close the month with every invoice issued, every payment reconciled and receivables up to date, with IFRS 15 revenue recognition."
+      }
+    },
+    {
+      "id": "ingenieria",
+      "pagina": "Para equipos · Ingeniería (ola 2)",
+      "es": {
+        "url": "/soluciones/ingenieria",
+        "title": "Relvo para equipos de ingeniería",
+        "description": "Envía el consumo por API y deja de construir facturación propia. Relvo calcula, factura y cobra; tu equipo vuelve a trabajar en el producto."
+      },
+      "en": {
+        "url": "/en/solutions/engineering",
+        "title": "Relvo for engineering teams",
+        "description": "Send usage through the API and stop building billing in-house. Relvo calculates, invoices and collects, so your team gets back to the product."
+      }
+    },
+    {
+      "id": "precios",
+      "pagina": "Precios",
+      "es": {
+        "url": "/precios",
+        "title": "Precios de Relvo: planes recurrentes y contratos",
+        "description": "Planes recurrentes con precio público y contratos con pricing híbrido desde USD 249, según tu volumen de contratos."
+      },
+      "en": {
+        "url": "/en/pricing",
+        "title": "Relvo pricing: recurring plans and contracts",
+        "description": "Recurring plans with public pricing, and hybrid pricing contracts from USD 249 based on your contract volume."
+      }
+    },
+    {
+      "id": "clientes",
+      "pagina": "Clientes",
+      "es": {
+        "url": "/clientes",
+        "title": "Clientes de Relvo",
+        "description": "Empresas SaaS, de IA y agencias de LatAm que operan su revenue con Relvo: del pricing a la conciliación, en un solo sistema."
+      },
+      "en": {
+        "url": "/en/customers",
+        "title": "Relvo customers",
+        "description": "SaaS, AI and agency teams across LatAm that run their revenue on Relvo, from pricing to reconciliation, in one system."
+      }
+    },
+    {
+      "id": "demo",
+      "pagina": "Agendar demo",
+      "es": {
+        "url": "/agendar-demo",
+        "title": "Agenda una demo de Relvo",
+        "description": "Cuéntanos cómo cobras hoy y te mostramos Relvo funcionando con un caso como el tuyo: planes recurrentes, contratos o cobro por uso."
+      },
+      "en": {
+        "url": "/en/book-a-demo",
+        "title": "Book a Relvo demo",
+        "description": "Tell us how you bill today and we'll show you Relvo working on a case like yours: recurring plans, contracts or usage-based billing."
+      }
+    },
+    {
+      "id": "blog",
+      "pagina": "Blog",
+      "es": {
+        "url": "/blog",
+        "title": "Blog de Relvo: pricing, facturación y métricas SaaS",
+        "description": "Guías sobre pricing, facturación, cobranza y métricas para empresas SaaS e IA en LatAm."
+      },
+      "en": {
+        "url": "/en/blog",
+        "title": "Relvo blog: pricing, billing and SaaS metrics",
+        "description": "Guides on pricing, billing, collections and metrics for SaaS and AI companies in LatAm."
+      }
+    },
+    {
+      "id": "docs",
+      "pagina": "Docs",
+      "es": {
+        "url": "/docs",
+        "title": "Documentación de Relvo",
+        "description": "Guías y referencia para integrar Relvo: envía consumo por API, configura reglas de pricing y conecta tus medios de pago."
+      },
+      "en": {
+        "url": "/en/docs",
+        "title": "Relvo documentation",
+        "description": "Guides and reference to integrate Relvo: send usage through the API, set up pricing rules and connect your payment providers."
+      }
+    },
+    {
+      "id": "terminos",
+      "pagina": "Términos de servicio",
+      "es": {
+        "url": "/terminos",
+        "title": "Términos de servicio | Relvo",
+        "description": "Términos y condiciones de uso de Relvo."
+      },
+      "en": {
+        "url": "/en/terms",
+        "title": "Terms of service | Relvo",
+        "description": "Terms and conditions for using Relvo."
+      }
+    },
+    {
+      "id": "privacidad",
+      "pagina": "Política de privacidad",
+      "es": {
+        "url": "/privacidad",
+        "title": "Política de privacidad | Relvo",
+        "description": "Cómo Relvo recopila, usa y protege los datos personales."
+      },
+      "en": {
+        "url": "/en/privacy",
+        "title": "Privacy policy | Relvo",
+        "description": "How Relvo collects, uses and protects personal data."
+      }
+    }
+  ]
+}
