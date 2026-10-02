@@ -1,8 +1,8 @@
 import { es } from './es'
+import { en } from './en'
 
-// Un idioma se publica solo cuando su diccionario existe. EN se suma acá
-// cuando el copy en inglés esté aprobado (no se traduce por cuenta propia).
-const dictionaries = { es }
+// Un idioma se publica solo cuando su diccionario existe.
+const dictionaries = { es, en }
 
 export const READY_LOCALES = Object.keys(dictionaries)
 

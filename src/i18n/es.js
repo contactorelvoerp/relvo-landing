@@ -22,7 +22,7 @@ export const es = {
     medicion: { name: 'Medición del consumo', desc: 'El uso de tus clientes, listo para cobrar.' },
     aprobaciones: { name: 'Aprobaciones y órdenes de compra', desc: 'Cada factura sale con su OC aprobada.' },
     cxc: { name: 'Cuentas por cobrar', desc: 'Factura, cobra y concilia en un solo flujo.' },
-    agentes: { name: 'Agentes', desc: 'El trabajo manual del cobro, hecho por IA.' },
+    agentes: { name: 'Agentes', desc: 'Leen OCs, siguen correos y coordinan al equipo por Slack, Google Chat y MCP.' },
     reporteria: { name: 'Reportería SaaS/IA', desc: 'MRR, consumo y DSO sin armar planillas.' },
     planes: { name: 'Planes recurrentes', desc: 'Suscripciones y planes fijos, cobrados en automático.' },
     hibrido: { name: 'Contratos con pricing híbrido', desc: 'Fijo, uso e hitos en un mismo contrato.' },

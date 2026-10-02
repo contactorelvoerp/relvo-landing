@@ -33,4 +33,4 @@ Una página sin registrar es **pendiente**: en previews y en local se genera con
 
 ## Idiomas
 
-ES es el principal. EN se activa agregando su diccionario en `src/i18n/` cuando el copy en inglés esté aprobado; las URLs en inglés ya están en `seo-metadata.json`.
+ES es el principal y EN vive bajo `/en`. Los textos de interfaz están en `src/i18n/es.js` y `src/i18n/en.js`; las URLs de ambos idiomas salen de `seo-metadata.json`.
