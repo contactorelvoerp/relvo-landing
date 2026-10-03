@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { SHOW_PENDING } from '../../env'
 import { hrefFor } from '../../routes'
 import { Texture } from '../../components/Texture'
 import { ThreeLayers } from './ThreeLayers'
@@ -8,6 +7,8 @@ import { Integrations } from './Integrations'
 import { Rails } from './Rails'
 import { Agents } from './Agents'
 import { Intelligence } from './Intelligence'
+import { Products } from './Products'
+import { Case } from './Case'
 import { copy } from './copy'
 import './home.css'
 
@@ -55,10 +56,6 @@ function LogoStrip({ label }) {
     </div>
   )
 }
-function Pending({ label, children }) {
-  return <p className="pending-note"><span className="pending-note__tag">{label}</span>{children && <span>{children}</span>}</p>
-}
-
 // Titular en dos tonos: número (opcional) + titular + continuación más suave.
 function Heading({ n, title, soft }) {
   return (
@@ -69,12 +66,13 @@ function Heading({ n, title, soft }) {
   )
 }
 
-export function HomePage({ locale }) {
+export function HomePage({ t, locale }) {
   const c = copy[locale]
   const demo = hrefFor('demo', locale)
   const plans = hrefFor('planes', locale)
   const contracts = hrefFor('hibrido', locale)
-  const agencies = hrefFor('agencias', locale)
+  const pricing = hrefFor('precios', locale)
+  const usage = hrefFor('uso', locale)
 
   return (
     <>
@@ -117,44 +115,37 @@ export function HomePage({ locale }) {
       </section>
 
       <section className="section band">
+        <Heading title={c.products.title} soft={c.products.soft} />
+        <Products c={c.products} pages={t.pages} locale={locale} />
+      </section>
+
+      <section id="soluciones" className="section band band--neutral">
         <Heading title={c.bridge.title} soft={c.bridge.soft} />
-        <div className="bridge">
-          <div className="bridge__col">
-            <h3 className="bridge__title">{c.bridge.plans.title}</h3>
-            <p className="bridge__body">{c.bridge.plans.body}</p>
-            <div className="bridge__actions">
-              {demo && <a className="btn btn--primary btn--md" href={demo}>{c.bridge.demo}</a>}
-              {plans && <a className="arrow-link" href={plans}>{c.bridge.plans.title} →</a>}
+        <div className="paths">
+          <div className="path">
+            <h3 className="path__title">{c.bridge.plans.title}</h3>
+            <p className="path__body">{c.bridge.plans.body}</p>
+            <div className="path__actions">
+              {pricing && <a className="btn btn--primary btn--md" href={pricing}>{c.bridge.plans.cta}</a>}
+              {plans && <a className="link" href={plans}>{c.bridge.plans.link}</a>}
             </div>
           </div>
-          <div className="bridge__col">
-            <h3 className="bridge__title">{c.bridge.contracts.title}</h3>
-            <p className="bridge__body">{c.bridge.contracts.body}</p>
-            <div className="bridge__actions">
-              {demo && <a className="btn btn--primary btn--md" href={demo}>{c.bridge.demo}</a>}
-              {contracts && <a className="arrow-link" href={contracts}>{c.bridge.contracts.title} →</a>}
+          <div className="path">
+            <h3 className="path__title">{c.bridge.contracts.title}</h3>
+            <p className="path__body">{c.bridge.contracts.body}</p>
+            <div className="path__actions">
+              {demo && <a className="btn btn--primary btn--md" href={demo}>{c.bridge.contracts.cta}</a>}
+              {contracts && <a className="link" href={contracts}>{c.bridge.contracts.link}</a>}
             </div>
           </div>
         </div>
-        {agencies && (
-          <p className="bridge__agency">{c.bridge.agencyQuestion} <a className="arrow-link" href={agencies}>{c.bridge.agencyLink}</a></p>
-        )}
+        {usage && <p className="paths__usage">{c.bridge.usageQuestion} <a className="link" href={usage}>{c.bridge.usageLink}</a></p>}
       </section>
 
-      {SHOW_PENDING && (
-        <section id="clientes" className="section band">
-          <Pending label={c.pending.optional}>{c.pending.casesNote}</Pending>
-          <Heading title={c.pending.casesTitle} />
-          <article className="case">
-            <img className="case__logo" src="/logos/clients/tgp.webp" alt="TGP" width="102" height="28" loading="lazy" />
-            <div className="case__figure">
-              <span className="case__value">{c.pending.value} → {c.pending.value}</span>
-              <span className="case__measure">{c.pending.measure}</span>
-            </div>
-            <span className="case__context">{c.pending.compare}</span>
-          </article>
-        </section>
-      )}
+      <section id="clientes" className="section band">
+        <Heading title={c.case.title} />
+        <Case c={c.case} />
+      </section>
 
       <section className="section band band--ink">
         <Heading title={c.latam.title} soft={c.latam.soft} />

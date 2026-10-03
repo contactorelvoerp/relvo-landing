@@ -3,12 +3,8 @@
 
 .section{padding:clamp(72px,7cqi,96px) var(--gutter) clamp(80px,8cqi,112px);scroll-margin-top:24px}
 
-.arrow-link{font-size:clamp(15px,1.15cqi,17px);font-weight:500;text-decoration:none}
 .example-tag{display:inline-flex;align-items:center;height:20px;padding:0 6px;border:1px dashed var(--line-rule);border-radius:var(--radius-sm);font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--text-main);white-space:nowrap}
 
-/* Marcas [PENDIENTE]: solo existen fuera de producción */
-.pending-note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 16px;font-size:13px;font-weight:500;line-height:1.4;color:var(--status-review)}
-.pending-note__tag{align-self:flex-start;padding:3px 8px;background:var(--status-review-wash);border:1px dashed var(--status-review);border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:var(--status-review);white-space:nowrap}
 
 /* Textura generativa: llena su contenedor, detrás del contenido */
 .texture{position:absolute;inset:0;z-index:-1;overflow:hidden;border-radius:inherit;pointer-events:none}
@@ -223,21 +219,70 @@
   .rails__panel{padding:20px}
 }
 
-/* 7 · Cobra como vendes */
-.bridge{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px}
-.bridge__col{display:flex;flex-direction:column;align-items:flex-start;gap:16px;padding:clamp(28px,3.4cqi,52px);border-radius:var(--radius-lg);background:var(--mint)}
-.bridge__title{margin:0;font-family:var(--font-display);font-weight:500;font-size:clamp(26px,2.6cqi,38px);line-height:1.12;letter-spacing:-.02em}
-.bridge__body{max-width:46ch;margin:0;font-size:clamp(17px,1.4cqi,20px)}
-.bridge__actions{display:flex;flex-direction:column;align-items:flex-start;gap:18px;margin-top:auto;padding-top:24px}
-.bridge__agency{margin:clamp(32px,3cqi,48px) 0 0;font-size:clamp(16px,1.25cqi,18px);text-align:center}
+/* Link de apoyo (prototipo): verde, subrayado fino */
+.link{font-weight:500;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(24,102,102,.3);padding-bottom:1px}
+.link:hover{border-bottom-color:var(--accent)}
 
-/* 8 · Casos (pendiente) */
-.case{display:flex;flex-wrap:wrap;align-items:center;gap:20px 40px;margin-top:clamp(32px,3.5cqi,56px);padding:clamp(24px,2.5cqi,36px) clamp(20px,2.5cqi,40px);border-radius:var(--radius-lg);background:var(--paper-2);color:var(--status-review)}
-.case__logo{flex:none;filter:grayscale(1) brightness(0);opacity:.82}
-.case__figure{display:flex;flex:1.4 1 320px;flex-direction:column;gap:6px;min-width:0}
-.case__value{font-family:var(--font-display);font-weight:500;font-size:clamp(30px,2.8cqi,40px);line-height:1.1;letter-spacing:-.03em}
-.case__measure{font-size:13.5px;font-weight:500}
-.case__context{flex:1 1 240px;min-width:0;font-size:16px;line-height:1.5}
+/* Bento de productos */
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.product{display:flex;flex-direction:column;min-height:300px;padding:26px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper);color:var(--text-main);text-decoration:none;transition:border-color .15s}
+a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
+.product--wide{grid-column:span 2}
+.product__layer{font-size:13px;font-weight:500;color:var(--accent)}
+.product__title{margin:4px 0 6px;font-size:20px;letter-spacing:-.01em}
+.product__desc{max-width:40ch;margin:0 0 22px;font-size:15px;color:var(--text-body)}
+.product__go{margin-top:18px;font-size:14.5px;font-weight:500;color:var(--accent)}
+.mini{margin-top:auto;padding:16px;border-radius:var(--radius-md);background:var(--band-neutral);font-size:13.5px}
+.mini__row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid var(--line-soft)}
+.mini__row:last-child{border-bottom:0}
+.mini__row .num{font-size:13px}
+.mini .chip--plain::before{display:block}
+.mini__row--total{margin-top:4px;padding-top:8px;border-top:3px double var(--ink);font-weight:600}
+.mini__note{margin:8px 0 0;font-size:13.5px;color:var(--text-muted)}
+.mini--metrics{display:flex;flex-wrap:wrap;gap:28px}
+.mini--metrics span{display:block;color:var(--text-muted)}
+.mini--metrics b{display:block;font-size:20px;font-weight:500}
+.spark{display:flex;align-items:flex-end;gap:5px;height:56px}
+.spark i{flex:1;border-radius:2px 2px 0 0;background:var(--accent);opacity:.85}
+
+/* 7 · Cobra como vendes */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.path{display:flex;flex-direction:column;min-height:260px;padding:32px;border-radius:var(--radius-lg);background:var(--mint)}
+.path__title{margin:0 0 10px;font-family:var(--font-display);font-size:clamp(22px,2cqi,26px);font-weight:500;letter-spacing:-.02em}
+.path__body{max-width:44ch;margin:0 0 28px;font-size:16px;color:var(--text-body)}
+.path__actions{display:flex;flex-wrap:wrap;align-items:center;gap:20px;margin-top:auto}
+.paths__usage{margin:28px 0 0;font-size:16px;color:var(--text-body)}
+
+/* 8 · Caso TGP */
+.case{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.2fr);align-items:start;gap:56px}
+.case__company{margin:0 0 26px;font-size:15px;line-height:1.5;color:var(--text-muted)}
+.case__company img{margin-bottom:10px;filter:grayscale(1) brightness(0);opacity:.82}
+.case__big{margin:0;color:var(--text-main);font-family:var(--font-display);font-size:clamp(64px,7.5cqi,96px);font-weight:500;line-height:.9;letter-spacing:-.04em}
+.case__big-label{margin:12px 0 4px;font-size:20px;font-weight:500;color:var(--text-main)}
+.case__sub{margin:0;font-size:16px;color:var(--text-body)}
+.case__metric{margin:0 0 20px;font-size:15px;color:var(--text-muted)}
+.case__metric b{font-weight:600;color:var(--text-main)}
+.case__dd{margin-bottom:20px}
+.case__dd-label{margin-bottom:4px;font-size:13.5px;color:var(--text-muted)}
+.case__dd-label--on{font-weight:500;color:var(--accent)}
+.case__dd-value{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.case__dd-value b{font-family:var(--font-display);font-size:44px;font-weight:500;line-height:1;letter-spacing:-.03em}
+.case__dd--before .case__dd-value b{color:var(--text-muted)}
+.case__dd-value small{font-size:15px;color:var(--text-muted)}
+.case__bars{display:flex;gap:6px}
+.case__bars i{display:block;width:32px;height:8px;border-radius:3px;background:var(--line)}
+.case__bars--on i{background:var(--accent)}
+.case__quote{margin:0}
+.case__quote blockquote{margin:0;font-size:21px;font-weight:500;line-height:1.45;letter-spacing:-.01em;color:var(--text-main)}
+.case__quote figcaption{margin-top:20px;font-size:15px;color:var(--text-main)}
+.case__quote figcaption span{display:block;color:var(--text-muted)}
+@container (max-width:979px){
+  .bento,.paths,.case{grid-template-columns:1fr}
+  .case{gap:40px}
+  .product--wide{grid-column:auto}
+}
+
+
 
 /* 9 · LatAm */
 .latam__list{display:flex;flex-direction:column;gap:22px;margin:0;padding:0;list-style:none}
