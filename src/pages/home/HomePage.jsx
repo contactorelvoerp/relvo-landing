@@ -1,12 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { SHOW_PENDING } from '../../env'
 import { hrefFor } from '../../routes'
 import { Texture } from '../../components/Texture'
-import { FeatureCard } from '../../components/FeatureCard'
 import { ThreeLayers } from './ThreeLayers'
 import { HeroStage } from './HeroStage'
 import { Integrations } from './Integrations'
-import { DsoDti, MrrUsageChart, MrrWaterfall } from './Charts'
+import { Rails } from './Rails'
+import { Agents } from './Agents'
+import { Intelligence } from './Intelligence'
 import { copy } from './copy'
 import './home.css'
 
@@ -22,7 +23,6 @@ const LOGOS = [
 // Cada mitad del carrusel repite los logos hasta tener al menos 8 celdas.
 const REPEAT = Math.ceil(8 / LOGOS.length)
 const SET = Array.from({ length: REPEAT }, () => LOGOS).flat()
-const CHARTS = [MrrUsageChart, DsoDti, MrrWaterfall]
 
 function LogoStrip({ label }) {
   const ref = useRef(null)
@@ -71,7 +71,6 @@ function Heading({ n, title, soft }) {
 
 export function HomePage({ locale }) {
   const c = copy[locale]
-  const [tab, setTab] = useState(0)
   const demo = hrefFor('demo', locale)
   const plans = hrefFor('planes', locale)
   const contracts = hrefFor('hibrido', locale)
@@ -104,48 +103,17 @@ export function HomePage({ locale }) {
 
       <section id="rieles" className="section band">
         <Heading n="01" title={c.rails.title} soft={c.rails.soft} />
-        <div className="split">
-          <ul className="points split__copy">
-            {c.rails.points.map((p) => <li key={p}>{p}</li>)}
-          </ul>
-          {SHOW_PENDING && (
-            <div className="split__visual">
-              <div className="panel panel--pending"><Pending label="[PENDIENTE]">{c.rails.pendingVisual}</Pending></div>
-            </div>
-          )}
-        </div>
+        <Rails c={c.rails} example={c.example} />
       </section>
 
       <section id="agentes" className="section band band--ink">
         <Heading n="02" title={c.agents.title} soft={c.agents.soft} />
-        <p className="band__punch">{c.agents.punch}</p>
-        <div className="stage stage--band">
-          <Texture kind="pulse" />
-          <div className="stage__card"><FeatureCard tone="dark" {...c.agents.card} /></div>
-          <span className="stage__example stage__example--on-ink">{c.example}</span>
-        </div>
+        <Agents c={c.agents} example={c.example} />
       </section>
 
       <section id="inteligencia" className="section band band--neutral">
         <Heading n="03" title={c.intel.title} soft={c.intel.soft} />
-        <div className="split">
-          <p className="support split__copy">{c.intel.support}</p>
-          <div className="split__visual">
-            <div className="panel-tabs">
-              <Texture kind="ridges" />
-              <div className="panel-tabs__list" role="tablist">
-                {c.intel.tabs.map((t, i) => (
-                  <button key={t.label} type="button" role="tab" id={`intel-tab-${i}`} aria-selected={tab === i} aria-controls="intel-panel" className="panel-tabs__tab" onClick={() => setTab(i)}>{t.label}</button>
-                ))}
-              </div>
-              <div className="panel-tabs__panel" role="tabpanel" id="intel-panel" aria-labelledby={`intel-tab-${tab}`}>
-                <p className="panel-tabs__desc">{c.intel.tabs[tab].desc}</p>
-                {(() => { const Chart = CHARTS[tab]; return <Chart c={c.charts} /> })()}
-                <span className="example-tag panel-tabs__example">{c.example}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Intelligence c={c.intel} example={c.example} />
       </section>
 
       <section className="section band">
