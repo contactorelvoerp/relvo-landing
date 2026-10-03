@@ -1,7 +1,7 @@
 /* Home. Estructura del mockup aprobado (Home.dc.html) y componentes del DS v1.5.
    Escala de tamaños ampliada (Ricardo, 2026-10-02): textos, tarjetas y franjas más grandes que en el mockup. */
 
-.section{padding:clamp(88px,9cqi,136px) clamp(20px,2.3cqi,32px) 0;scroll-margin-top:24px}
+.section{padding:clamp(88px,9cqi,136px) var(--gutter) 0;scroll-margin-top:24px}
 .rule{border-top:1px solid var(--line-rule);padding-top:20px}
 .rule--on-ink{border-top-color:var(--text-on-ink)}
 

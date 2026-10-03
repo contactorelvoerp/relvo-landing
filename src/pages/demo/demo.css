@@ -1,5 +1,5 @@
 /* Página de contacto: texto a la izquierda, formulario a la derecha. Inputs del DS (radio 6px). */
-.demo{display:flex;flex-wrap:wrap;align-items:flex-start;gap:40px 72px;padding:clamp(40px,5.5cqi,88px) clamp(20px,2.3cqi,32px) 0}
+.demo{display:flex;flex-wrap:wrap;align-items:flex-start;gap:40px 72px;padding:clamp(40px,5.5cqi,88px) var(--gutter) 0}
 .demo__intro{display:flex;flex:1 1 380px;flex-direction:column;gap:24px;min-width:0}
 .demo__title{margin:0;font-size:clamp(40px,4.7cqi,68px)}
 .demo__lede{max-width:48ch;margin:0;font-size:clamp(18px,1.55cqi,22px);line-height:1.5}
