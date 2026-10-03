@@ -91,9 +91,9 @@ export function HomePage({ locale }) {
       </section>
 
       {SHOW_PENDING && (
-        <section className="section">
+        <section className="section divider">
           <Pending label={c.pending.optional}>{c.pending.proofNote}</Pending>
-          <div className="rule proof">
+          <div className="proof">
             <div className="proof__figure">
               <span className="pending-note__tag">{c.pending.measure}</span>
               <span className="proof__value">{c.pending.value}</span>
@@ -106,12 +106,12 @@ export function HomePage({ locale }) {
         </section>
       )}
 
-      <section id="como-funciona" className="section">
+      <section id="como-funciona" className="section divider">
         <ThreeLayers c={c.layers} example={c.example} />
       </section>
 
-      <section id="rieles" className="section">
-        <div className="rule split">
+      <section id="rieles" className="section divider">
+        <div className="split">
           <div className="split__copy">
             <div className="numbered"><span className="numbered__n">01</span><h2 className="h2">{c.rails.title}</h2></div>
             <p className="lede">{c.rails.lede}</p>
@@ -127,7 +127,7 @@ export function HomePage({ locale }) {
         </div>
       </section>
 
-      <section id="agentes" className="section">
+      <section id="agentes" className="section divider">
         <div className="band band--ink">
           <Texture kind="pulse" />
           <div className="band__head">
@@ -144,8 +144,8 @@ export function HomePage({ locale }) {
         </div>
       </section>
 
-      <section id="inteligencia" className="section">
-        <div className="rule split">
+      <section id="inteligencia" className="section divider">
+        <div className="split">
           <div className="split__copy">
             <div className="numbered"><span className="numbered__n">03</span><h2 className="h2">{c.intel.title}</h2></div>
             <p className="lede">{c.intel.lede}</p>
@@ -169,8 +169,8 @@ export function HomePage({ locale }) {
         </div>
       </section>
 
-      <section className="section">
-        <div className="rule heading-row">
+      <section className="section divider">
+        <div className="heading-row">
           <h2 className="h2 heading-row__title">{c.bridge.title}</h2>
           <p className="lede heading-row__lede">{c.bridge.lede}</p>
         </div>
@@ -198,11 +198,9 @@ export function HomePage({ locale }) {
       </section>
 
       {SHOW_PENDING && (
-        <section id="clientes" className="section">
+        <section id="clientes" className="section divider">
           <Pending label={c.pending.optional}>{c.pending.casesNote}</Pending>
-          <div className="rule">
-            <h2 className="h2">{c.pending.casesTitle}</h2>
-          </div>
+          <h2 className="h2">{c.pending.casesTitle}</h2>
           <article className="case">
             <img className="case__logo" src="/logos/clients/tgp.webp" alt="TGP" width="102" height="28" loading="lazy" />
             <div className="case__figure">
@@ -214,9 +212,9 @@ export function HomePage({ locale }) {
         </section>
       )}
 
-      <section className="section">
+      <section className="section divider">
         <div className="band band--ink">
-          <div className="rule rule--on-ink heading-row">
+          <div className="heading-row">
             <h2 className="h2 h2--on-ink heading-row__title">{c.latam.title}</h2>
             <div className="heading-row__lede latam">
               <p className="lede lede--on-ink">{c.latam.lede}</p>
@@ -230,14 +228,12 @@ export function HomePage({ locale }) {
         </div>
       </section>
 
-      <section className="section">
-        <div className="rule">
-          <h2 className="h2">{c.integrations.title}</h2>
-        </div>
+      <section className="section divider">
+        <h2 className="h2">{c.integrations.title}</h2>
         <Integrations c={c.integrations} />
       </section>
 
-      <section className="section">
+      <section className="section divider">
         <div className="band band--green cta">
           <Texture kind="periods" />
           <div className="cta__content">

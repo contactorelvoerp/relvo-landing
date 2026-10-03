@@ -1,5 +1,5 @@
 /* Página de contacto: texto a la izquierda, formulario a la derecha. Inputs del DS (radio 6px). */
-.demo{display:flex;flex-wrap:wrap;align-items:flex-start;gap:40px 72px;padding:clamp(40px,5.5cqi,88px) var(--gutter) 0}
+.demo{display:flex;flex-wrap:wrap;align-items:flex-start;gap:40px 72px;padding:clamp(40px,5.5cqi,88px) var(--gutter) clamp(56px,5.5cqi,88px)}
 .demo__intro{display:flex;flex:1 1 380px;flex-direction:column;gap:24px;min-width:0}
 .demo__title{margin:0;font-size:clamp(40px,4.7cqi,68px)}
 .demo__lede{max-width:48ch;margin:0;font-size:clamp(18px,1.55cqi,22px);line-height:1.5}
@@ -7,7 +7,7 @@
 .demo__success p{margin:0;font-size:17px}
 .demo__success .demo__success-title{margin-bottom:8px;font-size:21px;font-weight:600;color:var(--text-main)}
 
-.form{display:flex;flex:1.1 1 440px;flex-direction:column;gap:20px;min-width:0;padding-top:20px;border-top:1px solid var(--line-rule)}
+.form{display:flex;flex:1.1 1 440px;flex-direction:column;gap:20px;min-width:0;padding-top:4px}
 .form__row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:20px}
 .form__field{display:flex;flex-direction:column;gap:8px;min-width:0}
 .form label{font-size:15px;font-weight:500;color:var(--text-main)}

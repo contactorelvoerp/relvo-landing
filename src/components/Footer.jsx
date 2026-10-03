@@ -19,7 +19,7 @@ export function Footer({ t, locale }) {
     .filter((c) => c.links.length > 0)
 
   return (
-    <footer className="footer">
+    <footer className="footer divider">
       <div className="footer__grid">
         <div className="footer__brand">
           <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />

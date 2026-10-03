@@ -94,7 +94,7 @@ export function Nav({ t, locale }) {
   )
 
   return (
-    <header className="nav" onPointerLeave={leave}>
+    <header className={`nav${open && open !== 'mobile' ? ' nav--open' : ''}${open === 'product' || open === 'solutions' ? ' nav--mega' : ''}`} onPointerLeave={leave}>
       <nav className="nav__bar nav__bar--desktop" aria-label={t.nav.menu}>
         {logo(26)}
         <div className="nav__links">
