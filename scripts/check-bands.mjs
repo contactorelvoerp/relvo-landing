@@ -6,14 +6,13 @@ import { fileURLToPath } from 'node:url'
 
 const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'dist')
 
-// Una sección es banda de color cuando su primer elemento es una banda (.band) o el bloque menta de Tres capas (.layers).
+// Cada sección declara su banda en la clase: band--mint, band--ink, band--green (color) o band--neutral (gris).
 function kind(section) {
-  const first = section.match(/^<section[^>]*>(?:<p class="pending-note"[\s\S]*?<\/p>)?<div class="([^"]*)"/)
-  const cls = first ? first[1].split(' ') : []
+  const cls = (section.match(/^<section[^>]*class="([^"]*)"/) || [])[1]?.split(' ') ?? []
   if (cls.includes('band--ink')) return 'oscura'
   if (cls.includes('band--green')) return 'verde'
-  if (cls.includes('layers')) return 'menta'
-  return /class="[^"]*section--tint/.test(section.slice(0, 200)) ? 'gris' : 'blanca'
+  if (cls.includes('band--mint')) return 'menta'
+  return cls.includes('band--neutral') ? 'gris' : 'blanca'
 }
 
 function htmlFiles(dir) {

@@ -13,5 +13,5 @@ export function renderDocument(template, route, headOptions) {
   return template
     .replace('<html lang="es">', `<html lang="${route.locale}">`)
     .replace('<!--app-head-->', buildHead(route, headOptions))
-    .replace('<div id="root"><!--app-html--></div>', `<div id="root" data-route="${routeKey(route)}">${html}</div>`)
+    .replace('<div id="root"><!--app-html--></div>', `<div id="root" data-route="${routeKey(route)}" data-status="${route.status}">${html}</div>`)
 }

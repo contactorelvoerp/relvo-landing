@@ -80,10 +80,6 @@ export function ThreeLayers({ c, example }) {
 
   return (
     <div ref={root} className="layers">
-      <div className="layers__intro">
-        <h2 className="layers__title">{c.title}</h2>
-        <p className="layers__lede">{c.lede}</p>
-      </div>
       <div data-k="layers" className="layers__grid">
         <article data-k="layer" className="layers__card">
           {head('01', c.rails)}
