@@ -79,25 +79,32 @@ export function Texture({ kind }) {
     const ctx = canvas.getContext('2d')
     const paint = painters[kind]
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    let w = 0, h = 0, visible = false, raf = 0
+    let w = 0, h = 0, visible = false, ready = false, raf = 0, last = 0
     const size = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
       w = stage.clientWidth; h = stage.clientHeight
       canvas.width = w * dpr; canvas.height = h * dpr
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       paint(ctx, w, h, 0)
     }
-    const loop = (t) => { paint(ctx, w, h, t); if (visible && !reduce) raf = requestAnimationFrame(loop) }
+    // 20 cuadros por segundo y densidad máxima 1,5×: el movimiento es lento y el costo por cuadro cae a un tercio.
+    const loop = (t) => {
+      if (t - last >= 50) { paint(ctx, w, h, t); last = t }
+      if (visible && !reduce) raf = requestAnimationFrame(loop)
+    }
+    const start = () => { cancelAnimationFrame(raf); if (ready && visible && !reduce) raf = requestAnimationFrame(loop) }
     const ro = new ResizeObserver(size)
     ro.observe(stage)
     // Se pausa fuera de pantalla y con movimiento reducido queda en el primer cuadro.
-    const io = new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting
-      cancelAnimationFrame(raf)
-      if (visible && !reduce) raf = requestAnimationFrame(loop)
-    })
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; start() })
     io.observe(stage)
-    return () => { visible = false; cancelAnimationFrame(raf); ro.disconnect(); io.disconnect() }
+    // La animación parte después de la carga: el primer render queda libre (el primer cuadro ya está pintado).
+    const begin = () => { ready = true; start() }
+    let timer = 0
+    const onLoad = () => { timer = setTimeout(begin, 1000) }
+    if (document.readyState === 'complete') onLoad()
+    else window.addEventListener('load', onLoad, { once: true })
+    return () => { visible = false; cancelAnimationFrame(raf); clearTimeout(timer); window.removeEventListener('load', onLoad); ro.disconnect(); io.disconnect() }
   }, [kind])
 
   return (

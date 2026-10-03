@@ -11,6 +11,7 @@
     "lint": "eslint . --ext js,jsx,mjs --report-unused-disable-directives --max-warnings 0",
     "knip": "knip",
     "check:links": "node scripts/check-links.mjs",
+    "check:bands": "node scripts/check-bands.mjs",
     "check:design": "node scripts/impeccable-gate.mjs"
   },
   "dependencies": {

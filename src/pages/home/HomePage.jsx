@@ -43,7 +43,7 @@ function LogoStrip({ label }) {
                 const repeat = group === 1 || i >= LOGOS.length
                 return (
                   <div key={i} className={`logo-strip__cell${i >= LOGOS.length ? ' logo-strip__cell--repeat' : ''}`}>
-                    <img src={logo.src} alt={repeat ? '' : logo.alt} width={logo.width} height={logo.height} draggable="false" />
+                    <img src={logo.src} alt={repeat ? '' : logo.alt} width={logo.width} height={logo.height} loading="lazy" draggable="false" />
                   </div>
                 )
               })}

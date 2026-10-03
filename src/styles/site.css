@@ -72,6 +72,8 @@ img,svg{display:block;max-width:100%}
 .nav__item,.nav__item:hover,.nav__plain,.nav__plain:hover{color:var(--text-main)}
 .nav__item-name{font-size:16px;font-weight:500}
 .nav__item:hover .nav__item-name,.nav__plain:hover{color:var(--accent)}
+.nav__item--static{cursor:default}
+.nav__item--static .nav__item-name,.nav__item--static:hover .nav__item-name{color:var(--text-main)}
 .nav__item-desc{font-size:14.5px;line-height:1.4;color:var(--text-soft)}
 .nav__plain{display:block;padding:8px 0;font-size:16px;font-weight:500;text-decoration:none}
 .nav__plain--accent,.nav__plain--accent:hover{color:var(--accent)}

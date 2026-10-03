@@ -10,23 +10,23 @@ const dist = path.join(root, 'dist')
 const ssrDir = path.join(root, 'dist-ssr')
 
 const production = process.env.VERCEL_ENV === 'production'
-const { getRoutes, SITE_NAME, SITE_URL, absoluteUrl, notFoundRoute, render, routeKey } = await import(
+const { getRoutes, SITE_NAME, SITE_URL, absoluteUrl, notFoundRoute, renderDocument } = await import(
   pathToFileURL(path.join(ssrDir, 'entry-server.js')).href
 )
 
 const ROUTES = getRoutes()
 
-const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
+// El CSS (~8 KB comprimido) va inline: evita una petición que bloquea el primer render.
+const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8').replace(
+  /<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/,
+  (_, href) => `<style>${fs.readFileSync(path.join(dist, href), 'utf8')}</style>`,
+)
 fs.rmSync(path.join(dist, 'index.html'))
 
 function page(route) {
   const ogFile = `/og/${route.id}-${route.locale}.png`
   const ogImage = fs.existsSync(path.join(dist, ogFile)) ? ogFile : null
-  const { html, head } = render(route, { production, ogImage })
-  return template
-    .replace('<html lang="es">', `<html lang="${route.locale}">`)
-    .replace('<!--app-head-->', head)
-    .replace('<div id="root"><!--app-html--></div>', `<div id="root" data-route="${routeKey(route)}">${html}</div>`)
+  return renderDocument(template, route, { production, ogImage })
 }
 
 function write(file, content) {

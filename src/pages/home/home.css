@@ -3,9 +3,11 @@
 
 .hero + .section::before{left:calc(50% - 50vw);right:calc(50% - 50vw)}
 /* Secciones en tono: gris claro de lado a lado para descansar del blanco (como Stripe).
+   Regla de bandas: nunca dos bandas de color (menta, oscura, verde) seguidas; entre ellas, una sección
+   blanca o gris. Lo verifica scripts/check-bands.mjs en CI.
    El cambio de tono reemplaza la línea de sección; las verticales siguen visibles encima. */
-.section--tint{isolation:isolate;background:var(--paper-2)}
-.section--tint::after{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:var(--paper-2)}
+.section--tint{isolation:isolate;background:var(--band-neutral)}
+.section--tint::after{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:var(--band-neutral)}
 .section--tint::before,.section--tint + .section::before{display:none}
 .section--tint .hub{background:var(--paper)}
 .section{padding:clamp(56px,5.5cqi,88px) var(--gutter);scroll-margin-top:24px}
