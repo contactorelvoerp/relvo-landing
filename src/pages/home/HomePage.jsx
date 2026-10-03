@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { hrefFor } from '../../routes'
 import { Texture } from '../../components/Texture'
+import { BandTexture } from '../../components/BandTexture'
 import { ThreeLayers } from './ThreeLayers'
 import { HeroStage } from './HeroStage'
 import { Integrations } from './Integrations'
@@ -73,6 +74,7 @@ export function HomePage({ t, locale }) {
   const contracts = hrefFor('hibrido', locale)
   const pricing = hrefFor('precios', locale)
   const usage = hrefFor('uso', locale)
+  const docs = hrefFor('docs', locale)
 
   return (
     <>
@@ -95,6 +97,7 @@ export function HomePage({ t, locale }) {
       </section>
 
       <section id="como-funciona" className="section band band--mint">
+        <BandTexture kind="orbitsEdge" />
         <Heading title={c.layers.title} soft={c.layers.soft} />
         <ThreeLayers c={c.layers} example={c.example} />
       </section>
@@ -110,6 +113,7 @@ export function HomePage({ t, locale }) {
       </section>
 
       <section id="inteligencia" className="section band band--neutral">
+        <BandTexture kind="ridgesSoft" />
         <Heading n="03" title={c.intel.title} soft={c.intel.soft} />
         <Intelligence c={c.intel} example={c.example} />
       </section>
@@ -120,6 +124,7 @@ export function HomePage({ t, locale }) {
       </section>
 
       <section id="soluciones" className="section band band--neutral">
+        <BandTexture kind="dotsGutter" />
         <Heading title={c.bridge.title} soft={c.bridge.soft} />
         <div className="paths">
           <div className="path">
@@ -148,17 +153,19 @@ export function HomePage({ t, locale }) {
       </section>
 
       <section className="section band band--ink">
+        <BandTexture kind="orbitsDark" />
         <Heading title={c.latam.title} soft={c.latam.soft} />
-        <ol className="latam__list">
-          {c.latam.points.map((p, i) => (
-            <li key={p}><span className="latam__n">{String(i + 1).padStart(2, '0')}</span><span className="latam__text">{p}</span></li>
+        <div className="latam">
+          {c.latam.points.map(([title, line], i) => (
+            <div key={i}><h3 className="latam__title">{title}</h3><p className="latam__line">{line}</p></div>
           ))}
-        </ol>
+        </div>
       </section>
 
       <section className="section band band--neutral">
+        <BandTexture kind="linesEdge" />
         <Heading title={c.integrations.title} soft={c.integrations.soft} />
-        <Integrations c={c.integrations} />
+        <Integrations c={c.integrations} locale={locale} />
       </section>
 
       <section className="section section--cta band band--green">
@@ -166,7 +173,11 @@ export function HomePage({ t, locale }) {
           <Texture kind="periods" />
           <div className="cta__content">
             <h2 className="cta__title">{c.cta.title}</h2>
-            {demo && <a className="cta__button" href={demo}>{c.cta.demo}</a>}
+            <div className="cta__actions">
+              {demo && <a className="cta__button" href={demo}>{c.cta.demo}</a>}
+              {pricing && <a className="link" href={pricing}>{c.cta.pricing}</a>}
+              {docs && <a className="link" href={docs}>{c.cta.docs}</a>}
+            </div>
           </div>
         </div>
       </section>

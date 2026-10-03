@@ -1,21 +1,22 @@
 import { hrefFor } from '../routes'
 import { SITE_URL } from '../site'
 
-// Columnas del Footer del Design System v1.5.
+// Columnas del Footer del Design System v1.5. Los equipos de Soluciones ("Para equipos") se muestran
+// por nombre, sin link, hasta que sus páginas existan, igual que en el menú.
 const COLUMNS = [
   { key: 'product', ids: ['contratos', 'medicion', 'aprobaciones', 'cxc', 'agentes', 'reporteria'] },
-  { key: 'solutions', ids: ['revops', 'finanzas', 'ingenieria', 'saas', 'agencias'] },
+  { key: 'solutions', ids: ['revops', 'finanzas', 'ingenieria', 'saas', 'agencias'], showWithoutPage: ['revops', 'finanzas', 'ingenieria'] },
   { key: 'useCases', ids: ['planes', 'hibrido', 'uso'] },
   { key: 'resources', ids: ['docs', 'blog', 'clientes', 'precios'] },
 ]
 const LEGAL = ['terminos', 'privacidad']
 
 export function Footer({ t, locale }) {
-  const links = (ids) => ids
+  const links = (ids, showWithoutPage = []) => ids
     .map((id) => ({ id, href: hrefFor(id, locale), name: t.pages[id].name }))
-    .filter((l) => l.href)
+    .filter((l) => l.href || showWithoutPage.includes(l.id))
   const columns = COLUMNS
-    .map((c) => ({ ...c, links: links(c.ids) }))
+    .map((c) => ({ ...c, links: links(c.ids, c.showWithoutPage) }))
     .filter((c) => c.links.length > 0)
 
   return (
@@ -29,7 +30,9 @@ export function Footer({ t, locale }) {
         {columns.map((c) => (
           <div key={c.key} className="footer__col">
             <p className="footer__col-title">{t.nav[c.key]}</p>
-            {c.links.map((l) => <a key={l.id} className="footer__link" href={l.href}>{l.name}</a>)}
+            {c.links.map((l) => l.href
+              ? <a key={l.id} className="footer__link" href={l.href}>{l.name}</a>
+              : <span key={l.id} className="footer__link">{l.name}</span>)}
           </div>
         ))}
       </div>
