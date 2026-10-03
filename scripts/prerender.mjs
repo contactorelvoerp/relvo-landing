@@ -10,9 +10,11 @@ const dist = path.join(root, 'dist')
 const ssrDir = path.join(root, 'dist-ssr')
 
 const production = process.env.VERCEL_ENV === 'production'
-const { ROUTES, SITE_NAME, SITE_URL, absoluteUrl, notFoundRoute, render, routeKey } = await import(
+const { getRoutes, SITE_NAME, SITE_URL, absoluteUrl, notFoundRoute, render, routeKey } = await import(
   pathToFileURL(path.join(ssrDir, 'entry-server.js')).href
 )
+
+const ROUTES = getRoutes()
 
 const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 fs.rmSync(path.join(dist, 'index.html'))

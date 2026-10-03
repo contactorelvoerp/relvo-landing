@@ -94,9 +94,9 @@ export function Nav({ t, locale }) {
   )
 
   return (
-    <header className="nav" onPointerLeave={leave}>
+    <header className={`nav${open && open !== 'mobile' ? ' nav--open' : ''}${open === 'product' || open === 'solutions' ? ' nav--mega' : ''}`} onPointerLeave={leave}>
       <nav className="nav__bar nav__bar--desktop" aria-label={t.nav.menu}>
-        {logo(22)}
+        {logo(26)}
         <div className="nav__links">
           {product.length > 0 && trigger('product', t.nav.product)}
           {solutions.length > 0 && trigger('solutions', t.nav.solutions)}
@@ -112,8 +112,8 @@ export function Nav({ t, locale }) {
           {pricing && <a className="nav__link" href={pricing} onPointerEnter={hover(null)}>{t.nav.pricing}</a>}
         </div>
         <div className="nav__actions">
-          <a className="btn btn--ghost btn--sm" href={APP_LOGIN_URL}>{t.nav.login}</a>
-          {demo && <a className="btn btn--primary btn--sm" href={demo}>{t.nav.demo}</a>}
+          <a className="btn btn--ghost btn--md" href={APP_LOGIN_URL}>{t.nav.login}</a>
+          {demo && <a className="btn btn--primary btn--md" href={demo}>{t.nav.demo}</a>}
         </div>
       </nav>
 

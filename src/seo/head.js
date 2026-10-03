@@ -1,4 +1,4 @@
-import { ROUTES } from '../routes'
+import { getRoutes } from '../routes'
 import { getDict } from '../i18n'
 import { APOLLO_APP_ID, DEFAULT_LOCALE, GA_ID, LINKEDIN_URL, SITE_NAME, SITE_URL } from '../site'
 
@@ -47,7 +47,7 @@ function jsonLd(route) {
     })
   }
   if (route.id !== 'home') {
-    const home = ROUTES.find((r) => r.id === 'home' && r.locale === route.locale)
+    const home = getRoutes().find((r) => r.id === 'home' && r.locale === route.locale)
     graph.push({
       '@type': 'BreadcrumbList',
       itemListElement: [
@@ -73,7 +73,7 @@ export function buildHead(route, { production, ogImage }) {
     const url = absoluteUrl(route.path)
     tags.push(`<link rel="canonical" href="${url}" />`)
 
-    const alternates = ROUTES.filter((r) => r.id === route.id && r.status === 'live')
+    const alternates = getRoutes().filter((r) => r.id === route.id && r.status === 'live')
     for (const alt of alternates) {
       tags.push(`<link rel="alternate" hreflang="${alt.locale}" href="${absoluteUrl(alt.path)}" />`)
     }
