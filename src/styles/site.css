@@ -93,18 +93,21 @@ img,svg{display:block;max-width:100%}
 }
 
 /* Footer */
-.footer{position:relative;padding:56px var(--gutter) 32px;background:var(--paper)}
+/* Footer de lado a lado sobre tinta: el fondo se extiende a todo el ancho y el contenido sigue la columna */
+.footer{position:relative;isolation:isolate;padding:72px var(--gutter) 36px;background:var(--ink);color:var(--text-on-ink)}
+.footer::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:var(--ink)}
 .footer__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:36px 28px}
-.footer__brand{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
-.footer__tagline{max-width:28ch;margin:0;font-size:15px;line-height:1.5;color:var(--text-soft)}
+.footer__brand{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.footer__badge{width:auto;height:40px;margin-top:8px}
+.footer__tagline{max-width:28ch;margin:0;font-size:15px;line-height:1.5;color:var(--text-on-ink-soft)}
 .footer__col{min-width:0}
-@media (min-width:720px){.footer__col{padding-left:24px;border-left:1px dashed var(--line)}}
-.footer__col-title{margin:0 0 12px;font-size:14.5px;font-weight:500;line-height:1.3;color:var(--text-main)}
-.footer__link{display:block;padding:6px 0;font-size:15px;line-height:1.3;color:var(--text-soft);text-decoration:none}
-.footer__link:hover{color:var(--text-main)}
-.footer__legal{display:flex;flex-wrap:wrap;gap:12px 24px;margin-top:56px;font-size:14px;color:var(--text-muted)}
-.footer__legal a{color:var(--text-muted);text-decoration:none}
-.footer__legal a:hover{color:var(--text-main)}
+@media (min-width:720px){.footer__col{padding-left:24px;border-left:1px dashed var(--line-on-ink)}}
+.footer__col-title{margin:0 0 12px;font-size:14.5px;font-weight:500;line-height:1.3;color:var(--text-on-ink)}
+.footer__link{display:block;padding:6px 0;font-size:15px;line-height:1.3;color:var(--text-on-ink-soft);text-decoration:none}
+.footer__link:hover{color:var(--text-on-ink)}
+.footer__legal{display:flex;flex-wrap:wrap;gap:12px 24px;margin-top:64px;padding-top:24px;border-top:1px solid var(--line-on-ink);font-size:14px;color:var(--text-on-ink-muted)}
+.footer__legal a{color:var(--text-on-ink-muted);text-decoration:none}
+.footer__legal a:hover{color:var(--text-on-ink)}
 .footer__domain{margin-left:auto}
 
 
