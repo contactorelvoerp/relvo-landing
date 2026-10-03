@@ -110,7 +110,7 @@ export function HomePage({ locale }) {
         <ThreeLayers c={c.layers} example={c.example} />
       </section>
 
-      <section id="rieles" className="section divider">
+      <section id="rieles" className="section section--tint divider">
         <div className="split">
           <div className="split__copy">
             <div className="numbered"><span className="numbered__n">01</span><h2 className="h2">{c.rails.title}</h2></div>
@@ -144,7 +144,7 @@ export function HomePage({ locale }) {
         </div>
       </section>
 
-      <section id="inteligencia" className="section divider">
+      <section id="inteligencia" className="section section--tint divider">
         <div className="split">
           <div className="split__copy">
             <div className="numbered"><span className="numbered__n">03</span><h2 className="h2">{c.intel.title}</h2></div>
@@ -228,7 +228,7 @@ export function HomePage({ locale }) {
         </div>
       </section>
 
-      <section className="section divider">
+      <section className="section section--tint divider">
         <h2 className="h2">{c.integrations.title}</h2>
         <Integrations c={c.integrations} />
       </section>
