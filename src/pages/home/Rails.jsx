@@ -1,34 +1,28 @@
 import { useTabs } from './useTabs'
 
-// 01 Rieles (prototipo home v1): 4 tabs verticales, cada una con su pantalla de producto.
-function Rows({ rows, total }) {
+// 01 Rieles (prototipo home v2): 4 tabs verticales, cada una con su pantalla de producto:
+// plan con tramos de tokens, aprobación con checks, factura dividida y cobro parcial.
+const CHECK = (
+  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <path d="M3 7.5 6 10l5-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
+
+function Timeline({ steps, compact }) {
   return (
-    <table className="ui__rows">
-      <tbody>
-        {rows.map((r) => (
-          <tr key={r.label}>
-            <td>{r.label}{r.detail && <small>{r.detail}</small>}</td>
-            <td className={r.exact ? 'ui__exact' : undefined}>{r.amount}</td>
-          </tr>
-        ))}
-        {total && <tr className="ui__total"><td>{total.label}</td><td>{total.amount}</td></tr>}
-      </tbody>
-    </table>
+    <ol className={`tline${compact ? ' tline--compact' : ''}`}>
+      {steps.map((s) => (
+        <li key={s.label} className={s.done ? undefined : 'tline__now'}>
+          <span className="tline__icon">{s.done && CHECK}</span>
+          <div><b>{s.label}</b><small>{s.detail}</small></div>
+        </li>
+      ))}
+    </ol>
   )
 }
 
-function Chips({ chips, example, status }) {
-  return (
-    <div className="ui__chips">
-      {status && <span className="chip">{status}</span>}
-      {chips.map((c) => <span key={c} className="chip chip--plain">{c}</span>)}
-      <span className="example-tag">{example}</span>
-    </div>
-  )
-}
-
-function Top({ title, meta }) {
-  return <div className="ui__top"><b>{title}</b><span>{meta}</span></div>
+function Head({ title, children }) {
+  return <div className="ui__head"><b>{title}</b>{children}</div>
 }
 
 export function Rails({ c, example }) {
@@ -36,38 +30,37 @@ export function Rails({ c, example }) {
   const { pricing, approvals, split, collection } = c
   const screens = [
     <>
-      <Top {...pricing} />
-      <Rows rows={pricing.rows} total={pricing.total} />
-      <Chips chips={pricing.chips} example={example} />
+      <div className="plan">
+        <span className="plan__mark" aria-hidden="true">{pricing.mark}</span>
+        <div><b>{pricing.plan}</b><small>{pricing.meta}</small></div>
+        <span className="plan__price num">{pricing.price}<small>{pricing.per}</small></span>
+      </div>
+      <div className="plan__line"><div className="plan__row"><span>{pricing.seats[0]}</span><span className="num">{pricing.seats[1]}</span></div></div>
+      <div className="plan__line">
+        <div className="plan__row"><span>{pricing.tokens[0]}</span><span className="num">{pricing.tokens[1]}</span></div>
+        <div className="tiers" aria-hidden="true"><i className="tiers__t1" style={{ width: '66%' }} /><i className="tiers__t2" style={{ width: '14%' }} /></div>
+        <div className="tiers__labels"><span>{pricing.tiers[0]}</span><span>{pricing.tiers[1]}</span></div>
+      </div>
+      <div className="plan__line"><div className="plan__row"><span>{pricing.discount[0]}</span><span className="num">{pricing.discount[1]}</span></div></div>
+      <div className="plan__sum"><span>{pricing.total[0]}</span><span className="num">{pricing.total[1]}</span></div>
     </>,
     <>
-      <Top {...approvals} />
-      <ul className="ui__steps">
-        {approvals.steps.map((s) => (
-          <li key={s.label} className={s.done ? 'ui__step--done' : undefined}>
-            <span className="ui__dot" aria-hidden="true" />
-            <span>{s.label}<small>{s.detail}</small></span>
-            <span className={`chip${s.done ? '' : ' chip--run'}`}>{s.done ? approvals.done : approvals.running}</span>
-          </li>
-        ))}
-      </ul>
-      <Chips chips={[]} example={example} />
+      <Head title={approvals.title}><span>{approvals.meta}</span></Head>
+      <Timeline steps={approvals.steps} />
     </>,
     <>
-      <Top {...split} />
-      <div className="ui__entities">
-        {split.entities.map((e) => (
-          <div key={e.name} className="ui__entity"><small>{e.name}</small><b>{e.share}</b><span className="num">{e.amount}</span></div>
-        ))}
+      <Head title={split.title}><span className="num">{split.meta}</span></Head>
+      <div className="splitbar" aria-hidden="true">{split.entities.map((e) => <i key={e.name} style={{ width: e.share }} />)}</div>
+      <div className="splitbar__legend">
+        {split.entities.map((e) => <div key={e.name}><small>{e.name}</small><b className="num">{e.amount}</b><span>{e.share}</span></div>)}
       </div>
       <div className="ui__glosa"><small>{split.glosaLabel}</small>{split.glosa}</div>
-      <Chips chips={split.chips} example={example} />
     </>,
     <>
-      <Top {...collection} />
-      <Rows rows={collection.rows} />
-      <div className="ui__balance"><span>{collection.balance.label}</span><span className="num">{collection.balance.amount}</span></div>
-      <Chips chips={collection.chips} status={collection.status} example={example} />
+      <Head title={collection.title}><span className="chip chip--run">{collection.status}</span></Head>
+      <div className="paid"><span className="num">{collection.paid}</span><small>{collection.of}</small></div>
+      <div className="meter meter--lg" aria-hidden="true"><i style={{ width: '65%' }} /></div>
+      <Timeline steps={collection.steps} compact />
     </>,
   ]
 
@@ -83,6 +76,7 @@ export function Rails({ c, example }) {
       </div>
       <div className="rails__panel">
         {screens.map((screen, i) => <div key={i} className="ui" {...tabs.panel(i)}>{screen}</div>)}
+        <span className="example-tag rails__tag">{example}</span>
       </div>
     </div>
   )
