@@ -7,28 +7,34 @@ export const copy = {
     hero: {
       eyebrow: 'Revenue Engine para SaaS e IA',
       title: 'Tu pricing, convertido en ingresos. Exacto y sin trabajo manual.',
-      subtitle: 'Monetiza tu SaaS o producto de IA como quieras: self-serve con tarjeta o contratos negociados, plan fijo, seats, uso o resultados. Relvo calcula, factura, cobra y concilia en un solo sistema. Agentes de IA sobre rieles determinísticos.',
+      subtitle: 'Plan fijo, seats, uso o resultados, con tarjeta o con contrato. Relvo calcula, factura, cobra y concilia cada peso en un solo sistema.',
       demo: 'Agendar demo',
       how: 'Ver cómo funciona',
       logos: 'Operan su revenue con Relvo',
-      // Composición de 4 piezas del prototipo: contrato → factura → pago conciliado → MRR
+      // Composición del prototipo v2: ventana de la app → tokens → factura → pago conciliado
       stage: {
-        contract: { title: 'Contrato Nimbo AI', meta: 'Octubre', plan: 'Plan Growth, fijo', planAmount: 'USD 500', usage: '1,2 M llamadas a la API', usageAmount: 'USD 2.400', total: 'Total del período', totalAmount: 'USD 2.900' },
-        invoice: { title: 'Factura F-1042', chip: 'Emitida', po: 'OC 4500-221', poState: 'Asociada', sent: 'Enviada a finanzas@nimbo.ai', sentState: 'Hoy' },
-        paid: { sender: 'Agente de Relvo, hace un momento', title: 'Pago recibido y conciliado.', context: 'Nimbo AI pagó octubre por transferencia.', amount: 'USD 2.900', running: 'Conciliando', done: 'Conciliado' },
-        mrr: { label: 'MRR de octubre', amount: 'USD 187.200', delta: '+USD 2.900' },
+        window: {
+          url: 'app.getrelvo.ai/contratos/nimbo-ai', brand: 'Relvo', nav: ['Contratos', 'Facturas', 'Cobranza', 'Reportes'],
+          label: 'Contrato', name: 'Nimbo AI', status: 'Activo',
+          columns: ['Factura', 'Monto', 'Estado'],
+          rows: [['F-1042', 'USD 2.900', 'Emitida'], ['F-1031', 'USD 2.760', 'Pagada']],
+          paid: 'Pagada',
+        },
+        usage: { title: 'Tokens', price: 'USD 0,002 por 1.000', amount: '1.200 M', of: 'de 1.500 M', period: 'Últimos 30 días' },
+        invoice: { title: 'Factura F-1042', meta: 'Octubre', total: 'USD 2.900', rows: [['Plan Growth, fijo', '500'], ['1.200 M tokens', '2.400']], totalLabel: 'Total' },
+        toast: { title: 'Pago conciliado', meta: 'Nimbo AI, hace un momento' },
       },
     },
     layers: {
       title: 'Tres capas, un solo motor.',
-      soft: 'Rieles exactos para calcular, agentes para operar e inteligencia para decidir.',
+      soft: 'Rieles para calcular, agentes para operar, inteligencia para decidir.',
       numberLocale: 'es-CL',
       rails: {
         title: 'Rieles',
         sub: 'Calculan el monto exacto de cada período.',
         plan: 'Plan Growth, fijo',
-        usage: 'Consumo de la API',
-        detail: '1,2 M de llamadas a USD 0,002',
+        usage: 'Consumo de tokens',
+        detail: '1.200 M tokens a USD 0,002 por 1.000',
         total: 'Total octubre',
       },
       agents: {
@@ -49,7 +55,7 @@ export const copy = {
     },
     rails: {
       title: 'El cálculo no se negocia.',
-      soft: 'Relvo convierte tu pricing en reglas exactas, venga de tu página de precios o de un contrato negociado.',
+      soft: 'Tu pricing, convertido en reglas exactas.',
       tablist: 'Qué hacen los rieles',
       tabs: [
         { title: 'Pricing', desc: 'Del plan fijo al pricing por uso, sin cambiar de sistema.' },
@@ -62,7 +68,7 @@ export const copy = {
         rows: [
           { label: 'Plan Growth, fijo', amount: 'USD 500' },
           { label: 'Seats adicionales', detail: '12 × USD 20', amount: 'USD 240' },
-          { label: 'Consumo de la API', detail: '1,2 M de llamadas, tramo 2 a USD 0,002', amount: 'USD 2.400', exact: true },
+          { label: 'Consumo de tokens', detail: '1.200 M tokens a USD 0,002 por 1.000', amount: 'USD 2.400', exact: true },
           { label: 'Descuento de lanzamiento', detail: 'Fase 1 de 3: 10% sobre el plan fijo', amount: '−USD 50' },
         ],
         total: { label: 'Total del período', amount: 'USD 3.090' },
@@ -100,7 +106,7 @@ export const copy = {
     },
     agents: {
       title: 'El trabajo manual que se come tu mes, hecho.',
-      soft: 'Los agentes leen órdenes de compra, siguen correos y avisan a tu equipo. Cuando algo no calza, te preguntan.',
+      soft: 'Tú apruebas solo las excepciones.',
       feedTitle: 'Actividad de hoy',
       inboxTitle: 'Requiere revisión',
       done: 'Listo',
@@ -121,7 +127,7 @@ export const copy = {
     },
     intel: {
       title: 'Qué está pasando con tu revenue.',
-      soft: 'Como Relvo opera todo el flujo, de la venta al pago, ve lo que ninguna planilla junta.',
+      soft: 'Lo que ninguna planilla junta.',
       tablist: 'Reportes',
       also: 'Además: facturación, recaudación, cuentas por cobrar y reconocimiento de ingresos bajo IFRS 15.',
       numberLocale: 'es-CL',
@@ -152,11 +158,11 @@ export const copy = {
     },
     products: {
       title: 'Todo tu revenue, en un solo sistema.',
-      soft: 'Seis productos que funcionan juntos, del pricing al reporte.',
+      soft: 'Seis productos, del pricing al reporte.',
       go: 'Ver',
       layers: { rails: 'Rieles', agents: 'Agentes', intelligence: 'Inteligencia' },
       contratos: { lines: [['Plan fijo', 'USD 500'], ['12 seats', 'USD 240'], ['Consumo por tramos', 'USD 2.400']], total: ['Total', 'USD 3.140'], go: 'Ver Contratos y pricing' },
-      medicion: { note: '1,2 M llamadas en octubre', go: 'Ver Medición del consumo' },
+      medicion: { note: '1.200 M tokens en octubre', go: 'Ver Medición del consumo' },
       aprobaciones: { lines: [['OC 4500-221', 'Calza', 'ok'], ['OC 4500-198', 'Revisar', 'review']], go: 'Ver Aprobaciones' },
       cxc: { lines: [['F-1042, Nimbo AI', 'Conciliada', 'ok'], ['F-1043, Faro Analytics', 'Pago parcial', 'review'], ['F-1044, Tandem SaaS', 'Enviada', 'plain']], go: 'Ver Cuentas por cobrar' },
       agentes: { lines: [['Leyó la OC 4500-221', 'Listo', 'ok'], ['Pidió la HES pendiente', 'En curso', 'review']], go: 'Ver Agentes' },
@@ -164,7 +170,7 @@ export const copy = {
     },
     bridge: {
       title: 'Cobra como vendes.',
-      soft: 'Self-serve con tarjeta o contratos negociados: Relvo opera los dos en el mismo motor, con las mismas reglas y los mismos reportes.',
+      soft: 'Tarjeta o contrato, el mismo motor.',
       plans: {
         title: 'Planes recurrentes',
         body: 'Tus clientes pagan con tarjeta. Relvo mide el consumo, cobra el plan y el uso en automático y te muestra cómo se mueve tu MRR.',
@@ -198,7 +204,7 @@ export const copy = {
     },
     latam: {
       title: 'Hecho para cobrar en LatAm.',
-      soft: 'Un solo sistema conectado a los bancos, medios de pago y facturación electrónica de la región.',
+      soft: 'Bancos, medios de pago y facturación de la región.',
       points: [
         ['Facturación electrónica', 'En Chile y México, emitida desde el mismo sistema.'],
         ['Conciliación bancaria', 'Con bancos locales, incluso pagos parciales.'],
@@ -210,7 +216,7 @@ export const copy = {
     },
     integrations: {
       title: 'Se conecta a lo que ya usas.',
-      soft: 'Tu CRM, tu ERP, tus medios de pago y tu banco, conectados a un solo motor.',
+      soft: 'Tu CRM, ERP, pagos y banco en un solo motor.',
       label: 'Integraciones',
       names: ['HubSpot', 'Stripe', 'Toku', 'Fintoc', 'Sintropix', 'Slack', 'Google Chat'],
       api: ['¿Usas otro sistema?', 'Conéctalo por API'],
@@ -231,15 +237,21 @@ export const copy = {
     hero: {
       eyebrow: 'Revenue Engine for SaaS and AI',
       title: 'Your pricing, turned into revenue. Exact, with no manual work.',
-      subtitle: 'Monetize your SaaS or AI product however you want: self-serve by card or negotiated contracts, fixed plans, seats, usage or outcomes. Relvo calculates, invoices, collects and reconciles in one system. AI agents on deterministic rails.',
+      subtitle: '[PENDIENTE]',
       demo: 'Book a demo',
       how: 'See how it works',
       logos: 'They run their revenue on Relvo',
       stage: {
-        contract: { title: '[PENDIENTE]', meta: '[PENDIENTE]', plan: '[PENDIENTE]', planAmount: '[PENDIENTE]', usage: '[PENDIENTE]', usageAmount: '[PENDIENTE]', total: '[PENDIENTE]', totalAmount: '[PENDIENTE]' },
-        invoice: { title: '[PENDIENTE]', chip: '[PENDIENTE]', po: '[PENDIENTE]', poState: '[PENDIENTE]', sent: '[PENDIENTE]', sentState: '[PENDIENTE]' },
-        paid: { sender: '[PENDIENTE]', title: '[PENDIENTE]', context: '[PENDIENTE]', amount: '[PENDIENTE]', running: '[PENDIENTE]', done: '[PENDIENTE]' },
-        mrr: { label: '[PENDIENTE]', amount: '[PENDIENTE]', delta: '[PENDIENTE]' },
+        window: {
+          url: 'app.getrelvo.ai/contratos/nimbo-ai', brand: 'Relvo', nav: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'],
+          label: '[PENDIENTE]', name: 'Nimbo AI', status: '[PENDIENTE]',
+          columns: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'],
+          rows: [['F-1042', 'USD 2,900', '[PENDIENTE]'], ['F-1031', 'USD 2,760', '[PENDIENTE]']],
+          paid: '[PENDIENTE]',
+        },
+        usage: { title: 'Tokens', price: '[PENDIENTE]', amount: '1,200 M', of: '[PENDIENTE]', period: '[PENDIENTE]' },
+        invoice: { title: '[PENDIENTE]', meta: '[PENDIENTE]', total: 'USD 2,900', rows: [['[PENDIENTE]', '500'], ['[PENDIENTE]', '2,400']], totalLabel: 'Total' },
+        toast: { title: '[PENDIENTE]', meta: '[PENDIENTE]' },
       },
     },
     layers: {
@@ -250,8 +262,8 @@ export const copy = {
         title: 'Rails',
         sub: 'They calculate the exact amount for every period.',
         plan: 'Growth plan, fixed',
-        usage: 'API usage',
-        detail: '1.2 M calls at USD 0.002',
+        usage: '[PENDIENTE]',
+        detail: '[PENDIENTE]',
         total: 'October total',
       },
       agents: {
@@ -313,7 +325,7 @@ export const copy = {
     },
     intel: {
       title: 'What is happening with your revenue.',
-      soft: 'Because Relvo runs the whole flow, from sale to payment, it sees what no spreadsheet puts together.',
+      soft: '[PENDIENTE]',
       tablist: '[PENDIENTE]',
       also: 'Also: invoicing, collections, accounts receivable and revenue recognition under IFRS 15.',
       numberLocale: 'en-US',

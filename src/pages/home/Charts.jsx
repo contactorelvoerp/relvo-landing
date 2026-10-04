@@ -2,13 +2,13 @@
 // SVG renderizado en el servidor: queda en el HTML inicial, sin canvas.
 const H = 230, L = 44, W = 640
 const INK = '#13131E', ACCENT = '#186666', ACCENT_SOFT = '#8CC7C7', NEGATIVE = '#A3302A'
-const MONO = 'Geist Mono, monospace', UI = 'Instrument Sans, sans-serif'
+const UI = 'Instrument Sans, sans-serif'
 
 function Grid({ ticks, y, format = String }) {
   return ticks.map((v) => (
     <g key={v}>
       <line x1={L} x2={W} y1={y(v)} y2={y(v)} stroke="#ECEEF1" />
-      <text x={L - 10} y={y(v) + 4} textAnchor="end" fontSize="11" fill="#6E6E7A" fontFamily={MONO}>{format(v)}</text>
+      <text x={L - 10} y={y(v) + 4} textAnchor="end" fontSize="11" fill="#6E6E7A" fontFamily={UI}>{format(v)}</text>
     </g>
   ))
 }
@@ -76,7 +76,7 @@ export function MrrWaterfall({ steps, label, locale }) {
         return (
           <g key={i}>
             <rect x={x} y={y1} width={bw} height={Math.max(1, y2 - y1)} fill={color} />
-            <text x={x + bw / 2} y={y1 - 6} textAnchor="middle" fontSize="11" fill="#4A4A57" fontFamily={MONO}>{base ? fmt(v) : (v > 0 ? '+' : '−') + fmt(Math.abs(v))}</text>
+            <text x={x + bw / 2} y={y1 - 6} textAnchor="middle" fontSize="11" fill="#4A4A57" fontFamily={UI}>{base ? fmt(v) : (v > 0 ? '+' : '−') + fmt(Math.abs(v))}</text>
             <Label x={x + bw / 2}>{steps[i]}</Label>
           </g>
         )
