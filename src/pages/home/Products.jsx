@@ -9,10 +9,10 @@ const CHECK = (
   </svg>
 )
 const TASKS = [
-  <><path d="M4 1.5h5l3 3v10H4z" /><path d="M9 1.5v3h3M6 8h4M6 10.5h4" /></>,
-  <><rect x="1.5" y="3.5" width="13" height="9" rx="1.5" /><path d="m2 4.5 6 4.5 6-4.5" /></>,
-  <path d="M6 2 4.5 14M11.5 2 10 14M2.5 5.5h11M2 10.5h11" />,
-  <path d="M5.5 1.5v3M10.5 1.5v3M3.5 4.5h9v3a4.5 4.5 0 0 1-9 0zM8 12v2.5" />,
+  <g key="doc"><path d="M4 1.5h5l3 3v10H4z" /><path d="M9 1.5v3h3M6 8h4M6 10.5h4" /></g>,
+  <g key="mail"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5" /><path d="m2 4.5 6 4.5 6-4.5" /></g>,
+  <path key="channel" d="M6 2 4.5 14M11.5 2 10 14M2.5 5.5h11M2 10.5h11" />,
+  <path key="plug" d="M5.5 1.5v3M10.5 1.5v3M3.5 4.5h9v3a4.5 4.5 0 0 1-9 0zM8 12v2.5" />,
 ]
 // Tokens por día de octubre (ejemplo), en % del día más alto
 const DAYS = [12, 18, 15, 22, 30, 26, 34, 28, 40, 36, 45, 38, 50, 44, 58, 52, 63, 55, 70, 61, 74, 66, 80, 72, 86, 78, 90, 84, 95, 88]
