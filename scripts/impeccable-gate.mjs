@@ -22,10 +22,12 @@ function htmlFiles(dir) {
   })
 }
 
-// Las páginas pendientes comparten plantilla: basta con revisar una.
+// Se revisa lo que se publica (páginas listas y 404) más una página pendiente de muestra: las
+// pendientes comparten la plantilla de placeholder y nunca llegan a producción.
 const pages = htmlFiles(dist)
-const isPending = (file) => fs.readFileSync(file, 'utf8').includes('class="pending"')
-const targets = [...pages.filter((f) => !isPending(f)), ...pages.filter(isPending).slice(0, 1)]
+const status = (file) => (fs.readFileSync(file, 'utf8').match(/data-status="([^"]+)"/) || [])[1]
+const isPlaceholder = (file) => fs.readFileSync(file, 'utf8').includes('class="pending"')
+const targets = [...pages.filter((f) => status(f) !== 'pending'), ...pages.filter(isPlaceholder).slice(0, 1)]
 
 const server = http.createServer((req, res) => {
   const clean = decodeURIComponent(req.url.split('?')[0])

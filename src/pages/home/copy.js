@@ -11,17 +11,17 @@ export const copy = {
       demo: 'Agendar demo',
       how: 'Ver cómo funciona',
       logos: 'Operan su revenue con Relvo',
-      card: {
-        sender: 'Agente de Relvo, hace un momento',
-        title: 'Factura enviada y conciliada.',
-        context: 'Nimbo AI pagó septiembre: plan fijo más 1,2 millones de llamadas a la API.',
-        amount: 'USD 12.400',
-        chip: 'Cobrado',
+      // Composición de 4 piezas del prototipo: contrato → factura → pago conciliado → MRR
+      stage: {
+        contract: { title: 'Contrato Nimbo AI', meta: 'Octubre', plan: 'Plan Growth, fijo', planAmount: 'USD 500', usage: '1,2 M llamadas a la API', usageAmount: 'USD 2.400', total: 'Total del período', totalAmount: 'USD 2.900' },
+        invoice: { title: 'Factura F-1042', chip: 'Emitida', po: 'OC 4500-221', poState: 'Asociada', sent: 'Enviada a finanzas@nimbo.ai', sentState: 'Hoy' },
+        paid: { sender: 'Agente de Relvo, hace un momento', title: 'Pago recibido y conciliado.', context: 'Nimbo AI pagó octubre por transferencia.', amount: 'USD 2.900', running: 'Conciliando', done: 'Conciliado' },
+        mrr: { label: 'MRR de octubre', amount: 'USD 187.200', delta: '+USD 2.900' },
       },
     },
     layers: {
-      title: 'Tres capas, un solo motor',
-      lede: 'Rieles exactos para calcular, agentes para operar e inteligencia para decidir. Cada capa se apoya en la anterior.',
+      title: 'Tres capas, un solo motor.',
+      soft: 'Rieles exactos para calcular, agentes para operar e inteligencia para decidir.',
       numberLocale: 'es-CL',
       rails: {
         title: 'Rieles',
@@ -49,7 +49,7 @@ export const copy = {
     },
     rails: {
       title: 'El cálculo no se negocia.',
-      lede: 'Relvo convierte tu pricing en reglas: planes, seats, uso, fases, descuentos y reajustes, venga de tu página de precios o de un contrato negociado. Mismo plan y mismo consumo, siempre el mismo monto.',
+      soft: 'Relvo convierte tu pricing en reglas exactas, venga de tu página de precios o de un contrato negociado.',
       points: [
         'Del plan fijo al pricing por uso, sin cambiar de sistema.',
         'Aprobaciones y órdenes de compra antes de emitir, cuando tu cliente las exige.',
@@ -60,7 +60,7 @@ export const copy = {
     },
     agents: {
       title: 'El trabajo manual que se come tu mes, hecho.',
-      lede: 'Los agentes leen las órdenes de compra, siguen los correos hasta conseguir lo que falta y avisan a tu equipo en Slack o Google Chat. Cuando algo no calza, se detienen y te preguntan.',
+      soft: 'Los agentes leen órdenes de compra, siguen correos y avisan a tu equipo. Cuando algo no calza, te preguntan.',
       punch: 'Tú apruebas las excepciones. Nada sale sin que cuadre.',
       card: {
         sender: 'Agente de Relvo, hace 2 minutos',
@@ -71,7 +71,7 @@ export const copy = {
     },
     intel: {
       title: 'Qué está pasando con tu revenue.',
-      lede: 'Como Relvo opera todo el flujo, de la venta al pago, ve lo que ninguna planilla junta.',
+      soft: 'Como Relvo opera todo el flujo, de la venta al pago, ve lo que ninguna planilla junta.',
       support: 'Además: facturación, recaudación, cuentas por cobrar y reconocimiento de ingresos bajo IFRS 15.',
       tabs: [
         { label: 'Qué usan vs. qué pagan', desc: 'MRR vs. consumo por métrica. Quién usa más de lo que paga y quién está en riesgo.' },
@@ -81,7 +81,7 @@ export const copy = {
     },
     bridge: {
       title: 'Cobra como vendes.',
-      lede: 'Self-serve con tarjeta o contratos negociados: la mayoría de los SaaS tienen las dos cosas. Relvo las opera en el mismo motor, con las mismas reglas y los mismos reportes.',
+      soft: 'Self-serve con tarjeta o contratos negociados: Relvo opera los dos en el mismo motor, con las mismas reglas y los mismos reportes.',
       plans: {
         title: 'Planes recurrentes',
         body: 'Tus clientes pagan con tarjeta. Relvo mide el consumo, cobra el plan y el uso en automático y te muestra cómo se mueve tu MRR.',
@@ -96,7 +96,7 @@ export const copy = {
     },
     latam: {
       title: 'Hecho para cobrar en LatAm.',
-      lede: 'Un solo sistema que ya se conecta con los bancos, medios de pago y facturación electrónica de la región.',
+      soft: 'Un solo sistema conectado a los bancos, medios de pago y facturación electrónica de la región.',
       points: [
         'Facturación electrónica en Chile y México, emitida desde el mismo sistema.',
         'Conciliación con bancos locales.',
@@ -108,6 +108,7 @@ export const copy = {
     },
     integrations: {
       title: 'Se conecta a lo que ya usas.',
+      soft: 'Tu CRM, tu ERP, tus medios de pago y tu banco, conectados a un solo motor.',
       layers: ['01 Rieles', '02 Agentes', '03 Inteligencia'],
       inputs: [
         { name: 'HubSpot', flow: 'Ventas' },
@@ -151,15 +152,15 @@ export const copy = {
     },
     pending: {
       optional: 'Sección opcional',
-      proofNote: 'Si no hay cifra real al lanzar, se omite.',
       casesNote: 'Tarjeta de caso sin cita. Se omite si no hay cifra real al lanzar.',
       casesTitle: 'Lo que cambió para nuestros clientes.',
       measure: '[PENDIENTE] Qué mide',
       value: '[PENDIENTE]',
       compare: '[PENDIENTE] Contra qué se compara',
-      judgement: '[PENDIENTE] Si es buena o mala',
     },
   },
+  // EN: las claves nuevas o cambiadas del prototipo quedan marcadas como pendientes (no se traducen
+  // todavía). Mientras tanto la home en inglés es una página pendiente: no se publica en producción.
   en: {
     example: 'EXAMPLE',
     hero: {
@@ -169,17 +170,16 @@ export const copy = {
       demo: 'Book a demo',
       how: 'See how it works',
       logos: 'They run their revenue on Relvo',
-      card: {
-        sender: 'Relvo agent, just now',
-        title: 'Invoice sent and reconciled.',
-        context: 'Nimbo AI paid September: fixed plan plus 1.2 million API calls.',
-        amount: 'USD 12,400',
-        chip: 'Paid',
+      stage: {
+        contract: { title: '[PENDIENTE]', meta: '[PENDIENTE]', plan: '[PENDIENTE]', planAmount: '[PENDIENTE]', usage: '[PENDIENTE]', usageAmount: '[PENDIENTE]', total: '[PENDIENTE]', totalAmount: '[PENDIENTE]' },
+        invoice: { title: '[PENDIENTE]', chip: '[PENDIENTE]', po: '[PENDIENTE]', poState: '[PENDIENTE]', sent: '[PENDIENTE]', sentState: '[PENDIENTE]' },
+        paid: { sender: '[PENDIENTE]', title: '[PENDIENTE]', context: '[PENDIENTE]', amount: '[PENDIENTE]', running: '[PENDIENTE]', done: '[PENDIENTE]' },
+        mrr: { label: '[PENDIENTE]', amount: '[PENDIENTE]', delta: '[PENDIENTE]' },
       },
     },
     layers: {
-      title: 'Three layers, one engine',
-      lede: 'Exact rails to calculate, agents to operate and intelligence to decide. Each layer builds on the one before.',
+      title: '[PENDIENTE]',
+      soft: '[PENDIENTE]',
       numberLocale: 'en-US',
       rails: {
         title: 'Rails',
@@ -207,7 +207,7 @@ export const copy = {
     },
     rails: {
       title: 'The calculation is not up for negotiation.',
-      lede: 'Relvo turns your pricing into rules: plans, seats, usage, phases, discounts and price adjustments, whether they come from your pricing page or a negotiated contract. Same plan and same usage, always the same amount.',
+      soft: '[PENDIENTE]',
       points: [
         'From fixed plans to usage-based pricing, without switching systems.',
         'Approvals and purchase orders before invoicing, when your customer requires them.',
@@ -218,7 +218,7 @@ export const copy = {
     },
     agents: {
       title: 'The manual work that eats your month, done.',
-      lede: 'Agents read purchase orders, follow up on emails until they get what is missing and alert your team in Slack or Google Chat. When something does not match, they stop and ask you.',
+      soft: '[PENDIENTE]',
       punch: 'You approve the exceptions. Nothing goes out until it adds up.',
       card: {
         sender: 'Relvo agent, 2 minutes ago',
@@ -229,7 +229,7 @@ export const copy = {
     },
     intel: {
       title: 'What is happening with your revenue.',
-      lede: 'Because Relvo runs the whole flow, from sale to payment, it sees what no spreadsheet puts together.',
+      soft: 'Because Relvo runs the whole flow, from sale to payment, it sees what no spreadsheet puts together.',
       support: 'Also: invoicing, collections, accounts receivable and revenue recognition under IFRS 15.',
       tabs: [
         { label: 'What they use vs. what they pay', desc: 'MRR vs. usage by metric. Who uses more than they pay for and who is at risk.' },
@@ -239,7 +239,7 @@ export const copy = {
     },
     bridge: {
       title: 'Bill the way you sell.',
-      lede: 'Self-serve by card or negotiated contracts: most SaaS companies have both. Relvo runs them on the same engine, with the same rules and the same reports.',
+      soft: '[PENDIENTE]',
       plans: {
         title: 'Recurring plans',
         body: 'Your customers pay by card. Relvo meters usage, collects the plan and the usage automatically and shows you how your MRR moves.',
@@ -254,7 +254,7 @@ export const copy = {
     },
     latam: {
       title: 'Built to get paid in LatAm.',
-      lede: 'One system already connected to the banks, payment methods and e-invoicing of the region.',
+      soft: '[PENDIENTE]',
       points: [
         'E-invoicing in Chile and Mexico, issued from the same system.',
         'Reconciliation with local banks.',
@@ -266,6 +266,7 @@ export const copy = {
     },
     integrations: {
       title: 'It connects to what you already use.',
+      soft: '[PENDIENTE]',
       layers: ['01 Rails', '02 Agents', '03 Intelligence'],
       inputs: [
         { name: 'HubSpot', flow: 'Sales' },
@@ -309,13 +310,11 @@ export const copy = {
     },
     pending: {
       optional: 'Optional section',
-      proofNote: 'Omitted if there is no real figure at launch.',
       casesNote: 'Case card without a quote. Omitted if there is no real figure at launch.',
       casesTitle: 'What changed for our customers.',
       measure: '[PENDING] What it measures',
       value: '[PENDING]',
       compare: '[PENDING] What it is compared against',
-      judgement: '[PENDING] Whether it is good or bad',
     },
   },
 }

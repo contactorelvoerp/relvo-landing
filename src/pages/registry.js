@@ -7,3 +7,9 @@ export const PAGE_COMPONENTS = {
   home: HomePage,
   demo: DemoPage,
 }
+
+// Idiomas con copy aprobado por página. Si una página no aparece acá, está lista en todos.
+// Home en inglés: pendiente de traducir el copy del prototipo home v1.
+export const PAGE_LOCALES = {
+  home: ['es'],
+}

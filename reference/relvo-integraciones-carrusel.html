@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Relvo · Integraciones (carrusel)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#13131E;--ink-2:#4A4A57;--muted:#6E6E7A;--neutral:#F6F7F8;--green:#186666;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0;background:#fff;color:var(--ink);font-family:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+.band{background:var(--neutral);padding:120px 0 112px}
+header{max-width:900px;margin:0 auto 64px;padding:0 24px;text-align:center}
+h2{font-weight:500;font-size:clamp(32px,4vw,52px);letter-spacing:-.025em;line-height:1.02;margin:0 0 16px}
+header p{margin:0;font-size:17px;line-height:1.55;color:var(--ink-2)}
+.track{overflow:hidden}
+.row{display:flex;gap:80px;width:max-content;list-style:none;margin:0;padding:0 40px;animation:slide 60s linear infinite}
+.track:hover .row{animation-play-state:paused}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 40px))}}
+.row li{font-size:24px;font-weight:500;letter-spacing:-.01em;color:var(--ink-2);white-space:nowrap}
+.foot{text-align:center;margin:64px 0 0;font-size:15px;color:var(--muted)}
+.foot.second{margin-top:10px}
+.foot a{color:var(--green);font-weight:500;text-decoration:none;border-bottom:1px solid rgba(24,102,102,.35)}
+.foot a:hover{border-bottom-color:var(--green)}
+.foot a:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){
+  .row{animation:none;flex-wrap:wrap;justify-content:center;width:auto;gap:24px 48px}
+  .row .dup{display:none}
+}
+@media (max-width:700px){ .row{gap:48px} .row li{font-size:20px} }
+.note{max-width:1200px;margin:0 auto;padding:24px;font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="band">
+  <header>
+    <h2>Se conecta a lo que ya usas.</h2>
+    <p>Tu CRM, tu ERP, tus medios de pago y tu banco, conectados a un solo motor.</p>
+  </header>
+  <div class="track" aria-label="Integraciones: HubSpot, Stripe, Toku, Fintoc, Sintropix, Slack y Google Chat">
+    <ul class="row"><li>HubSpot</li><li>Stripe</li><li>Toku</li><li>Fintoc</li><li>Sintropix</li><li>Slack</li><li>Google Chat</li><li aria-hidden="true" class="dup">HubSpot</li><li aria-hidden="true" class="dup">Stripe</li><li aria-hidden="true" class="dup">Toku</li><li aria-hidden="true" class="dup">Fintoc</li><li aria-hidden="true" class="dup">Sintropix</li><li aria-hidden="true" class="dup">Slack</li><li aria-hidden="true" class="dup">Google Chat</li></ul>
+  </div>
+  <p class="foot">¿Usas otro sistema? <a href="#" onclick="return false">Conéctalo por API</a></p>
+  <p class="foot second">¿Trabajas con herramientas de IA? <a href="#" onclick="return false">Conecta Relvo vía MCP</a></p>
+</div>
+<p class="note">Prototipo. Cada nombre se reemplaza por el logo oficial de la marca (wordmark, monocromo, misma altura óptica). Todos a la vez: no mezclar logos con texto.</p>
+</body>
+</html>

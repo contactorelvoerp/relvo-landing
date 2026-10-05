@@ -2,7 +2,7 @@ import seo from '../reference/seo-metadata.json'
 import { SHOW_PENDING } from './env'
 import { DEFAULT_LOCALE } from './site'
 import { READY_LOCALES, getDict } from './i18n'
-import { PAGE_COMPONENTS } from './pages/registry'
+import { PAGE_COMPONENTS, PAGE_LOCALES } from './pages/registry'
 
 
 function buildRoutes() {
@@ -10,9 +10,11 @@ function buildRoutes() {
   for (const page of seo.pages) {
     if (page.pagina.includes('(ola 2)')) continue
     // Las páginas sin implementar se generan solo fuera de producción.
-    const live = Boolean(PAGE_COMPONENTS[page.id])
-    if (!live && !SHOW_PENDING) continue
+    const built = Boolean(PAGE_COMPONENTS[page.id])
+    if (!built && !SHOW_PENDING) continue
     for (const locale of READY_LOCALES) {
+      const live = built && (!PAGE_LOCALES[page.id] || PAGE_LOCALES[page.id].includes(locale))
+      if (!live && !SHOW_PENDING) continue
       const meta = page[locale]
       routes.push({
         id: page.id,
