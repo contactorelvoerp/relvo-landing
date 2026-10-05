@@ -160,11 +160,9 @@ export function HomePage({ t, locale }) {
       <section className="section band band--ink">
         <BandTexture kind="orbitsDark" />
         <Heading title={c.latam.title} soft={c.latam.soft} />
-        <div className="latam">
-          {c.latam.points.map(([title, line], i) => (
-            <div key={i}><h3 className="latam__title">{title}</h3><p className="latam__line">{line}</p></div>
-          ))}
-        </div>
+        <ul className="latam">
+          {c.latam.points.map((point, i) => <li key={i}>{point}</li>)}
+        </ul>
       </section>
 
       <section className="section band band--neutral">

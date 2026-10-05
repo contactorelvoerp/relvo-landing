@@ -130,14 +130,14 @@ export const copy = {
       tabs: [
         {
           label: 'Qué usan vs. qué pagan',
-          kpis: [{ label: 'Consumo sobre el MRR', value: '21%', note: 'Subió desde 11% en abril. Crece más rápido que el plan fijo.' }],
+          kpis: [{ label: 'Consumo sobre el MRR', value: '21%', note: 'Desde 11% en abril.' }],
           chartLabel: 'MRR fijo y consumo por mes, abril a septiembre',
           legend: ['MRR fijo', 'Consumo: llamadas API', 'Consumo: documentos'],
         },
         {
           label: 'Qué tan rápido conviertes trabajo en caja',
           kpis: [
-            { label: 'Días en facturar (DTI)', value: '3', note: 'Desde que termina el período hasta que sale la factura.' },
+            { label: 'Días en facturar (DTI)', value: '3' },
             { label: 'Días en cobrar (DSO)', value: '38', note: '9 días menos que en abril.' },
           ],
           chartLabel: 'DTI y DSO por mes',
@@ -145,7 +145,7 @@ export const copy = {
         },
         {
           label: 'Cómo se mueve tu MRR',
-          kpis: [{ label: 'MRR de octubre', value: '192,4k', note: '+8.100 USD neto respecto a septiembre.' }],
+          kpis: [{ label: 'MRR de octubre', value: '192,4k', note: '+8.100 neto en el mes.' }],
           chartLabel: 'Movimiento del MRR de septiembre a octubre',
           steps: ['Sep', 'Altas', 'Expansión', 'Consumo', 'Contracción', 'Churn', 'Oct'],
         },
@@ -154,14 +154,12 @@ export const copy = {
     products: {
       title: 'Todo tu revenue, en un solo sistema.',
       soft: 'Seis productos, del pricing al reporte.',
-      go: 'Ver',
-      layers: { rails: 'Rieles', agents: 'Agentes', intelligence: 'Inteligencia' },
-      contratos: { lines: [['Plan fijo', 'USD 500'], ['12 seats', 'USD 240'], ['Consumo por tramos', 'USD 2.400']], total: ['Total', 'USD 3.140'], go: 'Ver Contratos y pricing' },
-      medicion: { note: '1.200 M tokens en octubre', go: 'Ver Medición del consumo' },
-      aprobaciones: { lines: [['OC 4500-221', 'Calza', 'ok'], ['OC 4500-198', 'Revisar', 'review']], go: 'Ver Aprobaciones' },
-      cxc: { lines: [['F-1042, Nimbo AI', 'Conciliada', 'ok'], ['F-1043, Faro Analytics', 'Pago parcial', 'review'], ['F-1044, Tandem SaaS', 'Enviada', 'plain']], go: 'Ver Cuentas por cobrar' },
-      agentes: { lines: [['Leyó la OC 4500-221', 'Listo', 'ok'], ['Pidió la HES pendiente', 'En curso', 'review']], go: 'Ver Agentes' },
-      reporteria: { metrics: [['MRR', '192,4k'], ['Consumo', '21%'], ['DSO', '38 días'], ['DTI', '3 días']], go: 'Ver Reportería' },
+      contratos: { desc: 'Cualquier pricing, convertido en reglas exactas.', amount: 'USD 3.140', label: 'total del período', legend: ['Fijo', 'Seats', 'Uso'] },
+      medicion: { desc: 'El uso de tus clientes, listo para cobrar.', amount: '1.200 M', label: 'tokens en octubre' },
+      aprobaciones: { desc: 'Cada factura sale con su OC aprobada.', steps: ['Pre-factura', 'OC', 'Aprobada', 'Emitida'] },
+      cxc: { desc: 'Factura, cobra y concilia en un solo flujo.', amount: 'USD 48.200', label: 'por cobrar', legend: ['Al día', '1 a 30 días', 'Más de 30 días'] },
+      agentes: { desc: 'Leen OCs, siguen correos y coordinan al equipo.', amount: '34', label: 'tareas hechas hoy' },
+      reporteria: { desc: 'MRR, consumo y DSO sin armar planillas.', amount: 'USD 192,4k', label: 'MRR de octubre', delta: '+4,4%' },
     },
     bridge: {
       title: 'Cobra como vendes.',
@@ -201,12 +199,12 @@ export const copy = {
       title: 'Hecho para cobrar en LatAm.',
       soft: 'Bancos, medios de pago y facturación de la región.',
       points: [
-        ['Facturación electrónica', 'En Chile y México, emitida desde el mismo sistema.'],
-        ['Conciliación bancaria', 'Con bancos locales, incluso pagos parciales.'],
-        ['Medios de pago locales', 'Cobro con Toku, Fintoc y Stripe.'],
-        ['Cualquier moneda', 'Con conversión automática, incluida la UF.'],
-        ['Varias sociedades', 'Un solo cierre para todas las empresas del grupo.'],
-        ['Órdenes de compra', 'Aprobaciones como compran las empresas en la región.'],
+        'Facturación electrónica en Chile y México',
+        'Conciliación con bancos locales',
+        'Toku, Fintoc y Stripe',
+        'Cualquier moneda, incluida la UF',
+        'Varias sociedades, un solo cierre',
+        'Órdenes de compra y aprobaciones',
       ],
     },
     integrations: {
@@ -334,14 +332,12 @@ export const copy = {
     products: {
       title: '[PENDIENTE]',
       soft: '[PENDIENTE]',
-      go: '[PENDIENTE]',
-      layers: { rails: 'Rails', agents: 'Agents', intelligence: 'Intelligence' },
-      contratos: { lines: [['[PENDIENTE]', 'USD 500'], ['[PENDIENTE]', 'USD 240'], ['[PENDIENTE]', 'USD 2,400']], total: ['Total', 'USD 3,140'], go: '[PENDIENTE]' },
-      medicion: { note: '[PENDIENTE]', go: '[PENDIENTE]' },
-      aprobaciones: { lines: [['PO 4500-221', '[PENDIENTE]', 'ok'], ['PO 4500-198', '[PENDIENTE]', 'review']], go: '[PENDIENTE]' },
-      cxc: { lines: [['[PENDIENTE]', '[PENDIENTE]', 'ok'], ['[PENDIENTE]', '[PENDIENTE]', 'review'], ['[PENDIENTE]', '[PENDIENTE]', 'plain']], go: '[PENDIENTE]' },
-      agentes: { lines: [['[PENDIENTE]', '[PENDIENTE]', 'ok'], ['[PENDIENTE]', '[PENDIENTE]', 'review']], go: '[PENDIENTE]' },
-      reporteria: { metrics: [['MRR', '192.4k'], ['[PENDIENTE]', '21%'], ['DSO', '[PENDIENTE]'], ['DTI', '[PENDIENTE]']], go: '[PENDIENTE]' },
+      contratos: { desc: '[PENDIENTE]', amount: 'USD 3,140', label: '[PENDIENTE]', legend: ['[PENDIENTE]', 'Seats', '[PENDIENTE]'] },
+      medicion: { desc: '[PENDIENTE]', amount: '1,200 M', label: '[PENDIENTE]' },
+      aprobaciones: { desc: '[PENDIENTE]', steps: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'] },
+      cxc: { desc: '[PENDIENTE]', amount: 'USD 48,200', label: '[PENDIENTE]', legend: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'] },
+      agentes: { desc: '[PENDIENTE]', amount: '34', label: '[PENDIENTE]' },
+      reporteria: { desc: '[PENDIENTE]', amount: 'USD 192.4k', label: '[PENDIENTE]', delta: '+4.4%' },
     },
     bridge: {
       title: 'Bill the way you sell.',
@@ -370,14 +366,7 @@ export const copy = {
     latam: {
       title: 'Built to get paid in LatAm.',
       soft: '[PENDIENTE]',
-      points: [
-        ['[PENDIENTE]', '[PENDIENTE]'],
-        ['[PENDIENTE]', '[PENDIENTE]'],
-        ['[PENDIENTE]', '[PENDIENTE]'],
-        ['[PENDIENTE]', '[PENDIENTE]'],
-        ['[PENDIENTE]', '[PENDIENTE]'],
-        ['[PENDIENTE]', '[PENDIENTE]'],
-      ],
+      points: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'],
     },
     integrations: {
       title: 'It connects to what you already use.',

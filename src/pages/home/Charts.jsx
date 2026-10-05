@@ -1,7 +1,8 @@
-// Gráficos de 03 Inteligencia (prototipo home v1), con datos de ejemplo y colores del DS v1.5.
+// Gráficos de 03 Inteligencia (prototipo home v2), con datos de ejemplo y colores del DS v1.5.
+// Las series de consumo van en el acento de uso (morado).
 // SVG renderizado en el servidor: queda en el HTML inicial, sin canvas.
 const H = 230, L = 44, W = 640
-const INK = '#13131E', ACCENT = '#186666', ACCENT_SOFT = '#8CC7C7', NEGATIVE = '#A3302A'
+const INK = '#13131E', ACCENT = '#186666', NEGATIVE = '#A3302A', USO = '#633BF2', USO_2 = '#E3C0F2'
 const UI = 'Instrument Sans, sans-serif'
 
 function Grid({ ticks, y, format = String }) {
@@ -27,7 +28,7 @@ export function UsageBars({ months, label }) {
         let top = H
         return (
           <g key={m}>
-            {[[fix[i], INK], [api[i], ACCENT], [doc[i], ACCENT_SOFT]].map(([v, color], k) => {
+            {[[fix[i], INK], [api[i], USO], [doc[i], USO_2]].map(([v, color], k) => {
               const h = (v / max) * (H - 20)
               top -= h
               return <rect key={k} x={x} y={top} width={bw} height={h} fill={color} />

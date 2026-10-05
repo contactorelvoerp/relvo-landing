@@ -173,7 +173,6 @@
 .vtab:focus-visible{outline-offset:-2px}
 .rails__panel{position:relative;display:grid;place-items:center;min-height:420px;padding:40px;border-radius:var(--radius-lg);background:var(--band-neutral)}
 .ui{width:100%;max-width:470px;padding:24px 26px;border-radius:var(--radius-lg);background:var(--paper);box-shadow:var(--shadow-overlay)}
-.chip--plain{background:var(--line-soft);color:var(--text-body)}
 .ui__glosa{padding:10px 12px;border-radius:var(--radius-md);background:var(--paper-2);font-size:13px;color:var(--text-body)}
 .ui__glosa small{display:block;margin-bottom:2px;font-size:12px;color:var(--text-muted)}
 
@@ -252,24 +251,30 @@
 .review__action--primary{background:var(--chip-fg-on-dark);color:var(--accent-pressed)}
 @media (prefers-reduced-motion:reduce){.feed--animated .feed__item{clip-path:none;transition:none}}
 
-/* 03 · Inteligencia: un contenedor, tabs de texto, KPI y gráfico */
+/* 03 · Inteligencia: un contenedor, tabs de texto, KPI y gráfico. En desktop el panel tiene alto fijo
+   (cambiar de tab no mueve la sección) y las tabs van en una línea sin scroll */
 .report{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}
-.htabs{display:flex;gap:28px;overflow-x:auto;padding:0 32px;border-bottom:1px solid var(--line)}
+.htabs{display:flex;flex-wrap:wrap;column-gap:28px;padding:0 32px;border-bottom:1px solid var(--line)}
 .htab{margin-bottom:-1px;padding:14px 0;border:0;border-bottom:2px solid transparent;background:none;font-family:var(--font-ui);font-size:15px;font-weight:500;color:var(--text-muted);white-space:nowrap;cursor:pointer}
 .htab[aria-selected="true"]{border-bottom-color:var(--accent);color:var(--text-main)}
 .htab:focus-visible{outline-offset:-2px}
-.report__panel{display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;min-height:380px;padding:32px}
+.report__panel{display:grid;grid-template-columns:240px minmax(0,1fr);align-items:start;gap:40px;height:420px;padding:32px}
 .kpis{display:flex;flex-direction:column;align-items:flex-start;gap:26px}
 .kpi__label{display:block;font-size:13.5px;color:var(--text-muted)}
 .kpi__value{display:block;margin:6px 0;font-size:44px;font-weight:500;line-height:1.05;letter-spacing:-.03em}
 .kpi__note{margin:0;font-size:14px;line-height:1.5;color:var(--text-body)}
-.report__chart svg{display:block;width:100%;height:auto;overflow:visible}
+.report__chart{display:flex;flex-direction:column;height:100%;min-height:0}
+.report__chart svg{display:block;flex:1;width:100%;height:100%;min-height:0;overflow:visible}
 .legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:12px;font-size:13px;color:var(--text-muted)}
 .legend i{display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:2px;vertical-align:-1px}
 .also{max-width:62ch;margin:20px 0 0;font-size:15px;color:var(--text-muted)}
 @container (max-width:979px){
   .rails,.agents{grid-template-columns:1fr}
-  .report__panel{grid-template-columns:1fr;padding:24px}
+  .report__panel{grid-template-columns:1fr;height:auto;padding:24px}
+  .report__chart svg{flex:none;height:auto}
+  /* En mobile las tabs se deslizan, con la barra oculta */
+  .htabs{flex-wrap:nowrap;overflow-x:auto;padding:0 24px;scrollbar-width:none}
+  .htabs::-webkit-scrollbar{display:none}
   .rails__panel{padding:20px}
 }
 
@@ -282,21 +287,31 @@
 .product{display:flex;flex-direction:column;min-height:300px;padding:26px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper);color:var(--text-main);text-decoration:none;transition:border-color .15s}
 a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
 .product--wide{grid-column:span 2}
-.product__layer{font-size:13px;font-weight:500;color:var(--accent)}
 .product__title{margin:4px 0 6px;font-size:20px;letter-spacing:-.01em}
-.product__desc{max-width:40ch;margin:0 0 22px;font-size:15px;color:var(--text-body)}
-.product__go{margin-top:18px;font-size:14.5px;font-weight:500;color:var(--accent)}
-.mini{margin-top:auto;padding:16px;border-radius:var(--radius-md);background:var(--band-neutral);font-size:13.5px}
-.mini__row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid var(--line-soft)}
-.mini__row:last-child{border-bottom:0}
-.mini__row .num{font-size:13px}
-.mini__row--total{margin-top:4px;padding-top:8px;border-top:3px double var(--ink);font-weight:600}
-.mini__note{margin:8px 0 0;font-size:13.5px;color:var(--text-muted)}
-.mini--metrics{display:flex;flex-wrap:wrap;gap:28px}
-.mini--metrics span{display:block;color:var(--text-muted)}
-.mini--metrics b{display:block;font-size:20px;font-weight:500}
-.spark{display:flex;align-items:flex-end;gap:5px;height:56px}
-.spark i{flex:1;border-radius:2px 2px 0 0;background:var(--accent);opacity:.85}
+.product__desc{max-width:40ch;margin:0 0 20px;font-size:15px;color:var(--text-body)}
+.mini{margin-top:auto;padding:16px 18px;border:1px solid #EEF0F2;border-radius:var(--radius-md);background:var(--paper);font-size:13px}
+/* Mini gráficos del bento (v2): cifra, barra apilada, histograma, pasos, tareas y área */
+.mini__figure{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-bottom:12px}
+.mini__figure b{font-size:22px;font-weight:500;letter-spacing:-.02em}
+.mini__figure small{font-size:12.5px;color:var(--text-muted)}
+.mini__delta{margin-left:auto;font-size:12.5px;font-weight:500;color:var(--positive)}
+.stack{display:flex;gap:2px;height:12px;overflow:hidden;border-radius:3px}
+.stack i{display:block}
+.stack__legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:12px;color:var(--text-muted)}
+.stack__legend i{display:inline-block;width:8px;height:8px;margin-right:6px;border-radius:2px}
+.mini__hist{display:flex;align-items:flex-end;gap:3px;height:64px}
+.mini__hist i{flex:1;border-radius:1px;background:var(--uso)}
+.nodes{display:flex;align-items:center}
+.nodes span{display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:50%}
+.nodes__ok{background:var(--accent);color:#FFFFFF}
+.nodes__now{border:1.5px solid var(--accent);background:var(--paper)}
+.nodes i{flex:1;height:1.5px;background:var(--accent)}
+.nodes i.nodes__off{background:#DCE9E6}
+.nodes__labels{display:flex;justify-content:space-between;margin-top:8px;font-size:11.5px;color:var(--text-muted)}
+.mini__tasks{display:flex;gap:8px}
+.mini__tasks span{display:grid;place-items:center;width:32px;height:32px;border-radius:var(--radius-md);background:var(--accent-wash);color:var(--accent-pressed)}
+.mini__tasks svg{width:16px;height:16px}
+.mini__area{display:block;width:100%;height:64px}
 
 /* 7 · Cobra como vendes */
 .paths{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -337,12 +352,10 @@ a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
 
 
 
-/* 9 · LatAm (prototipo): tres columnas, título y una línea */
-.latam{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 48px}
-.latam__title{margin:0 0 6px;font-size:17px;font-weight:600;line-height:1.35;color:var(--text-on-ink)}
-.latam__line{max-width:36ch;margin:0;font-size:15px;line-height:1.5;color:var(--text-on-ink-soft)}
-@container (max-width:979px){.latam{grid-template-columns:1fr 1fr}}
-@container (max-width:599px){.latam{grid-template-columns:1fr;gap:28px}}
+/* 9 · LatAm (prototipo v2): seis frases grandes en dos columnas */
+.latam{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:56px;margin:0;padding:0;list-style:none}
+.latam li{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:clamp(18px,1.6cqi,22px);font-weight:500;letter-spacing:-.01em;color:var(--text-on-ink)}
+@container (max-width:719px){.latam{grid-template-columns:1fr}}
 
 /* 10 · Integraciones (prototipo): carrusel de nombres en texto, lineal y lento */
 .ints{overflow:hidden}
