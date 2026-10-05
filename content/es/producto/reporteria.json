@@ -1,0 +1,306 @@
+{
+  "id": "reporteria",
+  "preset": "producto",
+  "seo": "reporteria",
+  "keyword": "métricas SaaS: MRR, ARR y DSO",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Producto",
+      "href": "/producto"
+    },
+    {
+      "label": "Reportería SaaS/IA"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Reportería SaaS/IA: tus métricas de revenue, sin armar planillas.",
+      "lead": "MRR, ARR, consumo, DSO y más, calculados con los mismos datos con que facturas y cobras.",
+      "intro": "Las métricas de revenue suelen armarse cruzando el CRM, la facturación y el banco, y casi nunca cuadran entre sí. Como Relvo opera todo el flujo, de la venta al pago, las métricas salen del mismo sistema que cobra. Lo que ves en un reporte es lo que efectivamente se facturó y se pagó.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "waterfall",
+        "data": {
+          "steps": [
+            [
+              "Sep",
+              184.3,
+              "base"
+            ],
+            [
+              "Altas",
+              6.2
+            ],
+            [
+              "Expansión",
+              3.1
+            ],
+            [
+              "Consumo",
+              2.9
+            ],
+            [
+              "Contracción",
+              -1.4
+            ],
+            [
+              "Churn",
+              -2.7
+            ],
+            [
+              "Oct",
+              192.4,
+              "base"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "De cruzar tres sistemas a un solo número.",
+      "h2Soft": "Que siempre cuadra.",
+      "before": [
+        "El MRR del CRM no coincide con lo facturado.",
+        "El DSO se calcula a mano cada cierre.",
+        "El consumo vive en otra herramienta."
+      ],
+      "after": [
+        "MRR y ARR salen de los contratos que efectivamente se cobran.",
+        "DSO y días en facturar, actualizados todo el mes.",
+        "Ingreso recurrente y consumo en el mismo gráfico."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo funciona.",
+      "h2Soft": "Del cobro al reporte.",
+      "steps": [
+        {
+          "title": "Relvo registra",
+          "text": "Cada cálculo, factura y pago queda en el mismo sistema."
+        },
+        {
+          "title": "Arma las métricas",
+          "text": "MRR, consumo, DSO y más, sin exportar nada."
+        },
+        {
+          "title": "Las ves",
+          "text": "Por cliente, por período o por métrica."
+        }
+      ]
+    },
+    {
+      "type": "featureTabs",
+      "h2": "Las métricas que importan en SaaS e IA.",
+      "h2Soft": "Con el detalle detrás de cada número.",
+      "tabs": [
+        {
+          "label": "MRR y ARR",
+          "desc": "Altas, expansión, contracción y churn.",
+          "visual": {
+            "id": "waterfall",
+            "data": {
+              "steps": [
+                [
+                  "Sep",
+                  184.3,
+                  "base"
+                ],
+                [
+                  "Altas",
+                  6.2
+                ],
+                [
+                  "Expansión",
+                  3.1
+                ],
+                [
+                  "Consumo",
+                  2.9
+                ],
+                [
+                  "Contracción",
+                  -1.4
+                ],
+                [
+                  "Churn",
+                  -2.7
+                ],
+                [
+                  "Oct",
+                  192.4,
+                  "base"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "label": "Recurrente vs. consumo",
+          "desc": "Cuánto de tu ingreso viene del uso.",
+          "visual": {
+            "id": "barChart",
+            "data": {
+              "labels": [
+                "Abr",
+                "May",
+                "Jun",
+                "Jul",
+                "Ago",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "name": "Recurrente",
+                  "values": [
+                    140,
+                    143,
+                    146,
+                    149,
+                    152,
+                    156
+                  ]
+                },
+                {
+                  "name": "Consumo: tokens",
+                  "values": [
+                    38,
+                    52,
+                    41,
+                    63,
+                    49,
+                    72
+                  ]
+                },
+                {
+                  "name": "Consumo: documentos",
+                  "values": [
+                    12,
+                    9,
+                    15,
+                    11,
+                    17,
+                    14
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "DSO y DTI",
+          "desc": "Qué tan rápido conviertes trabajo en caja.",
+          "visual": {
+            "id": "lineChart",
+            "data": {
+              "labels": [
+                "Abr",
+                "May",
+                "Jun",
+                "Jul",
+                "Ago",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "name": "DTI",
+                  "values": [
+                    6,
+                    5,
+                    5,
+                    4,
+                    3,
+                    3
+                  ]
+                },
+                {
+                  "name": "DSO",
+                  "values": [
+                    47,
+                    45,
+                    44,
+                    41,
+                    40,
+                    38
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "metrics",
+      "h2": "Además, para tu cierre.",
+      "h2Soft": "Bajo IFRS 15.",
+      "kpis": [
+        {
+          "label": "Facturación y recaudación",
+          "value": "Mes a mes"
+        },
+        {
+          "label": "Reconocimiento de ingresos",
+          "value": "IFRS 15"
+        }
+      ],
+      "note": "Cuentas por cobrar por cliente y antigüedad, en el mismo lugar."
+    },
+    {
+      "type": "related",
+      "h2": "Funciona junto con.",
+      "h2Soft": "El mismo motor, de punta a punta.",
+      "items": [
+        "medicion",
+        "cxc",
+        "contratos"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes sobre la reportería de Relvo.",
+      "items": [
+        {
+          "q": "¿Qué métricas incluye?",
+          "a": "MRR y ARR con su waterfall, ingreso recurrente frente a consumo por métrica, facturación, recaudación, cuentas por cobrar, DSO, días en facturar y reconocimiento de ingresos bajo IFRS 15."
+        },
+        {
+          "q": "¿De dónde salen los datos?",
+          "a": "Del mismo sistema que calcula, factura y cobra. No hay que exportar ni cruzar información entre herramientas."
+        },
+        {
+          "q": "¿Qué son el DSO y el DTI?",
+          "a": "El DSO son los días que demoras en cobrar una factura. El DTI son los días que demoras en facturar desde que termina el período. Juntos muestran qué tan rápido conviertes trabajo en caja."
+        },
+        {
+          "q": "¿Relvo hace reconocimiento de ingresos?",
+          "a": "Sí, bajo IFRS 15."
+        },
+        {
+          "q": "¿Puedo ver las métricas por cliente?",
+          "a": "Sí. Cada número se puede abrir por cliente, por período o por métrica."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ]
+}

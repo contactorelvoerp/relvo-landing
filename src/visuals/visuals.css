@@ -1,0 +1,196 @@
+/* Librería de visuales (src/visuals): UI estilo producto con datos de ejemplo. La comparten la home
+   y las páginas de plantilla. Tokens y reglas de CLAUDE.md: Instrument Sans con cifras tabulares,
+   etiquetas rectangulares sin punto y el acento de uso solo para consumo. */
+
+.example-tag{display:inline-flex;align-items:center;height:20px;padding:0 6px;border:1px dashed var(--line-rule);border-radius:var(--radius-sm);font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--text-main);white-space:nowrap}
+.example-tag--on-ink{border-color:var(--text-on-ink-muted);color:var(--text-on-ink-soft)}
+
+/* Etiqueta de estado (v2): rectangular, tinte suave, sin punto */
+.chip{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;background:var(--chip-bg);color:var(--chip-fg);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap}
+.chip--run{background:var(--status-review-wash);color:var(--status-review)}
+.chip--plain{background:var(--line-soft);color:var(--text-body)}
+
+/* Tarjeta de UI */
+.ui{width:100%;max-width:470px;padding:24px 26px;border-radius:var(--radius-lg);background:var(--paper);box-shadow:var(--shadow-overlay)}
+.ui__head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;font-size:14px}
+.ui__head > span:not(.chip){font-size:13px;color:var(--text-muted)}
+.ui__glosa{padding:10px 12px;border-radius:var(--radius-md);background:var(--paper-2);font-size:13px;color:var(--text-body)}
+.ui__glosa small{display:block;margin-bottom:2px;font-size:12px;color:var(--text-muted)}
+.ui--chart{max-width:640px;padding:20px 22px}
+.ui--codeBlock{max-width:520px;padding:0;overflow:hidden}
+
+/* planCard: plan con precio, líneas y barra de tramos (en el acento de uso) */
+.plan{display:flex;align-items:center;gap:12px;margin-bottom:6px;padding-bottom:16px;border-bottom:1px solid var(--line-soft)}
+.plan__mark{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:var(--radius-md);background:var(--accent-wash);font-weight:600;color:var(--accent-pressed)}
+.plan b{display:block;font-size:15px}
+.plan small{display:block;font-size:12.5px;color:var(--text-muted)}
+.plan__price{margin-left:auto;font-size:18px;font-weight:500;white-space:nowrap}
+.plan__price small{display:inline;margin-left:2px;font-size:12px}
+.plan__line{padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.plan__row{display:flex;justify-content:space-between;gap:12px;font-size:13.5px}
+.plan__row .num{color:var(--text-body)}
+.tiers{display:flex;height:8px;margin-top:10px;overflow:hidden;border-radius:4px;background:#ECEEF1}
+.tiers__t1{background:var(--uso-2)}
+.tiers__t2{background:var(--uso)}
+.tiers__labels{display:flex;justify-content:space-between;margin-top:5px;font-size:11.5px;color:var(--text-muted)}
+.plan__sum{display:flex;justify-content:space-between;gap:12px;margin-top:12px;padding-top:12px;border-top:3px double var(--ink);font-weight:600}
+
+/* timeline: pasos con checks */
+.tline{margin:0;padding:0;list-style:none}
+.tline li{position:relative;display:grid;grid-template-columns:24px 1fr;gap:12px;padding-bottom:18px}
+.tline li:not(:last-child)::after{content:"";position:absolute;top:24px;bottom:2px;left:11px;width:1.5px;background:#DCE9E6}
+.tline__icon{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#FFFFFF}
+.tline__now .tline__icon{border:1.5px solid var(--accent);background:var(--paper)}
+.tline b{display:block;font-size:14px;font-weight:500}
+.tline small{display:block;font-size:12.5px;color:var(--text-muted)}
+.tline--compact li{padding-bottom:12px}
+
+/* splitInvoice: factura dividida en proporciones */
+.splitbar{display:flex;gap:3px;height:40px;overflow:hidden;border-radius:6px}
+.splitbar i{display:block;background:var(--accent)}
+.splitbar i + i{background:var(--accent-on-ink)}
+.splitbar__legend{display:grid;gap:3px;margin:10px 0 16px}
+.splitbar__legend small{display:block;font-size:12px;color:var(--text-muted)}
+.splitbar__legend b{margin-right:6px;font-size:16px;font-weight:500;white-space:nowrap}
+.splitbar__legend span{font-size:12px;color:var(--text-muted)}
+
+/* payment: monto pagado, barra y eventos */
+.paid{display:flex;align-items:baseline;gap:8px}
+.paid .num{font-size:30px;font-weight:500;letter-spacing:-.02em}
+.paid small{font-size:13px;color:var(--text-muted)}
+.meter{height:6px;overflow:hidden;border-radius:3px;background:#ECEEF1}
+.meter i{display:block;height:100%;border-radius:3px;background:var(--accent)}
+.meter--uso i{background:var(--uso)}
+.meter--lg{height:10px;margin:10px 0 18px;border-radius:5px}
+.meter--card{height:10px;margin:4px 0 10px;border-radius:5px}
+
+/* usage: tokens con barra e histograma (acento de uso) */
+.usage__plan{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.usage__icon{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:var(--radius-md);background:var(--uso-soft);color:var(--uso)}
+.usage__icon svg{width:16px;height:16px}
+.usage__plan b,.usage__plan small{display:block;white-space:nowrap}
+.usage__plan b{font-size:13.5px}
+.usage__plan small{font-size:11.5px;color:var(--text-muted)}
+.usage__big{display:flex;align-items:baseline;gap:6px;margin-bottom:8px;white-space:nowrap}
+.usage__big b{font-size:22px;font-weight:500;letter-spacing:-.02em}
+.usage__big small{font-size:11.5px;color:var(--text-muted)}
+.usage__hist{display:flex;align-items:flex-end;gap:2px;height:84px;margin-top:14px}
+.usage__hist i{flex:1;border-radius:1px;background:var(--uso)}
+.usage__period{margin:6px 0 0;font-size:11px;color:var(--text-muted)}
+
+/* emailPreview: correo de cobranza y calendario de envíos */
+.mail{overflow:hidden;border:1px solid #ECEEF1;border-radius:var(--radius-md)}
+.mail__head{padding:10px 14px;border-bottom:1px solid #ECEEF1;background:#F7F8F9;font-size:12.5px;color:var(--text-muted)}
+.mail__head b{font-weight:500;color:var(--text-main)}
+.mail__body{padding:16px;font-size:13.5px;line-height:1.55;color:var(--text-body)}
+.mail__pay{display:inline-block;margin-top:12px;padding:8px 14px;border-radius:6px;background:var(--accent);font-size:13px;font-weight:500;color:#FFFFFF}
+.mail__schedule{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+
+/* methods: medios de pago con proveedor */
+.methods{display:flex;flex-direction:column;gap:8px}
+.methods__item{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #ECEEF1;border-radius:var(--radius-md);font-size:14px}
+.methods__item--on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.methods__radio{flex:none;width:14px;height:14px;border:1.5px solid #C4C6CD;border-radius:50%}
+.methods__item--on .methods__radio{border:4px solid var(--accent)}
+.methods__provider{margin-left:auto;font-size:12px;color:var(--text-muted)}
+
+/* codeBlock: el endpoint es ilustrativo y la nota lo dice en pantalla */
+.code__bar{display:flex;align-items:center;height:32px;padding:0 14px;background:var(--ink);font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--text-on-ink-muted)}
+.code__body{margin:0;padding:18px;overflow-x:auto;background:var(--ink-2);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.6;color:var(--text-on-ink)}
+.code__note{margin:0;padding:10px 14px;border-top:1px solid #ECEEF1;font-size:12.5px;color:var(--text-muted)}
+
+/* caseHeadline: resultado grande del caso */
+.case-headline img{display:block;margin-bottom:10px;filter:grayscale(1) brightness(0);opacity:.82}
+.case-headline__descriptor{margin:0 0 20px;font-size:14px;line-height:1.5;color:var(--text-muted)}
+.case-headline__value{margin:0;font-size:clamp(64px,8cqi,96px);font-weight:500;line-height:.9;letter-spacing:-.04em;color:var(--text-main)}
+.case-headline__label{margin:12px 0 4px;font-size:20px;font-weight:500;color:var(--text-main)}
+.case-headline__sub{margin:0;font-size:15px;color:var(--text-body)}
+
+/* agentFeed y review: claros por defecto; en la banda oscura de la home, en tinta (.agents--ink) */
+.feed{margin:0;padding:0;list-style:none}
+.feed__item{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line-soft);font-size:14px;color:var(--text-main);transition:clip-path .45s var(--ease-out)}
+.feed__item:last-child{border-bottom:0}
+.feed time{font-size:12.5px;color:var(--text-muted)}
+.feed--animated .feed__item{clip-path:inset(0 100% 0 0)}
+.feed--animated .feed__item--in{clip-path:inset(0)}
+.feed__icon{display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:var(--accent-wash);color:var(--accent-pressed)}
+.feed__icon svg{width:15px;height:15px}
+.agents__kpis{display:flex;align-items:flex-end;gap:40px;margin-bottom:18px}
+.agents__kpis small{display:block;font-size:12.5px;color:var(--text-muted)}
+.agents__kpis b{display:block;font-size:40px;font-weight:500;line-height:1.1;letter-spacing:-.03em;color:var(--text-main)}
+.agents__kpis b.agents__kpi--review{color:var(--status-review)}
+.agents__kpis .example-tag{margin-left:auto}
+.review{display:flex;flex-direction:column;height:100%}
+.review__label{margin:0 0 8px;font-size:12.5px;font-weight:500;color:var(--status-review)}
+.review__title{margin:0 0 18px;font-size:17px;font-weight:600;color:var(--text-main)}
+.review__compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.review__compare div{padding:12px;border:1px solid #ECEEF1;border-radius:var(--radius-md);background:var(--paper-2)}
+.review__compare small{display:block;font-size:12px;color:var(--text-muted)}
+.review__compare .num{font-size:20px;color:var(--text-main)}
+.review__compare div:first-child .num{color:var(--status-review)}
+.review__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.review__action{padding:8px 12px;border-radius:var(--radius-md);background:var(--line-soft);font-size:13px;font-weight:500;color:var(--text-main)}
+.review__action--primary{background:var(--accent);color:#FFFFFF}
+.agents--ink .feed__item{border-bottom-color:var(--line-on-ink);color:var(--text-on-ink)}
+.agents--ink .feed time{color:var(--text-on-ink-muted)}
+.agents--ink .feed__icon{background:#262736;color:#9FD9C1}
+.agents--ink .agents__kpis small{color:var(--text-on-ink-soft)}
+.agents--ink .agents__kpis b{color:var(--text-on-ink)}
+.agents--ink .agents__kpis b.agents__kpi--review,.agents--ink .review__label,.agents--ink .review__compare div:first-child .num{color:#E8B05C}
+.agents--ink .review__title,.agents--ink .review__compare .num{color:var(--text-on-ink)}
+.agents--ink .review__compare div{border-color:var(--line-on-ink);background:#14141F}
+.agents--ink .review__compare small{color:var(--text-on-ink-muted)}
+.agents--ink .review__action{background:var(--line-on-ink);color:var(--text-on-ink)}
+.agents--ink .review__action--primary{background:var(--chip-fg-on-dark);color:var(--accent-pressed)}
+@media (prefers-reduced-motion:reduce){.feed--animated .feed__item{clip-path:none;transition:none}}
+
+/* Gráficos */
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:12px;font-size:13px;color:var(--text-muted)}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:2px;vertical-align:-1px}
+
+/* Piezas del hero: se revelan con un recorte que se abre (sin opacidad: el texto nunca queda
+   semitransparente). Ventana de la app, tarjeta de cobro y aviso. */
+.hc{position:absolute;z-index:2;padding:16px 18px;border-radius:var(--radius-lg);background:var(--paper);box-shadow:var(--shadow-overlay);transition:clip-path .55s var(--ease-out),transform .55s var(--ease-out)}
+.js .hc{clip-path:inset(0 0 100% 0);transform:translateY(8px)}
+.js .hc.hc--in{clip-path:inset(-24px -24px -48px -24px);transform:none}
+.hc--window{padding:0;overflow:hidden}
+.js .hc--window.hc--in{clip-path:inset(0)}
+.win__bar{display:flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-bottom:1px solid #ECEEF1;background:#F7F8F9}
+.win__bar i{width:8px;height:8px;border-radius:50%;background:#DADDE2}
+.win__url{margin-left:12px;padding:2px 10px;border:1px solid #ECEEF1;border-radius:5px;background:var(--paper);font-size:11px;color:var(--text-muted)}
+.win__body{display:grid;grid-template-columns:100px minmax(0,1fr);min-height:200px}
+.win__side{display:flex;flex-direction:column;gap:2px;padding:14px 12px;border-right:1px solid #ECEEF1;font-size:12px;color:var(--text-muted)}
+.win__brand{display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:13px;font-weight:600;color:var(--text-main)}
+.win__brand svg{width:14px;height:14px}
+.win__nav{padding:5px 8px;border-radius:5px}
+.win__nav--on{background:var(--accent-wash);font-weight:500;color:var(--accent-pressed)}
+.win__main{min-width:0;padding:14px 18px}
+.win__head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.win__head small{display:block;font-size:11px;color:var(--text-muted)}
+.win__head b{font-size:16px}
+.win__table{width:100%;border-collapse:collapse;font-size:12px}
+.win__table th{padding:6px 0;border-bottom:1px solid #ECEEF1;font-size:11px;font-weight:500;text-align:left;color:var(--text-muted)}
+.win__table td{padding:7px 0;border-bottom:1px solid #F3F4F6}
+.win__table tr:last-child td{border-bottom:0}
+.win__table th:not(:last-child),.win__table td:not(:last-child){padding-right:12px}
+.win__table th:last-child,.win__table td:last-child{text-align:right}
+.inv__head{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--text-muted)}
+.inv__total{margin:6px 0 10px;font-size:30px;font-weight:500;letter-spacing:-.02em;color:var(--text-main)}
+.hc__row{display:flex;justify-content:space-between;gap:16px;padding:6px 0;border-bottom:1px solid var(--line-soft);font-size:13px}
+.hc__row:last-child{border-bottom:0}
+.hc__row .num{font-size:12.5px}
+.hc__uso{box-shadow:inset 0 -2px 0 var(--uso)}
+.hc__row--total{margin-top:4px;padding-top:9px;border-top:3px double var(--ink);font-size:13.5px;font-weight:600}
+.hc--toast{display:flex;align-items:center;gap:10px;padding:12px 16px}
+.hc__mark{display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:6px;background:var(--accent)}
+.hc--toast b{display:block;font-size:13.5px}
+.hc--toast small{display:block;font-size:12px;color:var(--text-muted)}
+.hero-stage__tag{position:absolute;right:12px;bottom:10px;z-index:2;background:rgba(255,255,255,.7)}
+@media (prefers-reduced-motion:reduce){.js .hc{clip-path:none;transform:none;transition:none}}
+
+/* heroApp (plantilla): ventana ancha, tarjeta de cobro abajo a la izquierda y aviso abajo a la derecha */
+.hero-app{position:absolute;inset:0}
+.hero-app__window{left:6%;top:7%;width:84%}
+.hero-app__card{left:3%;top:57%;width:44%}
+.hero-app .hc--toast{right:3%;top:84%}

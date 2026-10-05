@@ -1,18 +1,21 @@
-import { useTabs } from './useTabs'
-import { DtiDsoLines, MrrWaterfall, UsageBars } from './Charts'
+import { useTabs } from '../../blocks/useTabs'
+import { Chart } from '../../visuals/Visual'
 
 // 03 Inteligencia (prototipo home v2): un solo contenedor con tabs de texto, KPI a la izquierda y
-// gráfico. En desktop el panel tiene alto fijo: cambiar de tab no cambia la altura de la sección.
-const LEGEND_COLORS = [['#13131E', '#633BF2', '#E3C0F2'], ['#186666', '#13131E']]
+// gráfico de la librería de visuales. En desktop el panel tiene alto fijo: cambiar de tab no cambia
+// la altura de la sección. Datos de ejemplo.
+const RECURRING = [140, 143, 146, 149, 152, 156], TOKENS = [38, 52, 41, 63, 49, 72], DOCS = [12, 9, 15, 11, 17, 14]
+const DTI = [6, 5, 5, 4, 3, 3], DSO = [47, 45, 44, 41, 40, 38]
+const MRR = [184.3, 6.2, 3.1, 2.9, -1.4, -2.7, 192.4]
+
+function chartFor(i, t, months) {
+  if (i === 0) return { id: 'barChart', data: { labels: months, series: [RECURRING, TOKENS, DOCS].map((values, k) => ({ name: t.legend[k], values })) } }
+  if (i === 1) return { id: 'lineChart', data: { labels: months, series: [DTI, DSO].map((values, k) => ({ name: t.legend[k], values })) } }
+  return { id: 'waterfall', data: { steps: t.steps.map((name, k) => (k === 0 || k === t.steps.length - 1 ? [name, MRR[k], 'base'] : [name, MRR[k]])) } }
+}
 
 export function Intelligence({ c, example }) {
   const tabs = useTabs('reportes', c.tabs.length)
-  const charts = [
-    <UsageBars key="usage" months={c.months} label={c.tabs[0].chartLabel} />,
-    <DtiDsoLines key="dti" months={c.months} label={c.tabs[1].chartLabel} />,
-    <MrrWaterfall key="mrr" steps={c.tabs[2].steps} label={c.tabs[2].chartLabel} locale={c.numberLocale} />,
-  ]
-
   return (
     <>
       <div className="report">
@@ -31,14 +34,7 @@ export function Intelligence({ c, example }) {
               ))}
               <span className="example-tag">{example}</span>
             </div>
-            <div className="report__chart">
-              {charts[i]}
-              {t.legend && (
-                <div className="legend">
-                  {t.legend.map((name, k) => <span key={name + k}><i style={{ background: LEGEND_COLORS[i][k] }} />{name}</span>)}
-                </div>
-              )}
-            </div>
+            <div className="report__chart"><Chart {...chartFor(i, t, c.months)} label={t.chartLabel} locale={c.numberLocale} /></div>
           </div>
         ))}
       </div>

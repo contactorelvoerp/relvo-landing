@@ -1,0 +1,161 @@
+{
+  "id": "saas",
+  "preset": "solucion",
+  "seo": "saas",
+  "keyword": "facturación y cobro para empresas SaaS e IA",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Soluciones",
+      "href": "/soluciones"
+    },
+    {
+      "label": "SaaS/IA"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Facturación y cobro para empresas SaaS e IA.",
+      "lead": "Seats, uso, tokens o planes fijos: Relvo calcula, factura, cobra y concilia el revenue de empresas SaaS e IA en LatAm.",
+      "intro": "Las empresas de software e IA cambian su pricing más seguido que cualquier otra industria: de seats a uso, de uso a tokens, de self-serve a contratos enterprise. Relvo está hecho para eso. Tu pricing vive como reglas, así que cambiarlo no significa cambiar de sistema, y cada cobro sale exacto aunque el modelo sea nuevo.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "usage",
+        "data": {
+          "unit": "Tokens",
+          "price": "USD 0,002 por 1.000",
+          "used": "1.200 M",
+          "included": "1.500 M",
+          "series": [
+            8,
+            12,
+            18,
+            15,
+            24,
+            30,
+            22,
+            26,
+            14,
+            10,
+            28,
+            25,
+            33,
+            38,
+            30,
+            52,
+            70,
+            42,
+            35,
+            26,
+            30,
+            34,
+            32,
+            44,
+            50,
+            56,
+            62,
+            48,
+            36,
+            40
+          ]
+        }
+      }
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "Del pricing que cambia cada trimestre a un motor que lo aguanta.",
+      "h2Soft": "Sin rehacer la facturación.",
+      "before": [
+        "Cada cambio de pricing obliga a rehacer planillas.",
+        "Self-serve en una herramienta y contratos enterprise en otra.",
+        "Métricas SaaS armadas a mano cada cierre."
+      ],
+      "after": [
+        "Un pricing nuevo es una regla nueva.",
+        "Planes con tarjeta y contratos negociados en el mismo motor.",
+        "MRR, consumo y DSO salen del mismo sistema que cobra."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo lo resuelve Relvo.",
+      "h2Soft": "Con las tres capas.",
+      "steps": [
+        {
+          "title": "Rieles",
+          "text": "Seats, uso, tokens, fases y descuentos convertidos en reglas exactas."
+        },
+        {
+          "title": "Agentes",
+          "text": "OCs, seguimientos y avisos del equipo, sin trabajo manual."
+        },
+        {
+          "title": "Inteligencia",
+          "text": "Ingreso recurrente frente a consumo, MRR y DSO, siempre al día."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Los productos que más usan.",
+      "h2Soft": "Las empresas SaaS e IA.",
+      "items": [
+        "medicion",
+        "contratos",
+        "reporteria"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes para empresas SaaS e IA.",
+      "items": [
+        {
+          "q": "¿Relvo sirve para cobrar tokens?",
+          "a": "Sí. Los tokens son una métrica de consumo más: tu producto los envía por API y Relvo los cobra con el precio de cada contrato."
+        },
+        {
+          "q": "¿Puedo tener clientes self-serve y contratos enterprise?",
+          "a": "Sí. Planes recurrentes pagados con tarjeta y contratos con pricing híbrido funcionan en el mismo motor, con las mismas reglas y los mismos reportes."
+        },
+        {
+          "q": "¿Relvo emite facturación electrónica?",
+          "a": "Sí, en Chile y México, desde el mismo sistema."
+        },
+        {
+          "q": "¿Qué métricas SaaS entrega?",
+          "a": "MRR y ARR con su waterfall, ingreso recurrente frente a consumo, DSO, días en facturar y reconocimiento de ingresos bajo IFRS 15."
+        },
+        {
+          "q": "¿Con qué herramientas se integra?",
+          "a": "Con HubSpot, Stripe, Toku, Fintoc, Sintropix, Slack y Google Chat, y con tus herramientas de IA vía MCP."
+        },
+        {
+          "q": "¿Puedo cambiar mi modelo de pricing sin cambiar de sistema?",
+          "a": "Sí. Tu pricing vive como reglas en Relvo: pasar de seats a uso, o de uso a tokens, es cambiar reglas, no migrar de herramienta."
+        },
+        {
+          "q": "¿Sirve si tengo sociedades en Chile y México?",
+          "a": "Sí. Relvo emite facturación electrónica en ambos países, puede facturar desde distintas sociedades y hacer un solo cierre para todas."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ]
+}

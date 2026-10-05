@@ -38,6 +38,7 @@ export const en = {
     blog: { name: 'Blog' },
     docs: { name: 'Docs' },
     terminos: { name: 'Terms' },
+    tgp: { name: 'TGP' },
     privacidad: { name: 'Privacy' },
   },
   footer: {

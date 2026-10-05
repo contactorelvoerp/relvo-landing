@@ -1,0 +1,230 @@
+{
+  "id": "aprobaciones",
+  "preset": "producto",
+  "seo": "aprobaciones",
+  "keyword": "aprobaciones y órdenes de compra",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Producto",
+      "href": "/producto"
+    },
+    {
+      "label": "Aprobaciones y órdenes de compra"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Aprobaciones y órdenes de compra: ninguna factura sale sin su OC.",
+      "lead": "Relvo prepara la pre-factura, consigue la orden de compra o la aprobación que tu cliente exige y emite solo cuando todo cuadra.",
+      "intro": "Cuando vendes a empresas, una factura sin su orden de compra o su HES es una factura rechazada. Los primeros días del mes se van en pedir documentos por correo, revisar que calcen con el contrato y volver a emitir. Relvo ordena ese tramo: cada factura sale con sus documentos asociados y aprobados.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "timeline",
+        "data": {
+          "title": "Factura de octubre, Nimbo AI",
+          "steps": [
+            {
+              "label": "Pre-factura generada",
+              "sub": "1 de octubre",
+              "done": true
+            },
+            {
+              "label": "OC 4500-221 asociada",
+              "sub": "Monto y vigencia calzan",
+              "done": true
+            },
+            {
+              "label": "Aprobada por el cliente",
+              "sub": "2 de octubre",
+              "done": true
+            },
+            {
+              "label": "Emisión",
+              "sub": "Hoy",
+              "done": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "Del correo pidiendo la OC a la factura aprobada.",
+      "h2Soft": "Sin rechazos.",
+      "before": [
+        "Facturas rechazadas por falta de orden de compra.",
+        "Correos de ida y vuelta para conseguir la OC o la HES.",
+        "Alguien revisa a mano que la OC calce con el contrato."
+      ],
+      "after": [
+        "Cada factura sale con su OC asociada.",
+        "Un agente sigue el correo hasta conseguir el documento.",
+        "Si la OC no calza, Relvo la deja en revisión antes de emitir."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo funciona.",
+      "h2Soft": "De la pre-factura a la emisión.",
+      "steps": [
+        {
+          "title": "Pre-factura",
+          "text": "Relvo calcula el período y prepara la pre-factura."
+        },
+        {
+          "title": "OC y aprobación",
+          "text": "Un agente lee la OC, la asocia y pide lo que falte."
+        },
+        {
+          "title": "Emisión",
+          "text": "Con todo aprobado, la factura sale sola."
+        }
+      ]
+    },
+    {
+      "type": "featureTabs",
+      "h2": "Cada paso, con su documento.",
+      "h2Soft": "Y su aprobación.",
+      "tabs": [
+        {
+          "label": "Pre-facturas",
+          "desc": "El monto, revisado antes de emitir.",
+          "visual": {
+            "id": "planCard",
+            "data": {
+              "plan": "Pre-factura de octubre",
+              "client": "Nimbo AI",
+              "price": "USD 3.090",
+              "lines": [
+                [
+                  "Plan Growth",
+                  "USD 500"
+                ],
+                [
+                  "Seats adicionales",
+                  "USD 240"
+                ],
+                [
+                  "Tokens",
+                  "USD 2.400"
+                ],
+                [
+                  "Descuento de lanzamiento",
+                  "−USD 50"
+                ]
+              ],
+              "total": [
+                "Total a facturar",
+                "USD 3.090"
+              ]
+            }
+          }
+        },
+        {
+          "label": "OC y HES",
+          "desc": "Leídas y asociadas a cada factura.",
+          "visual": {
+            "id": "timeline",
+            "data": {
+              "title": "OC 4500-221",
+              "steps": [
+                {
+                  "label": "OC recibida por correo",
+                  "sub": "Nimbo AI",
+                  "done": true
+                },
+                {
+                  "label": "Monto y vigencia leídos",
+                  "sub": "USD 3.090, hasta diciembre",
+                  "done": true
+                },
+                {
+                  "label": "HES pendiente",
+                  "sub": "Pedida a finanzas del cliente",
+                  "done": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "Revisión",
+          "desc": "Lo que no calza, lo decides tú.",
+          "visual": {
+            "id": "review",
+            "data": {
+              "title": "La OC no calza con el contrato.",
+              "left": [
+                "OC de Tandem SaaS",
+                "USD 1.800"
+              ],
+              "right": [
+                "Contrato",
+                "USD 2.100"
+              ],
+              "actions": [
+                "Pedir nueva OC",
+                "Aprobar igual"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Funciona junto con.",
+      "h2Soft": "El mismo motor, de punta a punta.",
+      "items": [
+        "agentes",
+        "contratos",
+        "cxc"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes sobre aprobaciones y órdenes de compra.",
+      "items": [
+        {
+          "q": "¿Qué es una HES?",
+          "a": "Es la hoja de entrada de servicios, un documento que muchos clientes en Chile exigen junto con la orden de compra para aceptar una factura. Relvo la asocia a la factura igual que la OC."
+        },
+        {
+          "q": "¿Relvo lee las órdenes de compra?",
+          "a": "Sí. Un agente lee la OC, extrae sus datos, como el número, el monto y la vigencia, y la asocia a la pre-factura que corresponde."
+        },
+        {
+          "q": "¿Qué pasa si la OC no calza con el contrato?",
+          "a": "Relvo no emite. La factura queda en una bandeja de revisión y tu equipo decide si pedir una nueva OC o aprobarla igual."
+        },
+        {
+          "q": "¿Puedo definir aprobaciones internas?",
+          "a": "Sí. Puedes configurar flujos de aprobación de tu equipo y del cliente antes de emitir."
+        },
+        {
+          "q": "¿Funciona con clientes que no piden OC?",
+          "a": "Sí. Si un cliente no exige orden de compra ni aprobación, su factura sale directo cuando termina el período."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ]
+}

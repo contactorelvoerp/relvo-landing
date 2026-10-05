@@ -1,8 +1,8 @@
 import { getRoutes } from '../routes'
+import { getContent } from '../content'
 import { getDict } from '../i18n'
 import { APOLLO_APP_ID, DEFAULT_LOCALE, GA_ID, LINKEDIN_URL, SITE_NAME, SITE_URL } from '../site'
 
-const PRODUCT_PAGES = ['contratos', 'medicion', 'aprobaciones', 'cxc', 'agentes', 'reporteria']
 const OG_LOCALE = { es: 'es_LA', en: 'en_US' }
 
 const esc = (s) => String(s)
@@ -35,7 +35,9 @@ function jsonLd(route) {
   if (route.status !== 'live') return graph
 
   const url = absoluteUrl(route.path)
-  if (route.id === 'home' || PRODUCT_PAGES.includes(route.id)) {
+  const page = getContent(route.locale, route.path)
+  if (page) return [...graph, ...landingLd(page, route, url, org)]
+  if (route.id === 'home') {
     graph.push({
       '@type': 'SoftwareApplication',
       name: SITE_NAME,
@@ -57,6 +59,40 @@ function jsonLd(route) {
     })
   }
   return graph
+}
+
+// Páginas de plantilla (content/SCHEMA.md §5): BreadcrumbList desde las migas visibles,
+// SoftwareApplication en producto y solución, y FAQPage con exactamente el texto visible de la FAQ.
+// Una miga intermedia sin página publicada no entra al BreadcrumbList (no se enlaza a una URL que no existe).
+function landingLd(page, route, url, org) {
+  const live = (path) => getRoutes().some((r) => r.path === path && r.status === 'live')
+  const crumbs = page.breadcrumb.filter((c, i) => i === page.breadcrumb.length - 1 || (c.href && live(c.href)))
+  const ld = [{
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((c, i) => ({
+      '@type': 'ListItem', position: i + 1, name: c.label,
+      item: i === crumbs.length - 1 ? url : absoluteUrl(c.href),
+    })),
+  }]
+  if (page.preset !== 'caso') {
+    ld.push({
+      '@type': 'SoftwareApplication',
+      name: SITE_NAME,
+      url,
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      description: route.description,
+      provider: { '@id': org },
+    })
+  }
+  const faq = page.blocks.find((b) => b.type === 'faq')
+  if (faq) {
+    ld.push({
+      '@type': 'FAQPage',
+      mainEntity: faq.items.map((q) => ({ '@type': 'Question', name: q.q, acceptedAnswer: { '@type': 'Answer', text: q.a } })),
+    })
+  }
+  return ld
 }
 
 // Devuelve el HTML del <head> de una ruta. `production` decide indexación y analítica;

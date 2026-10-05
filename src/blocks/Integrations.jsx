@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { hrefFor } from '../../routes'
+import { hrefFor } from '../routes'
 
 // Integraciones (prototipo home v1): carrusel de nombres en texto y dos líneas de salida.
 // "Conecta Relvo vía MCP" queda sin link hasta que exista su documentación.

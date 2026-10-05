@@ -35,9 +35,10 @@ function write(file, content) {
   fs.writeFileSync(target, content)
 }
 
-// lastmod real: fecha del último commit que tocó la página.
+// lastmod real: fecha del último commit que tocó la página (en las de plantilla, su archivo de contenido).
 function lastmod(route) {
-  const source = `src/pages/${route.id}`
+  const content = `content/${route.locale}${route.path}.json`
+  const source = fs.existsSync(path.join(root, content)) ? content : `src/pages/${route.id}`
   try {
     const date = execFileSync('git', ['log', '-1', '--format=%cs', '--', source], { cwd: root, encoding: 'utf8' }).trim()
     if (date) return date
