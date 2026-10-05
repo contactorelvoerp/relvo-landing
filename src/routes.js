@@ -1,6 +1,6 @@
 import seo from '../reference/seo-metadata.json'
 import { SHOW_PENDING } from './env'
-import { DEFAULT_LOCALE } from './site'
+import { DEFAULT_LOCALE, EXTERNAL_PAGES } from './site'
 import { READY_LOCALES, getDict } from './i18n'
 import { PAGE_COMPONENTS, PAGE_LOCALES } from './pages/registry'
 import { NOINDEX_PAGES } from './pages/noindex'
@@ -11,6 +11,8 @@ function buildRoutes() {
   for (const page of seo.pages) {
     // Las páginas sin implementar se generan solo fuera de producción; las de la ola 2, solo cuando
     // ya están implementadas.
+    // Docs y Blog son sitios externos: no generan página en este sitio
+    if (EXTERNAL_PAGES[page.id]) continue
     const built = Boolean(PAGE_COMPONENTS[page.id])
     if (page.pagina.includes('(ola 2)') && !built) continue
     if (!built && !SHOW_PENDING) continue
@@ -49,7 +51,7 @@ function findRoute(id, locale) {
 }
 
 export function hrefFor(id, locale) {
-  return findRoute(id, locale)?.path ?? null
+  return EXTERNAL_PAGES[id] ?? findRoute(id, locale)?.path ?? null
 }
 
 // Para links escritos como URL en los archivos de contenido: la URL si la página existe en este

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { hrefFor } from '../routes'
-import { APP_LOGIN_URL } from '../site'
+import { API_DOCS_URL, APP_LOGIN_URL } from '../site'
 
 // Mega-menú por capa (brief 6.4, Nav del Design System v1.5).
 const PRODUCT = [
@@ -70,7 +70,8 @@ export function Nav({ t, locale }) {
   const solutions = columns(SOLUTIONS, t.nav)
   const resources = links(RESOURCES)
   const docs = hrefFor('docs', locale)
-  const customers = hrefFor('clientes', locale)
+  // Clientes lleva al caso TGP de la home
+  const customers = `${hrefFor('home', locale) ?? '/'}#clientes`
   const pricing = hrefFor('precios', locale)
   const demo = hrefFor('demo', locale)
   const home = hrefFor('home', locale) ?? '/'
@@ -131,7 +132,7 @@ export function Nav({ t, locale }) {
         {docs && (
           <div className="nav__col nav__col--last">
             <p className="nav__col-title">{t.nav.developers}</p>
-            <a className="nav__plain nav__plain--accent" href={docs}>{t.nav.apiDocs} →</a>
+            <a className="nav__plain nav__plain--accent" href={API_DOCS_URL}>{t.nav.apiDocs} →</a>
           </div>
         )}
       </div>
