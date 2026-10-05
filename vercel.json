@@ -4,7 +4,9 @@
   "redirects": [
     { "source": "/about-us", "destination": "/", "statusCode": 301 },
     { "source": "/pricing", "destination": "/precios", "statusCode": 301 },
-    { "source": "/en/precios", "destination": "/en/pricing", "statusCode": 301 },
+    { "source": "/en/precios", "destination": "/precios", "statusCode": 301 },
+    { "source": "/en", "destination": "/", "statusCode": 301 },
+    { "source": "/en/pricing", "destination": "/precios", "statusCode": 301 },
     { "source": "/shader-only", "destination": "/", "statusCode": 301 },
     { "source": "/linkedin-banner", "destination": "/", "statusCode": 301 },
     { "source": "/login", "destination": "https://app.relvoerp.com/login", "statusCode": 301 }

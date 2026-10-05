@@ -65,7 +65,7 @@ function jsonLd(route) {
 // SoftwareApplication en producto y solución, y FAQPage con exactamente el texto visible de la FAQ.
 // Una miga intermedia sin página publicada no entra al BreadcrumbList (no se enlaza a una URL que no existe).
 function landingLd(page, route, url, org) {
-  const live = (path) => getRoutes().some((r) => r.path === path && r.status === 'live')
+  const live = (path) => getRoutes().some((r) => r.path === path && r.status === 'live' && !r.noindex)
   const crumbs = page.breadcrumb.filter((c, i) => i === page.breadcrumb.length - 1 || (c.href && live(c.href)))
   const ld = [{
     '@type': 'BreadcrumbList',
@@ -98,10 +98,11 @@ function landingLd(page, route, url, org) {
 // Devuelve el HTML del <head> de una ruta. `production` decide indexación y analítica;
 // `ogImage` es la ruta pública de la imagen 1200×630 de la página, si existe.
 export function buildHead(route, { production, ogImage }) {
-  const indexable = production && route.status === 'live'
+  const indexable = production && route.status === 'live' && !route.noindex
   const tags = [
     `<title>${esc(route.title)}</title>`,
-    `<meta name="robots" content="${indexable ? 'index, follow' : 'noindex, nofollow'}" />`,
+    // Las páginas en preparación (noindex) dejan seguir sus links en producción
+    `<meta name="robots" content="${indexable ? 'index, follow' : production && route.noindex ? 'noindex, follow' : 'noindex, nofollow'}" />`,
   ]
   if (route.description) tags.push(`<meta name="description" content="${esc(route.description)}" />`)
 

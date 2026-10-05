@@ -67,6 +67,9 @@ const LATAM_ICONS = [
 ]
 
 
+// Banda de cifras "Operando hoy en LatAm": oculta por ahora (Ricardo, 2026-10-05)
+const SHOW_STATS = false
+
 export function HomePage({ t, locale }) {
   const c = copy[locale]
   const demo = hrefFor('demo', locale)
@@ -95,12 +98,12 @@ export function HomePage({ t, locale }) {
         <LogoStrip label={c.hero.logos} />
       </section>
 
-      <section className="section band" aria-labelledby="cifras">
+      {SHOW_STATS && <section className="section band" aria-labelledby="cifras">
         <Heading id="cifras" title={c.stats.title} soft={c.stats.soft} />
         <div className="stats">
           {c.stats.items.map(([value, label]) => <div key={label}><b className="stats__value num">{value}</b><p className="stats__label">{label}</p></div>)}
         </div>
-      </section>
+      </section>}
 
       <section id="como-funciona" className="section band band--mint">
         <BandTexture kind="orbitsEdge" />

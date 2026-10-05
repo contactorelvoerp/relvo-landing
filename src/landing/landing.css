@@ -11,6 +11,8 @@
 .lp-hero__visual{min-width:0;container-type:inline-size}
 .lp-stage{padding:40px}
 .lp-stage > .ui{position:relative;z-index:1}
+/* Relieve sobre gris claro: sobre la página blanca el escenario necesita su fondo */
+.lp-stage .texture--ridges{background:var(--band-neutral)}
 /* Intro (40 a 70 palabras), centrada bajo el visual */
 .lp-intro{max-width:720px;margin:48px auto 0;font-size:17px;line-height:1.6;text-align:center;color:var(--text-body)}
 @container (max-width:560px){.lp-stage{padding:20px}}

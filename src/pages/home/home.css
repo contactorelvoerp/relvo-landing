@@ -93,8 +93,11 @@
 .manifesto__text{margin:0;font-size:clamp(34px,4.2cqi,60px);font-weight:500;line-height:1.1;letter-spacing:-.035em;color:var(--text-main);text-wrap:balance}
 
 /* 02 · Agentes: registro + caso de revisión sobre la textura Pulso (visuales en tinta) */
-.agents{position:relative;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px}
-.agents__bg{position:absolute;inset:-40px 0;z-index:0;pointer-events:none}
+.agents{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px}
+/* La textura Pulso ocupa toda la sección, detrás del titular y de los paneles */
+#agentes{position:relative}
+.agents__bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+#agentes .h2{position:relative;z-index:1}
 .agents__bg .texture{border-radius:0}
 .pane{position:relative;z-index:1;padding:22px;border:1px solid var(--line-on-ink);border-radius:var(--radius-lg);background:var(--panel-on-ink)}
 .principle{position:relative;z-index:1;max-width:62ch;margin:28px 0 0;font-size:16px;color:var(--text-on-ink-soft)}
