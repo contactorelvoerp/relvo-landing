@@ -21,5 +21,6 @@ jobs:
       - run: npm run knip
       - run: npm run build
       - run: npm run check:links
+      - run: npm run check:jsonld
       - run: npm run check:bands
       - run: npm run check:design

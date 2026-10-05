@@ -1,0 +1,143 @@
+{
+  "id": "agencias",
+  "preset": "solucion",
+  "seo": "agencias",
+  "keyword": "facturación para agencias con fee variable",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Soluciones",
+      "href": "/soluciones"
+    },
+    {
+      "label": "Agencias"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Facturación para agencias con fee variable.",
+      "lead": "Fee mensual más un variable por resultados: Relvo calcula el monto de cada cliente, gestiona sus órdenes de compra, factura y cobra cada mes.",
+      "intro": "En una agencia, el cierre de mes es una carrera: validar con cada cliente los resultados del período, calcular el variable, conseguir las OCs y armar las facturas a mano. Con Relvo, envías los resultados del mes por Slack o por API y el resto ocurre solo: cálculo, aprobaciones, facturas y cobranza.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "planCard",
+        "data": {
+          "plan": "Fee de prospecting",
+          "client": "Cliente de agencia, octubre",
+          "price": "USD 2.000",
+          "lines": [
+            [
+              "Reuniones agendadas",
+              "32 × USD 45"
+            ]
+          ],
+          "total": [
+            "Total octubre",
+            "USD 3.440"
+          ]
+        }
+      }
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "Del cierre al día 10 a la factura en días.",
+      "h2Soft": "Con el variable incluido.",
+      "before": [
+        "Managers validando resultados con cada cliente a fin de mes.",
+        "Formularios y planillas para calcular el variable.",
+        "Facturas armadas a mano y OCs seguidas en una lista."
+      ],
+      "after": [
+        "Envías los resultados por Slack y Relvo calcula el variable.",
+        "El fee fijo y el variable se juntan en una sola factura exacta.",
+        "Cada factura sale con su OC asociada y aprobada."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo lo resuelve Relvo.",
+      "h2Soft": "Con las tres capas.",
+      "steps": [
+        {
+          "title": "Rieles",
+          "text": "El fee fijo y la regla del variable de cada cliente, calculados siempre igual."
+        },
+        {
+          "title": "Agentes",
+          "text": "Reciben los resultados, consiguen las OCs y avisan al equipo."
+        },
+        {
+          "title": "Inteligencia",
+          "text": "Cuánto factura cada cliente y cuánto demoras en facturar y cobrar."
+        }
+      ]
+    },
+    {
+      "type": "case",
+      "ref": "tgp",
+      "h2": "Lo que cambió para TGP."
+    },
+    {
+      "type": "related",
+      "h2": "Los productos que más usan.",
+      "h2Soft": "Las agencias.",
+      "items": [
+        "contratos",
+        "aprobaciones",
+        "cxc"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes para agencias.",
+      "items": [
+        {
+          "q": "¿Relvo calcula fees variables por resultados?",
+          "a": "Sí. El variable es una regla del contrato de cada cliente: envías los resultados del período y Relvo calcula el monto."
+        },
+        {
+          "q": "¿Cómo envío los resultados del mes?",
+          "a": "Por Slack o por API. Así trabaja TGP: envía la información por Slack y Relvo automatiza el resto."
+        },
+        {
+          "q": "¿Puedo combinar fee fijo y variable en una factura?",
+          "a": "Sí. Ambos componentes se calculan con sus reglas y salen en la misma factura."
+        },
+        {
+          "q": "¿Relvo maneja órdenes de compra?",
+          "a": "Sí. Un agente lee la OC, la asocia a la factura y la factura sale cuando todo está aprobado."
+        },
+        {
+          "q": "¿Cuánto tiempo puede ahorrar una agencia?",
+          "a": "En el caso de TGP, 70% menos tiempo operativo y la mitad de días para completar el ciclo de facturación, mientras su operación creció 30%."
+        },
+        {
+          "q": "¿Puedo facturar a clientes que tienen varias sociedades?",
+          "a": "Sí. Puedes dividir una factura entre sociedades o centros de costo, con la glosa que pida cada cliente."
+        },
+        {
+          "q": "¿Cómo se entera mi equipo de los cobros pendientes?",
+          "a": "Los agentes avisan en Slack o Google Chat, y los correos de cobranza salen solos antes y después del vencimiento."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ]
+}

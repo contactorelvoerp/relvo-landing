@@ -1,0 +1,146 @@
+{
+  "id": "uso",
+  "preset": "solucion",
+  "seo": "uso",
+  "keyword": "cómo empezar a cobrar por uso",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Soluciones",
+      "href": "/soluciones"
+    },
+    {
+      "label": "Empezando a cobrar por uso"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Cómo empezar a cobrar por uso sin cambiar de sistema.",
+      "lead": "Suma un componente de consumo a tus planes: envía el uso por API y Relvo lo convierte en cobros exactos cada período.",
+      "intro": "Muchas empresas SaaS e IA quieren cobrar por uso, pero frenan porque implica medir, calcular y facturar algo que cambia cada mes. Relvo te deja dar ese paso de a poco: mantienes tu plan fijo, agregas una métrica de consumo y la parte variable se calcula y se cobra sola.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "planCard",
+        "data": {
+          "plan": "Plan Growth",
+          "client": "Antes: solo fijo. Ahora: fijo más tokens",
+          "price": "USD 500",
+          "lines": [
+            [
+              "Tokens",
+              "1.200 M"
+            ]
+          ],
+          "tiers": {
+            "t1": 0.66,
+            "t2": 0.14,
+            "labels": [
+              "Incluidos en el plan",
+              "Adicionales"
+            ]
+          },
+          "total": [
+            "Total octubre",
+            "USD 2.900"
+          ]
+        }
+      }
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "Del plan fijo al plan con consumo.",
+      "h2Soft": "Sin rehacer tu facturación.",
+      "before": [
+        "Un plan fijo que no crece con el uso de tus clientes.",
+        "Miedo a cobrar por uso porque cambia cada mes.",
+        "Construir la lógica de cobro dentro de tu producto."
+      ],
+      "after": [
+        "Un plan fijo más una métrica de consumo.",
+        "El monto variable se calcula solo, con reglas exactas.",
+        "Tu producto solo envía el consumo; Relvo hace el resto."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo dar el paso.",
+      "h2Soft": "En tres movimientos.",
+      "steps": [
+        {
+          "title": "Elige la métrica",
+          "text": "La unidad que mejor refleja el valor de tu producto: tokens, llamadas o documentos."
+        },
+        {
+          "title": "Envía el consumo",
+          "text": "Tu producto reporta el uso a Relvo por API."
+        },
+        {
+          "title": "Ajusta el plan",
+          "text": "Agregas el consumo como regla y Relvo lo cobra desde el próximo período."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Los productos que más usan.",
+      "h2Soft": "Para empezar a cobrar por uso.",
+      "items": [
+        "medicion",
+        "contratos",
+        "reporteria"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes sobre empezar a cobrar por uso.",
+      "items": [
+        {
+          "q": "¿Tengo que cambiar de sistema para cobrar por uso?",
+          "a": "No. El consumo se agrega como una regla más del plan, en el mismo sistema donde facturas y cobras."
+        },
+        {
+          "q": "¿Puedo mantener mi plan fijo?",
+          "a": "Sí. Lo más común es mantener el fijo y sumar una parte variable por consumo."
+        },
+        {
+          "q": "¿Cómo envío el consumo?",
+          "a": "Por API. Tu producto reporta el uso de cada cliente y Relvo lo acumula para el período."
+        },
+        {
+          "q": "¿Qué métrica de consumo debería elegir?",
+          "a": "La que mejor refleje el valor que recibe tu cliente y que puedas medir sin ambigüedad, como tokens, llamadas a la API o documentos procesados."
+        },
+        {
+          "q": "¿Cómo sé cuánto ingreso viene del consumo?",
+          "a": "En Reportería ves el ingreso recurrente frente al consumo, mes a mes y por cliente."
+        },
+        {
+          "q": "¿Cada cliente puede tener un precio distinto por consumo?",
+          "a": "Sí. El precio del consumo es parte de las reglas de cada contrato, así que puedes respetar lo que negociaste con cada cliente."
+        },
+        {
+          "q": "¿Puedo empezar solo con algunos clientes?",
+          "a": "Sí. Puedes sumar consumo a los contratos que quieras y mantener al resto con su plan actual mientras pruebas el modelo."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ]
+}

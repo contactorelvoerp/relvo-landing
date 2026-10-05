@@ -7,7 +7,6 @@
   ],
   "notas": [
     "404: noindex",
-    "Caso TGP: title y description pendientes hasta tener datos (5.3)",
     "Previews de Vercel: noindex"
   ],
   "pages": [
@@ -317,6 +316,20 @@
         "url": "/en/privacy",
         "title": "Privacy policy | Relvo",
         "description": "How Relvo collects, uses and protects personal data."
+      }
+    },
+    {
+      "id": "tgp",
+      "pagina": "Caso de cliente · TGP",
+      "es": {
+        "url": "/clientes/tgp",
+        "title": "TGP: 70% menos tiempo operativo con Relvo",
+        "description": "La agencia de prospecting más grande de LatAm redujo 70% su tiempo operativo y pasó de 6 a 3 días para facturar, mientras creció 30% en 3 meses."
+      },
+      "en": {
+        "url": "/en/customers/tgp",
+        "title": "TGP: 70% less operational time with Relvo",
+        "description": "LatAm's largest prospecting agency cut operational time by 70% and went from 6 to 3 days to invoice while growing 30% in 3 months."
       }
     }
   ]

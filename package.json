@@ -6,19 +6,22 @@
   "description": "Sitio público de Relvo (getrelvo.ai)",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "build": "node scripts/validate-content.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/og.mjs && node scripts/prerender.mjs",
     "preview": "vite preview",
     "lint": "eslint . --ext js,jsx,mjs --report-unused-disable-directives --max-warnings 0",
     "knip": "knip",
     "check:links": "node scripts/check-links.mjs",
     "check:bands": "node scripts/check-bands.mjs",
-    "check:design": "node scripts/impeccable-gate.mjs"
+    "check:design": "node scripts/impeccable-gate.mjs",
+    "check:content": "node scripts/validate-content.mjs",
+    "check:jsonld": "node scripts/check-jsonld.mjs"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.55.0",
     "eslint-plugin-react": "^7.33.2",
@@ -26,6 +29,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "impeccable": "latest",
     "knip": "^5.0.0",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "zod": "^4.6.5"
   }
 }

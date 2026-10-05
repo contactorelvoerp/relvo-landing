@@ -1,0 +1,252 @@
+{
+  "id": "agentes",
+  "preset": "producto",
+  "seo": "agentes",
+  "keyword": "agentes de IA para facturación y cobranza",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Producto",
+      "href": "/producto"
+    },
+    {
+      "label": "Agentes"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Agentes de IA que hacen el trabajo manual del cobro.",
+      "lead": "Leen órdenes de compra, siguen correos, avisan a tu equipo y responden consultas. Cuando algo no calza, te preguntan.",
+      "intro": "Alrededor de cada cobro hay trabajo que no es cálculo: leer documentos, perseguir respuestas, avisar a quien corresponde. Los agentes de Relvo hacen esas tareas sobre los rieles del motor. No calculan montos, no inventan cifras y no emiten nada que no cuadre: lo que no calza llega a tu equipo para que decida.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "agentFeed",
+        "data": {
+          "kpis": [
+            [
+              "Tareas hechas hoy",
+              "34"
+            ],
+            [
+              "Para revisar",
+              "2"
+            ]
+          ],
+          "items": [
+            [
+              "doc",
+              "OC 4500-221 leída y asociada",
+              "09:02"
+            ],
+            [
+              "mail",
+              "HES pedida a Nimbo AI",
+              "09:14"
+            ],
+            [
+              "hash",
+              "Aviso en #finanzas",
+              "09:20"
+            ],
+            [
+              "plug",
+              "Consulta vía MCP respondida",
+              "09:31"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "De perseguir documentos a revisar excepciones.",
+      "h2Soft": "Tu equipo decide, los agentes ejecutan.",
+      "before": [
+        "Horas leyendo OCs y copiando datos.",
+        "Correos de seguimiento escritos uno por uno.",
+        "Avisos al equipo que dependen de que alguien se acuerde."
+      ],
+      "after": [
+        "Un agente lee cada OC y la asocia a su factura.",
+        "Los seguimientos salen solos hasta conseguir lo que falta.",
+        "Tu equipo recibe en Slack o Google Chat solo lo que necesita."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo funciona.",
+      "h2Soft": "Sobre los rieles del motor.",
+      "steps": [
+        {
+          "title": "Toma la tarea",
+          "text": "Una OC que llega, un correo sin responder, una consulta."
+        },
+        {
+          "title": "La ejecuta",
+          "text": "Con los datos del motor, nunca con montos propios."
+        },
+        {
+          "title": "Te consulta",
+          "text": "Si algo no calza, lo deja en tu bandeja de revisión."
+        }
+      ]
+    },
+    {
+      "type": "featureTabs",
+      "h2": "Qué hacen los agentes hoy.",
+      "h2Soft": "Tareas concretas, con resultado visible.",
+      "tabs": [
+        {
+          "label": "Lectura de OCs",
+          "desc": "Extraen los datos y los asocian.",
+          "visual": {
+            "id": "timeline",
+            "data": {
+              "title": "OC 4500-221",
+              "steps": [
+                {
+                  "label": "OC recibida",
+                  "sub": "Faro Analytics",
+                  "done": true
+                },
+                {
+                  "label": "Datos extraídos",
+                  "sub": "Número, monto y vigencia",
+                  "done": true
+                },
+                {
+                  "label": "Asociada a la pre-factura",
+                  "sub": "Calza con el contrato",
+                  "done": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "Seguimiento por correo",
+          "desc": "Persiguen lo que falta.",
+          "visual": {
+            "id": "emailPreview",
+            "data": {
+              "to": "finanzas@nimbo.ai",
+              "subject": "HES pendiente para la factura de octubre",
+              "body": "Hola equipo de Nimbo AI: para emitir la factura de octubre nos falta la HES asociada a la OC 4500-221.",
+              "schedule": [
+                {
+                  "label": "Enviado hoy"
+                },
+                {
+                  "label": "Seguimiento: en 3 días",
+                  "tone": "neutral"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "Slack, Google Chat y MCP",
+          "desc": "Avisan y responden donde trabajas.",
+          "visual": {
+            "id": "agentFeed",
+            "data": {
+              "items": [
+                [
+                  "hash",
+                  "3 facturas listas para emitir",
+                  "09:20"
+                ],
+                [
+                  "hash",
+                  "Faro Analytics pagó F-1043",
+                  "10:05"
+                ],
+                [
+                  "plug",
+                  "¿Cuánto factura Tandem SaaS este mes?",
+                  "10:31"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "label": "Bandeja de revisión",
+          "desc": "Tú apruebas las excepciones.",
+          "visual": {
+            "id": "review",
+            "data": {
+              "title": "Cambio de razón social.",
+              "left": [
+                "Faro Analytics pide facturar a",
+                "Otra sociedad del grupo"
+              ],
+              "right": [
+                "Contrato",
+                "Faro Analytics SpA"
+              ],
+              "actions": [
+                "Revisar",
+                "Responder"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Funciona junto con.",
+      "h2Soft": "El mismo motor, de punta a punta.",
+      "items": [
+        "aprobaciones",
+        "cxc",
+        "reporteria"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes sobre los agentes de Relvo.",
+      "items": [
+        {
+          "q": "¿Los agentes calculan los montos que se cobran?",
+          "a": "No. Los montos los calcula el motor de reglas, siempre de la misma forma. Los agentes trabajan alrededor del cobro: documentos, seguimientos y avisos."
+        },
+        {
+          "q": "¿Qué tareas hacen hoy?",
+          "a": "Leen órdenes de compra, siguen correos hasta conseguir lo que falta, avisan a tu equipo en Slack o Google Chat y responden consultas vía MCP."
+        },
+        {
+          "q": "¿Qué pasa cuando algo no calza?",
+          "a": "El agente se detiene y deja el caso en una bandeja de revisión. Nada se emite hasta que alguien de tu equipo lo decide."
+        },
+        {
+          "q": "¿Qué es MCP?",
+          "a": "Model Context Protocol, un estándar para que herramientas de IA consulten sistemas como Relvo. Permite que tus propios asistentes de IA pregunten por facturas, cobros o consumo."
+        },
+        {
+          "q": "¿Puedo ver qué hizo cada agente?",
+          "a": "Sí. Cada tarea queda registrada con su hora y su resultado."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ]
+}

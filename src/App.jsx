@@ -11,7 +11,7 @@ export function App({ route }) {
 
   let content
   if (route.status === '404') content = <NotFoundPage t={t} />
-  else if (Page) content = <Page t={t} locale={route.locale} />
+  else if (Page) content = <Page t={t} locale={route.locale} route={route} />
   else content = <PendingPage route={route} />
 
   return (

@@ -1,0 +1,86 @@
+/* Plantilla de landing (producto, soluciones y casos). Referencia visual: la página piloto aprobada
+   (reference/relvo-producto-cuentas-por-cobrar.html). El H1 va en Instrument Sans: Fujiwara A es
+   solo para el H1 de la home. */
+
+/* Hero: migas de pan, H1, bajada, CTAs y visual sobre la textura Órbitas */
+.lp-hero{padding-top:clamp(40px,5.5cqi,88px)}
+.lp-hero__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center;gap:56px}
+.crumbs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0;list-style:none;font-size:14px;color:var(--text-muted)}
+.crumbs li + li::before{content:"/";margin-right:8px;color:#C4C6CD}
+.crumbs a{color:var(--text-muted);text-decoration:none}
+.crumbs a:hover{color:var(--text-main)}
+.lp-hero__title{margin:0;font-family:var(--font-ui);font-size:clamp(36px,3.9cqi,56px);font-weight:500;line-height:1.08;letter-spacing:-.03em}
+.lp-hero__lead{max-width:46ch;margin:24px 0 0;font-size:clamp(17px,1.4cqi,19px);line-height:1.55;color:var(--text-body)}
+.lp-hero__ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.lp-hero__visual{min-width:0;container-type:inline-size}
+.lp-stage{min-height:clamp(440px,80cqi,560px);padding:40px}
+.lp-stage > .ui{position:relative;z-index:1}
+.lp-stage--app{display:block;height:clamp(500px,92cqi,600px);padding:0}
+/* Intro bajo el hero: 40 a 70 palabras, separada por el filete de la grilla */
+.lp-intro{max-width:60ch;margin:clamp(56px,5.5cqi,80px) 0 0;padding-top:clamp(40px,4cqi,56px);border-top:1px solid var(--line);font-size:clamp(17px,1.4cqi,19px);line-height:1.6;color:var(--text-body)}
+@container (max-width:560px){
+  .lp-stage{padding:20px}
+  .lp-stage--app{display:flex;flex-direction:column;gap:12px;height:auto;padding:20px}
+  .lp-stage--app .hero-app{position:static;display:flex;flex-direction:column;gap:12px}
+  .lp-stage--app .hc{position:relative;inset:auto;width:100%}
+  .lp-stage--app .win__body{grid-template-columns:1fr;min-height:0}
+  .lp-stage--app .win__side{display:none}
+  .lp-stage .hero-stage__tag{position:static;align-self:flex-end}
+}
+
+/* Antes / después: tres puntos por lado, cada "después" responde a su "antes" */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ba__side{padding:32px;border-radius:var(--radius-lg)}
+.ba__side--before{background:var(--band-neutral)}
+.ba__side--after{background:var(--mint)}
+.ba h3{margin:0 0 18px;font-size:15px;font-weight:600;color:var(--text-muted)}
+.ba__side--after h3{color:var(--accent)}
+.ba ul{display:flex;flex-direction:column;gap:16px;margin:0;padding:0;list-style:none}
+.ba li{display:grid;grid-template-columns:22px 1fr;gap:12px;font-size:16.5px;line-height:1.5;color:var(--text-main)}
+.ba li i{display:grid;place-items:center;width:22px;height:22px;margin-top:1px;border-radius:50%}
+.ba__side--before li i{border:1.5px solid #C4C6CD}
+.ba__side--after li i{background:var(--accent);color:#FFFFFF}
+
+/* Cómo funciona: siempre 3 pasos, unidos por el riel, sobre menta */
+.steps3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none}
+.steps3__step{padding:28px;border-radius:var(--radius-lg);background:var(--paper)}
+.steps3__n{display:block;margin-bottom:6px;font-size:14px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.steps3 h3{margin:0 0 8px;font-size:20px}
+.steps3 p{margin:0;font-size:15.5px;line-height:1.5;color:var(--text-body)}
+.steps3__rail{position:relative;height:28px;margin-top:16px}
+.steps3__rail::before{content:"";position:absolute;top:50%;right:0;left:0;height:2px;background:var(--accent)}
+.steps3__rail span{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--accent)}
+.steps3__rail span:nth-child(1){left:16.66%}
+.steps3__rail span:nth-child(2){left:50%}
+.steps3__rail span:nth-child(3){left:83.33%}
+
+/* Métricas sin gráfico: los KPI van en fila */
+.report--kpis .report__panel{display:block;height:auto}
+.kpis--row{flex-direction:row;flex-wrap:wrap;align-items:flex-end;gap:24px 64px}
+.kpis--row .kpi__note{flex-basis:100%}
+
+/* Relacionados: las tarjetas del bento de la home */
+.related{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.related .product{min-height:0}
+
+/* Preguntas frecuentes: acordeón con <details>, todo el texto en el HTML */
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{display:flex;justify-content:space-between;gap:24px;padding:20px 0;font-size:17.5px;font-weight:500;color:var(--text-main);list-style:none;cursor:pointer}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font-size:22px;line-height:1;color:var(--text-muted);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq summary:focus-visible{outline-offset:2px}
+.faq details p{max-width:60ch;margin:0 0 22px;font-size:16px;line-height:1.6;color:var(--text-body)}
+@media (prefers-reduced-motion:reduce){.faq summary::after{transition:none}}
+
+/* Cita (preset caso) */
+.lp-quote{max-width:880px;margin:0}
+.lp-quote blockquote{margin:0;font-size:clamp(22px,2.2cqi,30px);font-weight:500;line-height:1.4;letter-spacing:-.015em;color:var(--text-main)}
+.lp-quote figcaption{margin-top:24px;font-size:16px;color:var(--text-main)}
+.lp-quote figcaption span{display:block;color:var(--text-muted)}
+
+@container (max-width:979px){
+  .lp-hero__grid,.ba,.steps3,.related{grid-template-columns:1fr}
+  .steps3__rail{display:none}
+}

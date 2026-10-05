@@ -1,15 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { hrefFor } from '../../routes'
-import { Texture } from '../../components/Texture'
 import { BandTexture } from '../../components/BandTexture'
 import { ThreeLayers } from './ThreeLayers'
 import { HeroStage } from './HeroStage'
-import { Integrations } from './Integrations'
 import { Rails } from './Rails'
 import { Agents } from './Agents'
 import { Intelligence } from './Intelligence'
 import { Products } from './Products'
-import { Case } from './Case'
+import { Case } from '../../blocks/Case'
+import { CtaSection, Heading, IntegrationsSection } from '../../blocks/Shared'
 import { copy } from './copy'
 import './home.css'
 
@@ -67,15 +66,6 @@ const LATAM_ICONS = [
   <g key="po"><rect x="5" y="4" width="14" height="17" rx="2" /><path d="M9 4V3h6v1M9 12l2 2 4-4" /></g>,
 ]
 
-// Titular en dos tonos: número (opcional) + titular + continuación más suave.
-function Heading({ n, title, soft }) {
-  return (
-    <h2 className="h2">
-      {n && <span className="h2__n">{n}</span>}
-      {title}{soft && <> <span className="h2__soft">{soft}</span></>}
-    </h2>
-  )
-}
 
 export function HomePage({ t, locale }) {
   const c = copy[locale]
@@ -84,7 +74,6 @@ export function HomePage({ t, locale }) {
   const contracts = hrefFor('hibrido', locale)
   const pricing = hrefFor('precios', locale)
   const usage = hrefFor('uso', locale)
-  const docs = hrefFor('docs', locale)
 
   return (
     <>
@@ -100,7 +89,7 @@ export function HomePage({ t, locale }) {
             </div>
           </div>
           <div className="hero__visual">
-            <HeroStage c={c.hero.stage} example={c.example} />
+            <HeroStage c={c.hero.stage} locale={locale} example={c.example} />
           </div>
         </div>
         <LogoStrip label={c.hero.logos} />
@@ -119,12 +108,12 @@ export function HomePage({ t, locale }) {
 
       <section id="rieles" className="section band">
         <Heading n="01" title={c.rails.title} soft={c.rails.soft} />
-        <Rails c={c.rails} example={c.example} />
+        <Rails c={c.rails} locale={locale} example={c.example} />
       </section>
 
       <section id="agentes" className="section band band--ink">
         <Heading n="02" title={c.agents.title} soft={c.agents.soft} />
-        <Agents c={c.agents} example={c.example} />
+        <Agents c={c.agents} locale={locale} example={c.example} />
       </section>
 
       <section id="inteligencia" className="section band band--neutral">
@@ -175,25 +164,9 @@ export function HomePage({ t, locale }) {
         </ul>
       </section>
 
-      <section className="section band">
-        <BandTexture kind="linesEdge" />
-        <Heading title={c.integrations.title} soft={c.integrations.soft} />
-        <Integrations c={c.integrations} locale={locale} />
-      </section>
+      <IntegrationsSection c={c.integrations} locale={locale} />
 
-      <section className="section section--cta band">
-        <div className="cta">
-          <Texture kind="periods" />
-          <div className="cta__content">
-            <h2 className="cta__title">{c.cta.title}</h2>
-            <div className="cta__actions">
-              {demo && <a className="cta__button" href={demo}>{c.cta.demo}</a>}
-              {pricing && <a className="link" href={pricing}>{c.cta.pricing}</a>}
-              {docs && <a className="link" href={docs}>{c.cta.docs}</a>}
-            </div>
-          </div>
-        </div>
-      </section>
+      <CtaSection c={c.cta} locale={locale} />
     </>
   )
 }

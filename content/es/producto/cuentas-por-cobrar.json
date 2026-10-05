@@ -1,0 +1,343 @@
+{
+  "id": "cxc",
+  "preset": "producto",
+  "seo": "cxc",
+  "keyword": "facturación, cobranza y conciliación",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Producto",
+      "href": "/producto"
+    },
+    {
+      "label": "Cuentas por cobrar"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Factura, cobra y concilia sin tocar una planilla.",
+      "lead": "Facturas complejas emitidas solas, cobros por correo o automáticos, y cada pago cuadrado contra su factura. Tus cuentas por cobrar, siempre al día.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "heroApp",
+        "data": {
+          "url": "app.getrelvo.ai/cobranza",
+          "section": "Cobranza",
+          "columns": [
+            "Factura",
+            "Cliente",
+            "Estado"
+          ],
+          "kpi": {
+            "label": "Por cobrar",
+            "value": "USD 48.200",
+            "badge": "DSO 38 días"
+          },
+          "rows": [
+            {
+              "cols": [
+                "F-1042",
+                "Nimbo AI"
+              ],
+              "status": "Pagada"
+            },
+            {
+              "cols": [
+                "F-1043",
+                "Faro Analytics"
+              ],
+              "status": "Pago parcial",
+              "tone": "warn"
+            },
+            {
+              "cols": [
+                "F-1044",
+                "Tandem SaaS"
+              ],
+              "status": "Enviada",
+              "tone": "neutral"
+            }
+          ],
+          "card": {
+            "title": "Cobro de F-1043",
+            "meta": "Faro Analytics",
+            "amount": "USD 2.000",
+            "progress": 0.65,
+            "line": [
+              "Saldo pendiente",
+              "USD 1.090"
+            ]
+          },
+          "toast": {
+            "title": "Transferencia conciliada",
+            "sub": "Faro Analytics, hace un momento"
+          }
+        }
+      },
+      "intro": "Para la mayoría de los equipos, cobrar es el tramo más manual del revenue: armar facturas a fin de mes, perseguir pagos por correo y revisar la cartola para saber quién pagó. Relvo junta la facturación, la cobranza y la conciliación en un solo flujo, con las reglas de cada contrato, para que tus cuentas por cobrar estén siempre al día."
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "Del cierre a mano al ciclo automático.",
+      "h2Soft": "Lo mismo que hoy hace tu equipo, sin planillas.",
+      "before": [
+        "Facturas armadas a mano a fin de mes, una por cliente.",
+        "Cobranza en una planilla de deudores y correos uno por uno.",
+        "La cartola revisada línea por línea para saber quién pagó."
+      ],
+      "after": [
+        "Cada factura sale el día que corresponde, con el monto exacto.",
+        "Los correos de cobranza salen solos y los pagos con tarjeta se cobran en automático.",
+        "Cada pago se concilia contra su factura, incluso los parciales."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo funciona.",
+      "h2Soft": "Tres pasos, un solo flujo.",
+      "steps": [
+        {
+          "title": "Factura",
+          "text": "Relvo emite la factura electrónica en Chile o México con el monto del período."
+        },
+        {
+          "title": "Cobra",
+          "text": "Envía correos de cobranza o cobra en automático con Toku, Fintoc o Stripe."
+        },
+        {
+          "title": "Concilia",
+          "text": "Cruza cada movimiento del banco con su factura y actualiza lo que te deben."
+        }
+      ]
+    },
+    {
+      "type": "featureTabs",
+      "h2": "Todo el ciclo de cobro, en detalle.",
+      "h2Soft": "De la factura al banco.",
+      "tabs": [
+        {
+          "label": "Facturación compleja",
+          "desc": "Divididas, prorrateadas y con tu glosa.",
+          "visual": {
+            "id": "splitInvoice",
+            "data": {
+              "invoice": "F-1042",
+              "total": "USD 3.090",
+              "parts": [
+                {
+                  "entity": "Nimbo AI SpA, Chile",
+                  "amount": "USD 1.854",
+                  "pct": 60
+                },
+                {
+                  "entity": "Nimbo AI, México",
+                  "amount": "USD 1.236",
+                  "pct": 40
+                }
+              ],
+              "glosa": "Servicio Relvo, octubre 2026. OC 4500-221."
+            }
+          }
+        },
+        {
+          "label": "Cobranza por correo",
+          "desc": "Recordatorios antes y después del vencimiento.",
+          "visual": {
+            "id": "emailPreview",
+            "data": {
+              "to": "finanzas@faro.io",
+              "subject": "Factura F-1043 vence el 30 de octubre",
+              "body": "Hola equipo de Faro Analytics: les recordamos que la factura F-1043 por USD 3.090 vence el 30 de octubre.",
+              "cta": "Pagar factura",
+              "schedule": [
+                {
+                  "label": "Enviado: 5 días antes"
+                },
+                {
+                  "label": "Programado: al vencer",
+                  "tone": "warn"
+                },
+                {
+                  "label": "Programado: 7 días después",
+                  "tone": "neutral"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "Cobro automático",
+          "desc": "Tarjeta, link de pago o transferencia.",
+          "visual": {
+            "id": "methods",
+            "data": {
+              "title": "Cobro de octubre",
+              "client": "Nimbo AI",
+              "methods": [
+                {
+                  "label": "Tarjeta",
+                  "provider": "Stripe",
+                  "selected": true
+                },
+                {
+                  "label": "Link de pago",
+                  "provider": "Toku"
+                },
+                {
+                  "label": "Transferencia",
+                  "provider": "Fintoc"
+                }
+              ],
+              "total": [
+                "Cobrado el 1 de noviembre",
+                "USD 2.900"
+              ]
+            }
+          }
+        },
+        {
+          "label": "Conciliación",
+          "desc": "Cada pago contra su factura, incluso parciales.",
+          "visual": {
+            "id": "payment",
+            "data": {
+              "invoice": "F-1043",
+              "badge": "Pago parcial",
+              "paid": "USD 2.000",
+              "total": "USD 3.090",
+              "progress": 0.65,
+              "events": [
+                {
+                  "label": "Transferencia conciliada",
+                  "sub": "18 de octubre",
+                  "done": true
+                },
+                {
+                  "label": "Recordatorio por correo",
+                  "sub": "25 de octubre",
+                  "done": false
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "metrics",
+      "h2": "Mide qué tan rápido conviertes trabajo en caja.",
+      "h2Soft": "Días en facturar y días en cobrar.",
+      "kpis": [
+        {
+          "label": "Días en facturar (DTI)",
+          "value": "3"
+        },
+        {
+          "label": "Días en cobrar (DSO)",
+          "value": "38"
+        }
+      ],
+      "note": "9 días menos que en abril.",
+      "chart": {
+        "id": "lineChart",
+        "data": {
+          "labels": [
+            "Abr",
+            "May",
+            "Jun",
+            "Jul",
+            "Ago",
+            "Sep"
+          ],
+          "series": [
+            {
+              "name": "DTI",
+              "values": [
+                6,
+                5,
+                5,
+                4,
+                3,
+                3
+              ]
+            },
+            {
+              "name": "DSO",
+              "values": [
+                47,
+                45,
+                44,
+                41,
+                40,
+                38
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "case",
+      "ref": "tgp",
+      "h2": "Lo que cambió para TGP."
+    },
+    {
+      "type": "related",
+      "h2": "Funciona junto con.",
+      "h2Soft": "El mismo motor, de punta a punta.",
+      "items": [
+        "contratos",
+        "aprobaciones",
+        "reporteria"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes sobre cuentas por cobrar.",
+      "items": [
+        {
+          "q": "¿En qué países emite Relvo facturación electrónica?",
+          "a": "En Chile y México. Relvo emite la factura electrónica desde el mismo sistema donde se calcula el cobro, con la sociedad y la moneda que corresponden a cada contrato."
+        },
+        {
+          "q": "¿Puedo dividir una factura entre varias sociedades?",
+          "a": "Sí. Un mismo contrato puede facturarse en partes a distintas sociedades o centros de costo, con prorrateos y la glosa que pida tu cliente."
+        },
+        {
+          "q": "¿Con qué medios de pago puedo cobrar?",
+          "a": "Con link de pago, tarjeta o transferencia, a través de Toku, Fintoc o Stripe. Puedes combinar cobro automático para planes recurrentes y cobranza por correo para contratos."
+        },
+        {
+          "q": "¿Cómo funciona la cobranza por correo?",
+          "a": "Relvo envía los correos de cobranza por ti, antes y después del vencimiento, y lleva el estado de cobro de cada cliente."
+        },
+        {
+          "q": "¿Relvo concilia pagos parciales?",
+          "a": "Sí. Cada movimiento del banco se cruza con su factura; si el pago es parcial, la factura queda con su saldo pendiente y sigue en cobranza."
+        },
+        {
+          "q": "¿En qué monedas puedo facturar y cobrar?",
+          "a": "En cualquier moneda, con conversión automática, incluida la UF."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ]
+}

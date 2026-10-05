@@ -48,6 +48,12 @@ export function hrefFor(id, locale) {
   return findRoute(id, locale)?.path ?? null
 }
 
+// Para links escritos como URL en los archivos de contenido: la URL si la página existe en este
+// build (en producción, solo las publicadas); si no, null y el link no se renderiza.
+export function hrefForPath(path) {
+  return getRoutes().some((r) => r.path === path) ? path : null
+}
+
 export function resolvePath(pathname) {
   const path = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname
   return getRoutes().find((r) => r.path === path) ?? notFoundRoute()

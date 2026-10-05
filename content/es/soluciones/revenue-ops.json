@@ -1,0 +1,157 @@
+{
+  "id": "revops",
+  "preset": "solucion",
+  "seo": "revops",
+  "keyword": "Relvo para equipos de Revenue Ops",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Soluciones",
+      "href": "/soluciones"
+    },
+    {
+      "label": "Revenue Ops"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Relvo para equipos de Revenue Ops.",
+      "lead": "Opera el ciclo del contrato al cobro sin planillas: reglas de pricing exactas, agentes que hacen el trabajo manual y métricas que siempre cuadran.",
+      "intro": "Revenue Ops suele quedar en medio de todo: ventas cierra un contrato con condiciones especiales, finanzas necesita facturarlo y nadie tiene el dato completo. Relvo le da a tu equipo un solo lugar donde cada contrato es una regla, cada cobro es trazable y cada métrica sale del mismo sistema.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "waterfall",
+        "data": {
+          "steps": [
+            [
+              "Sep",
+              184.3,
+              "base"
+            ],
+            [
+              "Altas",
+              6.2
+            ],
+            [
+              "Expansión",
+              3.1
+            ],
+            [
+              "Consumo",
+              2.9
+            ],
+            [
+              "Contracción",
+              -1.4
+            ],
+            [
+              "Churn",
+              -2.7
+            ],
+            [
+              "Oct",
+              192.4,
+              "base"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "De traducir contratos a mano a operar un solo flujo.",
+      "h2Soft": "Entre ventas y finanzas.",
+      "before": [
+        "Condiciones especiales que se pierden entre el CRM y la factura.",
+        "Planillas puente entre ventas y finanzas.",
+        "Métricas que cambian según quién las calcule."
+      ],
+      "after": [
+        "Cada condición negociada vive como regla en Relvo.",
+        "Ventas, finanzas y el motor trabajan sobre el mismo contrato.",
+        "Una sola fuente para MRR, consumo y cobranza."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo lo usa tu equipo.",
+      "h2Soft": "Del cierre al reporte.",
+      "steps": [
+        {
+          "title": "Configura el contrato",
+          "text": "Las condiciones de cada cliente, convertidas en reglas."
+        },
+        {
+          "title": "Deja operar al motor",
+          "text": "Cálculo, aprobaciones, facturas y cobranza, sin planillas."
+        },
+        {
+          "title": "Lee el resultado",
+          "text": "MRR, consumo y DSO actualizados, por cliente."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Los productos que más usa.",
+      "h2Soft": "Un equipo de Revenue Ops.",
+      "items": [
+        "contratos",
+        "agentes",
+        "reporteria"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes para equipos de Revenue Ops.",
+      "items": [
+        {
+          "q": "¿Relvo reemplaza a mi CRM?",
+          "a": "No. Relvo se integra con HubSpot y toma el contrato desde donde lo cierra ventas para operar todo lo que viene después."
+        },
+        {
+          "q": "¿Cómo manejo condiciones especiales de un cliente?",
+          "a": "Como reglas de su contrato: fases, descuentos, componentes de uso o hitos. No hace falta crear excepciones a mano."
+        },
+        {
+          "q": "¿Quién ve qué en Relvo?",
+          "a": "Ventas, finanzas y operaciones trabajan sobre el mismo contrato y los mismos números."
+        },
+        {
+          "q": "¿Cómo se entera mi equipo de lo que pasa?",
+          "a": "Los agentes avisan en Slack o Google Chat y dejan las excepciones en una bandeja de revisión."
+        },
+        {
+          "q": "¿Puedo confiar en las métricas?",
+          "a": "Salen del mismo sistema que calcula, factura y cobra, así que coinciden con lo que efectivamente se facturó y se pagó."
+        },
+        {
+          "q": "¿Puedo manejar planes recurrentes y contratos en el mismo lugar?",
+          "a": "Sí. Planes pagados con tarjeta y contratos con pricing híbrido funcionan en el mismo motor, con las mismas reglas y los mismos reportes."
+        },
+        {
+          "q": "¿Qué pasa si ventas cambia las condiciones de un contrato?",
+          "a": "Se actualizan las reglas de ese contrato en Relvo y los próximos cobros las aplican, sin tocar planillas."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ]
+}
