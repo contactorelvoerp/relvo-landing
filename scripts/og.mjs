@@ -1,10 +1,15 @@
-// Imagen Open Graph (1200×630) de cada página de plantilla: el H1 del archivo de contenido sobre el
-// fondo de marca (menta con la textura Órbitas), con el logo y el dominio. Corre en el build, antes
-// de prerender.mjs, y escribe dist/og/<id>-<idioma>.png (prerender la enlaza si existe).
+// Imagen Open Graph (1200×630) de cada página publicada: su H1 sobre el fondo de marca (menta con la
+// textura Órbitas), con el logo oficial (public/logo-logotype-dark.svg) y el dominio. Corre en el
+// build, antes de prerender.mjs, y escribe dist/og/<id>-<idioma>.png (prerender la enlaza si existe).
+// H1: el del archivo de contenido en las plantillas, el de su copy en la home y la demo, y el title
+// (que es su H1) en las páginas en preparación.
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { Resvg } from '@resvg/resvg-js'
+import { copy as homeCopy } from '../src/pages/home/copy.js'
+import { copy as demoCopy } from '../src/pages/demo/copy.js'
+import { NOINDEX_PAGES } from '../src/pages/noindex.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const seo = JSON.parse(fs.readFileSync(path.join(root, 'reference/seo-metadata.json'), 'utf8'))
@@ -60,13 +65,19 @@ const files = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) 
 
 const out = path.join(root, 'dist/og')
 fs.mkdirSync(out, { recursive: true })
-let n = 0
+const render = (h1) => new Resvg(svg(h1), { font: { fontFiles: [font], loadSystemFonts: false, defaultFontFamily: 'Instrument Sans' } }).render().asPng()
+
+// [id, idioma, H1] de cada página
+const pages = [
+  ['home', 'es', homeCopy.es.hero.title],
+  ['demo', 'es', demoCopy.es.title],
+  ['demo', 'en', demoCopy.en.title],
+  ...seo.pages.filter((p) => NOINDEX_PAGES.includes(p.id)).map((p) => [p.id, 'es', p.es.title]),
+]
 for (const file of files(path.join(root, 'content'))) {
   const page = JSON.parse(fs.readFileSync(file, 'utf8'))
   const locale = path.relative(path.join(root, 'content'), file).split(path.sep)[0]
-  if (!seo.pages.some((p) => p.id === page.seo)) continue
-  const png = new Resvg(svg(page.blocks[0].h1), { font: { fontFiles: [font], loadSystemFonts: false, defaultFontFamily: 'Instrument Sans' } }).render().asPng()
-  fs.writeFileSync(path.join(out, `${page.seo}-${locale}.png`), png)
-  n++
+  if (seo.pages.some((p) => p.id === page.seo)) pages.push([page.seo, locale, page.blocks[0].h1])
 }
-console.log(`og: ${n} imágenes de páginas de plantilla`)
+for (const [id, locale, h1] of pages) fs.writeFileSync(path.join(out, `${id}-${locale}.png`), render(h1))
+console.log(`og: ${pages.length} imágenes (H1 sobre fondo de marca)`)

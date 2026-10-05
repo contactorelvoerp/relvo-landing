@@ -7,8 +7,8 @@ import { SITE_NAME, SITE_URL } from '../site'
 // sitemap.xml, robots.txt y llms.txt (CLAUDE.md, SEO). Los usan el build estático
 // (scripts/prerender.mjs) y el servidor de desarrollo, así ambos sirven lo mismo.
 
-// Páginas que van al sitemap y a llms.txt: las publicadas.
-const sitemapRoutes = () => getRoutes().filter((r) => r.status === 'live')
+// Páginas que van al sitemap y a llms.txt: las publicadas e indexables.
+const sitemapRoutes = () => getRoutes().filter((r) => r.status === 'live' && !r.noindex)
 
 // lastmod real: fecha del último commit que tocó la página (en las de plantilla, su archivo de
 // contenido). Sin git (p. ej. un tarball) se usa la fecha de hoy.

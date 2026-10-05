@@ -3,6 +3,7 @@ import { SHOW_PENDING } from './env'
 import { DEFAULT_LOCALE } from './site'
 import { READY_LOCALES, getDict } from './i18n'
 import { PAGE_COMPONENTS, PAGE_LOCALES } from './pages/registry'
+import { NOINDEX_PAGES } from './pages/noindex'
 
 
 function buildRoutes() {
@@ -15,7 +16,8 @@ function buildRoutes() {
     if (!built && !SHOW_PENDING) continue
     for (const locale of READY_LOCALES) {
       const live = built && (!PAGE_LOCALES[page.id] || PAGE_LOCALES[page.id].includes(locale))
-      if (!live && !SHOW_PENDING) continue
+      // Sin traducción no hay ruta en inglés (404), tampoco en preview
+      if (!live && (!SHOW_PENDING || locale !== DEFAULT_LOCALE)) continue
       const meta = page[locale]
       routes.push({
         id: page.id,
@@ -24,6 +26,7 @@ function buildRoutes() {
         title: meta.title,
         description: meta.description,
         status: live ? 'live' : 'pending',
+        noindex: NOINDEX_PAGES.includes(page.id),
       })
     }
   }

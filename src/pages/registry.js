@@ -1,6 +1,8 @@
 import { HomePage } from './home/HomePage'
 import { DemoPage } from './demo/DemoPage'
 import { LandingPage } from '../landing/LandingPage'
+import { PlaceholderPage } from './PlaceholderPage'
+import { NOINDEX_PAGES } from './noindex'
 
 // Páginas de plantilla publicadas: se renderizan desde su archivo de contenido
 // (content/<idioma>/<url>.json). El resto de los archivos de content/ se valida pero no se publica.
@@ -12,6 +14,7 @@ export const PAGE_COMPONENTS = {
   home: HomePage,
   demo: DemoPage,
   ...Object.fromEntries(LANDINGS.map((id) => [id, LandingPage])),
+  ...Object.fromEntries(NOINDEX_PAGES.map((id) => [id, PlaceholderPage])),
 }
 
 // Idiomas con copy aprobado por página. Si una página no aparece acá, está lista en todos.
@@ -19,5 +22,5 @@ export const PAGE_COMPONENTS = {
 // después (rutas /en preparadas, sin publicar).
 export const PAGE_LOCALES = {
   home: ['es'],
-  ...Object.fromEntries(LANDINGS.map((id) => [id, ['es']])),
+  ...Object.fromEntries([...LANDINGS, ...NOINDEX_PAGES].map((id) => [id, ['es']])),
 }
