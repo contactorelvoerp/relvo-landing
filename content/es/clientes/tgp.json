@@ -50,9 +50,33 @@
         }
       ],
       "visual": {
-        "id": "caseHeadline",
-        "data": {}
-      }
+        "id": "composition",
+        "data": {
+          "pieces": [
+            {
+              "id": "dtiBars",
+              "data": {
+                "before": 6,
+                "after": 3,
+                "label": "Días en facturar (DTI)"
+              }
+            },
+            {
+              "id": "slackMessage",
+              "data": {
+                "channel": "#facturacion",
+                "author": "TGP",
+                "text": "Resultados del mes enviados.",
+                "reply": {
+                  "author": "Relvo",
+                  "text": "Facturas calculadas y enviadas a aprobación."
+                }
+              }
+            }
+          ]
+        }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -103,5 +127,6 @@
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

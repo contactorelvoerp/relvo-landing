@@ -59,7 +59,8 @@
             "USD 2.900"
           ]
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -142,5 +143,6 @@
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

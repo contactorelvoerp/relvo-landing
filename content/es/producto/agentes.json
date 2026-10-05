@@ -70,7 +70,8 @@
             ]
           ]
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -210,6 +211,29 @@
       ]
     },
     {
+      "type": "capabilities",
+      "h2": "Automático no significa a ciegas.",
+      "h2Soft": "Los agentes operan dentro de tus límites.",
+      "items": [
+        {
+          "title": "Reglas y límites explícitos",
+          "text": "Cada agente actúa dentro de lo que autoriza el contrato y tus políticas: descuentos máximos, plazos y tono de la cobranza."
+        },
+        {
+          "title": "Aprobación humana donde importa",
+          "text": "Defines qué pasos requieren visto bueno antes de ejecutarse. El resto corre solo."
+        },
+        {
+          "title": "Registro de cada acción",
+          "text": "Qué hizo el agente, cuándo y con qué dato, trazable hasta el evento que lo originó."
+        },
+        {
+          "title": "Escalamiento con contexto",
+          "text": "Cuando algo se sale del camino, tu equipo recibe el caso en Slack con el historial completo, no una alerta suelta."
+        }
+      ]
+    },
+    {
       "type": "related",
       "h2": "Funciona junto con.",
       "h2Soft": "El mismo motor, de punta a punta.",
@@ -242,11 +266,16 @@
         {
           "q": "¿Puedo ver qué hizo cada agente?",
           "a": "Sí. Cada tarea queda registrada con su hora y su resultado."
+        },
+        {
+          "q": "¿Puedo limitar lo que hace un agente?",
+          "a": "Sí. Cada agente actúa dentro de lo que autoriza el contrato y las políticas que configuras, como descuentos máximos, plazos o el tono de la cobranza."
         }
       ]
     },
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

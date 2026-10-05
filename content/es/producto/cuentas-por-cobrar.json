@@ -89,7 +89,8 @@
           }
         }
       },
-      "intro": "Para la mayoría de los equipos, cobrar es el tramo más manual del revenue: armar facturas a fin de mes, perseguir pagos por correo y revisar la cartola para saber quién pagó. Relvo junta la facturación, la cobranza y la conciliación en un solo flujo, con las reglas de cada contrato, para que tus cuentas por cobrar estén siempre al día."
+      "intro": "Para la mayoría de los equipos, cobrar es el tramo más manual del revenue: armar facturas a fin de mes, perseguir pagos por correo y revisar la cartola para saber quién pagó. Relvo junta la facturación, la cobranza y la conciliación en un solo flujo, con las reglas de cada contrato, para que tus cuentas por cobrar estén siempre al día.",
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -103,7 +104,7 @@
       "after": [
         "Cada factura sale el día que corresponde, con el monto exacto.",
         "Los correos de cobranza salen solos y los pagos con tarjeta se cobran en automático.",
-        "Cada pago se concilia contra su factura, incluso los parciales."
+        "Relvo propone a qué factura corresponde cada pago, con su evidencia, y tu equipo confirma."
       ]
     },
     {
@@ -121,7 +122,7 @@
         },
         {
           "title": "Concilia",
-          "text": "Cruza cada movimiento del banco con su factura y actualiza lo que te deben."
+          "text": "Relvo propone la conciliación de cada movimiento del banco y actualiza lo que te deben al confirmarla."
         }
       ]
     },
@@ -212,7 +213,7 @@
         },
         {
           "label": "Conciliación",
-          "desc": "Cada pago contra su factura, incluso parciales.",
+          "desc": "Propuestas con evidencia, confirmadas por tu equipo.",
           "visual": {
             "id": "payment",
             "data": {
@@ -235,6 +236,37 @@
               ]
             }
           }
+        }
+      ]
+    },
+    {
+      "type": "capabilities",
+      "h2": "Facturado y cobrado, siempre separados.",
+      "h2Soft": "Para saber exactamente cuánto entró.",
+      "items": [
+        {
+          "title": "Notas de crédito y débito",
+          "text": "Corregir antes de emitir es recalcular; después, se emite un documento de corrección."
+        },
+        {
+          "title": "Medio de pago por cliente o contrato",
+          "text": "Coordenadas bancarias, link de pago o portal de suscripción con tarjeta, sin migrar a todos de una vez."
+        },
+        {
+          "title": "Cadencia de cobranza",
+          "text": "Recordatorios antes y después del vencimiento, con tono y frecuencia configurables."
+        },
+        {
+          "title": "Conciliación que aprende",
+          "text": "Relvo propone el match de cada movimiento con su evidencia y aprende de cada confirmación."
+        },
+        {
+          "title": "Pagos parciales y excedentes",
+          "text": "El saldo queda abierto en la factura y un pago de más queda como crédito del cliente."
+        },
+        {
+          "title": "Webhooks",
+          "text": "Cada conciliación puede actualizar tu ERP, tu producto o tu portal de clientes."
         }
       ]
     },
@@ -328,16 +360,25 @@
         },
         {
           "q": "¿Relvo concilia pagos parciales?",
-          "a": "Sí. Cada movimiento del banco se cruza con su factura; si el pago es parcial, la factura queda con su saldo pendiente y sigue en cobranza."
+          "a": "Sí. Relvo propone a qué factura corresponde cada movimiento del banco y tu equipo lo confirma. Si el pago es parcial, la factura queda con su saldo pendiente y sigue en cobranza."
         },
         {
           "q": "¿En qué monedas puedo facturar y cobrar?",
           "a": "En cualquier moneda, con conversión automática, incluida la UF."
+        },
+        {
+          "q": "¿La conciliación es automática?",
+          "a": "Relvo evalúa cada movimiento del banco y propone a qué factura corresponde, con la evidencia a la vista. Una persona confirma, y Relvo aprende de cada confirmación para proponer mejor la próxima vez."
+        },
+        {
+          "q": "¿Qué pasa si un cliente paga de más?",
+          "a": "El excedente queda como crédito del cliente, disponible para aplicarse a un documento futuro."
         }
       ]
     },
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

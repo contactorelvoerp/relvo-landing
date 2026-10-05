@@ -83,3 +83,59 @@
   .lp-hero__grid,.ba,.steps3,.related{grid-template-columns:1fr}
   .steps3__rail{display:none}
 }
+
+/* Hero centrado (todas las páginas internas, como las de producto de Stripe): migas, H1, lead y CTAs
+   centrados en ~760px; el visual a todo el ancho del contenedor debajo y la intro centrada bajo él */
+.lp-head{max-width:780px;margin:0 auto;text-align:center}
+.lp-head .crumbs{justify-content:center}
+.lp-head__title{margin:0;font-family:var(--font-ui);font-size:clamp(34px,3.6cqi,52px);font-weight:500;line-height:1.08;letter-spacing:-.03em}
+.lp-head__lead{max-width:46ch;margin:20px auto 0;font-size:clamp(17px,1.4cqi,19px);line-height:1.55;color:var(--text-body)}
+.lp-head__ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
+.lp-hero .lp-hero__visual{margin-top:clamp(40px,4cqi,56px)}
+.lp-hero .lp-stage{min-height:480px}
+.lp-hero .lp-stage--wide{display:block;height:clamp(440px,36cqi,520px);padding:0}
+.lp-hero .lp-intro{max-width:720px;margin:48px auto 0;padding-top:0;border-top:0;font-size:17px;text-align:center}
+/* heroApp: ventana a la izquierda, tarjeta de cobro a la derecha y aviso abajo (piloto) */
+.lp-stage--wide .hero-app__window{left:6%;top:9%;width:58%}
+.lp-stage--wide .hero-app__card{left:auto;right:8%;top:20%;width:30%}
+.lp-stage--wide .hero-app .hc--toast{right:5%;top:76%}
+/* composition: 2 o 3 piezas superpuestas, como el hero de la home */
+.composition{position:absolute;inset:0}
+.composition__piece{width:min(440px,44%)}
+.composition__piece--0{left:12%;top:12%}
+.composition__piece--1{right:12%;top:30%}
+.composition__piece--2{left:34%;top:58%}
+.composition--2 .composition__piece--1{right:10%;top:26%}
+.lp-hero .lp-stage--wide:has(.composition--2){height:clamp(380px,28cqi,420px)}
+
+/* Barra secundaria: fija bajo el menú, sin barra de scroll visible */
+.subnav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97)}
+.subnav::after{content:"";position:absolute;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);border-bottom:1px solid var(--line)}
+.subnav::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(255,255,255,.97)}
+.subnav__inner{display:flex;align-items:center;justify-content:space-between;gap:24px;height:48px;padding:0 var(--gutter)}
+.subnav__name{flex:none;font-size:14.5px;font-weight:600}
+.subnav__links{display:flex;gap:22px;min-width:0;overflow-x:auto;font-size:14px;scrollbar-width:none}
+.subnav__links::-webkit-scrollbar{display:none}
+.subnav__links a{color:var(--text-body);text-decoration:none;white-space:nowrap}
+.subnav__links a:hover{color:var(--text-main)}
+.subnav__links .subnav__docs{font-weight:500;color:var(--accent)}
+.lp .h2[id]{scroll-margin-top:80px}
+
+/* Capacidades: grilla de 2 o 3 columnas, título en negrita y una línea, sin íconos ni tarjetas */
+.caps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 48px}
+.caps--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.caps h3{margin:0 0 6px;font-size:16.5px;font-weight:600}
+.caps p{max-width:44ch;margin:0;font-size:15.5px;line-height:1.55;color:var(--text-body)}
+
+@container (max-width:979px){
+  .caps,.caps--2{grid-template-columns:1fr;gap:28px}
+  .subnav__links{gap:16px}
+}
+@container (max-width:719px){
+  .lp-hero .lp-stage--wide,.lp-hero .lp-stage--wide:has(.composition--2){display:flex;flex-direction:column;gap:12px;height:auto;padding:20px}
+  .lp-stage--wide .hero-app,.lp-stage--wide .composition{position:static;display:flex;flex-direction:column;gap:12px}
+  .lp-stage--wide .hc{position:relative;inset:auto;width:100%}
+  .lp-stage--wide .win__body{grid-template-columns:1fr;min-height:0}
+  .lp-stage--wide .win__side{display:none}
+  .subnav__name{display:none}
+}

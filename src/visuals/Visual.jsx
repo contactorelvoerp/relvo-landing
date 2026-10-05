@@ -1,11 +1,13 @@
-import { AgentFeed, CaseHeadline, CodeBlock, EmailPreview, Methods, Payment, PlanCard, Review, SplitInvoice, TimelineCard, Usage } from './cards'
+import { AgentFeed, CaseHeadline, CodeBlock, DtiBars, EmailPreview, Methods, Payment, PlanCard, Review, SlackMessage, SplitInvoice, TimelineCard, Usage } from './cards'
 import { BarChart, Legend, LineChart, Waterfall } from './Charts'
 import { BAR_COLORS, LINE_COLORS } from './colors'
 import { labelsFor } from './labels'
 import { HeroApp } from './HeroApp'
+import { useSequence } from './useSequence'
 
 // Renderiza un visual de la librería a partir de { id, data } (content/SCHEMA.md §3).
-// Las tarjetas van dentro de la tarjeta blanca de UI (.ui); heroApp ocupa todo el escenario del hero.
+// Las tarjetas van dentro de la tarjeta blanca de UI (.ui); heroApp y composition ocupan todo el
+// escenario del hero.
 const CARDS = {
   planCard: PlanCard,
   timeline: TimelineCard,
@@ -16,7 +18,10 @@ const CARDS = {
   usage: Usage,
   review: Review,
   codeBlock: CodeBlock,
+  slackMessage: SlackMessage,
+  dtiBars: DtiBars,
 }
+const CHARTS = ['barChart', 'lineChart', 'waterfall']
 
 export function Chart({ id, data, label, locale }) {
   if (id === 'waterfall') return <div className="chart"><Waterfall steps={data.steps} label={label} locale={locale} /></div>
@@ -30,16 +35,36 @@ export function Chart({ id, data, label, locale }) {
   )
 }
 
+// Contenido de un visual sin su tarjeta (lo usan .ui y las piezas de composition)
+function Inner({ id, data, locale, caseData, label }) {
+  if (id === 'caseHeadline') return <CaseHeadline c={caseData} />
+  if (id === 'agentFeed') return <AgentFeed d={data} />
+  if (CHARTS.includes(id)) return <Chart id={id} data={data} label={label} locale={locale === 'en' ? 'en-US' : 'es-CL'} />
+  const Card = CARDS[id]
+  return <Card d={data} l={labelsFor(locale)} />
+}
+
+// composition: 2 o 3 visuales superpuestos que aparecen en secuencia una sola vez
+function Composition({ pieces, locale, caseData, label }) {
+  const [stage] = useSequence(pieces.length - 1)
+  return (
+    <div ref={stage} className={`composition composition--${pieces.length}`}>
+      {pieces.map((piece, i) => (
+        <div key={piece.id + i} className={`hc composition__piece composition__piece--${i} composition__piece--${piece.id}`}>
+          <Inner {...piece} locale={locale} caseData={caseData} label={label} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export function Visual({ visual, locale, caseData, label }) {
   const { id, data } = visual
-  const l = labelsFor(locale)
-  if (id === 'heroApp') return <HeroApp d={data} l={l} />
-  if (id === 'caseHeadline') return <div className="ui ui--case"><CaseHeadline c={caseData} /></div>
-  // La etiqueta de ejemplo la pone el escenario o el panel que contiene al visual
-  if (id === 'agentFeed') return <div className="ui ui--feed"><AgentFeed d={data} /></div>
-  if (id === 'barChart' || id === 'lineChart' || id === 'waterfall') {
-    return <div className="ui ui--chart"><Chart id={id} data={data} label={label} locale={locale === 'en' ? 'en-US' : 'es-CL'} /></div>
-  }
-  const Card = CARDS[id]
-  return <div className={`ui ui--${id}`}><Card d={data} l={l} /></div>
+  if (id === 'heroApp') return <HeroApp d={data} l={labelsFor(locale)} />
+  if (id === 'composition') return <Composition pieces={data.pieces} locale={locale} caseData={caseData} label={label} />
+  return (
+    <div className={`ui ui--${id}${CHARTS.includes(id) ? ' ui--chart' : ''}`}>
+      <Inner id={id} data={data} locale={locale} caseData={caseData} label={label} />
+    </div>
+  )
 }

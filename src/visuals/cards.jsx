@@ -185,13 +185,43 @@ export function Review({ d, l }) {
   )
 }
 
-// El endpoint de los ejemplos de código es ilustrativo: la nota del contenido lo dice en pantalla.
+// ILUSTRATIVO: el endpoint de los bloques de código no es el real de la API de Relvo. La nota
+// (`d.note`) queda en el archivo de contenido para reemplazarlo; no se muestra en la página.
 export function CodeBlock({ d }) {
   return (
     <div className="code">
       <div className="code__bar"><span>{d.lang.toUpperCase()}</span></div>
       <pre className="code__body"><code>{d.code}</code></pre>
-      <p className="code__note">{d.note}</p>
+    </div>
+  )
+}
+
+// Mensaje en un canal de Slack con la respuesta de Relvo
+export function SlackMessage({ d }) {
+  const initial = (name) => name.trim().charAt(0)
+  return (
+    <div className="slack">
+      <p className="slack__channel">{d.channel}</p>
+      <div className="slack__msg">
+        <span className="slack__avatar" aria-hidden="true">{initial(d.author)}</span>
+        <div><p className="slack__meta"><b>{d.author}</b>{d.time && <time>{d.time}</time>}</p><p className="slack__text">{d.text}</p></div>
+      </div>
+      <div className="slack__msg slack__msg--reply">
+        <img className="slack__avatar slack__avatar--relvo" src="/logo-mark-dark.svg" alt="" width="28" height="28" />
+        <div><p className="slack__meta"><b>{d.reply.author}</b></p><p className="slack__text">{d.reply.text}</p></div>
+      </div>
+    </div>
+  )
+}
+
+// Barras de días antes y después (DTI)
+export function DtiBars({ d, l }) {
+  const Bars = ({ count, on }) => <div className={`case__bars${on ? ' case__bars--on' : ''}`} aria-hidden="true">{Array.from({ length: count }, (_, i) => <i key={i} />)}</div>
+  return (
+    <div className="dti">
+      <p className="dti__label">{d.label}</p>
+      <div className="case__dd case__dd--before"><div className="case__dd-label">{l.before}</div><div className="case__dd-value"><b className="num">{d.before}</b><small>{l.days}</small></div><Bars count={d.before} /></div>
+      <div className="case__dd"><div className="case__dd-label case__dd-label--on">{l.after}</div><div className="case__dd-value"><b className="num">{d.after}</b><small>{l.days}</small></div><Bars count={d.after} on /></div>
     </div>
   )
 }

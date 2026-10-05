@@ -26,30 +26,57 @@ function Breadcrumbs({ items, label }) {
   )
 }
 
+// Hero centrado (todas las páginas internas): migas, H1, lead y CTAs centrados; el visual a todo el
+// ancho del contenedor debajo y la intro centrada bajo el visual.
 export function Hero({ b, p, breadcrumb }) {
   const ctas = b.ctas.map((c) => ({ ...c, href: hrefForPath(c.href) })).filter((c) => c.href)
-  const app = b.visual.id === 'heroApp'
+  const wide = b.visual.id === 'heroApp' || b.visual.id === 'composition'
   return (
     <section className="section band band--first lp-hero" aria-labelledby="lp-h1">
-      <div className="lp-hero__grid">
-        <div className="lp-hero__copy">
-          <Breadcrumbs items={breadcrumb} label={p.l.breadcrumb} />
-          <h1 id="lp-h1" className="lp-hero__title">{b.h1}</h1>
-          <p className="lp-hero__lead">{b.lead}</p>
-          {ctas.length > 0 && (
-            <div className="lp-hero__ctas">
-              {ctas.map((c) => <a key={c.label} className={`btn btn--lg ${c.style === 'primary' ? 'btn--primary' : 'btn--secondary'}`} href={c.href}>{c.label}</a>)}
-            </div>
-          )}
-        </div>
-        <div className="lp-hero__visual">
-          <div className={`stage lp-stage${app ? ' lp-stage--app' : ''}`}>
-            <Texture kind="orbits" />
-            <Visual visual={b.visual} locale={p.locale} caseData={p.caseData} label={b.h1} />
+      <div className="lp-head">
+        <Breadcrumbs items={breadcrumb} label={p.l.breadcrumb} />
+        <h1 id="lp-h1" className="lp-head__title">{b.h1}</h1>
+        <p className="lp-head__lead">{b.lead}</p>
+        {ctas.length > 0 && (
+          <div className="lp-head__ctas">
+            {ctas.map((c) => <a key={c.label} className={`btn btn--lg ${c.style === 'primary' ? 'btn--primary' : 'btn--secondary'}`} href={c.href}>{c.label}</a>)}
           </div>
+        )}
+      </div>
+      <div className="lp-hero__visual">
+        <div className={`stage lp-stage${wide ? ' lp-stage--wide' : ''}`}>
+          <Texture kind="orbits" />
+          <Visual visual={b.visual} locale={p.locale} caseData={p.caseData} label={b.h1} />
         </div>
       </div>
       {b.intro && <p className="lp-intro">{b.intro}</p>}
+    </section>
+  )
+}
+
+// Barra secundaria fija bajo el menú: nombre de la página, anclas a cada sección con h2 y Docs
+export function Subnav({ name, anchors, docs, l }) {
+  return (
+    <div className="subnav">
+      <div className="subnav__inner">
+        <b className="subnav__name">{name}</b>
+        <nav className="subnav__links" aria-label={l.sections}>
+          {anchors.map((a) => <a key={a.id} href={`#${a.id}`}>{a.label}</a>)}
+          {docs && <a className="subnav__docs" href={docs}>{l.docs}</a>}
+        </nav>
+      </div>
+    </div>
+  )
+}
+
+// Capacidades: grilla de 2 o 3 columnas, título en negrita y una línea, sin íconos ni tarjetas
+export function Capabilities({ b, id }) {
+  return (
+    <section className="section band" aria-labelledby={id}>
+      <Heading id={id} title={b.h2} soft={b.h2Soft} />
+      <div className={`caps${b.items.length === 4 ? ' caps--2' : ''}`}>
+        {b.items.map((item) => <div key={item.title}><h3>{item.title}</h3><p>{item.text}</p></div>)}
+      </div>
     </section>
   )
 }

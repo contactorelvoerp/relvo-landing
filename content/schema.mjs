@@ -71,28 +71,39 @@ const VISUAL_DATA = {
   review: z.object({ title: text, left: pair, right: pair, actions: z.array(text).min(1) }).strict(),
   codeBlock: z.object({ lang: text, code: text, note: text }).strict(),
   caseHeadline: z.object({}).strict(),
+  slackMessage: z.object({ channel: text, author: text, time: text.optional(), text, reply: z.object({ author: text, text }).strict() }).strict(),
+  dtiBars: z.object({ before: z.number().int().positive(), after: z.number().int().positive(), label: text }).strict(),
+  // composition: 2 o 3 visuales superpuestos (como el hero de la home); cada pieza se valida como visual
+  composition: z.object({ pieces: z.array(z.object({ id: text, data: z.unknown() }).strict()).min(2).max(3) }).strict(),
 }
 const VISUAL_IDS = Object.keys(VISUAL_DATA)
 
-const visual = z.object({ id: z.enum(VISUAL_IDS), data: z.unknown() }).strict()
-  .superRefine((v, ctx) => {
-    const result = VISUAL_DATA[v.id].safeParse(v.data)
-    if (!result.success) for (const issue of result.error.issues) ctx.addIssue({ ...issue, path: ['data', ...issue.path] })
-  })
+const checkVisual = (v, ctx, path) => {
+  if (!VISUAL_IDS.includes(v.id)) return ctx.addIssue({ code: 'custom', message: `visual desconocido: ${v.id}`, path: [...path, 'id'] })
+  const result = VISUAL_DATA[v.id].safeParse(v.data)
+  if (!result.success) for (const issue of result.error.issues) ctx.addIssue({ ...issue, path: [...path, 'data', ...issue.path] })
+  else if (v.id === 'composition') v.data.pieces.forEach((piece, i) => (piece.id === 'composition'
+    ? ctx.addIssue({ code: 'custom', message: 'composition no se anida', path: [...path, 'data', 'pieces', i] })
+    : checkVisual(piece, ctx, [...path, 'data', 'pieces', i])))
+}
+const visual = z.object({ id: z.enum(VISUAL_IDS), data: z.unknown() }).strict().superRefine((v, ctx) => checkVisual(v, ctx, []))
 
 const titled = { h2: text, h2Soft: maxWords(10).optional() }
 const cta = z.object({ label: text, href: z.string().startsWith('/'), style: z.enum(['primary', 'secondary']) }).strict()
 
 const BLOCKS = [
-  z.object({ type: z.literal('hero'), h1: text, lead: maxWords(30), intro: wordRange(40, 70).optional(), ctas: z.array(cta).min(1).max(2), visual }).strict(),
+  // layout centered: obligatorio en las páginas internas (el hero de la home es el único a dos columnas)
+  z.object({ type: z.literal('hero'), layout: z.literal('centered'), h1: text, lead: maxWords(30), intro: wordRange(40, 70).optional(), ctas: z.array(cta).min(1).max(2), visual }).strict(),
   z.object({ type: z.literal('beforeAfter'), ...titled, before: z.array(text).length(3), after: z.array(text).length(3) }).strict(),
   z.object({ type: z.literal('steps'), ...titled, steps: z.array(z.object({ title: text, text }).strict()).length(3) }).strict(),
   z.object({ type: z.literal('featureTabs'), ...titled, tabs: z.array(z.object({ label: text, desc: maxWords(8), visual }).strict()).min(3).max(4) }).strict(),
+  z.object({ type: z.literal('capabilities'), ...titled, items: z.array(z.object({ title: text, text }).strict()).min(4).max(6) }).strict(),
   z.object({ type: z.literal('metrics'), ...titled, kpis: z.array(z.object({ label: text, value: text }).strict()).min(1).max(3), note: text.optional(), chart: visual.optional() }).strict(),
   z.object({ type: z.literal('case'), ref: text, h2: text, optional: z.boolean().optional() }).strict(),
   z.object({ type: z.literal('related'), ...titled, items: z.array(z.enum(['contratos', 'medicion', 'aprobaciones', 'cxc', 'agentes', 'reporteria'])).length(3) }).strict(),
-  // SCHEMA.md pide de 4 a 6 preguntas; las 8 soluciones traen 7 (pendiente de confirmar con Ricardo)
-  z.object({ type: z.literal('faq'), h2: text, items: z.array(z.object({ q: text, a: text }).strict()).min(4).max(7) }).strict(),
+  // SCHEMA.md pide de 4 a 6 preguntas; el contenido trae de 5 a 9. Más de 6 es un aviso del validador
+  // (pendiente de confirmar con Ricardo), no un error.
+  z.object({ type: z.literal('faq'), h2: text, items: z.array(z.object({ q: text, a: text }).strict()).min(4) }).strict(),
   z.object({ type: z.literal('quote'), ref: text, variant: z.enum(['full', 'short']) }).strict(),
   z.object({ type: z.literal('integrations') }).strict(),
   z.object({ type: z.literal('cta') }).strict(),
@@ -112,6 +123,7 @@ export const pageSchema = z.object({
   preset: z.enum(['producto', 'solucion', 'caso']),
   seo: text,
   keyword: text,
+  subnav: z.boolean().optional(),
   breadcrumb: z.array(z.object({ label: text, href: z.string().startsWith('/').optional() }).strict()).min(2),
   case: caseData.optional(),
   blocks: z.array(block).min(3),

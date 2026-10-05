@@ -70,7 +70,8 @@
             ]
           ]
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -153,5 +154,6 @@
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }
