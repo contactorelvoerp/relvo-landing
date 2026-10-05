@@ -354,7 +354,8 @@ a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
 
 /* 9 · LatAm (prototipo v2): seis frases grandes en dos columnas */
 .latam{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:56px;margin:0;padding:0;list-style:none}
-.latam li{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:clamp(18px,1.6cqi,22px);font-weight:500;letter-spacing:-.01em;color:var(--text-on-ink)}
+.latam li{display:flex;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:clamp(18px,1.6cqi,22px);font-weight:500;letter-spacing:-.01em;color:var(--text-on-ink)}
+.latam svg{flex:none;width:22px;height:22px;fill:none;stroke:var(--chip-fg-on-dark);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 @container (max-width:719px){.latam{grid-template-columns:1fr}}
 
 /* 10 · Integraciones (prototipo): carrusel de nombres en texto, lineal y lento */
@@ -372,13 +373,13 @@ a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
 
 /* 11 · CTA final */
 /* La banda verde no lleva el padding de sección: la columna del CTA define su alto (prototipo) */
-.section--cta{padding-block:0}
-.cta{position:relative;isolation:isolate;display:flex;align-items:center;min-height:clamp(360px,30cqi,420px);padding-block:clamp(64px,7cqi,96px)}
+/* Tarjeta verde (prototipo v2.1) dentro de una sección blanca, con aire arriba y abajo y separada del footer */
+.cta{position:relative;isolation:isolate;display:flex;align-items:center;min-height:clamp(360px,30cqi,420px);padding:clamp(64px,7cqi,96px) clamp(24px,4cqi,56px);overflow:hidden;border-radius:12px;background:var(--band-green);color:var(--text-on-green)}
 .cta__content{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:32px;max-width:min(60%,760px)}
 .cta__title{margin:0;font-size:clamp(36px,4.8cqi,68px);line-height:1.05;letter-spacing:-.02em;color:#FFFFFF}
 .cta__button{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:var(--radius-md);background:#FFFFFF;color:var(--accent-pressed);font-size:17px;font-weight:500;text-decoration:none}
 .cta__button:hover{background:var(--mint);color:var(--accent-pressed)}
 .cta__actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px}
-.band--green .link,.band--ink .link{color:#FFFFFF;border-bottom-color:rgba(255,255,255,.4)}
-.band--green .link:hover,.band--ink .link:hover{border-bottom-color:#FFFFFF}
+.cta .link,.band--ink .link{color:#FFFFFF;border-bottom-color:rgba(255,255,255,.4)}
+.cta .link:hover,.band--ink .link:hover{border-bottom-color:#FFFFFF}
 @container (max-width:719px){.cta__content{max-width:84%}}

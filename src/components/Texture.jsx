@@ -56,10 +56,11 @@ const painters = {
   periods(ctx, w, h, t) {
     ctx.clearRect(0, 0, w, h)
     const r = h * 0.3, cy = h * 0.5, n = 60
-    const startX = w * 0.64, span = w * 0.5
+    // El tubo termina en el borde derecho: el último círculo queda fijo ahí y solo se mueven los intermedios
+    const startX = w * 0.58, span = (w - r) - startX, step = span / (n - 1), off = (t * 0.012) % step
     for (let k = 0; k < n; k++) {
       const p = k / (n - 1)
-      const x = startX + p * span + ((t * 0.012) % (span / (n - 1)))
+      const x = startX + p * span + (k < n - 1 ? off : 0)
       ctx.strokeStyle = `rgba(${C.white},${(0.06 + 0.3 * (1 - p)).toFixed(3)})`
       ctx.lineWidth = 1
       ctx.beginPath(); ctx.arc(x, cy, r, 0, Math.PI * 2); ctx.stroke()

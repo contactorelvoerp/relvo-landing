@@ -517,6 +517,16 @@ footer .legal span{display:flex;gap:20px}
   .chartbox{height:auto}
   .chart svg{height:240px;flex:none}
 }
+
+/* Ajustes v2.1 */
+.lat2 span{display:flex;align-items:center;gap:14px}
+.lat2 svg{width:22px;height:22px;flex:none;fill:none;stroke:#72DDAA;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.final{padding:0 0 112px;background:#fff}
+.final > .wrap{border-top:1px solid var(--rail-c);padding-top:96px}
+.final-card{background:var(--green);color:#fff;border-radius:12px;padding:0 56px}
+.final-card .link{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+@media (max-width:980px){.final-card{padding:0 24px}.final{padding-bottom:80px}.final > .wrap{padding-top:72px}}
+
 </style>
 </head>
 <body>
@@ -719,14 +729,14 @@ footer .legal span{display:flex;gap:20px}
   <div class="wrap">
     <h2 class="h2" id="t-int"><span class="n">03</span>Qué está pasando con tu revenue. <span class="s">Lo que ninguna planilla junta.</span></h2>
     <div class="htabs" role="tablist" aria-label="Reportes" data-tabs="intel" style="background:#fff;border:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:12px 12px 0 0;padding:0 32px">
-      <button class="htab" role="tab" aria-selected="true" aria-controls="i0" id="it0">Qué usan vs. qué pagan</button>
+      <button class="htab" role="tab" aria-selected="true" aria-controls="i0" id="it0">Recurrente vs. consumo</button>
       <button class="htab" role="tab" aria-selected="false" aria-controls="i1" id="it1" tabindex="-1">Qué tan rápido conviertes trabajo en caja</button>
       <button class="htab" role="tab" aria-selected="false" aria-controls="i2" id="it2" tabindex="-1">Cómo se mueve tu MRR</button>
     </div>
     <div class="chartbox" role="tabpanel" id="i0" aria-labelledby="it0">
-      <div class="kpi"><small>Consumo sobre el MRR</small><b class="num">21%</b><p>Desde 11% en abril.</p><p class="k2"><span class="tag">Ejemplo</span></p></div>
-      <div class="chart"><svg id="c0" viewBox="0 0 640 260" role="img" aria-label="MRR fijo y consumo por mes, abril a septiembre"></svg>
-        <div class="legend"><span><i style="background:#13131E"></i>MRR fijo</span><span><i style="background:#633BF2"></i>Consumo: llamadas API</span><span><i style="background:#E3C0F2"></i>Consumo: documentos</span></div></div>
+      <div class="kpi"><small>Consumo sobre el ingreso</small><b class="num">36%</b><p>Desde 26% en abril. Varía mes a mes con el uso.</p><p class="k2"><span class="tag">Ejemplo</span></p></div>
+      <div class="chart"><svg id="c0" viewBox="0 0 640 260" role="img" aria-label="Ingreso recurrente y consumo por mes, abril a septiembre"></svg>
+        <div class="legend"><span><i style="background:#13131E"></i>Recurrente (planes y seats)</span><span><i style="background:#633BF2"></i>Consumo: tokens</span><span><i style="background:#E3C0F2"></i>Consumo: documentos</span></div></div>
     </div>
     <div class="chartbox" role="tabpanel" id="i1" aria-labelledby="it1" hidden>
       <div class="kpi"><small>Días en facturar (DTI)</small><b class="num">3</b><small class="k2" style="margin-top:22px">Días en cobrar (DSO)</small><b class="num">38</b><p>9 días menos que en abril.</p></div>
@@ -789,7 +799,7 @@ footer .legal span{display:flex;gap:20px}
   <div class="wrap">
     <h2 class="h2" id="t-caso">Lo que cambió para nuestros clientes.</h2>
     <div class="case">
-      <div><p class="co"><b>TGP</b>Agencia de prospecting. Cobra un fee fijo más un variable cada mes.</p>
+      <div><p class="co"><b>TGP</b>La agencia de prospecting más grande de LatAm.</p>
         <p class="big">70%</p><p class="big-l">menos tiempo operativo</p><p class="sub">mientras su operación creció 30% en 3 meses.</p></div>
       <div><p class="k"><b>Días en facturar (DTI)</b>, con aprobaciones de clientes y órdenes de compra incluidas.</p>
         <div class="dd off"><div class="l">Antes</div><div class="d"><b>6</b><small>días</small></div><div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
@@ -807,18 +817,18 @@ footer .legal span{display:flex;gap:20px}
   <div class="wrap">
     <h2 class="h2" id="t-lat">Hecho para cobrar en LatAm. <span class="s">Bancos, medios de pago y facturación de la región.</span></h2>
     <div class="lat lat2">
-      <span>Facturación electrónica en Chile y México</span>
-      <span>Conciliación con bancos locales</span>
-      <span>Toku, Fintoc y Stripe</span>
-      <span>Cualquier moneda, incluida la UF</span>
-      <span>Varias sociedades, un solo cierre</span>
-      <span>Órdenes de compra y aprobaciones</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg>Facturación electrónica en Chile y México</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 4l9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg>Conciliación con bancos locales</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h4"/></svg>Toku, Fintoc y Stripe</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="10" r="5"/><path d="M14.5 6.2A5 5 0 1 1 13 17.6"/></svg>Cualquier moneda, incluida la UF</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V8l5-3v15M9 20V10l6-3v13M15 20V11l5 2v7M3 20h18"/></svg>Varias sociedades, un solo cierre</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 12l2 2 4-4"/></svg>Órdenes de compra y aprobaciones</span>
     </div>
   </div>
 </section>
 
 <!-- INTEGRACIONES -->
-<section class="band sec b-neutral ints" aria-labelledby="t-ints">
+<section class="band sec ints" aria-labelledby="t-ints">
   <canvas class="btex" data-btex="linesEdge" aria-hidden="true"></canvas>
   <div class="wrap">
     <h2 class="h2" id="t-ints">Se conecta a lo que ya usas. <span class="s">Tu CRM, ERP, pagos y banco en un solo motor.</span></h2>
@@ -830,9 +840,9 @@ footer .legal span{display:flex;gap:20px}
 </section>
 
 <!-- CTA FINAL -->
-<section class="band b-green final" aria-labelledby="t-fin">
+<section class="band final" aria-labelledby="t-fin">
   <div class="wrap">
-    <div class="final-in" data-tex="periods">
+    <div class="final-in final-card" data-tex="periods">
       <canvas aria-hidden="true"></canvas>
       <div class="txt">
         <h2 id="t-fin">Tú vendes. Relvo hace el resto.</h2>
@@ -891,9 +901,10 @@ footer .legal span{display:flex;gap:20px}
     },
     periods(ctx, w, h, t) {
       ctx.clearRect(0,0,w,h);
-      const r = h*0.3, cy = h*0.5, n = 60, sx = w*0.6, span = w*0.5;
+      const r = h*0.3, cy = h*0.5, n = 60, sx = w*0.58, span = (w - r) - sx;
+      const step = span/(n-1), off = (t*0.012) % step;
       for (let k = 0; k < n; k++) {
-        const p = k/(n-1), x = sx + p*span + ((t*0.012) % (span/(n-1)));
+        const p = k/(n-1), x = sx + p*span + (k < n-1 ? off : 0);
         ctx.strokeStyle = `rgba(${C.white},${(0.06 + 0.3*(1-p)).toFixed(3)})`; ctx.lineWidth = 1;
         ctx.beginPath(); ctx.arc(x, cy, r, 0, Math.PI*2); ctx.stroke();
       }
@@ -1061,9 +1072,9 @@ footer .legal span{display:flex;gap:20px}
   const label = (svg, x, y, s, anchor) => { const t = el('text', { x, y, 'text-anchor':anchor || 'middle', 'font-size':12, fill:'#6E6E7A', 'font-family':'Instrument Sans, sans-serif' }); t.textContent = s; svg.appendChild(t); };
   // c0: barras apiladas
   (() => {
-    const svg = document.getElementById('c0'), H = 230, L = 44, W = 640, max = 220;
-    const m = ['Abr','May','Jun','Jul','Ago','Sep'], fix = [140,143,146,149,152,156], api = [12,14,17,20,24,31], doc = [6,6,7,7,8,10];
-    axis(svg, max, [0,100,200], H, L, W);
+    const svg = document.getElementById('c0'), H = 230, L = 44, W = 640, max = 250;
+    const m = ['Abr','May','Jun','Jul','Ago','Sep'], fix = [140,143,146,149,152,156], api = [38,52,41,63,49,72], doc = [12,9,15,11,17,14];
+    axis(svg, max, [0,125,250], H, L, W);
     const bw = 46, gap = (W - L - 20 - bw*6)/5;
     m.forEach((mm, i) => {
       const x = L + 10 + i*(bw + gap); let y = H;

@@ -129,10 +129,10 @@ export const copy = {
       months: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
       tabs: [
         {
-          label: 'Qué usan vs. qué pagan',
-          kpis: [{ label: 'Consumo sobre el MRR', value: '21%', note: 'Desde 11% en abril.' }],
-          chartLabel: 'MRR fijo y consumo por mes, abril a septiembre',
-          legend: ['MRR fijo', 'Consumo: llamadas API', 'Consumo: documentos'],
+          label: 'Recurrente vs. consumo',
+          kpis: [{ label: 'Consumo sobre el ingreso', value: '36%', note: 'Desde 26% en abril. Varía mes a mes con el uso.' }],
+          chartLabel: 'Ingreso recurrente y consumo por mes, abril a septiembre',
+          legend: ['Recurrente (planes y seats)', 'Consumo: tokens', 'Consumo: documentos'],
         },
         {
           label: 'Qué tan rápido conviertes trabajo en caja',
@@ -182,7 +182,7 @@ export const copy = {
     case: {
       title: 'Lo que cambió para nuestros clientes.',
       company: 'TGP',
-      about: 'Agencia de prospecting. Cobra un fee fijo más un variable cada mes.',
+      about: 'La agencia de prospecting más grande de LatAm.',
       big: '70%',
       bigLabel: 'menos tiempo operativo',
       bigSub: 'mientras su operación creció 30% en 3 meses.',
@@ -324,7 +324,7 @@ export const copy = {
       numberLocale: 'en-US',
       months: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
       tabs: [
-        { label: 'What they use vs. what they pay', kpis: [{ label: '[PENDIENTE]', value: '21%', note: '[PENDIENTE]' }], chartLabel: '[PENDIENTE]', legend: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'] },
+        { label: '[PENDIENTE]', kpis: [{ label: '[PENDIENTE]', value: '36%', note: '[PENDIENTE]' }], chartLabel: '[PENDIENTE]', legend: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'] },
         { label: 'How fast you turn work into cash', kpis: [{ label: '[PENDIENTE]', value: '3', note: '[PENDIENTE]' }, { label: '[PENDIENTE]', value: '38', note: '[PENDIENTE]' }], chartLabel: '[PENDIENTE]', legend: ['DTI', 'DSO'] },
         { label: 'How your MRR moves', kpis: [{ label: '[PENDIENTE]', value: '192.4k', note: '[PENDIENTE]' }], chartLabel: '[PENDIENTE]', steps: ['Sep', '[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]', 'Churn', 'Oct'] },
       ],

@@ -57,6 +57,16 @@ function LogoStrip({ label }) {
     </div>
   )
 }
+// Íconos de línea de LatAm (prototipo v2.1), en el mismo orden que las frases
+const LATAM_ICONS = [
+  <g key="einvoice"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4M9 12h6M9 16h6" /></g>,
+  <path key="bank" d="M3 10 12 4l9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18" />,
+  <g key="card"><rect x="3" y="6" width="18" height="12" rx="2" /><path d="M3 10h18M7 15h4" /></g>,
+  <g key="currency"><circle cx="9" cy="10" r="5" /><path d="M14.5 6.2A5 5 0 1 1 13 17.6" /></g>,
+  <path key="entities" d="M4 20V8l5-3v15M9 20V10l6-3v13M15 20V11l5 2v7M3 20h18" />,
+  <g key="po"><rect x="5" y="4" width="14" height="17" rx="2" /><path d="M9 4V3h6v1M9 12l2 2 4-4" /></g>,
+]
+
 // Titular en dos tonos: número (opcional) + titular + continuación más suave.
 function Heading({ n, title, soft }) {
   return (
@@ -161,17 +171,17 @@ export function HomePage({ t, locale }) {
         <BandTexture kind="orbitsDark" />
         <Heading title={c.latam.title} soft={c.latam.soft} />
         <ul className="latam">
-          {c.latam.points.map((point, i) => <li key={i}>{point}</li>)}
+          {c.latam.points.map((point, i) => <li key={i}><svg viewBox="0 0 24 24" aria-hidden="true">{LATAM_ICONS[i]}</svg>{point}</li>)}
         </ul>
       </section>
 
-      <section className="section band band--neutral">
+      <section className="section band">
         <BandTexture kind="linesEdge" />
         <Heading title={c.integrations.title} soft={c.integrations.soft} />
         <Integrations c={c.integrations} locale={locale} />
       </section>
 
-      <section className="section section--cta band band--green">
+      <section className="section section--cta band">
         <div className="cta">
           <Texture kind="periods" />
           <div className="cta__content">

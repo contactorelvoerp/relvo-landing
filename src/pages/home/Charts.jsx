@@ -17,12 +17,12 @@ function Grid({ ticks, y, format = String }) {
 const Label = ({ x, children }) => <text x={x} y={H + 20} textAnchor="middle" fontSize="12" fill="#5C5C69" fontFamily={UI}>{children}</text>
 
 export function UsageBars({ months, label }) {
-  const max = 220, fix = [140, 143, 146, 149, 152, 156], api = [12, 14, 17, 20, 24, 31], doc = [6, 6, 7, 7, 8, 10]
+  const max = 250, fix = [140, 143, 146, 149, 152, 156], api = [38, 52, 41, 63, 49, 72], doc = [12, 9, 15, 11, 17, 14]
   const y = (v) => H - (v / max) * (H - 20)
   const bw = 46, gap = (W - L - 20 - bw * 6) / 5
   return (
     <svg viewBox="0 0 640 260" role="img" aria-label={label}>
-      <Grid ticks={[0, 100, 200]} y={y} />
+      <Grid ticks={[0, 125, 250]} y={y} />
       {months.map((m, i) => {
         const x = L + 10 + i * (bw + gap)
         let top = H

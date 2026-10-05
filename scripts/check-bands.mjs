@@ -6,11 +6,10 @@ import { fileURLToPath } from 'node:url'
 
 const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'dist')
 
-// Cada sección declara su banda en la clase: band--mint, band--ink, band--green (color) o band--neutral (gris).
+// Cada sección declara su banda en la clase: band--mint, band--ink (color) o band--neutral (gris).
 function kind(section) {
   const cls = (section.match(/^<section[^>]*class="([^"]*)"/) || [])[1]?.split(' ') ?? []
   if (cls.includes('band--ink')) return 'oscura'
-  if (cls.includes('band--green')) return 'verde'
   if (cls.includes('band--mint')) return 'menta'
   return cls.includes('band--neutral') ? 'gris' : 'blanca'
 }
