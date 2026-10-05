@@ -22,5 +22,10 @@ jobs:
       - run: npm run build
       - run: npm run check:links
       - run: npm run check:jsonld
+      - name: Rutas y archivos técnicos sin headers especiales (como curl)
+        run: |
+          npx vite preview --port 4317 --strictPort &
+          sleep 5
+          npm run check:routes
       - run: npm run check:bands
       - run: npm run check:design
