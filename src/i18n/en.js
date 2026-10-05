@@ -44,6 +44,7 @@ export const en = {
   footer: {
     tagline: 'Revenue Engine for SaaS and AI. Santiago, Chile.',
     legal: '© 2026 Relvo SpA',
+    illustrative: '[PENDIENTE]',
   },
   notFound: {
     title: 'Page not found',

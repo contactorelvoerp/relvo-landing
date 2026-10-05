@@ -33,7 +33,7 @@ export function Chart({ id, data, label, locale }) {
 export function Visual({ visual, locale, caseData, label }) {
   const { id, data } = visual
   const l = labelsFor(locale)
-  if (id === 'heroApp') return <HeroApp d={data} l={l} example={l.example} />
+  if (id === 'heroApp') return <HeroApp d={data} l={l} />
   if (id === 'caseHeadline') return <div className="ui ui--case"><CaseHeadline c={caseData} /></div>
   // La etiqueta de ejemplo la pone el escenario o el panel que contiene al visual
   if (id === 'agentFeed') return <div className="ui ui--feed"><AgentFeed d={data} /></div>

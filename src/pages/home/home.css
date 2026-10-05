@@ -50,6 +50,12 @@
   .logo-strip__cell{width:150px;height:84px}
 }
 
+/* 2 · Banda de cifras (prototipo v2): tres cifras grandes en verde con su contexto */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px}
+.stats__value{display:block;font-size:clamp(48px,5.6cqi,80px);font-weight:500;line-height:1;letter-spacing:-.04em;color:var(--accent)}
+.stats__label{max-width:26ch;margin:14px 0 0;font-size:16px;line-height:1.5;color:var(--text-body)}
+@container (max-width:979px){.stats{grid-template-columns:1fr;gap:32px}}
+
 /* 3 · Tres capas */
 .layers{position:relative}
 .layers__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px}

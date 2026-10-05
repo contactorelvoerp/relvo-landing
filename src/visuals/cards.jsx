@@ -146,8 +146,8 @@ export function Usage({ d, l }) {
   )
 }
 
-// Agentes y revisión: en la banda oscura de la home van en tinta (dark); en la plantilla, claros.
-export function AgentFeed({ d, example, dark, feedRef }) {
+// Agentes y revisión: claros; en la banda oscura de la home van en tinta (.agents--ink).
+export function AgentFeed({ d, feedRef }) {
   return (
     <>
       {d.kpis && (
@@ -155,7 +155,6 @@ export function AgentFeed({ d, example, dark, feedRef }) {
           {d.kpis.map(([label, value], i) => (
             <div key={label}><small>{label}</small><b className={i === 1 ? 'num agents__kpi--review' : 'num'}>{value}</b></div>
           ))}
-          {example && <span className={`example-tag${dark ? ' example-tag--on-ink' : ''}`}>{example}</span>}
         </div>
       )}
       <ul ref={feedRef} className="feed">

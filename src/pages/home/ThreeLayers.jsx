@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 // Un pulso recorre el riel y enciende cada capa; en mobile y con movimiento reducido
 // queda quieto en el estado final. Las capas apagadas se atenúan por el fondo de la tarjeta
 // (no por opacidad, como en el prototipo) para que el texto conserve su contraste.
-export function ThreeLayers({ c, example }) {
+export function ThreeLayers({ c }) {
   const root = useRef(null)
   const done = c.agents.done, running = c.agents.running, deltaText = c.intel.delta, numberLocale = c.numberLocale
 
@@ -118,7 +118,6 @@ export function ThreeLayers({ c, example }) {
         </article>
       </div>
       <div className="layers__rail" aria-hidden="true"><svg data-k="rail" /></div>
-      <div className="layers__example"><span className="example-tag">{example}</span></div>
     </div>
   )
 }

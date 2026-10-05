@@ -89,16 +89,23 @@ export function HomePage({ t, locale }) {
             </div>
           </div>
           <div className="hero__visual">
-            <HeroStage c={c.hero.stage} locale={locale} example={c.example} />
+            <HeroStage c={c.hero.stage} locale={locale} />
           </div>
         </div>
         <LogoStrip label={c.hero.logos} />
       </section>
 
+      <section className="section band" aria-labelledby="cifras">
+        <Heading id="cifras" title={c.stats.title} soft={c.stats.soft} />
+        <div className="stats">
+          {c.stats.items.map(([value, label]) => <div key={label}><b className="stats__value num">{value}</b><p className="stats__label">{label}</p></div>)}
+        </div>
+      </section>
+
       <section id="como-funciona" className="section band band--mint">
         <BandTexture kind="orbitsEdge" />
         <Heading title={c.layers.title} soft={c.layers.soft} />
-        <ThreeLayers c={c.layers} example={c.example} />
+        <ThreeLayers c={c.layers} />
       </section>
 
       <section className="section band manifesto" aria-label={c.manifesto.label}>
@@ -108,18 +115,18 @@ export function HomePage({ t, locale }) {
 
       <section id="rieles" className="section band">
         <Heading n="01" title={c.rails.title} soft={c.rails.soft} />
-        <Rails c={c.rails} locale={locale} example={c.example} />
+        <Rails c={c.rails} locale={locale} />
       </section>
 
       <section id="agentes" className="section band band--ink">
         <Heading n="02" title={c.agents.title} soft={c.agents.soft} />
-        <Agents c={c.agents} locale={locale} example={c.example} />
+        <Agents c={c.agents} locale={locale} />
       </section>
 
       <section id="inteligencia" className="section band band--neutral">
         <BandTexture kind="ridgesSoft" />
         <Heading n="03" title={c.intel.title} soft={c.intel.soft} />
-        <Intelligence c={c.intel} example={c.example} />
+        <Intelligence c={c.intel} />
       </section>
 
       <section className="section band">
