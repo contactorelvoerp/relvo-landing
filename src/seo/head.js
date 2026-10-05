@@ -1,4 +1,4 @@
-import { ROUTES } from '../routes'
+import { getRoutes } from '../routes'
 import { getDict } from '../i18n'
 import { APOLLO_APP_ID, DEFAULT_LOCALE, GA_ID, LINKEDIN_URL, SITE_NAME, SITE_URL } from '../site'
 
@@ -47,7 +47,7 @@ function jsonLd(route) {
     })
   }
   if (route.id !== 'home') {
-    const home = ROUTES.find((r) => r.id === 'home' && r.locale === route.locale)
+    const home = getRoutes().find((r) => r.id === 'home' && r.locale === route.locale)
     graph.push({
       '@type': 'BreadcrumbList',
       itemListElement: [
@@ -73,7 +73,7 @@ export function buildHead(route, { production, ogImage }) {
     const url = absoluteUrl(route.path)
     tags.push(`<link rel="canonical" href="${url}" />`)
 
-    const alternates = ROUTES.filter((r) => r.id === route.id && r.status === 'live')
+    const alternates = getRoutes().filter((r) => r.id === route.id && r.status === 'live')
     for (const alt of alternates) {
       tags.push(`<link rel="alternate" hreflang="${alt.locale}" href="${absoluteUrl(alt.path)}" />`)
     }
@@ -97,6 +97,7 @@ export function buildHead(route, { production, ogImage }) {
         `<meta property="og:image" content="${image}" />`,
         `<meta property="og:image:width" content="1200" />`,
         `<meta property="og:image:height" content="630" />`,
+        `<meta property="og:image:alt" content="${esc(route.title)}" />`,
         `<meta name="twitter:image" content="${image}" />`,
       )
     }
@@ -105,12 +106,11 @@ export function buildHead(route, { production, ogImage }) {
   const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLd(route) }).replace(/</g, '\\u003c')
   tags.push(`<script type="application/ld+json">${ld}</script>`)
 
-  // Analítica solo en producción: los previews no ensucian las métricas de conversión.
+  // Analítica solo en producción (los previews no ensucian las métricas de conversión) y recién
+  // después de la carga, para no competir con el primer render. gtag() encola eventos desde el inicio.
   if (production) {
     tags.push(
-      `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>`,
-      `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');</script>`,
-      `<script>(function(){var s=document.createElement('script');s.src='https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache='+Math.random().toString(36).substring(7);s.async=true;s.defer=true;s.onload=function(){window.trackingFunctions.onLoad({appId:'${APOLLO_APP_ID}'})};document.head.appendChild(s)})();</script>`,
+      `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');addEventListener('load',function(){setTimeout(function(){function add(src,onload){var s=document.createElement('script');s.src=src;s.async=true;if(onload)s.onload=onload;document.head.appendChild(s)}add('https://www.googletagmanager.com/gtag/js?id=${GA_ID}');add('https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache='+Math.random().toString(36).substring(7),function(){window.trackingFunctions.onLoad({appId:'${APOLLO_APP_ID}'})})},1500)})</script>`,
     )
   }
   return tags.join('\n    ')

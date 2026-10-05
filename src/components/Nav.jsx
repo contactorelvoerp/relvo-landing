@@ -9,7 +9,8 @@ const PRODUCT = [
   { index: '03', key: 'intelligence', ids: ['reporteria'] },
 ]
 const SOLUTIONS = [
-  { key: 'teams', ids: ['revops', 'finanzas', 'ingenieria'] },
+  // Ola 2: se muestran por nombre, sin link, hasta que sus páginas existan.
+  { key: 'teams', ids: ['revops', 'finanzas', 'ingenieria'], showWithoutPage: true },
   { key: 'industries', ids: ['saas', 'agencias'] },
   { key: 'useCases', ids: ['planes', 'hibrido', 'uso'] },
 ]
@@ -23,16 +24,24 @@ function Chevron() {
   )
 }
 
+// Página construida: link. Página aún no construida (columna "Para equipos"): solo el nombre.
+function Item({ link, className, nameClass }) {
+  const content = (
+    <>
+      <span className={nameClass}>{link.name}</span>
+      {link.desc && <span className="nav__item-desc">{link.desc}</span>}
+    </>
+  )
+  return link.href
+    ? <a className={className} href={link.href}>{content}</a>
+    : <span className={`${className} nav__item--static`}>{content}</span>
+}
+
 function Column({ index, title, links }) {
   return (
     <div className="nav__col">
       <p className="nav__col-title">{index && <span>{index}</span>}<span>{title}</span></p>
-      {links.map((l) => (
-        <a key={l.id} className="nav__item" href={l.href}>
-          <span className="nav__item-name">{l.name}</span>
-          {l.desc && <span className="nav__item-desc">{l.desc}</span>}
-        </a>
-      ))}
+      {links.map((l) => <Item key={l.id} link={l} className="nav__item" nameClass="nav__item-name" />)}
     </div>
   )
 }
@@ -50,11 +59,11 @@ export function Nav({ t, locale }) {
   }, [open])
 
   // Solo se enlazan páginas que existen en este build: sin links rotos.
-  const links = (ids) => ids
+  const links = (ids, showWithoutPage = false) => ids
     .map((id) => ({ id, href: hrefFor(id, locale), ...t.pages[id] }))
-    .filter((l) => l.href)
+    .filter((l) => l.href || showWithoutPage)
   const columns = (groups, titles) => groups
-    .map((g) => ({ ...g, title: titles[g.key], links: links(g.ids) }))
+    .map((g) => ({ ...g, title: titles[g.key], links: links(g.ids, g.showWithoutPage) }))
     .filter((g) => g.links.length > 0)
 
   const product = columns(PRODUCT, t.nav.layers)
@@ -94,9 +103,9 @@ export function Nav({ t, locale }) {
   )
 
   return (
-    <header className="nav" onPointerLeave={leave}>
+    <header className={`nav${open && open !== 'mobile' ? ' nav--open' : ''}${open === 'product' || open === 'solutions' ? ' nav--mega' : ''}`} onPointerLeave={leave}>
       <nav className="nav__bar nav__bar--desktop" aria-label={t.nav.menu}>
-        {logo(22)}
+        {logo(26)}
         <div className="nav__links">
           {product.length > 0 && trigger('product', t.nav.product)}
           {solutions.length > 0 && trigger('solutions', t.nav.solutions)}
@@ -112,8 +121,8 @@ export function Nav({ t, locale }) {
           {pricing && <a className="nav__link" href={pricing} onPointerEnter={hover(null)}>{t.nav.pricing}</a>}
         </div>
         <div className="nav__actions">
-          <a className="btn btn--ghost btn--sm" href={APP_LOGIN_URL}>{t.nav.login}</a>
-          {demo && <a className="btn btn--primary btn--sm" href={demo}>{t.nav.demo}</a>}
+          <a className="btn btn--ghost btn--md" href={APP_LOGIN_URL}>{t.nav.login}</a>
+          {demo && <a className="btn btn--primary btn--md" href={demo}>{t.nav.demo}</a>}
         </div>
       </nav>
 
@@ -146,10 +155,7 @@ export function Nav({ t, locale }) {
           <div className="nav__sheet-group">
             <p className="nav__sheet-top">{t.nav.product}</p>
             {product.flatMap((c) => c.links).map((l) => (
-              <a key={l.id} className="nav__sheet-item" href={l.href}>
-                <span>{l.name}</span>
-                {l.desc && <span className="nav__item-desc">{l.desc}</span>}
-              </a>
+              <Item key={l.id} link={l} className="nav__sheet-item" />
             ))}
           </div>
         )}
@@ -160,10 +166,7 @@ export function Nav({ t, locale }) {
               <div key={c.key}>
                 <p className="nav__sheet-label">{c.title}</p>
                 {c.links.map((l) => (
-                  <a key={l.id} className="nav__sheet-item" href={l.href}>
-                    <span>{l.name}</span>
-                    {l.desc && <span className="nav__item-desc">{l.desc}</span>}
-                  </a>
+                  <Item key={l.id} link={l} className="nav__sheet-item" />
                 ))}
               </div>
             ))}

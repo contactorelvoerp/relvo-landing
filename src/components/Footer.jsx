@@ -22,8 +22,9 @@ export function Footer({ t, locale }) {
     <footer className="footer">
       <div className="footer__grid">
         <div className="footer__brand">
-          <img src="/logo-logotype-dark.svg" alt="Relvo" width="86" height="22" />
+          <img src="/logo-logotype-light.svg" alt="Relvo" width="102" height="26" loading="lazy" />
           <p className="footer__tagline">{t.footer.tagline}</p>
+          <img className="footer__badge" src="/logos/startup-chile-white.webp" alt="Start-Up Chile by Corfo" width="227" height="40" loading="lazy" />
         </div>
         {columns.map((c) => (
           <div key={c.key} className="footer__col">

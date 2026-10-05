@@ -48,6 +48,7 @@
   --mint:#DFF4EB;              /* banda clara, panel de visual, fondo de Órbitas */
   --band-ink:#13131E;          /* banda oscura (= --ink), fondo de Pulso */
   --band-green:#186666;        /* banda verde (= --accent), fondo de Períodos. Máx. 1 por página */
+  --band-neutral:#F6F7F8;      /* sección gris de lado a lado entre blancas (web, aprobado 2026-10-03). No cuenta como banda de color */
   --panel-on-ink:#1E1E2C;      /* panel dentro de banda oscura */
   --text-on-green:#FFFFFF;     /* 6,7:1 sobre #186666 */
   --text-on-green-soft:#DFF4EB;/* 5,9:1 sobre #186666 */

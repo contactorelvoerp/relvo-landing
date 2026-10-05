@@ -17,7 +17,9 @@ export function App({ route }) {
   return (
     <div className="site">
       <Nav t={t} locale={route.locale} />
-      <main>{content}</main>
+      <div className="frame">
+        <main>{content}</main>
+      </div>
       <Footer t={t} locale={route.locale} />
     </div>
   )
