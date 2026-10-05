@@ -14,7 +14,8 @@ Si algo no está en el brief, no va en la web. Si falta un texto, se pide; no se
 ## Reglas de contenido
 - Copy exacto del brief. No reescribir ni "mejorar" textos.
 - Nunca inventar cifras, clientes, citas ni logos. Todo lo marcado `[PENDIENTE]` se renderiza como placeholder visible en preview y NO se publica en producción (secciones condicionales se ocultan).
-- Datos de ejemplo en visuales: marcados como ejemplo, nombres ficticios.
+- Datos ilustrativos en visuales: nombres de clientes ficticios y números coherentes entre sí. SIN etiqueta "Ejemplo" en los visuales; en su lugar, una sola línea en el footer: "Las pantallas de producto muestran datos ilustrativos."
+- Logo: usar siempre el logo oficial del Design System. Nunca recrearlo con formas.
 - Para el cliente se dice "Planes recurrentes" y "Contratos con pricing híbrido". PLG/SLG son términos internos.
 - Prohibido: "product-led scale / sales-led complexity" (frase de Metronome) y palabras vacías (potencia, revoluciona, sin fricción, seamless, next-gen, desbloquea).
 - Integraciones visibles: solo las en vivo (HubSpot, Sintropix, Stripe, Toku, Fintoc, Slack, Google Chat, MCP).

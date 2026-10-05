@@ -14,7 +14,7 @@ function chartFor(i, t, months) {
   return { id: 'waterfall', data: { steps: t.steps.map((name, k) => (k === 0 || k === t.steps.length - 1 ? [name, MRR[k], 'base'] : [name, MRR[k]])) } }
 }
 
-export function Intelligence({ c, example }) {
+export function Intelligence({ c }) {
   const tabs = useTabs('reportes', c.tabs.length)
   return (
     <>
@@ -32,7 +32,6 @@ export function Intelligence({ c, example }) {
                   {k.note && <p className="kpi__note">{k.note}</p>}
                 </div>
               ))}
-              <span className="example-tag">{example}</span>
             </div>
             <div className="report__chart"><Chart {...chartFor(i, t, c.months)} label={t.chartLabel} locale={c.numberLocale} /></div>
           </div>

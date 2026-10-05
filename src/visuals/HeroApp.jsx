@@ -3,24 +3,19 @@ import { useSequence } from './useSequence'
 
 // Ventana de la app (barra con URL, menú lateral, cifra y tabla con encabezado gris) y la
 // secuencia de aparición de las piezas del hero. Las usan el hero de la home y el visual heroApp.
-const MARK = (
-  <svg viewBox="0 0 20 20" aria-hidden="true" fill="#186666">
-    <circle cx="6" cy="5" r="3.2" /><circle cx="14.5" cy="6.5" r="3.2" /><circle cx="5" cy="13.5" r="3.2" /><circle cx="12.5" cy="15" r="3.2" />
-  </svg>
-)
 const CHECK = (
   <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
     <path d="M3 7.5 6 10l5-6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
 
-export function Window({ url, nav, brand, section, kpi, columns, rows, className = '' }) {
+export function Window({ url, nav, section, kpi, columns, rows, className = '' }) {
   return (
     <div className={`hc hc--window ${className}`}>
       <div className="win__bar" aria-hidden="true"><i /><i /><i /><span className="win__url">{url}</span></div>
       <div className="win__body">
         <div className="win__side">
-          <span className="win__brand">{MARK}{brand}</span>
+          <img className="win__brand" src="/logo-logotype-dark.svg" alt="Relvo" width="55" height="14" />
           {nav.map((item) => <span key={item} className={item === section ? 'win__nav win__nav--on' : 'win__nav'}>{item}</span>)}
         </div>
         <div className="win__main">
@@ -55,11 +50,11 @@ export function Toast({ title, sub }) {
 }
 
 // Visual heroApp (plantilla): ventana + tarjeta de cobro opcional + notificación
-export function HeroApp({ d, l, example }) {
+export function HeroApp({ d, l }) {
   const [stage] = useSequence(2)
   return (
     <div ref={stage} className="hero-app">
-      <Window url={d.url} nav={l.appNav} brand={l.brand} section={d.section} kpi={d.kpi} columns={d.columns} rows={d.rows} className="hero-app__window" />
+      <Window url={d.url} nav={l.appNav} section={d.section} kpi={d.kpi} columns={d.columns} rows={d.rows} className="hero-app__window" />
       {d.card && (
         <div className="hc hero-app__card">
           <div className="inv__head"><span>{d.card.title}</span>{d.card.meta && <span>{d.card.meta}</span>}</div>
@@ -69,7 +64,6 @@ export function HeroApp({ d, l, example }) {
         </div>
       )}
       <Toast {...d.toast} />
-      <span className="example-tag hero-stage__tag">{example}</span>
     </div>
   )
 }

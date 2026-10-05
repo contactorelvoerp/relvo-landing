@@ -25,7 +25,6 @@
   .lp-stage--app .hc{position:relative;inset:auto;width:100%}
   .lp-stage--app .win__body{grid-template-columns:1fr;min-height:0}
   .lp-stage--app .win__side{display:none}
-  .lp-stage .hero-stage__tag{position:static;align-self:flex-end}
 }
 
 /* Antes / después: tres puntos por lado, cada "después" responde a su "antes" */

@@ -29,8 +29,6 @@ function Breadcrumbs({ items, label }) {
 export function Hero({ b, p, breadcrumb }) {
   const ctas = b.ctas.map((c) => ({ ...c, href: hrefForPath(c.href) })).filter((c) => c.href)
   const app = b.visual.id === 'heroApp'
-  // El resultado del caso son datos reales: no lleva la etiqueta de ejemplo
-  const example = !app && b.visual.id !== 'caseHeadline'
   return (
     <section className="section band band--first lp-hero" aria-labelledby="lp-h1">
       <div className="lp-hero__grid">
@@ -48,7 +46,6 @@ export function Hero({ b, p, breadcrumb }) {
           <div className={`stage lp-stage${app ? ' lp-stage--app' : ''}`}>
             <Texture kind="orbits" />
             <Visual visual={b.visual} locale={p.locale} caseData={p.caseData} label={b.h1} />
-            {example && <span className="example-tag hero-stage__tag">{p.l.example}</span>}
           </div>
         </div>
       </div>
@@ -92,7 +89,7 @@ export function Features({ b, id, p }) {
   return (
     <section className="section band" aria-labelledby={id}>
       <Heading id={id} title={b.h2} soft={b.h2Soft} />
-      <FeatureTabs prefix="funciones" tablist={b.h2} tabs={tabs} locale={p.locale} example={p.l.example} />
+      <FeatureTabs prefix="funciones" tablist={b.h2} tabs={tabs} locale={p.locale} />
     </section>
   )
 }
@@ -102,7 +99,6 @@ export function Metrics({ b, id, p }) {
     <div className={b.chart ? 'kpis' : 'kpis kpis--row'}>
       {b.kpis.map((k) => <div key={k.label} className="kpi"><span className="kpi__label">{k.label}</span><b className="kpi__value num">{k.value}</b></div>)}
       {b.note && <p className="kpi__note">{b.note}</p>}
-      {b.chart && <span className="example-tag">{p.l.example}</span>}
     </div>
   )
   return (

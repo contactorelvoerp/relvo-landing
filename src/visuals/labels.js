@@ -11,8 +11,6 @@ export const chipClass = (tone) => TONE[tone] ?? 'chip'
 
 const LABELS = {
   es: {
-    example: 'EJEMPLO',
-    brand: 'Relvo',
     appNav: ['Contratos', 'Facturas', 'Cobranza', 'Reportes'],
     invoice: 'Factura',
     collection: 'Cobro de',
@@ -29,8 +27,6 @@ const LABELS = {
     breadcrumb: 'Migas de pan',
   },
   en: {
-    example: 'EXAMPLE',
-    brand: 'Relvo',
     appNav: [P, P, P, P],
     invoice: P,
     collection: P,

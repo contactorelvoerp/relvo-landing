@@ -24,7 +24,6 @@
   .hero-stage .hc{position:relative;inset:auto;width:100%}
   .hero-stage .win__body{grid-template-columns:1fr;min-height:0}
   .hero-stage .win__side{display:none}
-  .hero-stage__tag{position:static;align-self:flex-end}
 }
 
 /* Carrusel de logos: lineal y lento, pausa en hover, corte limpio con filete (sin fade) */
@@ -49,6 +48,12 @@
   .logo-strip__label{padding:14px var(--gutter);border-right:0;border-bottom:1px solid var(--line);font-size:14px}
   .logo-strip__cell{width:150px;height:84px}
 }
+
+/* 2 · Banda de cifras (prototipo v2): tres cifras grandes en verde con su contexto */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px}
+.stats__value{display:block;font-size:clamp(48px,5.6cqi,80px);font-weight:500;line-height:1;letter-spacing:-.04em;color:var(--accent)}
+.stats__label{max-width:26ch;margin:14px 0 0;font-size:16px;line-height:1.5;color:var(--text-body)}
+@container (max-width:979px){.stats{grid-template-columns:1fr;gap:32px}}
 
 /* 3 · Tres capas */
 .layers{position:relative}
@@ -82,7 +87,6 @@
 .layers__rail{display:none;position:relative;height:40px;margin-top:20px}
 .layers--wide .layers__rail{display:block}
 .layers__rail svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.layers__example{display:flex;justify-content:flex-end;margin-top:12px}
 
 /* Manifiesto (v2): una frase grande y centrada sobre la textura de relieve */
 .manifesto{padding-block:clamp(96px,10cqi,150px);text-align:center}

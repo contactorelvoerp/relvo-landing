@@ -7,7 +7,7 @@ import { labelsFor } from '../../visuals/labels'
 // (OC contra contrato) sobre la textura Pulso, con los visuales agentFeed y review de la librería
 // en su versión oscura. El registro se va llenando en loop solo mientras está en pantalla; sin JS o
 // con movimiento reducido se ve completo.
-export function Agents({ c, locale, example }) {
+export function Agents({ c, locale }) {
   const feed = useRef(null)
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export function Agents({ c, locale, example }) {
     <>
       <div className="agents agents--ink">
         <div className="agents__bg"><Texture kind="pulse" /></div>
-        <div className="pane"><AgentFeed d={feedData} example={example} dark feedRef={feed} /></div>
+        <div className="pane"><AgentFeed d={feedData} feedRef={feed} /></div>
         <div className="pane"><Review d={c.review} l={{ ...labelsFor(locale), review: c.review.label }} /></div>
       </div>
       <p className="principle">{c.principle}</p>

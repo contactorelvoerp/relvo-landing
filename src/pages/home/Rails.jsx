@@ -4,7 +4,7 @@ import { FeatureTabs } from '../../blocks/FeatureTabs'
 // plan con tramos de tokens, aprobación con checks, factura dividida y cobro parcial.
 const VISUALS = [['planCard', 'pricing'], ['timeline', 'approvals'], ['splitInvoice', 'split'], ['payment', 'collection']]
 
-export function Rails({ c, locale, example }) {
+export function Rails({ c, locale }) {
   const tabs = c.tabs.map((tab, i) => ({ label: tab.title, desc: tab.desc, visual: { id: VISUALS[i][0], data: c[VISUALS[i][1]] } }))
-  return <FeatureTabs prefix="rieles" tablist={c.tablist} tabs={tabs} locale={locale} example={example} />
+  return <FeatureTabs prefix="rieles" tablist={c.tablist} tabs={tabs} locale={locale} />
 }

@@ -3,7 +3,6 @@
 // Los datos de los visuales son de ejemplo, con nombres ficticios.
 export const copy = {
   es: {
-    example: 'EJEMPLO',
     hero: {
       eyebrow: 'Revenue Engine para SaaS e IA',
       title: 'Tu pricing, convertido en ingresos. Exacto y sin trabajo manual.',
@@ -14,7 +13,7 @@ export const copy = {
       // Composición del prototipo v2: ventana de la app → tokens → factura → pago conciliado
       stage: {
         window: {
-          url: 'app.getrelvo.ai/contratos/nimbo-ai', brand: 'Relvo', nav: ['Contratos', 'Facturas', 'Cobranza', 'Reportes'],
+          url: 'app.getrelvo.ai/contratos/nimbo-ai', nav: ['Contratos', 'Facturas', 'Cobranza', 'Reportes'],
           label: 'Contrato', name: 'Nimbo AI', status: 'Activo',
           columns: ['Factura', 'Monto', 'Estado'],
           rows: [['F-1042', 'USD 2.900', 'Emitida'], ['F-1031', 'USD 2.760', 'Pagada']],
@@ -24,6 +23,16 @@ export const copy = {
         invoice: { title: 'Factura F-1042', meta: 'Octubre', total: 'USD 2.900', rows: [['Plan Growth, fijo', '500'], ['1.200 M tokens', '2.400']], totalLabel: 'Total' },
         toast: { title: 'Pago conciliado', meta: 'Nimbo AI, hace un momento' },
       },
+    },
+    // Banda de cifras (prototipo home v2, después del carrusel de clientes)
+    stats: {
+      title: 'Operando hoy en LatAm.',
+      soft: 'Con empresas SaaS, IA y agencias.',
+      items: [
+        ['1.000+', 'facturas emitidas y conciliadas cada mes con Relvo'],
+        ['3', 'países en operación: Chile, México y Colombia'],
+        ['2 meses', 'de implementación para el primer país, de punta a punta'],
+      ],
     },
     layers: {
       title: 'Tres capas, un solo motor.',
@@ -224,7 +233,6 @@ export const copy = {
   // EN: las claves nuevas o cambiadas del prototipo quedan marcadas como pendientes (no se traducen
   // todavía). Mientras tanto la home en inglés es una página pendiente: no se publica en producción.
   en: {
-    example: 'EXAMPLE',
     hero: {
       eyebrow: 'Revenue Engine for SaaS and AI',
       title: 'Your pricing, turned into revenue. Exact, with no manual work.',
@@ -234,7 +242,7 @@ export const copy = {
       logos: 'They run their revenue on Relvo',
       stage: {
         window: {
-          url: 'app.getrelvo.ai/contratos/nimbo-ai', brand: 'Relvo', nav: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'],
+          url: 'app.getrelvo.ai/contratos/nimbo-ai', nav: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'],
           label: '[PENDIENTE]', name: 'Nimbo AI', status: '[PENDIENTE]',
           columns: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'],
           rows: [['F-1042', 'USD 2,900', '[PENDIENTE]'], ['F-1031', 'USD 2,760', '[PENDIENTE]']],
@@ -244,6 +252,11 @@ export const copy = {
         invoice: { title: '[PENDIENTE]', meta: '[PENDIENTE]', total: 'USD 2,900', rows: [['[PENDIENTE]', '500'], ['[PENDIENTE]', '2,400']], totalLabel: 'Total' },
         toast: { title: '[PENDIENTE]', meta: '[PENDIENTE]' },
       },
+    },
+    stats: {
+      title: '[PENDIENTE]',
+      soft: '[PENDIENTE]',
+      items: [['1,000+', '[PENDIENTE]'], ['3', '[PENDIENTE]'], ['[PENDIENTE]', '[PENDIENTE]']],
     },
     layers: {
       title: '[PENDIENTE]',
