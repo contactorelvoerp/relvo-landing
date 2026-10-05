@@ -32,7 +32,7 @@
 .tiers{display:flex;height:8px;margin-top:10px;overflow:hidden;border-radius:4px;background:#ECEEF1}
 .tiers__t1{background:var(--uso-2)}
 .tiers__t2{background:var(--uso)}
-.tiers__labels{display:flex;justify-content:space-between;margin-top:5px;font-size:11.5px;color:var(--text-muted)}
+.tiers__labels{display:flex;justify-content:space-between;margin-top:5px;font-size:12px;color:var(--text-muted)}
 .plan__sum{display:flex;justify-content:space-between;gap:12px;margin-top:12px;padding-top:12px;border-top:3px double var(--ink);font-weight:600}
 
 /* timeline: pasos con checks */
@@ -70,10 +70,10 @@
 .usage__icon svg{width:16px;height:16px}
 .usage__plan b,.usage__plan small{display:block;white-space:nowrap}
 .usage__plan b{font-size:13.5px}
-.usage__plan small{font-size:11.5px;color:var(--text-muted)}
+.usage__plan small{font-size:12px;color:var(--text-muted)}
 .usage__big{display:flex;align-items:baseline;gap:6px;margin-bottom:8px;white-space:nowrap}
 .usage__big b{font-size:22px;font-weight:500;letter-spacing:-.02em}
-.usage__big small{font-size:11.5px;color:var(--text-muted)}
+.usage__big small{font-size:12px;color:var(--text-muted)}
 .usage__hist{display:flex;align-items:flex-end;gap:2px;height:84px;margin-top:14px}
 .usage__hist i{flex:1;border-radius:1px;background:var(--uso)}
 .usage__period{margin:6px 0 0;font-size:11px;color:var(--text-muted)}

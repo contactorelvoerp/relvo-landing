@@ -7,7 +7,8 @@ const Bars = ({ count, on }) => (
   </div>
 )
 
-export function Case({ c }) {
+// `link` (opcional): { href, label } hacia la página del caso
+export function Case({ c, link }) {
   const before = c.beforeDays ?? 6, after = c.afterDays ?? 3
   return (
     <div className="case">
@@ -36,6 +37,7 @@ export function Case({ c }) {
       <figure className="case__quote">
         <blockquote>“{c.quote}”</blockquote>
         <figcaption>{c.author}<span>{c.role}</span></figcaption>
+        {link && <p className="case__link"><a className="link" href={link.href}>{link.label}</a></p>}
       </figure>
     </div>
   )
