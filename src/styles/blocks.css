@@ -105,10 +105,12 @@ a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
 /* Integraciones (prototipo): carrusel de nombres en texto, lineal y lento */
 .ints{overflow:hidden}
 .ints__track{--ints-gap:80px;display:flex;gap:var(--ints-gap);width:max-content;margin:0;padding:0;list-style:none;animation:relvo-ints 60s linear infinite}
-.ints__track li{font-size:24px;font-weight:500;letter-spacing:-.01em;color:var(--text-main);white-space:nowrap}
+.ints__track li{display:flex;flex:none;align-items:center;height:48px}
+/* Logos en monocromo, como el carrusel de clientes del hero */
+.ints__track img{width:auto;filter:grayscale(1) brightness(0);opacity:.82}
 .ints:hover .ints__track,.ints--offscreen .ints__track{animation-play-state:paused}
 @keyframes relvo-ints{to{transform:translateX(calc(-50% - var(--ints-gap) / 2))}}
-@container (max-width:599px){.ints__track{--ints-gap:48px}.ints__track li{font-size:20px}}
+@container (max-width:599px){.ints__track{--ints-gap:48px}.ints__track img{transform:scale(.85)}}
 .ints__more{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:48px;font-size:15px;color:var(--text-muted)}
 @media (prefers-reduced-motion:reduce){
   .ints__track{flex-wrap:wrap;width:auto;gap:20px 40px;animation:none}
