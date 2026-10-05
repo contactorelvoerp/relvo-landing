@@ -2,30 +2,18 @@
    (reference/relvo-producto-cuentas-por-cobrar.html). El H1 va en Instrument Sans: Fujiwara A es
    solo para el H1 de la home. */
 
-/* Hero: migas de pan, H1, bajada, CTAs y visual sobre la textura Órbitas */
+/* Hero: migas de pan y visual sobre la textura Órbitas (el layout centrado está más abajo) */
 .lp-hero{padding-top:clamp(40px,5.5cqi,88px)}
-.lp-hero__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center;gap:56px}
 .crumbs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0;list-style:none;font-size:14px;color:var(--text-muted)}
 .crumbs li + li::before{content:"/";margin-right:8px;color:#C4C6CD}
 .crumbs a{color:var(--text-muted);text-decoration:none}
 .crumbs a:hover{color:var(--text-main)}
-.lp-hero__title{margin:0;font-family:var(--font-ui);font-size:clamp(36px,3.9cqi,56px);font-weight:500;line-height:1.08;letter-spacing:-.03em}
-.lp-hero__lead{max-width:46ch;margin:24px 0 0;font-size:clamp(17px,1.4cqi,19px);line-height:1.55;color:var(--text-body)}
-.lp-hero__ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
 .lp-hero__visual{min-width:0;container-type:inline-size}
-.lp-stage{min-height:clamp(440px,80cqi,560px);padding:40px}
+.lp-stage{padding:40px}
 .lp-stage > .ui{position:relative;z-index:1}
-.lp-stage--app{display:block;height:clamp(500px,92cqi,600px);padding:0}
-/* Intro bajo el hero: 40 a 70 palabras, separada por el filete de la grilla */
-.lp-intro{max-width:60ch;margin:clamp(56px,5.5cqi,80px) 0 0;padding-top:clamp(40px,4cqi,56px);border-top:1px solid var(--line);font-size:clamp(17px,1.4cqi,19px);line-height:1.6;color:var(--text-body)}
-@container (max-width:560px){
-  .lp-stage{padding:20px}
-  .lp-stage--app{display:flex;flex-direction:column;gap:12px;height:auto;padding:20px}
-  .lp-stage--app .hero-app{position:static;display:flex;flex-direction:column;gap:12px}
-  .lp-stage--app .hc{position:relative;inset:auto;width:100%}
-  .lp-stage--app .win__body{grid-template-columns:1fr;min-height:0}
-  .lp-stage--app .win__side{display:none}
-}
+/* Intro (40 a 70 palabras), centrada bajo el visual */
+.lp-intro{max-width:720px;margin:48px auto 0;font-size:17px;line-height:1.6;text-align:center;color:var(--text-body)}
+@container (max-width:560px){.lp-stage{padding:20px}}
 
 /* Antes / después: tres puntos por lado, cada "después" responde a su "antes" */
 .ba{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -80,7 +68,7 @@
 .lp-quote figcaption span{display:block;color:var(--text-muted)}
 
 @container (max-width:979px){
-  .lp-hero__grid,.ba,.steps3,.related{grid-template-columns:1fr}
+  .ba,.steps3,.related{grid-template-columns:1fr}
   .steps3__rail{display:none}
 }
 
@@ -94,7 +82,6 @@
 .lp-hero .lp-hero__visual{margin-top:clamp(40px,4cqi,56px)}
 .lp-hero .lp-stage{min-height:480px}
 .lp-hero .lp-stage--wide{display:block;height:clamp(440px,36cqi,520px);padding:0}
-.lp-hero .lp-intro{max-width:720px;margin:48px auto 0;padding-top:0;border-top:0;font-size:17px;text-align:center}
 /* heroApp: ventana a la izquierda, tarjeta de cobro a la derecha y aviso abajo (piloto) */
 .lp-stage--wide .hero-app__window{left:6%;top:9%;width:58%}
 .lp-stage--wide .hero-app__card{left:auto;right:8%;top:20%;width:30%}
