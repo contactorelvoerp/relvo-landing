@@ -29,7 +29,9 @@ for (const page of seo.pages.filter((p) => NOINDEX_PAGES.includes(p.id))) {
   else if (!/<meta name="robots" content="noindex/.test(html)) errors.push(`${url}: sin noindex`)
   if (paths.includes(url)) errors.push(`${url}: está en el sitemap y debería quedar fuera`)
 }
-const untranslated = seo.pages.map((p) => p.en.url).filter((url) => !paths.includes(url))
+// Las que tienen redirect 301 en vercel.json (URLs indexadas del sitio anterior) no cuentan
+const redirected = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8')).redirects.map((r) => r.source)
+const untranslated = seo.pages.map((p) => p.en.url).filter((url) => !paths.includes(url) && !redirected.includes(url))
 for (const url of untranslated) {
   const code = await status(url)
   if (code !== 404) errors.push(`${url}: ${code} (sin traducción, esperado 404)`)
