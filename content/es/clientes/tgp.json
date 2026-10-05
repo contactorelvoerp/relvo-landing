@@ -1,0 +1,132 @@
+{
+  "id": "tgp",
+  "preset": "caso",
+  "seo": "tgp",
+  "keyword": "caso TGP Relvo",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Clientes",
+      "href": "/clientes"
+    },
+    {
+      "label": "TGP"
+    }
+  ],
+  "case": {
+    "company": "TGP",
+    "descriptor": "La agencia de prospecting más grande de LatAm.",
+    "headline": {
+      "value": "70%",
+      "label": "menos tiempo operativo",
+      "sub": "mientras su operación creció 30% en 3 meses."
+    },
+    "dti": {
+      "before": 6,
+      "after": 3,
+      "note": "Con aprobaciones de clientes y órdenes de compra incluidas."
+    },
+    "quote": {
+      "short": "Hoy trabajamos mucho más rápido, con mayor confianza en los cálculos y con un proceso que puede escalar junto a nuestro crecimiento.",
+      "full": "Relvo nos permitió pasar de un proceso manual que tomaba horas a simplemente enviar la información por Slack. Hoy trabajamos mucho más rápido, con mayor confianza en los cálculos y con un proceso que puede escalar junto a nuestro crecimiento.",
+      "author": "Francesco Cotroneo",
+      "role": "Operations Lead, TGP"
+    }
+  },
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "TGP redujo 70% su tiempo operativo con Relvo.",
+      "lead": "Mientras su operación creció 30% en 3 meses, TGP pasó de 6 a 3 días para completar su ciclo de facturación.",
+      "intro": "TGP es la agencia de prospecting más grande de LatAm. Cobra a cada cliente un fee fijo más un variable que depende de los resultados del mes, y muchos de sus clientes exigen órdenes de compra antes de aceptar una factura.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        }
+      ],
+      "visual": {
+        "id": "composition",
+        "data": {
+          "pieces": [
+            {
+              "id": "dtiBars",
+              "data": {
+                "before": 6,
+                "after": 3,
+                "label": "Días en facturar (DTI)"
+              }
+            },
+            {
+              "id": "slackMessage",
+              "data": {
+                "channel": "#facturacion",
+                "author": "TGP",
+                "text": "Resultados del mes enviados.",
+                "reply": {
+                  "author": "Relvo",
+                  "text": "Facturas calculadas y enviadas a aprobación."
+                }
+              }
+            }
+          ]
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "Cómo era el cierre de mes.",
+      "h2Soft": "Y cómo es hoy.",
+      "before": [
+        "A fin de mes, los managers validaban los resultados con cada cliente.",
+        "Un formulario y Zapier avisaban por Slack para que alguien armara cada factura a mano.",
+        "La lista de clientes que pedían OC se seguía a mano, y el cierre se iba hasta el día 10."
+      ],
+      "after": [
+        "TGP envía los resultados del mes por Slack y Relvo calcula fijo y variable.",
+        "Las facturas salen con su monto exacto, sin armarlas a mano.",
+        "Las órdenes de compra se asocian a cada factura, y el ciclo de facturación bajó de 6 a 3 días."
+      ]
+    },
+    {
+      "type": "metrics",
+      "h2": "Los resultados.",
+      "h2Soft": "En 3 meses, con 30% más volumen.",
+      "kpis": [
+        {
+          "label": "Tiempo operativo",
+          "value": "−70%"
+        },
+        {
+          "label": "Días en facturar (DTI)",
+          "value": "6 → 3"
+        }
+      ],
+      "note": "Aprobaciones de clientes y órdenes de compra incluidas."
+    },
+    {
+      "type": "quote",
+      "ref": "tgp",
+      "variant": "full"
+    },
+    {
+      "type": "related",
+      "h2": "Lo que usa TGP.",
+      "h2Soft": "El mismo motor, de punta a punta.",
+      "items": [
+        "contratos",
+        "aprobaciones",
+        "agentes"
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

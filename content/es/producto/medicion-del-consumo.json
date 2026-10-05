@@ -1,0 +1,299 @@
+{
+  "id": "medicion",
+  "preset": "producto",
+  "seo": "medicion",
+  "keyword": "medición del consumo para cobro por uso",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Producto",
+      "href": "/producto"
+    },
+    {
+      "label": "Medición del consumo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Medición del consumo: el uso de tus clientes, listo para cobrar.",
+      "lead": "Envía el consumo por API y Relvo lo cruza con el plan o el contrato de cada cliente: tokens, llamadas, usuarios activos o la métrica que definas.",
+      "intro": "Cobrar por uso suele terminar en una exportación a fin de mes: alguien saca los datos de la base, los cruza con lo que paga cada cliente y arma el cobro a mano. Con Relvo, el consumo llega por API mientras ocurre y la parte variable de cada cobro se calcula sola, con las mismas reglas que el resto del contrato.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "usage",
+        "data": {
+          "unit": "Tokens",
+          "price": "USD 0,002 por 1.000",
+          "used": "1.200 M",
+          "included": "1.500 M",
+          "series": [
+            8,
+            12,
+            18,
+            15,
+            24,
+            30,
+            22,
+            26,
+            14,
+            10,
+            28,
+            25,
+            33,
+            38,
+            30,
+            52,
+            70,
+            42,
+            35,
+            26,
+            30,
+            34,
+            32,
+            44,
+            50,
+            56,
+            62,
+            48,
+            36,
+            40
+          ]
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "Del export de fin de mes al consumo en tiempo real.",
+      "h2Soft": "Sin cruzar datos a mano.",
+      "before": [
+        "El uso se exporta de la base de datos cuando cierra el mes.",
+        "Alguien cruza el consumo con el precio de cada cliente en una planilla.",
+        "Nadie sabe cuánto va a facturar un cliente hasta que termina el período."
+      ],
+      "after": [
+        "El consumo llega por API a medida que ocurre.",
+        "Relvo lo cruza con el pricing de cada cliente, sin pasos manuales.",
+        "Ves el consumo de cada cliente y cada métrica durante todo el mes."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo funciona.",
+      "h2Soft": "De tu producto al cobro.",
+      "steps": [
+        {
+          "title": "Defines tus métricas",
+          "text": "Tokens, llamadas, documentos o la unidad con que cobra tu producto."
+        },
+        {
+          "title": "Envías el consumo",
+          "text": "Tu producto manda el uso a Relvo por API."
+        },
+        {
+          "title": "Relvo lo cobra",
+          "text": "El consumo se cruza con el pricing de cada cliente y pasa a la factura."
+        }
+      ]
+    },
+    {
+      "type": "featureTabs",
+      "h2": "Consumo que se entiende y se cobra.",
+      "h2Soft": "Por cliente y por métrica.",
+      "tabs": [
+        {
+          "label": "Tus métricas",
+          "desc": "Las unidades que usa tu producto.",
+          "visual": {
+            "id": "usage",
+            "data": {
+              "unit": "Documentos procesados",
+              "price": "USD 0,05 por documento",
+              "used": "48.300",
+              "included": "60.000",
+              "series": [
+                20,
+                24,
+                22,
+                30,
+                28,
+                35,
+                33,
+                40,
+                38,
+                44,
+                41,
+                47,
+                45,
+                52,
+                50,
+                58,
+                55,
+                61,
+                59,
+                66,
+                63,
+                70,
+                68,
+                74,
+                72,
+                78,
+                76,
+                83,
+                80,
+                86
+              ]
+            }
+          }
+        },
+        {
+          "label": "Envío por API",
+          "desc": "Tu producto reporta el uso.",
+          "visual": {
+            "id": "codeBlock",
+            "data": {
+              "lang": "http",
+              "code": "POST /usage\n{\n  \"customer\": \"nimbo-ai\",\n  \"metric\": \"tokens\",\n  \"quantity\": 1250000\n}",
+              "note": "Endpoint ilustrativo: reemplazar por el real de la API de Relvo."
+            }
+          }
+        },
+        {
+          "label": "Consumo vs. lo que pagan",
+          "desc": "Quién usa más de lo que paga.",
+          "visual": {
+            "id": "barChart",
+            "data": {
+              "labels": [
+                "Abr",
+                "May",
+                "Jun",
+                "Jul",
+                "Ago",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "name": "Recurrente",
+                  "values": [
+                    140,
+                    143,
+                    146,
+                    149,
+                    152,
+                    156
+                  ]
+                },
+                {
+                  "name": "Consumo: tokens",
+                  "values": [
+                    38,
+                    52,
+                    41,
+                    63,
+                    49,
+                    72
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "capabilities",
+      "h2": "Consumo confiable, de punta a punta.",
+      "h2Soft": "Desde el evento hasta la línea de factura.",
+      "items": [
+        {
+          "title": "API, webhook, lotes o carga masiva",
+          "text": "El consumo entra en tiempo real o por lotes, como ya lo reportas hoy. También se puede registrar a mano."
+        },
+        {
+          "title": "Métricas configurables",
+          "text": "Eventos, transacciones, GB, asientos activos o tokens: cada unidad se mapea a las reglas del contrato."
+        },
+        {
+          "title": "Agregación por período",
+          "text": "El uso del ciclo se suma solo, sea mensual, quincenal o un período a medida."
+        },
+        {
+          "title": "Idempotencia",
+          "text": "Los eventos duplicados o reenviados no se cuentan dos veces."
+        },
+        {
+          "title": "Eventos inmutables",
+          "text": "Un evento no se edita: se corrige de forma explícita, y la corrección queda registrada."
+        },
+        {
+          "title": "Trazabilidad",
+          "text": "Cada línea de factura queda vinculada a los eventos que la generaron."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Funciona junto con.",
+      "h2Soft": "El mismo motor, de punta a punta.",
+      "items": [
+        "contratos",
+        "cxc",
+        "reporteria"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes sobre medición del consumo.",
+      "items": [
+        {
+          "q": "¿Cómo envío el consumo a Relvo?",
+          "a": "Por API, en tiempo real o por lotes, o con una carga masiva. Tu producto reporta el uso de cada cliente y Relvo lo agrega para el período."
+        },
+        {
+          "q": "¿Qué métricas puedo medir?",
+          "a": "Las que use tu producto para cobrar: tokens, llamadas a la API, documentos procesados, usuarios activos u otra unidad que definas."
+        },
+        {
+          "q": "¿Puedo combinar consumo con un plan fijo?",
+          "a": "Sí. El consumo es una regla más del contrato, así que puede sumarse a un plan fijo, a seats o a cualquier otro componente."
+        },
+        {
+          "q": "¿Puedo ver el consumo de cada cliente durante el mes?",
+          "a": "Sí, por cliente y por métrica. En Reportería además ves el ingreso recurrente frente al consumo, mes a mes."
+        },
+        {
+          "q": "¿Necesito construir mi propio sistema de facturación por uso?",
+          "a": "No. Envías el consumo y Relvo calcula, factura y cobra. Tu equipo de ingeniería no tiene que mantener la lógica de cobro."
+        },
+        {
+          "q": "¿Qué pasa si envío un evento dos veces?",
+          "a": "No se cuenta dos veces. Relvo es idempotente: los eventos duplicados o reenviados se descartan."
+        },
+        {
+          "q": "¿Qué pasa si el consumo de un cliente se dispara?",
+          "a": "Cuando el consumo se desvía de forma anómala respecto de los ciclos anteriores, Relvo avisa a tu equipo antes de facturar."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

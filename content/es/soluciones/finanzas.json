@@ -1,0 +1,144 @@
+{
+  "id": "finanzas",
+  "preset": "solucion",
+  "seo": "finanzas",
+  "keyword": "Relvo para equipos de finanzas",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Soluciones",
+      "href": "/soluciones"
+    },
+    {
+      "label": "Finanzas"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Relvo para equipos de finanzas.",
+      "lead": "Cierra el mes con cada factura emitida, cada pago conciliado y tus cuentas por cobrar al día, con reconocimiento de ingresos bajo IFRS 15.",
+      "intro": "Para un equipo de finanzas, el problema no es facturar una vez: es facturar bien todos los meses, conseguir las OCs, cobrar a tiempo y cuadrar cada peso contra el banco. Relvo opera ese ciclo con reglas exactas y deja a tu equipo solo las excepciones, con trazabilidad completa de cada número.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "payment",
+        "data": {
+          "invoice": "F-1043",
+          "badge": "Pago parcial",
+          "paid": "USD 2.000",
+          "total": "USD 3.090",
+          "progress": 0.65,
+          "events": [
+            {
+              "label": "Transferencia conciliada",
+              "sub": "18 de octubre",
+              "done": true
+            },
+            {
+              "label": "Recordatorio por correo",
+              "sub": "25 de octubre",
+              "done": false
+            }
+          ]
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "Del cierre que se come la primera semana al cierre al día.",
+      "h2Soft": "Con cada número trazable.",
+      "before": [
+        "La primera semana del mes se va en facturar.",
+        "Pagos que se concilian revisando la cartola a mano.",
+        "Reconocimiento de ingresos en una planilla aparte."
+      ],
+      "after": [
+        "Las facturas salen el día que corresponde.",
+        "Relvo propone a qué factura corresponde cada pago, incluso los parciales, y tu equipo confirma.",
+        "Ingresos reconocidos bajo IFRS 15 en el mismo sistema."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo lo usa tu equipo.",
+      "h2Soft": "Del período al cierre.",
+      "steps": [
+        {
+          "title": "Revisa y aprueba",
+          "text": "Pre-facturas con su OC, listas para emitir."
+        },
+        {
+          "title": "Cobra y concilia",
+          "text": "Cobranza por correo o automática, cuadrada contra el banco."
+        },
+        {
+          "title": "Cierra",
+          "text": "Cuentas por cobrar, DSO e ingresos bajo IFRS 15, al día."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Los productos que más usa.",
+      "h2Soft": "Un equipo de finanzas.",
+      "items": [
+        "cxc",
+        "aprobaciones",
+        "reporteria"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes para equipos de finanzas.",
+      "items": [
+        {
+          "q": "¿Relvo emite facturación electrónica?",
+          "a": "Sí, en Chile y México, con la sociedad y la moneda que correspondan a cada contrato."
+        },
+        {
+          "q": "¿Cómo concilia Relvo los pagos?",
+          "a": "Se conecta con tu banco, evalúa cada movimiento y propone a qué factura corresponde, con su evidencia. Tu equipo confirma, y Relvo aprende de cada confirmación. Los pagos parciales quedan con su saldo pendiente."
+        },
+        {
+          "q": "¿Relvo hace reconocimiento de ingresos?",
+          "a": "Sí, bajo IFRS 15."
+        },
+        {
+          "q": "¿Puedo manejar varias sociedades?",
+          "a": "Sí. Puedes facturar desde distintas sociedades y dividir una factura entre ellas, con un solo cierre."
+        },
+        {
+          "q": "¿Relvo se conecta con mi ERP?",
+          "a": "Sí, Relvo se integra con Sintropix."
+        },
+        {
+          "q": "¿Cómo se cobran los pagos atrasados?",
+          "a": "Relvo envía correos de cobranza antes y después del vencimiento, y los agentes avisan a tu equipo cuando un caso necesita atención."
+        },
+        {
+          "q": "¿Puedo ver la antigüedad de mis cuentas por cobrar?",
+          "a": "Sí. Ves lo que te debe cada cliente y desde cuándo, junto con el DSO, actualizado todo el mes."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

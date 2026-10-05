@@ -1,0 +1,147 @@
+{
+  "id": "hibrido",
+  "preset": "solucion",
+  "seo": "hibrido",
+  "keyword": "facturación de contratos con pricing híbrido",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Soluciones",
+      "href": "/soluciones"
+    },
+    {
+      "label": "Contratos con pricing híbrido"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Facturación de contratos con pricing híbrido: fijo, uso e hitos en un mismo contrato.",
+      "lead": "Relvo convierte cada condición negociada en reglas, gestiona las órdenes de compra, divide facturas entre sociedades y cobra.",
+      "intro": "Cuando vendes con contrato, cada cliente es un caso distinto: un fijo mensual más consumo, un hito de implementación, una OC que hay que conseguir y una factura que va a dos sociedades. Es el tipo de cobro que termina en planillas frágiles. Relvo lo opera como un solo flujo, con las condiciones de cada contrato como reglas exactas.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "splitInvoice",
+        "data": {
+          "invoice": "F-1042",
+          "total": "USD 3.090",
+          "parts": [
+            {
+              "entity": "Nimbo AI SpA, Chile",
+              "amount": "USD 1.854",
+              "pct": 60
+            },
+            {
+              "entity": "Nimbo AI, México",
+              "amount": "USD 1.236",
+              "pct": 40
+            }
+          ],
+          "glosa": "Servicio Relvo, octubre 2026. OC 4500-221."
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "De un contrato distinto por cliente a un solo motor para todos.",
+      "h2Soft": "Sin planillas frágiles.",
+      "before": [
+        "Cada contrato calculado con su propia planilla.",
+        "OCs y aprobaciones perseguidas por correo.",
+        "Facturas divididas entre sociedades armadas a mano."
+      ],
+      "after": [
+        "Cada condición negociada convertida en una regla.",
+        "Cada factura sale con su OC asociada y aprobada.",
+        "Splits, prorrateos y glosas configurados por contrato."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo lo resuelve Relvo.",
+      "h2Soft": "Con las tres capas.",
+      "steps": [
+        {
+          "title": "Rieles",
+          "text": "Fijo, uso, hitos, fases y descuentos de cada contrato, calculados siempre igual."
+        },
+        {
+          "title": "Agentes",
+          "text": "Leen OCs, consiguen lo que falta y te avisan si algo no calza."
+        },
+        {
+          "title": "Inteligencia",
+          "text": "Ingreso recurrente frente a consumo, y cuánto demoras en facturar y cobrar."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Los productos que más usan.",
+      "h2Soft": "Para contratos con pricing híbrido.",
+      "items": [
+        "contratos",
+        "aprobaciones",
+        "cxc"
+      ]
+    },
+    {
+      "type": "case",
+      "ref": "tgp",
+      "h2": "Lo que cambió para TGP."
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes sobre contratos con pricing híbrido.",
+      "items": [
+        {
+          "q": "¿Qué es un contrato con pricing híbrido?",
+          "a": "Uno que combina más de un componente de cobro: por ejemplo, un fijo mensual más consumo, o un fijo más hitos. Relvo calcula cada componente con su regla y los junta en una sola factura."
+        },
+        {
+          "q": "¿Cada cliente puede tener condiciones distintas?",
+          "a": "Sí. Cada contrato tiene sus propias reglas, fases y descuentos."
+        },
+        {
+          "q": "¿Relvo maneja órdenes de compra?",
+          "a": "Sí. Un agente lee la OC, la asocia a la factura y la factura sale solo cuando todo está aprobado."
+        },
+        {
+          "q": "¿Puedo facturar un contrato a varias sociedades?",
+          "a": "Sí. Puedes dividir una factura entre sociedades o centros de costo, con prorrateos y la glosa que pida tu cliente."
+        },
+        {
+          "q": "¿En qué países y monedas puedo facturar?",
+          "a": "Facturación electrónica en Chile y México, en cualquier moneda, con conversión automática, incluida la UF."
+        },
+        {
+          "q": "¿Puedo cobrar hitos además del fijo y el uso?",
+          "a": "Sí. Un hito es una regla más del contrato: se factura cuando corresponde, junto con el resto de los componentes del período."
+        },
+        {
+          "q": "¿Qué pasa si una OC no calza con el contrato?",
+          "a": "Relvo no emite la factura. El caso queda en una bandeja de revisión y tu equipo decide si pedir una nueva OC o aprobarla igual."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

@@ -1,0 +1,24 @@
+/* Página de contacto: texto a la izquierda, formulario a la derecha. Inputs del DS (radio 6px). */
+.demo{display:flex;flex-wrap:wrap;align-items:flex-start;gap:40px 72px;padding:clamp(40px,5.5cqi,88px) var(--gutter) clamp(56px,5.5cqi,88px)}
+.demo__intro{display:flex;flex:1 1 380px;flex-direction:column;gap:24px;min-width:0}
+.demo__title{margin:0;font-size:clamp(40px,4.7cqi,68px)}
+.demo__lede{max-width:48ch;margin:0;font-size:clamp(18px,1.55cqi,22px);line-height:1.5}
+.demo__success{flex:1.1 1 440px;padding:clamp(28px,3cqi,44px);border-radius:var(--radius-lg);background:var(--mint)}
+.demo__success p{margin:0;font-size:17px}
+.demo__success .demo__success-title{margin-bottom:8px;font-size:21px;font-weight:600;color:var(--text-main)}
+
+.form{display:flex;flex:1.1 1 440px;flex-direction:column;gap:20px;min-width:0;padding-top:4px}
+.form__row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:20px}
+.form__field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.form label{font-size:15px;font-weight:500;color:var(--text-main)}
+.form__optional{font-weight:400;color:var(--text-muted)}
+/* 16px mínimo en controles: menos dispara el zoom automático de iOS */
+.form input,.form select,.form textarea{width:100%;padding:12px 14px;border:1px solid var(--ink-300);border-radius:var(--radius-md);background:var(--paper);color:var(--text-main);font-family:var(--font-ui);font-size:16px;line-height:1.4}
+.form input,.form select{height:48px}
+.form textarea{resize:vertical}
+.form ::placeholder{color:var(--text-muted)}
+.form [aria-invalid="true"]{border-color:var(--negative)}
+.form__error{margin:0;font-size:14px;color:var(--negative)}
+.form__trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form .btn{align-self:flex-start;min-width:160px}
+.form .btn:disabled{background:var(--paper-2);border-color:var(--line);color:var(--text-muted);cursor:not-allowed}

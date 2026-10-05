@@ -1,0 +1,130 @@
+{
+  "id": "ingenieria",
+  "preset": "solucion",
+  "seo": "ingenieria",
+  "keyword": "Relvo para equipos de ingeniería",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Soluciones",
+      "href": "/soluciones"
+    },
+    {
+      "label": "Ingeniería"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Relvo para equipos de ingeniería.",
+      "lead": "Envía el consumo por API y deja de construir facturación propia. Relvo calcula, factura y cobra; tu equipo vuelve a trabajar en el producto.",
+      "intro": "Construir facturación dentro del producto parece rápido al principio y se vuelve una deuda permanente: cada cambio de pricing es un ticket, cada error de cálculo es un incidente. Con Relvo, tu producto solo reporta el consumo. Las reglas de cobro viven en Relvo y finanzas puede ajustarlas sin pedirle nada a ingeniería.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "codeBlock",
+        "data": {
+          "lang": "http",
+          "code": "POST /usage\n{\n  \"customer\": \"nimbo-ai\",\n  \"metric\": \"tokens\",\n  \"quantity\": 1250000\n}",
+          "note": "Endpoint ilustrativo: reemplazar por el real de la API de Relvo."
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "De mantener facturación a enviar un evento.",
+      "h2Soft": "Y volver al producto.",
+      "before": [
+        "Lógica de cobro escrita y mantenida dentro del producto.",
+        "Cada cambio de pricing se convierte en un ticket.",
+        "Errores de cálculo que llegan como incidentes."
+      ],
+      "after": [
+        "Tu producto solo envía el consumo por API.",
+        "Finanzas ajusta las reglas de pricing en Relvo.",
+        "El cálculo vive en un motor determinístico y auditable."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo se integra.",
+      "h2Soft": "En tres pasos.",
+      "steps": [
+        {
+          "title": "Conecta la API",
+          "text": "Tu producto reporta el consumo de cada cliente."
+        },
+        {
+          "title": "Define las métricas",
+          "text": "Tokens, llamadas o la unidad que use tu producto."
+        },
+        {
+          "title": "Olvídate del cobro",
+          "text": "Relvo calcula, factura y cobra con las reglas de cada contrato."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Los productos que más usa.",
+      "h2Soft": "Un equipo de ingeniería.",
+      "items": [
+        "medicion",
+        "agentes",
+        "contratos"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes para equipos de ingeniería.",
+      "items": [
+        {
+          "q": "¿Qué tiene que construir mi equipo?",
+          "a": "Solo el envío del consumo a Relvo por API. El cálculo, la facturación y el cobro quedan fuera de tu producto."
+        },
+        {
+          "q": "¿Quién cambia el pricing?",
+          "a": "Las reglas de pricing se configuran en Relvo, así que finanzas o Revenue Ops pueden ajustarlas sin un ticket para ingeniería."
+        },
+        {
+          "q": "¿El cálculo es determinístico?",
+          "a": "Sí. El monto lo calcula un motor de reglas, siempre igual para el mismo contrato y el mismo consumo. Los agentes de IA no calculan montos."
+        },
+        {
+          "q": "¿Puedo consultar Relvo desde mis herramientas de IA?",
+          "a": "Sí, vía MCP."
+        },
+        {
+          "q": "¿Dónde está la documentación?",
+          "a": "En la documentación de Relvo, con las guías para enviar consumo y conectar tus sistemas."
+        },
+        {
+          "q": "¿Tengo que implementar la facturación electrónica?",
+          "a": "No. Relvo emite la factura electrónica en Chile y México; tu producto no necesita integrarse con ningún sistema tributario."
+        },
+        {
+          "q": "¿Relvo se integra con Stripe?",
+          "a": "Sí. Relvo cobra con tarjeta a través de Stripe, además de Toku y Fintoc."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": ["index.html", "src/entry-server.jsx", "scripts/*.mjs", "api/*.js"],
+  "project": ["src/**/*.{js,jsx}", "scripts/**/*.mjs", "api/**/*.js", "content/**/*.mjs"],
+  "ignoreDependencies": ["impeccable"]
+}

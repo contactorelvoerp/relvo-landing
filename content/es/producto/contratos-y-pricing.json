@@ -1,0 +1,283 @@
+{
+  "id": "contratos",
+  "preset": "producto",
+  "seo": "contratos",
+  "keyword": "contratos y pricing para SaaS",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Producto",
+      "href": "/producto"
+    },
+    {
+      "label": "Contratos y pricing"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Contratos y pricing: cualquier modelo, convertido en reglas exactas.",
+      "lead": "Plan fijo, seats, uso, fases, descuentos y reajustes. Configuras cada condición una vez y Relvo calcula cada cobro igual, todos los meses.",
+      "intro": "En la mayoría de las empresas SaaS e IA, las condiciones de cada cliente viven repartidas entre el contrato en PDF, el CRM, correos y una planilla que entiende una sola persona. Relvo junta todo en un solo lugar: cada cliente tiene sus reglas de pricing, y el monto de cada período sale de esas reglas, no de una fórmula copiada a mano.",
+      "ctas": [
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "primary"
+        },
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "planCard",
+        "data": {
+          "plan": "Plan Growth",
+          "client": "Nimbo AI, facturación mensual",
+          "price": "USD 500",
+          "lines": [
+            [
+              "Seats adicionales",
+              "12 × USD 20"
+            ],
+            [
+              "Tokens",
+              "1.200 M"
+            ],
+            [
+              "Descuento de lanzamiento",
+              "Fase 1 de 3"
+            ]
+          ],
+          "tiers": {
+            "t1": 0.66,
+            "t2": 0.14,
+            "labels": [
+              "Tramo 1, incluido",
+              "Tramo 2"
+            ]
+          },
+          "total": [
+            "Total octubre",
+            "USD 3.090"
+          ]
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "Del contrato en PDF a reglas que se cumplen solas.",
+      "h2Soft": "Sin fórmulas copiadas a mano.",
+      "before": [
+        "Cada cliente con condiciones distintas, anotadas en lugares distintos.",
+        "Descuentos y fases que alguien tiene que recordar aplicar.",
+        "Cambiar el pricing significa rehacer la planilla."
+      ],
+      "after": [
+        "Cada contrato convertido en reglas que Relvo aplica en cada período.",
+        "Fases, descuentos y reajustes que se activan solos en su fecha.",
+        "Un pricing nuevo es una regla nueva, no un sistema nuevo."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo funciona.",
+      "h2Soft": "Del contrato al monto del período.",
+      "steps": [
+        {
+          "title": "Cargas el contrato",
+          "text": "El plan de tu página de precios o las condiciones negociadas con cada cliente."
+        },
+        {
+          "title": "Defines las reglas",
+          "text": "Ítems, métricas, precios, fases, descuentos, reajustes y frecuencia de cobro."
+        },
+        {
+          "title": "Relvo calcula",
+          "text": "Cada período, el monto exacto queda listo para aprobar y facturar."
+        }
+      ]
+    },
+    {
+      "type": "featureTabs",
+      "h2": "Todo lo que se puede negociar, se puede configurar.",
+      "h2Soft": "Sin excepciones a mano.",
+      "tabs": [
+        {
+          "label": "Modelos de cobro",
+          "desc": "Fijo, seats, uso o resultados, combinados.",
+          "visual": {
+            "id": "planCard",
+            "data": {
+              "plan": "Plan Growth",
+              "price": "USD 500",
+              "lines": [
+                [
+                  "Seats adicionales",
+                  "12 × USD 20"
+                ],
+                [
+                  "Tokens",
+                  "1.200 M"
+                ]
+              ],
+              "total": [
+                "Total del período",
+                "USD 3.140"
+              ]
+            }
+          }
+        },
+        {
+          "label": "Fases y descuentos",
+          "desc": "Precios que cambian según la etapa del contrato.",
+          "visual": {
+            "id": "timeline",
+            "data": {
+              "title": "Contrato Nimbo AI",
+              "steps": [
+                {
+                  "label": "Fase 1: lanzamiento",
+                  "sub": "10% de descuento sobre el plan fijo, 3 meses",
+                  "done": true
+                },
+                {
+                  "label": "Fase 2: crecimiento",
+                  "sub": "Precio de lista, desde enero",
+                  "done": false
+                },
+                {
+                  "label": "Fase 3: renovación",
+                  "sub": "Reajuste anual",
+                  "done": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "Frecuencias y monedas",
+          "desc": "Mensual a anual, en cualquier moneda.",
+          "visual": {
+            "id": "methods",
+            "data": {
+              "title": "Frecuencia de cobro",
+              "methods": [
+                {
+                  "label": "Mensual",
+                  "selected": true
+                },
+                {
+                  "label": "Trimestral"
+                },
+                {
+                  "label": "Semestral"
+                },
+                {
+                  "label": "Anual"
+                }
+              ],
+              "total": [
+                "Moneda del contrato",
+                "UF, con conversión automática"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "capabilities",
+      "h2": "Seis modelos de precio, tres tipos de cargo.",
+      "h2Soft": "Lo que dice el contrato, calculado igual.",
+      "items": [
+        {
+          "title": "Cargos fijos, de uso y únicos",
+          "text": "Un fijo por período, un cargo por lo que se consume y cargos de una sola vez, como una implementación o un hito."
+        },
+        {
+          "title": "Cargos por asiento",
+          "text": "La cantidad de seats se toma de una métrica, no se escribe a mano cada mes."
+        },
+        {
+          "title": "Seis modelos de precio",
+          "text": "Estándar, por tramos, por volumen, por paquete, porcentual y porcentual por tramos."
+        },
+        {
+          "title": "Unidades gratis, mínimos y topes",
+          "text": "Se aplican en un orden fijo y conocido, para que el monto siempre se pueda explicar."
+        },
+        {
+          "title": "Prorrateo, anticipado y vencido",
+          "text": "Cada cargo define si se prorratea y si se cobra al inicio o al cierre del período."
+        },
+        {
+          "title": "Fases, amendments y versiones",
+          "text": "Los contratos cambian por etapas y cada cambio queda como versión nueva, sin perder el historial."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Funciona junto con.",
+      "h2Soft": "El mismo motor, de punta a punta.",
+      "items": [
+        "medicion",
+        "aprobaciones",
+        "cxc"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes sobre contratos y pricing.",
+      "items": [
+        {
+          "q": "¿Qué modelos de pricing soporta Relvo?",
+          "a": "Plan fijo, seats, uso, resultados o una mezcla de ellos, con fases, descuentos por período y reajustes. Cada contrato puede combinar los componentes que necesite."
+        },
+        {
+          "q": "¿Cada cliente puede tener condiciones distintas?",
+          "a": "Sí. Cada contrato tiene sus propias reglas, así que puedes respetar lo que negociaste con cada cliente sin crear excepciones a mano."
+        },
+        {
+          "q": "¿Con qué frecuencia puedo cobrar?",
+          "a": "Mensual, trimestral, semestral o anual, según lo que diga cada contrato."
+        },
+        {
+          "q": "¿Qué pasa si cambio mi pricing?",
+          "a": "Actualizas las reglas en Relvo. No necesitas cambiar de sistema ni rehacer planillas para pasar, por ejemplo, de un plan fijo a un modelo con consumo."
+        },
+        {
+          "q": "¿En qué monedas puedo cobrar?",
+          "a": "En cualquier moneda, con conversión automática, incluida la UF."
+        },
+        {
+          "q": "¿Relvo se conecta con mi CRM?",
+          "a": "Sí, Relvo se integra con HubSpot."
+        },
+        {
+          "q": "¿Qué diferencia hay entre cobrar por tramos y por volumen?",
+          "a": "Por tramos, cada tramo cobra su propio precio solo por las unidades que caen en él. Por volumen, la cantidad total define un tramo y ese precio se aplica a todas las unidades. Con los mismos tramos, los montos son distintos: elegir uno u otro es una decisión comercial."
+        },
+        {
+          "q": "¿Puedo cobrar un porcentaje sobre transacciones?",
+          "a": "Sí. Los modelos porcentual y porcentual por tramos cobran sobre el valor de cada evento, por ejemplo una comisión sobre el volumen transado, con pisos y techos por transacción."
+        },
+        {
+          "q": "¿Puedo dividir el cobro entre muchas sociedades?",
+          "a": "Sí. Un cobro puede dividirse en más de veinte razones sociales, cada una con sus reglas fiscales."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

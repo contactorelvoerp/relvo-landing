@@ -1,0 +1,140 @@
+/* Bloques compartidos por la home y las páginas de plantilla: sección, texturas, tabs verticales,
+   panel de gráficos, caso TGP, bento, integraciones y CTA final. */
+
+.section{padding:clamp(72px,7cqi,96px) var(--gutter) clamp(80px,8cqi,112px);scroll-margin-top:24px}
+
+/* Textura generativa: llena su contenedor, detrás del contenido */
+.texture{position:absolute;inset:0;z-index:-1;overflow:hidden;border-radius:inherit;pointer-events:none}
+.texture canvas{position:absolute;inset:0;width:100%;height:100%}
+.texture--orbits{background:var(--mint)}
+.texture--ridges{background:var(--paper)}
+.texture--pulse{background:var(--band-ink)}
+.texture--periods{background:var(--band-green)}
+
+/* Panel con textura */
+.stage{position:relative;isolation:isolate;display:grid;place-items:center;width:100%;border-radius:var(--radius-lg)}
+
+/* Link de apoyo (prototipo): verde, subrayado fino */
+.link{font-weight:500;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(24,102,102,.3);padding-bottom:1px}
+.link:hover{border-bottom-color:var(--accent)}
+
+/* Tabs verticales + pantalla (01 Rieles y featureTabs) */
+.rails{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);align-items:start;gap:48px}
+.vtabs{display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.vtab{display:block;margin-left:-1px;padding:18px 0 18px 22px;border:0;border-left:2px solid transparent;background:none;font-family:var(--font-ui);text-align:left;cursor:pointer}
+.vtab b{display:block;margin-bottom:4px;font-size:17px;font-weight:600;color:var(--text-muted);transition:color .2s}
+.vtab span{display:block;font-size:15px;line-height:1.5;color:var(--text-muted)}
+.vtab[aria-selected="true"]{border-left-color:var(--accent)}
+.vtab[aria-selected="true"] b{color:var(--text-main)}
+.vtab[aria-selected="true"] span{color:var(--text-body)}
+.vtab:focus-visible{outline-offset:-2px}
+.rails__panel{position:relative;display:grid;place-items:center;min-height:420px;padding:40px;border-radius:var(--radius-lg);background:var(--band-neutral)}
+.rails__screen{display:grid;place-items:center;width:100%}
+
+/* Panel de reportes: tabs de texto, KPI y gráfico. En desktop el panel tiene alto fijo
+   (cambiar de tab no mueve la sección) y las tabs van en una línea sin scroll */
+.report{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}
+.htabs{display:flex;flex-wrap:wrap;column-gap:28px;padding:0 32px;border-bottom:1px solid var(--line)}
+.htab{margin-bottom:-1px;padding:14px 0;border:0;border-bottom:2px solid transparent;background:none;font-family:var(--font-ui);font-size:15px;font-weight:500;color:var(--text-muted);white-space:nowrap;cursor:pointer}
+.htab[aria-selected="true"]{border-bottom-color:var(--accent);color:var(--text-main)}
+.htab:focus-visible{outline-offset:-2px}
+.report__panel{display:grid;grid-template-columns:240px minmax(0,1fr);align-items:start;gap:40px;height:420px;padding:32px}
+.kpis{display:flex;flex-direction:column;align-items:flex-start;gap:26px}
+.kpi__label{display:block;font-size:13.5px;color:var(--text-muted)}
+.kpi__value{display:block;margin:6px 0;font-size:44px;font-weight:500;line-height:1.05;letter-spacing:-.03em}
+.kpi__note{margin:0;font-size:14px;line-height:1.5;color:var(--text-body)}
+.report__chart,.report__chart .chart{display:flex;flex-direction:column;height:100%;min-height:0}
+.report__chart svg{display:block;flex:1;width:100%;height:100%;min-height:0;overflow:visible}
+
+/* Caso TGP */
+.case{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.2fr);align-items:start;gap:56px}
+.case__company{margin:0 0 26px;font-size:15px;line-height:1.5;color:var(--text-muted)}
+.case__company img{margin-bottom:10px;filter:grayscale(1) brightness(0);opacity:.82}
+.case__big{margin:0;color:var(--text-main);font-size:clamp(64px,7.5cqi,96px);font-weight:500;line-height:.9;letter-spacing:-.04em}
+.case__big-label{margin:12px 0 4px;font-size:20px;font-weight:500;color:var(--text-main)}
+.case__sub{margin:0;font-size:16px;color:var(--text-body)}
+.case__metric{margin:0 0 20px;font-size:15px;color:var(--text-muted)}
+.case__metric b{font-weight:600;color:var(--text-main)}
+.case__dd{margin-bottom:20px}
+.case__dd-label{margin-bottom:4px;font-size:13.5px;color:var(--text-muted)}
+.case__dd-label--on{font-weight:500;color:var(--accent)}
+.case__dd-value{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.case__dd-value b{font-size:44px;font-weight:500;line-height:1;letter-spacing:-.03em}
+.case__dd--before .case__dd-value b{color:var(--text-muted)}
+.case__dd-value small{font-size:15px;color:var(--text-muted)}
+.case__bars{display:flex;gap:6px}
+.case__bars i{display:block;width:32px;height:8px;border-radius:3px;background:var(--line)}
+.case__bars--on i{background:var(--accent)}
+.case__quote{margin:0}
+.case__quote blockquote{margin:0;font-size:21px;font-weight:500;line-height:1.45;letter-spacing:-.01em;color:var(--text-main)}
+.case__quote figcaption{margin-top:20px;font-size:15px;color:var(--text-main)}
+.case__quote figcaption span{display:block;color:var(--text-muted)}
+.case__link{margin:24px 0 0;font-size:15px}
+
+/* Bento de productos (home) y tarjetas relacionadas (plantilla) */
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.product{display:flex;flex-direction:column;min-height:300px;padding:26px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper);color:var(--text-main);text-decoration:none;transition:border-color .15s}
+a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
+.product--wide{grid-column:span 2}
+.product__title{margin:4px 0 6px;font-size:20px;letter-spacing:-.01em}
+.product__desc{max-width:40ch;margin:0 0 20px;font-size:15px;color:var(--text-body)}
+.mini{margin-top:auto;padding:16px 18px;border:1px solid #EEF0F2;border-radius:var(--radius-md);background:var(--paper);font-size:13px}
+/* Mini gráficos del bento (v2): cifra, barra apilada, histograma, pasos, tareas y área */
+.mini__figure{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-bottom:12px}
+.mini__figure b{font-size:22px;font-weight:500;letter-spacing:-.02em}
+.mini__figure small{font-size:12.5px;color:var(--text-muted)}
+.mini__delta{margin-left:auto;font-size:12.5px;font-weight:500;color:var(--positive)}
+.stack{display:flex;gap:2px;height:12px;overflow:hidden;border-radius:3px}
+.stack i{display:block}
+.stack__legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:12px;color:var(--text-muted)}
+.stack__legend i{display:inline-block;width:8px;height:8px;margin-right:6px;border-radius:2px}
+.mini__hist{display:flex;align-items:flex-end;gap:3px;height:64px}
+.mini__hist i{flex:1;border-radius:1px;background:var(--uso)}
+.nodes{display:flex;align-items:center}
+.nodes span{display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:50%}
+.nodes__ok{background:var(--accent);color:#FFFFFF}
+.nodes__now{border:1.5px solid var(--accent);background:var(--paper)}
+.nodes i{flex:1;height:1.5px;background:var(--accent)}
+.nodes i.nodes__off{background:#DCE9E6}
+.nodes__labels{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--text-muted)}
+.mini__tasks{display:flex;gap:8px}
+.mini__tasks span{display:grid;place-items:center;width:32px;height:32px;border-radius:var(--radius-md);background:var(--accent-wash);color:var(--accent-pressed)}
+.mini__tasks svg{width:16px;height:16px}
+.mini__area{display:block;width:100%;height:64px}
+
+/* Integraciones (prototipo): carrusel de nombres en texto, lineal y lento */
+.ints{overflow:hidden}
+.ints__track{--ints-gap:80px;display:flex;gap:var(--ints-gap);width:max-content;margin:0;padding:0;list-style:none;animation:relvo-ints 60s linear infinite}
+.ints__track li{font-size:24px;font-weight:500;letter-spacing:-.01em;color:var(--text-main);white-space:nowrap}
+.ints:hover .ints__track,.ints--offscreen .ints__track{animation-play-state:paused}
+@keyframes relvo-ints{to{transform:translateX(calc(-50% - var(--ints-gap) / 2))}}
+@container (max-width:599px){.ints__track{--ints-gap:48px}.ints__track li{font-size:20px}}
+.ints__more{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:48px;font-size:15px;color:var(--text-muted)}
+@media (prefers-reduced-motion:reduce){
+  .ints__track{flex-wrap:wrap;width:auto;gap:20px 40px;animation:none}
+  .ints__dup{display:none}
+}
+
+/* CTA final: tarjeta verde (prototipo v2.1) dentro de una sección blanca, separada del footer */
+.cta{position:relative;isolation:isolate;display:flex;align-items:center;min-height:clamp(360px,30cqi,420px);padding:clamp(64px,7cqi,96px) clamp(24px,4cqi,56px);overflow:hidden;border-radius:12px;background:var(--band-green);color:var(--text-on-green)}
+.cta__content{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:32px;max-width:min(60%,760px)}
+.cta__title{margin:0;font-size:clamp(36px,4.8cqi,68px);line-height:1.05;letter-spacing:-.02em;color:#FFFFFF}
+.cta__button{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:var(--radius-md);background:#FFFFFF;color:var(--accent-pressed);font-size:17px;font-weight:500;text-decoration:none}
+.cta__button:hover{background:var(--mint);color:var(--accent-pressed)}
+.cta__actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px}
+.cta .link,.band--ink .link{color:#FFFFFF;border-bottom-color:rgba(255,255,255,.4)}
+.cta .link:hover,.band--ink .link:hover{border-bottom-color:#FFFFFF}
+
+@container (max-width:979px){
+  .rails{grid-template-columns:1fr}
+  .rails__panel{padding:20px}
+  .report__panel{grid-template-columns:1fr;height:auto;padding:24px}
+  .report__chart svg{flex:none;height:auto}
+  /* En mobile las tabs se deslizan, con la barra oculta */
+  .htabs{flex-wrap:nowrap;overflow-x:auto;padding:0 24px;scrollbar-width:none}
+  .htabs::-webkit-scrollbar{display:none}
+  .bento,.case{grid-template-columns:1fr}
+  .case{gap:40px}
+  .product--wide{grid-column:auto}
+}
+@container (max-width:719px){.cta__content{max-width:84%}}

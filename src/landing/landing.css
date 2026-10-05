@@ -1,0 +1,130 @@
+/* Plantilla de landing (producto, soluciones y casos). Referencia visual: la página piloto aprobada
+   (reference/relvo-producto-cuentas-por-cobrar.html). El H1 va en Instrument Sans: Fujiwara A es
+   solo para el H1 de la home. */
+
+/* Hero: migas de pan y visual sobre la textura Órbitas (el layout centrado está más abajo) */
+.lp-hero{padding-top:clamp(40px,5.5cqi,88px)}
+.crumbs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0;list-style:none;font-size:14px;color:var(--text-muted)}
+.crumbs li + li::before{content:"/";margin-right:8px;color:#C4C6CD}
+.crumbs a{color:var(--text-muted);text-decoration:none}
+.crumbs a:hover{color:var(--text-main)}
+.lp-hero__visual{min-width:0;container-type:inline-size}
+.lp-stage{padding:40px}
+.lp-stage > .ui{position:relative;z-index:1}
+/* Relieve sobre gris claro: sobre la página blanca el escenario necesita su fondo */
+.lp-stage .texture--ridges{background:var(--band-neutral)}
+/* Intro (40 a 70 palabras), centrada bajo el visual */
+.lp-intro{max-width:720px;margin:48px auto 0;font-size:17px;line-height:1.6;text-align:center;color:var(--text-body)}
+@container (max-width:560px){.lp-stage{padding:20px}}
+
+/* Antes / después: tres puntos por lado, cada "después" responde a su "antes" */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ba__side{padding:32px;border-radius:var(--radius-lg)}
+.ba__side--before{background:var(--band-neutral)}
+.ba__side--after{background:var(--mint)}
+.ba h3{margin:0 0 18px;font-size:15px;font-weight:600;color:var(--text-muted)}
+.ba__side--after h3{color:var(--accent)}
+.ba ul{display:flex;flex-direction:column;gap:16px;margin:0;padding:0;list-style:none}
+.ba li{display:grid;grid-template-columns:22px 1fr;gap:12px;font-size:16.5px;line-height:1.5;color:var(--text-main)}
+.ba li i{display:grid;place-items:center;width:22px;height:22px;margin-top:1px;border-radius:50%}
+.ba__side--before li i{border:1.5px solid #C4C6CD}
+.ba__side--after li i{background:var(--accent);color:#FFFFFF}
+
+/* Cómo funciona: siempre 3 pasos, unidos por el riel, sobre menta */
+.steps3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none}
+.steps3__step{padding:28px;border-radius:var(--radius-lg);background:var(--paper)}
+.steps3__n{display:block;margin-bottom:6px;font-size:14px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.steps3 h3{margin:0 0 8px;font-size:20px}
+.steps3 p{margin:0;font-size:15.5px;line-height:1.5;color:var(--text-body)}
+.steps3__rail{position:relative;height:28px;margin-top:16px}
+.steps3__rail::before{content:"";position:absolute;top:50%;right:0;left:0;height:2px;background:var(--accent)}
+.steps3__rail span{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--accent)}
+.steps3__rail span:nth-child(1){left:16.66%}
+.steps3__rail span:nth-child(2){left:50%}
+.steps3__rail span:nth-child(3){left:83.33%}
+
+/* Métricas sin gráfico: los KPI van en fila */
+.report--kpis .report__panel{display:block;height:auto}
+.kpis--row{flex-direction:row;flex-wrap:wrap;align-items:flex-end;gap:24px 64px}
+.kpis--row .kpi__note{flex-basis:100%}
+
+/* Relacionados: las tarjetas del bento de la home */
+.related{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.related .product{min-height:0}
+
+/* Preguntas frecuentes: acordeón con <details>, todo el texto en el HTML */
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{display:flex;justify-content:space-between;gap:24px;padding:20px 0;font-size:17.5px;font-weight:500;color:var(--text-main);list-style:none;cursor:pointer}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font-size:22px;line-height:1;color:var(--text-muted);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq summary:focus-visible{outline-offset:2px}
+.faq details p{max-width:60ch;margin:0 0 22px;font-size:16px;line-height:1.6;color:var(--text-body)}
+@media (prefers-reduced-motion:reduce){.faq summary::after{transition:none}}
+
+/* Cita (preset caso) */
+.lp-quote{max-width:880px;margin:0}
+.lp-quote blockquote{margin:0;font-size:clamp(22px,2.2cqi,30px);font-weight:500;line-height:1.4;letter-spacing:-.015em;color:var(--text-main)}
+.lp-quote figcaption{margin-top:24px;font-size:16px;color:var(--text-main)}
+.lp-quote figcaption span{display:block;color:var(--text-muted)}
+
+@container (max-width:979px){
+  .ba,.steps3,.related{grid-template-columns:1fr}
+  .steps3__rail{display:none}
+}
+
+/* Hero centrado (todas las páginas internas, como las de producto de Stripe): migas, H1, lead y CTAs
+   centrados en ~760px; el visual a todo el ancho del contenedor debajo y la intro centrada bajo él */
+.lp-head{max-width:780px;margin:0 auto;text-align:center}
+.lp-head .crumbs{justify-content:center}
+.lp-head__title{margin:0;font-family:var(--font-ui);font-size:clamp(34px,3.6cqi,52px);font-weight:500;line-height:1.08;letter-spacing:-.03em}
+.lp-head__lead{max-width:46ch;margin:20px auto 0;font-size:clamp(17px,1.4cqi,19px);line-height:1.55;color:var(--text-body)}
+.lp-head__ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
+.lp-hero .lp-hero__visual{margin-top:clamp(40px,4cqi,56px)}
+.lp-hero .lp-stage{min-height:480px}
+.lp-hero .lp-stage--wide{display:block;height:clamp(440px,36cqi,520px);padding:0}
+/* heroApp: ventana a la izquierda, tarjeta de cobro a la derecha y aviso abajo (piloto) */
+.lp-stage--wide .hero-app__window{left:6%;top:9%;width:58%}
+.lp-stage--wide .hero-app__card{left:auto;right:8%;top:20%;width:30%}
+.lp-stage--wide .hero-app .hc--toast{right:5%;top:76%}
+/* composition: 2 o 3 piezas superpuestas, como el hero de la home */
+.composition{position:absolute;inset:0}
+.composition__piece{width:min(440px,44%)}
+.composition__piece--0{left:12%;top:12%}
+.composition__piece--1{right:12%;top:30%}
+.composition__piece--2{left:34%;top:58%}
+.composition--2 .composition__piece--1{right:10%;top:26%}
+.lp-hero .lp-stage--wide:has(.composition--2){height:clamp(380px,28cqi,420px)}
+
+/* Barra secundaria: fija bajo el menú, sin barra de scroll visible */
+.subnav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97)}
+.subnav::after{content:"";position:absolute;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);border-bottom:1px solid var(--line)}
+.subnav::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(255,255,255,.97)}
+.subnav__inner{display:flex;align-items:center;justify-content:space-between;gap:24px;height:48px;padding:0 var(--gutter)}
+.subnav__name{flex:none;font-size:14.5px;font-weight:600}
+.subnav__links{display:flex;gap:22px;min-width:0;overflow-x:auto;font-size:14px;scrollbar-width:none}
+.subnav__links::-webkit-scrollbar{display:none}
+.subnav__links a{color:var(--text-body);text-decoration:none;white-space:nowrap}
+.subnav__links a:hover{color:var(--text-main)}
+.subnav__links .subnav__docs{font-weight:500;color:var(--accent)}
+.lp .h2[id]{scroll-margin-top:80px}
+
+/* Capacidades: grilla de 2 o 3 columnas, título en negrita y una línea, sin íconos ni tarjetas */
+.caps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 48px}
+.caps--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.caps h3{margin:0 0 6px;font-size:16.5px;font-weight:600}
+.caps p{max-width:44ch;margin:0;font-size:15.5px;line-height:1.55;color:var(--text-body)}
+
+@container (max-width:979px){
+  .caps,.caps--2{grid-template-columns:1fr;gap:28px}
+  .subnav__links{gap:16px}
+}
+@container (max-width:719px){
+  .lp-hero .lp-stage--wide,.lp-hero .lp-stage--wide:has(.composition--2){display:flex;flex-direction:column;gap:12px;height:auto;padding:20px}
+  .lp-stage--wide .hero-app,.lp-stage--wide .composition{position:static;display:flex;flex-direction:column;gap:12px}
+  .lp-stage--wide .hc{position:relative;inset:auto;width:100%}
+  .lp-stage--wide .win__body{grid-template-columns:1fr;min-height:0}
+  .lp-stage--wide .win__side{display:none}
+  .subnav__name{display:none}
+}

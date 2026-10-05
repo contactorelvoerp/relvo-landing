@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Relvo | Revenue Engine para SaaS e IA</title>
+<meta name="description" content="Relvo convierte tu pricing en ingresos: calcula, factura, cobra y concilia planes fijos, seats y uso en un solo sistema. Para SaaS e IA en LatAm.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#13131E; --ink-2:#4A4A57; --muted:#6E6E7A; --soft:#8B8D97;
+  --line:#E4E6EA; --rail:rgba(19,19,30,.08);
+  --green:#186666; --green-h:#2E8080; --green-deep:#0F4A4A; --mint:#DFF4EB; --green-light:#72DDAA;
+  --neutral:#F6F7F8; --dark:#13131E; --positive:#3F7A1C; --review:#8A5A00; --review-bg:#FBF1DF;
+  --w:1120px; --pad:24px;
+  --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,Menlo,monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(72px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.55}
+a{color:inherit}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:4px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---------- Grilla de rieles ---------- */
+.band{position:relative;--rail-c:var(--rail);overflow:hidden}
+.btex{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.band::before,.band::after{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--rail-c);pointer-events:none;z-index:1}
+.band::before{left:max(0px,calc(50% - var(--w)/2 - var(--pad)))}
+.band::after{right:max(0px,calc(50% - var(--w)/2 - var(--pad)))}
+.wrap{max-width:calc(var(--w) + var(--pad)*2);margin:0 auto;padding:0 var(--pad);position:relative;z-index:2}
+.sec{padding:0 0 112px}
+.sec > .wrap{border-top:1px solid var(--rail-c);padding-top:96px}
+.band.first > .wrap{border-top:0}
+.b-mint{background:var(--mint);--rail-c:rgba(15,74,74,.12)}
+.b-neutral{background:var(--neutral)}
+.b-dark{background:var(--dark);color:#F4F4F7;--rail-c:rgba(255,255,255,.08)}
+.b-green{background:var(--green);color:#fff;--rail-c:rgba(255,255,255,.14)}
+
+/* ---------- Titulares en dos tonos ---------- */
+.h2{font-weight:500;font-size:clamp(28px,3.1vw,40px);letter-spacing:-.022em;line-height:1.15;margin:0 0 56px;max-width:32ch}
+.h2 .s{color:var(--soft)}
+.b-dark .h2 .s{color:#8E90A0}
+.b-mint .h2 .s{color:#4F7C76}
+.h2 .n{color:var(--green);margin-right:.35em;font-variant-numeric:tabular-nums}
+.b-dark .h2 .n{color:var(--green-light)}
+
+/* ---------- Botones ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 18px;border-radius:8px;font:500 15px/1 var(--sans);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background-color .15s,border-color .15s}
+.btn-p{background:var(--green);color:#fff}
+.btn-p:hover{background:var(--green-h)}
+.btn-s{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-s:hover{border-color:#C9CCD2}
+.btn-w{background:#fff;color:var(--green-deep)}
+.link{color:var(--green);font-weight:500;text-decoration:none;border-bottom:1px solid rgba(24,102,102,.3);padding-bottom:1px}
+.link:hover{border-bottom-color:var(--green)}
+.b-dark .link,.b-green .link{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.tag{display:inline-block;font-size:11px;color:var(--muted);border:1px dashed #B9BCC4;border-radius:4px;padding:1px 6px}
+.b-dark .tag{color:#9EA1AE;border-color:#4A4C5A}
+
+/* ---------- Nav ---------- */
+header.nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:600;font-size:21px;letter-spacing:-.02em;text-decoration:none}
+.logo svg{width:auto;height:22px}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14.5px;color:var(--ink-2)}
+.nav ul a{text-decoration:none}
+.nav ul a:hover{color:var(--ink)}
+.nav .right{display:flex;align-items:center;gap:18px;font-size:14.5px}
+.nav .right a.in{text-decoration:none;color:var(--ink-2)}
+.nav .btn{height:38px;font-size:14px}
+
+/* ---------- Hero ---------- */
+.hero{padding:88px 0 0}
+.hero .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:center}
+.eyebrow{font-size:14px;font-weight:500;color:var(--green);margin:0 0 18px}
+h1{font-weight:500;font-size:clamp(40px,5.4vw,68px);line-height:1.02;letter-spacing:-.035em;margin:0 0 24px}
+.lead{font-size:18px;line-height:1.55;color:var(--ink-2);margin:0 0 32px;max-width:46ch}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.stage{position:relative;aspect-ratio:5/4;border-radius:10px;overflow:hidden;background:var(--mint)}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%}
+.note-card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(330px,78%);background:#fff;border-radius:10px;padding:20px 22px;box-shadow:0 1px 0 rgba(19,19,30,.05),0 14px 34px -14px rgba(19,19,30,.22)}
+.who{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted);margin-bottom:12px}
+.mk{width:22px;height:22px;border-radius:6px;background:var(--green);display:grid;place-items:center;flex:none}
+.note-card h3{font-size:16px;font-weight:600;margin:0 0 5px}
+.note-card p{font-size:13.5px;color:var(--ink-2);margin:0;line-height:1.45}
+.amt{font-size:32px;font-weight:500;letter-spacing:-.02em;margin:14px 0 0}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:3px 10px;border-radius:99px;background:var(--mint);color:var(--green-deep)}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.chip.run{background:var(--review-bg);color:var(--review)}
+.stage .tag{position:absolute;right:12px;bottom:10px;background:rgba(255,255,255,.7)}
+.logos{margin-top:72px;border-top:1px solid var(--rail);display:flex;align-items:center;height:96px}
+.logos .lbl{font-size:13px;color:var(--muted);flex:none;width:170px;line-height:1.35}
+.marq{overflow:hidden;flex:1}
+.marq ul{display:flex;gap:72px;list-style:none;margin:0;padding:0;width:max-content;animation:slide 40s linear infinite}
+.marq li{font-size:22px;font-weight:600;letter-spacing:-.01em;color:#5B5E69;white-space:nowrap}
+@keyframes slide{to{transform:translateX(calc(-50% - 36px))}}
+
+
+/* ---------- Hero: composición de producto ---------- */
+.hero-stage{aspect-ratio:auto;height:560px}
+.flow{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.flow .fl{fill:none;stroke:#186666;stroke-width:1.5;stroke-dasharray:4 4;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .6s}
+.hero-stage.s2 .fl:nth-child(1),.hero-stage.s3 .fl{opacity:.6}
+.hc{position:absolute;z-index:2;background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 1px 0 rgba(19,19,30,.05),0 14px 34px -16px rgba(19,19,30,.28);opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
+.hc.in{opacity:1;transform:none}
+.hc-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;font-size:14px}
+.hc-top span{font-size:12.5px;color:var(--muted)}
+.hr{display:flex;justify-content:space-between;gap:16px;font-size:13px;padding:6px 0;border-bottom:1px solid #F0F1F3}
+.hr:last-child{border-bottom:0}
+.hr .num{font-size:12.5px}
+.hr .x{box-shadow:inset 0 -2px 0 var(--uso,#633BF2)}
+.hr.tot{border-top:3px double var(--ink);border-bottom:0;margin-top:4px;padding-top:9px;font-weight:600;font-size:13.5px}
+.hr .ok{color:var(--green);font-weight:500;font-size:12.5px}
+.c-contract{left:5%;top:5%;width:55%}
+.c-invoice{left:42%;top:35%;width:52%}
+.c-paid{left:7%;top:58%;width:56%;padding:15px 18px}
+.c-paid h3{font-size:15px;font-weight:600;margin:0 0 4px}
+.c-paid p{font-size:13px;color:var(--ink-2);margin:0}
+.c-paid .amt{font-size:26px;margin-top:10px}
+.c-mrr{right:5%;top:7%;width:30%;padding:14px 16px}
+.c-mrr small{display:block;font-size:12px;color:var(--muted)}
+.c-mrr b{display:block;font-size:18px;font-weight:500;margin:3px 0 2px;letter-spacing:-.01em}
+.c-mrr .up{font-size:12.5px;color:var(--positive);font-weight:500}
+@media (max-width:980px){
+  .hero-stage{height:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+  .hero-stage .hc{position:relative;left:auto;right:auto;top:auto;width:100%}
+  .flow{display:none}
+  .stage .tag{position:static;align-self:flex-end}
+}
+@media (prefers-reduced-motion:reduce){.hc{opacity:1;transform:none;transition:none}.flow .fl{opacity:.6}}
+
+/* ---------- Tres capas ---------- */
+.layers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.layer{background:#fff;border-radius:10px;padding:24px 24px 26px;min-height:270px;display:flex;flex-direction:column}
+.layer > *{opacity:.45;transition:opacity .6s}
+.layer.on > *{opacity:1}
+.layer .hd{display:flex;align-items:baseline;gap:10px}
+.layer .hd b{font-size:13px;color:var(--green);font-weight:600}
+.layer h3{font-size:19px;font-weight:600;margin:0}
+.layer .what{font-size:14px;color:var(--muted);margin:4px 0 20px}
+.layer .body{margin-top:auto}
+.calc{width:100%;border-collapse:collapse;font-size:14px}
+.calc td{padding:6px 0}
+.calc td:last-child{text-align:right;font-family:var(--mono);font-size:13.5px}
+.calc tr.sub td{color:var(--muted);font-size:12.5px;padding-top:0;font-family:var(--sans)}
+.calc tr.tot td{border-top:3px double var(--ink);padding-top:10px;font-weight:600;font-size:16px}
+.calc .x{box-shadow:inset 0 -2px 0 var(--uso,#633BF2)}
+.ev{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.ev strong{display:block;font-size:14.5px;margin-bottom:3px}
+.ev span.c{font-size:13px;color:var(--ink-2);display:block;line-height:1.45;margin-bottom:10px}
+.mrr{font-size:13px;color:var(--muted)}
+.mrr b{display:block;font-size:26px;font-weight:500;color:var(--ink);letter-spacing:-.02em;margin:2px 0}
+.delta{font-size:13px;color:var(--positive);font-weight:500;min-height:20px}
+.layers-rail{height:36px;margin-top:16px;position:relative}
+.layers-rail svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.layers-foot{display:flex;justify-content:flex-end;margin-top:6px}
+
+/* ---------- Rieles (tabs verticales) ---------- */
+.split{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:48px;align-items:start}
+.vtabs{display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.vtab{all:unset;cursor:pointer;display:block;padding:18px 0 18px 22px;margin-left:-1px;border-left:2px solid transparent}
+.vtab b{display:block;font-size:17px;font-weight:600;margin-bottom:4px;color:var(--muted);transition:color .2s}
+.vtab span{display:block;font-size:14.5px;color:var(--muted);line-height:1.5}
+.vtab[aria-selected="true"]{border-left-color:var(--green)}
+.vtab[aria-selected="true"] b{color:var(--ink)}
+.vtab[aria-selected="true"] span{color:var(--ink-2)}
+.vtab:focus-visible{outline-offset:-2px}
+.panel-wrap{background:var(--neutral);border-radius:12px;padding:40px;min-height:420px;display:grid;place-items:center}
+.ui{background:#fff;border-radius:10px;width:100%;max-width:470px;padding:24px 26px;box-shadow:0 1px 0 rgba(19,19,30,.04),0 18px 40px -22px rgba(19,19,30,.25)}
+.ui .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;gap:12px}
+.ui .top b{font-size:15px}
+.ui .top span{font-size:12.5px;color:var(--muted)}
+.ui .rows{width:100%;border-collapse:collapse;font-size:14px}
+.ui .rows td{padding:8px 0;border-bottom:1px solid #F0F1F3;vertical-align:top}
+.ui .rows td:last-child{text-align:right;font-family:var(--mono);font-size:13.5px;white-space:nowrap;padding-left:16px}
+.ui .rows small{display:block;color:var(--muted);font-size:12px}
+.ui .rows tr.tot td{border-bottom:0;border-top:3px double var(--ink);font-weight:600;font-size:16px;padding-top:12px}
+.ui .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.ui .chip.g{background:#F0F1F3;color:var(--ink-2)}
+.ui .chip.g::before{display:none}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid #F0F1F3;font-size:14px}
+.steps li:last-child{border-bottom:0}
+.steps .dot{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--green);margin-top:3px}
+.steps li.ok .dot{background:var(--green)}
+.steps small{display:block;color:var(--muted);font-size:12.5px}
+.split-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:4px 0 14px}
+.ent{border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.ent small{display:block;font-size:12px;color:var(--muted)}
+.ent b{display:block;font-size:14px;margin:2px 0 6px}
+.ent .num{font-size:16px}
+.glosa{font-size:13px;color:var(--ink-2);background:#F7F8F9;border-radius:6px;padding:10px 12px}
+.glosa small{display:block;color:var(--muted);font-size:11.5px;margin-bottom:2px}
+.bal{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding-top:12px;border-top:3px double var(--ink);font-weight:600}
+.bal .num{font-size:16px}
+
+/* ---------- Agentes ---------- */
+.agents{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;position:relative}
+.agents-bg{position:absolute;inset:-40px 0 -40px 0;pointer-events:none;z-index:0;opacity:.9}
+.agents-bg canvas{width:100%;height:100%}
+.pane{position:relative;z-index:1;background:#1C1C29;border:1px solid #2A2B39;border-radius:12px;padding:22px}
+.pane h3{font-size:14px;font-weight:500;color:#A6A8B6;margin:0 0 14px;display:flex;justify-content:space-between}
+.feed{list-style:none;margin:0;padding:0;min-height:320px}
+.feed li{display:grid;grid-template-columns:52px 1fr auto;gap:12px;padding:12px 0;border-bottom:1px solid #2A2B39;font-size:14px;color:#E6E7EE;opacity:0;transform:translateY(4px);transition:opacity .45s,transform .45s}
+.feed li.in{opacity:1;transform:none}
+.feed li:last-child{border-bottom:0}
+.feed time{font-family:var(--mono);font-size:12.5px;color:#7F8192;padding-top:1px}
+.b-dark .chip{background:rgba(114,221,170,.12);color:var(--green-light)}
+.b-dark .chip.run{background:rgba(232,176,92,.14);color:#E8B05C}
+.inbox{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.inbox li{border:1px solid #3A3423;background:rgba(232,176,92,.06);border-radius:10px;padding:14px 16px}
+.inbox b{display:block;font-size:14px;color:#F4F4F7;margin-bottom:4px}
+.inbox span{display:block;font-size:13px;color:#B6B8C4;line-height:1.45}
+.inbox .acts{display:flex;gap:8px;margin-top:12px}
+.inbox .acts span{display:inline-block;font-size:12.5px;font-weight:500;border-radius:6px;padding:5px 10px;background:#2A2B39;color:#E6E7EE}
+.inbox .acts span.p{background:var(--green-light);color:var(--green-deep)}
+.principle{position:relative;z-index:1;margin:28px 0 0;font-size:15px;color:#C9CAD4}
+.principle b{color:#fff;font-weight:600}
+
+/* ---------- Inteligencia ---------- */
+.htabs{display:flex;gap:28px;border-bottom:1px solid var(--line);margin-bottom:0;overflow-x:auto}
+.htab{all:unset;cursor:pointer;padding:14px 0;font-size:15px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.htab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--green)}
+.chartbox{background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;padding:32px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;min-height:380px}
+.kpi small{display:block;font-size:13px;color:var(--muted)}
+.kpi b{display:block;font-size:44px;font-weight:500;letter-spacing:-.03em;line-height:1.05;margin:6px 0}
+.kpi p{font-size:14px;color:var(--ink-2);margin:0;line-height:1.5}
+.kpi .k2{margin-top:26px}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:12px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.also{margin-top:20px;font-size:14px;color:var(--muted)}
+
+/* ---------- Bento productos ---------- */
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px;display:flex;flex-direction:column;text-decoration:none;min-height:300px;transition:border-color .15s}
+.card:hover{border-color:#BFC6C6}
+.card.w2{grid-column:span 2}
+.card .lay{font-size:12.5px;color:var(--green);font-weight:500}
+.card h3{font-size:20px;font-weight:600;letter-spacing:-.01em;margin:4px 0 6px}
+.card p{font-size:14.5px;color:var(--ink-2);margin:0 0 22px;max-width:40ch}
+.mini{margin-top:auto;background:var(--neutral);border-radius:8px;padding:16px;font-size:13px}
+.mini .r{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #EAECEF}
+.mini .r:last-child{border-bottom:0}
+.mini .r .num{font-size:12.5px}
+.mini .r.t{border-top:3px double var(--ink);border-bottom:0;font-weight:600;margin-top:4px;padding-top:8px}
+.spark{display:flex;align-items:flex-end;gap:5px;height:56px}
+.spark i{flex:1;background:var(--green);border-radius:2px 2px 0 0;opacity:.85}
+.card .go{margin-top:18px;font-size:14px;color:var(--green);font-weight:500}
+
+/* ---------- Cobra como vendes ---------- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.path{background:var(--mint);border-radius:12px;padding:32px;display:flex;flex-direction:column;min-height:260px}
+.path h3{font-size:24px;font-weight:500;letter-spacing:-.02em;margin:0 0 10px}
+.path p{font-size:15px;color:var(--ink-2);margin:0 0 28px;max-width:42ch}
+.path .act{margin-top:auto;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.agency{margin:28px 0 0;font-size:15px;color:var(--ink-2)}
+
+/* ---------- Caso TGP ---------- */
+.case{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.2fr);gap:56px;align-items:start}
+.case .co{font-size:14px;color:var(--muted);margin:0 0 26px;line-height:1.5}
+.case .co b{display:block;font-size:22px;letter-spacing:.04em;color:var(--ink);font-weight:700;margin-bottom:4px}
+.big{font-size:clamp(64px,7.5vw,96px);font-weight:500;letter-spacing:-.04em;line-height:.9;margin:0}
+.big-l{font-size:19px;font-weight:500;margin:12px 0 4px}
+.case .sub{font-size:15px;color:var(--ink-2);margin:0}
+.case .k{font-size:14px;color:var(--muted);margin:0 0 20px}
+.case .k b{color:var(--ink);font-weight:600}
+.dd{margin-bottom:20px}
+.dd .l{font-size:13px;color:var(--muted);margin-bottom:4px}
+.dd .l.on{color:var(--green);font-weight:500}
+.dd .d{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.dd .d b{font-size:42px;font-weight:500;letter-spacing:-.03em;line-height:1}
+.dd.off .d b{color:#8C8F99}
+.dd .d small{font-size:15px;color:var(--muted)}
+.bars{display:flex;gap:6px}
+.bars i{display:block;width:32px;height:8px;border-radius:3px;background:#D9DCE1}
+.bars.on i{background:var(--green)}
+blockquote{margin:0;font-size:20px;line-height:1.45;letter-spacing:-.01em;font-weight:500}
+.by{margin-top:20px;font-size:14px}
+.by span{display:block;color:var(--muted)}
+
+/* ---------- LatAm ---------- */
+.lat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 48px}
+.lat h3{font-size:17px;font-weight:600;margin:0 0 6px;color:#fff}
+.lat p{font-size:15px;color:#B6B8C4;margin:0;line-height:1.5}
+
+/* ---------- Integraciones ---------- */
+.ints .marq ul{gap:80px;animation-duration:60s}
+.ints .marq li{font-size:24px;font-weight:500;color:var(--ink-2)}
+.ints .more{display:flex;gap:40px;flex-wrap:wrap;margin-top:48px;font-size:15px;color:var(--muted)}
+
+/* ---------- CTA final ---------- */
+.final{padding:0}
+.final .wrap{border-top:0}
+.final-in{position:relative;min-height:420px;display:flex;align-items:center;overflow:hidden}
+.final canvas{position:absolute;inset:0;width:100%;height:100%}
+.final .txt{position:relative;z-index:1;max-width:520px;padding:96px 0}
+.final h2{font-size:clamp(34px,4.2vw,56px);font-weight:500;letter-spacing:-.03em;line-height:1.02;margin:0 0 28px}
+.final .ctas{align-items:center;gap:24px}
+
+/* ---------- Footer ---------- */
+footer{background:var(--dark);color:#B6B8C4;font-size:14px;--rail-c:rgba(255,255,255,.06)}
+footer .cols{display:grid;grid-template-columns:1.3fr repeat(4,1fr);gap:32px;padding:72px 0 56px}
+footer h4{color:#fff;font-size:13.5px;font-weight:600;margin:0 0 14px}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+footer a{text-decoration:none}
+footer a:hover{color:#fff}
+footer .legal{display:flex;justify-content:space-between;border-top:1px solid #2A2B39;padding:22px 0 32px;font-size:13px}
+footer .legal span{display:flex;gap:20px}
+
+/* ---------- Responsive ---------- */
+@media (max-width:980px){
+  .nav ul{display:none}
+  .hero .grid,.split,.agents,.case,.two{grid-template-columns:1fr}
+  .layers,.lat{grid-template-columns:1fr}
+  .bento{grid-template-columns:1fr}
+  .card.w2{grid-column:auto}
+  .chartbox{grid-template-columns:1fr;padding:24px}
+  .layers-rail{display:none}
+  .sec{padding:0 0 80px}
+  .sec > .wrap{padding-top:72px}
+  .logos{flex-direction:column;align-items:flex-start;height:auto;padding:24px 0;gap:14px}
+  .logos .lbl{width:auto}
+  .marq{width:100%}
+  footer .cols{grid-template-columns:1fr 1fr}
+  .panel-wrap{padding:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .marq ul{animation:none;flex-wrap:wrap;width:auto;gap:20px 40px}
+  .marq li.dup{display:none}
+  .layer,.feed li{transition:none}
+}
+
+/* ================= v2: UI estilo producto real ================= */
+:root{--mono:var(--sans);--uso:#633BF2;--uso-soft:#E6DCEF;--uso-2:#E3C0F2}
+.num{font-family:var(--sans);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.chip{border-radius:4px;padding:2px 7px;font-size:12px;font-weight:500;gap:4px;background:#E3F1EC;color:#0F4A4A}
+.chip::before{display:none}
+.chip.run,.chip.warn{background:#FBF1DF;color:#8A5A00}
+.b-dark .chip.warn{background:rgba(232,176,92,.14);color:#E8B05C}
+/* Hero: ventana de producto */
+.hero-stage{height:560px}
+.win{left:6%;top:7%;width:88%;padding:0;overflow:hidden;border-radius:10px}
+.win-bar{height:30px;background:#F7F8F9;border-bottom:1px solid #ECEEF1;display:flex;align-items:center;gap:6px;padding:0 12px}
+.win-bar i{width:8px;height:8px;border-radius:50%;background:#DADDE2}
+.win-bar .url{margin-left:12px;font-size:11px;color:#8B8D97;background:#fff;border:1px solid #ECEEF1;border-radius:5px;padding:2px 10px}
+.win-body{display:grid;grid-template-columns:100px 1fr;min-height:250px}
+.side{border-right:1px solid #ECEEF1;padding:14px 12px;display:flex;flex-direction:column;gap:2px;font-size:12px;color:#6E6E7A}
+.side-logo{display:flex;align-items:center;gap:6px;color:var(--ink);font-size:13px;margin-bottom:10px}
+.side-logo svg{width:14px;height:14px}
+.side span{padding:5px 8px;border-radius:5px}
+.side span.on{background:#EEF6F3;color:var(--green-deep);font-weight:500}
+.main{padding:14px 18px}
+.m-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.m-head small{display:block;font-size:11px;color:#8B8D97}
+.m-head b{font-size:16px}
+.meter{margin-bottom:12px}
+.meter .mt{display:flex;justify-content:space-between;font-size:11.5px;color:#6E6E7A;margin-bottom:5px}
+.bar{height:6px;background:#ECEEF1;border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:3px}
+.bar.big{height:10px;border-radius:5px;margin:10px 0 18px}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{text-align:left;font-weight:500;color:#8B8D97;font-size:11px;padding:6px 0;border-bottom:1px solid #ECEEF1}
+.tbl td{padding:7px 0;border-bottom:1px solid #F3F4F6}
+.tbl tr:last-child td{border-bottom:0}
+.inv{left:3%;top:52%;width:44%;padding:16px 18px}
+.inv-h{display:flex;justify-content:space-between;font-size:12px;color:#6E6E7A}
+.inv-total{font-size:30px;font-weight:500;letter-spacing:-.02em;margin:6px 0 10px}
+.toast{right:3%;top:62%;width:auto;display:flex;align-items:center;gap:10px;padding:12px 16px}
+.toast b{display:block;font-size:13.5px}
+.toast small{display:block;font-size:12px;color:#6E6E7A}
+/* Rieles */
+.pw-tag{position:absolute;right:14px;bottom:12px}
+.panel-wrap{position:relative}
+.ui-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:14px}
+.ui-h span{color:#6E6E7A;font-size:13px}
+.plan-h{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid #F0F1F3;margin-bottom:6px}
+.plan-h .pic{width:34px;height:34px;border-radius:8px;background:#EEF6F3;color:var(--green-deep);display:grid;place-items:center;font-weight:600}
+.plan-h b{display:block;font-size:15px}
+.plan-h small{display:block;font-size:12.5px;color:#6E6E7A}
+.plan-h .price{margin-left:auto;font-size:18px;font-weight:500}
+.plan-h .price small{display:inline;font-size:12px;color:#8B8D97;margin-left:2px}
+.pl{padding:12px 0;border-bottom:1px solid #F0F1F3}
+.pl-t{display:flex;justify-content:space-between;font-size:13.5px}
+.pl-t .num{color:#4A4A57}
+.tiers{position:relative;height:8px;background:#ECEEF1;border-radius:4px;margin-top:10px;display:flex;overflow:hidden}
+.tiers .t1{background:#7FB3AC}.tiers .t2{background:var(--green)}
+.tl{display:flex;justify-content:space-between;font-size:11.5px;color:#8B8D97;margin-top:5px}
+.sum{display:flex;justify-content:space-between;border-top:3px double var(--ink);margin-top:12px;padding-top:12px;font-weight:600}
+.tline{list-style:none;margin:0;padding:0}
+.tline li{display:grid;grid-template-columns:24px 1fr;gap:12px;position:relative;padding-bottom:18px}
+.tline li:not(:last-child)::after{content:"";position:absolute;left:11px;top:24px;bottom:2px;width:1.5px;background:#DCE9E6}
+.tline .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff}
+.tline li.now .ic{background:#fff;border:1.5px solid var(--green)}
+.tline b{display:block;font-size:14px;font-weight:500}
+.tline small{display:block;font-size:12.5px;color:#6E6E7A}
+.tline.compact li{padding-bottom:12px}
+.splitbar{display:flex;height:40px;border-radius:6px;overflow:hidden;gap:3px}
+.splitbar i{display:block;background:var(--green)}
+.splitbar i+i{background:#7FB3AC}
+.splitlg{display:grid;grid-template-columns:3fr 2fr;gap:3px;margin:10px 0 16px}
+.splitlg small{display:block;font-size:12px;color:#6E6E7A}
+.splitlg b{font-size:16px;font-weight:500;margin-right:6px}
+.splitlg span{font-size:12px;color:#8B8D97}
+.paid{display:flex;align-items:baseline;gap:8px}
+.paid .num{font-size:30px;font-weight:500;letter-spacing:-.02em}
+.paid small{color:#6E6E7A;font-size:13px}
+/* Agentes */
+.kpis{display:flex;gap:40px;align-items:flex-end;margin-bottom:18px}
+.kpis small{display:block;font-size:12.5px;color:#A6A8B6}
+.kpis b{display:block;font-size:40px;font-weight:500;letter-spacing:-.03em;color:#fff;line-height:1.1}
+.kpis b.warn{color:#E8B05C}
+.kpis .tag{margin-left:auto}
+.feed{min-height:0}
+.feed li{grid-template-columns:28px 1fr auto;align-items:center;padding:11px 0}
+.fi{width:28px;height:28px;border-radius:7px;background:#262736;color:#9FD9C1;display:grid;place-items:center}
+.fi svg{width:15px;height:15px}
+.review{display:flex;flex-direction:column}
+.rv-l{font-size:12.5px;color:#E8B05C;margin-bottom:8px}
+.rv-t{font-size:17px;font-weight:600;color:#fff;margin-bottom:18px}
+.rv-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.rv-cmp div{background:#14141F;border:1px solid #2A2B39;border-radius:8px;padding:12px}
+.rv-cmp small{display:block;font-size:12px;color:#8E90A0}
+.rv-cmp .num{font-size:20px;color:#fff}
+.rv-cmp div:first-child .num{color:#E8B05C}
+.rv-a{margin-top:auto;display:flex;gap:8px}
+.rv-a span{font-size:13px;font-weight:500;border-radius:6px;padding:8px 12px}
+.b-p{background:var(--green-light);color:var(--green-deep)}
+.b-s{background:#2A2B39;color:#E6E7EE}
+.principle{color:#A6A8B6}
+/* Bento v2 */
+.card p{margin-bottom:20px}
+.mini{background:#fff;border:1px solid #EEF0F2;padding:16px 18px}
+.mrow{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.mrow b{font-size:22px;font-weight:500;letter-spacing:-.02em}
+.mrow small{font-size:12.5px;color:#6E6E7A}
+.mrow .up{margin-left:auto;font-size:12.5px;color:var(--positive);font-weight:500}
+.stack{display:flex;height:12px;border-radius:3px;overflow:hidden;gap:2px}
+.stack i{display:block}
+.lg{display:flex;gap:16px;margin-top:10px;font-size:12px;color:#6E6E7A}
+.lg i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px}
+.hist{display:flex;align-items:flex-end;gap:3px;height:64px}
+.hist i{flex:1;background:var(--green);border-radius:1px}
+.nodes{display:flex;align-items:center}
+.nodes span{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex:none}
+.nodes span.ok{background:var(--green);color:#fff}
+.nodes span.now{border:1.5px solid var(--green);background:#fff}
+.nodes i{flex:1;height:1.5px;background:var(--green)}
+.nodes i.off{background:#DCE9E6}
+.nl{display:flex;justify-content:space-between;font-size:11.5px;color:#6E6E7A;margin-top:8px}
+.icons{display:flex;gap:8px}
+.icons span{width:32px;height:32px;border-radius:8px;background:#EEF6F3;color:var(--green-deep);display:grid;place-items:center}
+.icons svg{width:16px;height:16px}
+.area{width:100%;height:64px;display:block}
+.card .go{display:none}
+/* LatAm v2 */
+.lat2{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 56px}
+.lat2 span{font-size:clamp(18px,1.8vw,22px);font-weight:500;color:#F4F4F7;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.1);letter-spacing:-.01em}
+/* Manifiesto */
+.manifesto{padding:150px 0;text-align:center;background:#fff}
+.manifesto p{margin:0;font-size:clamp(34px,4.6vw,60px);font-weight:500;letter-spacing:-.035em;line-height:1.08}
+@media (max-width:980px){
+  .win-body{grid-template-columns:1fr}
+  .side{display:none}
+  .inv,.toast{position:relative}
+  .lat2{grid-template-columns:1fr}
+  .manifesto{padding:96px 0}
+  .kpis{gap:24px}
+}
+
+
+/* v3: acento de uso + hero con consumo */
+.hero-stage{height:600px}
+.win{left:4%;top:5%;width:62%}
+.tbl td:last-child,.tbl th:last-child{text-align:right}
+.win .tbl tr:nth-child(3){display:none}
+.usage{right:3%;top:34%;width:36%;padding:16px 18px}
+.u-plan{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.u-ic{width:30px;height:30px;border-radius:8px;background:var(--uso-soft);color:var(--uso);display:grid;place-items:center}
+.u-ic svg{width:16px;height:16px}
+.u-plan b{display:block;font-size:13.5px}
+.u-plan small{display:block;font-size:11.5px;color:#6E6E7A}
+.u-meter .mt{display:flex;justify-content:space-between;font-size:11.5px;color:#6E6E7A;margin-bottom:5px}
+.u-meter .mt .num{color:var(--ink);font-weight:500}
+.bar.uso i{background:var(--uso)}
+.u-hist{display:flex;align-items:flex-end;gap:2px;height:84px;margin-top:14px}
+.u-hist i{flex:1;background:var(--uso);border-radius:1px;opacity:.9}
+.u-big{display:flex;align-items:baseline;gap:6px;margin-bottom:8px;white-space:nowrap}
+.u-big b{font-size:22px;font-weight:500;letter-spacing:-.02em}
+.u-big small{font-size:11.5px;color:#6E6E7A}
+.u-plan small,.u-plan b{white-space:nowrap}
+.u-l{font-size:11px;color:#8B8D97;margin-top:6px}
+.inv{left:3%;top:55%;width:42%}
+.toast{right:5%;top:84%}
+.meter .bar i{background:var(--uso)}
+.tiers .t2{background:var(--uso)} .tiers .t1{background:var(--uso-2)}
+.hist i{background:var(--uso)}
+@media (max-width:980px){.usage{position:relative;right:auto;top:auto;width:100%}}
+
+
+/* Inteligencia: alto fijo, sin scroll en tabs */
+.htabs{overflow:visible;flex-wrap:wrap;row-gap:0}
+.chartbox{height:420px;min-height:0;align-items:start}
+.chart{height:100%;display:flex;flex-direction:column}
+.chart svg{flex:1;width:100%;height:100%;min-height:0}
+@media (max-width:980px){
+  .htabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .htabs::-webkit-scrollbar{display:none}
+  .chartbox{height:auto}
+  .chart svg{height:240px;flex:none}
+}
+
+/* Ajustes v2.1 */
+.lat2 span{display:flex;align-items:center;gap:14px}
+.lat2 svg{width:22px;height:22px;flex:none;fill:none;stroke:#72DDAA;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.final{padding:0 0 112px;background:#fff}
+.final > .wrap{border-top:1px solid var(--rail-c);padding-top:96px}
+.final-card{background:var(--green);color:#fff;border-radius:12px;padding:0 56px}
+.final-card .link{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+@media (max-width:980px){.final-card{padding:0 24px}.final{padding-bottom:80px}.final > .wrap{padding-top:72px}}
+
+
+.side-logo svg{width:auto!important;height:13px!important}
+
+/* Banda de cifras */
+.stat-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px}
+.stat-row b{display:block;font-size:clamp(48px,6vw,80px);font-weight:500;letter-spacing:-.04em;line-height:1;color:var(--green)}
+.stat-row p{margin:14px 0 0;font-size:16px;color:var(--ink-2);max-width:26ch;line-height:1.5}
+@media (max-width:980px){.stat-row{grid-template-columns:1fr;gap:32px}}
+
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Relvo, inicio"><svg viewBox="0 0 1032 263" height="22" aria-hidden="true" style="display:block"><path fill="currentColor" fill-rule="evenodd" d="M55.8,261.9C49.8,260.2 45.5,257.3 42.3,252.8C38.6,247.5 37.0,242.3 37.0,235.0C36.9,213.8 52.7,190.1 73.6,179.8C88.4,172.6 102.3,173.4 111.0,182.1C113.8,184.8 116.2,188.9 117.4,193.0C121.3,205.7 116.4,224.2 105.4,238.5C99.4,246.2 88.7,255.2 82.0,258.0C81.3,258.3 80.1,258.9 79.3,259.2C71.8,262.6 62.1,263.7 55.8,261.9ZM194.5,262.5C194.1,262.2 193.2,262.0 192.5,262.0C189.1,262.0 179.3,257.9 174.0,254.3C162.5,246.5 152.8,234.7 147.8,222.2C143.9,212.7 142.8,201.4 145.0,193.6C147.6,184.3 153.7,178.1 162.7,175.7C166.5,174.7 173.8,174.8 178.9,176.0C184.1,177.3 193.2,181.6 197.6,184.9C206.2,191.4 214.4,200.8 218.7,209.3C223.8,219.5 225.2,225.1 225.2,234.8C225.2,240.6 225.0,242.3 224.1,245.0C221.1,254.0 215.4,259.6 206.4,262.0C202.3,263.1 195.8,263.3 194.5,262.5ZM544.2,226.4C531.5,224.2 523.0,221.0 514.3,215.2C497.5,204.1 487.5,186.7 483.4,161.8C482.5,156.3 482.5,132.5 483.4,127.8C486.1,113.5 487.3,109.7 491.8,100.5C503.5,76.6 527.3,63.0 557.2,63.0C562.1,63.0 572.0,64.0 575.5,64.8C580.3,65.9 581.6,66.2 584.2,67.1C589.8,68.9 596.0,72.0 600.7,75.1C604.7,77.9 612.4,85.3 615.5,89.5C626.1,103.9 630.6,123.6 628.3,146.0L627.8,151.8L571.0,152.0L514.2,152.2L514.1,156.2C513.8,163.3 515.2,172.1 517.3,177.5C522.1,189.7 531.6,197.6 545.8,201.3C550.1,202.5 564.6,202.6 569.0,201.6C583.3,198.1 593.0,190.4 597.8,178.8L598.8,176.2L613.7,176.1C622.0,176.0 628.8,176.2 629.0,176.4C629.8,177.2 626.4,187.4 623.3,193.0C617.0,204.8 605.6,214.9 591.8,220.7C585.2,223.5 580.5,224.8 571.5,226.3C566.3,227.1 548.6,227.2 544.2,226.4ZM941.2,226.4C935.8,225.5 932.7,224.9 931.2,224.5C919.5,221.1 909.2,215.4 901.7,208.2C895.8,202.5 891.3,196.2 887.5,188.6C883.6,180.6 881.7,174.3 879.4,161.8C878.5,156.9 878.5,134.1 879.4,128.5C882.5,109.0 888.9,95.6 900.7,83.7C906.6,77.8 911.1,74.5 917.9,71.1C921.9,69.1 928.7,66.6 933.0,65.6C934.2,65.3 935.8,64.9 936.5,64.8C937.2,64.6 940.5,64.1 943.8,63.7C962.7,61.4 981.7,64.9 995.6,73.2C1005.0,78.8 1014.4,88.0 1019.9,97.0C1024.9,105.3 1028.4,114.9 1030.3,125.5C1032.2,136.5 1032.2,154.1 1030.2,165.0C1025.7,190.3 1012.3,209.4 992.4,219.2C984.3,223.1 979.4,224.7 969.5,226.3C964.7,227.1 945.4,227.2 941.2,226.4ZM386.2,224.0C386.1,223.9 386.0,188.3 386.0,144.9L386.0,66.0L427.0,66.0L468.0,66.0L468.0,79.0L468.0,92.0L442.5,92.0L417.0,92.0L417.0,158.0C417.0,194.3 416.8,224.0 416.6,224.0C402.1,224.2 386.4,224.2 386.2,224.0ZM665.0,224.1C664.7,224.0 664.5,186.6 664.5,113.5L664.5,3.0L679.8,3.0L695.0,3.0L694.9,113.5L694.8,224.0L680.1,224.1C672.1,224.2 665.3,224.2 665.0,224.1ZM776.5,224.0C776.1,223.7 774.8,220.3 772.5,213.8C771.6,211.3 770.5,208.1 770.0,206.8C769.5,205.4 768.4,202.2 767.5,199.8C766.6,197.3 765.5,194.1 765.0,192.8C764.5,191.4 763.4,188.2 762.5,185.8C761.6,183.3 760.5,180.1 760.0,178.8C759.5,177.4 758.4,174.2 757.5,171.8C756.6,169.3 755.5,166.1 755.0,164.8C754.5,163.4 753.4,160.2 752.5,157.8C750.8,153.0 749.6,149.7 748.2,146.0C747.8,144.8 747.0,142.5 746.5,141.0C746.0,139.5 744.9,136.3 744.0,134.0C743.1,131.7 742.0,128.5 741.5,127.0C741.0,125.5 739.9,122.3 739.0,120.0C738.1,117.7 737.0,114.5 736.5,113.0C736.0,111.5 734.9,108.3 734.0,106.0C732.3,101.5 729.7,94.1 729.0,92.0C728.8,91.3 727.6,88.2 726.5,85.0C725.3,81.8 724.2,78.7 724.0,78.0C723.8,77.3 722.8,74.5 721.8,71.8C720.8,69.1 720.0,66.7 720.0,66.4C720.0,66.2 727.4,66.0 736.9,66.0L753.9,66.0L754.4,67.5C755.4,70.0 755.8,71.4 758.5,80.0C759.9,84.5 761.5,89.5 762.0,91.0C762.5,92.5 764.1,97.5 765.5,102.0C766.9,106.5 768.5,111.5 769.0,113.0C769.5,114.5 771.1,119.5 772.5,124.0C773.9,128.5 775.5,133.5 776.0,135.0C777.4,139.1 779.8,146.8 781.0,151.0C781.6,153.1 782.3,155.3 782.5,156.0C782.7,156.7 783.6,159.6 784.5,162.4C785.9,167.3 788.1,174.5 790.0,180.8C794.0,193.9 794.1,194.0 795.0,194.0C795.6,194.0 796.0,193.3 796.5,191.9C796.8,190.7 797.3,189.2 797.5,188.5C797.7,187.8 798.4,185.6 799.0,183.5C800.2,179.6 800.9,177.3 803.5,168.5C806.0,160.1 806.8,157.5 808.0,153.5C809.5,148.5 812.9,137.4 814.0,134.0C814.5,132.5 815.8,128.2 817.0,124.5C818.2,120.8 819.5,116.5 820.0,115.0C821.2,111.4 824.3,101.5 827.0,93.0C828.1,89.3 829.5,85.0 830.0,83.5C830.5,82.0 832.0,77.4 833.2,73.4L835.6,66.0L852.2,66.0C861.3,66.0 869.0,66.1 869.1,66.3C869.3,66.4 868.5,69.1 867.4,72.2C866.3,75.2 865.0,79.0 864.5,80.5C864.0,82.0 862.4,86.5 861.0,90.5C856.3,103.9 855.4,106.2 854.5,109.0C854.0,110.5 852.6,114.3 851.5,117.5C850.4,120.7 849.0,124.5 848.5,126.0C848.0,127.5 846.6,131.3 845.5,134.5C844.4,137.7 843.0,141.5 842.5,143.0C842.0,144.5 840.4,149.0 839.0,153.0C837.6,157.0 836.0,161.5 835.5,163.0C835.0,164.5 833.6,168.3 832.5,171.5C831.4,174.7 830.0,178.5 829.5,180.0C829.0,181.5 827.4,186.0 826.0,190.0C824.6,194.0 823.2,197.8 823.0,198.5C822.8,199.2 821.4,203.0 820.0,207.0C818.6,211.0 817.0,215.5 816.5,217.0C815.2,221.1 813.9,224.0 813.6,224.0C804.7,224.2 776.8,224.2 776.5,224.0ZM966.9,200.2C981.1,196.9 991.5,188.7 996.4,176.8C999.5,169.2 1000.0,164.6 1000.0,145.7C1000.0,129.3 999.6,124.7 997.7,118.5C994.5,108.0 986.5,98.6 976.5,93.9C966.8,89.3 954.6,88.0 943.2,90.6C929.3,93.6 918.5,102.6 913.5,115.0C910.5,122.4 910.0,127.0 910.0,145.8C910.0,167.0 910.6,170.8 915.0,179.8C919.9,189.6 930.2,197.2 942.4,200.1C948.9,201.6 960.6,201.6 966.9,200.2ZM45.8,165.5C34.9,163.6 28.9,161.3 21.0,156.0C10.8,149.1 3.0,138.2 0.9,127.8C0.1,123.8 -0.1,116.5 0.5,114.2C2.1,108.4 3.3,105.4 5.0,102.5C12.2,90.2 26.2,83.0 42.8,83.0C66.5,83.0 87.6,97.7 94.0,118.5C95.5,123.3 95.6,133.0 94.3,137.7C91.3,148.7 83.0,157.7 71.6,162.3C63.8,165.5 53.2,166.8 45.8,165.5ZM186.2,148.2C175.4,146.5 168.3,142.2 166.0,136.1C160.1,120.5 185.4,100.5 218.4,94.7C224.5,93.6 238.3,93.5 243.0,94.4C254.3,96.8 260.9,101.5 262.5,108.3C264.6,116.9 256.4,128.0 242.0,136.4C225.3,146.0 202.4,150.9 186.2,148.2ZM597.2,124.0C597.2,118.1 596.7,115.4 594.9,110.5C591.4,101.3 583.1,93.7 572.8,90.2C563.6,87.2 550.1,87.2 540.6,90.3C535.1,92.1 528.0,96.3 524.7,99.7C520.9,103.8 517.9,108.8 516.1,114.3C515.0,117.7 513.7,127.9 514.2,129.2C514.4,129.9 517.9,130.0 555.9,129.9L597.2,129.8L597.2,124.0ZM119.5,94.8C111.9,92.8 106.4,90.0 101.2,85.7C91.4,77.5 85.8,67.9 83.7,55.5C82.5,48.0 83.1,40.5 85.7,32.8C91.2,16.4 105.2,4.4 122.7,0.9C126.4,0.2 136.2,0.2 140.0,0.9C146.6,2.2 152.4,4.6 158.2,8.5C168.5,15.4 175.6,26.1 178.5,39.0C179.3,42.6 179.3,54.0 178.5,57.5C174.1,77.1 160.0,91.2 141.0,95.3C135.7,96.4 124.7,96.2 119.5,94.8Z"/></svg></a>
+    <nav aria-label="Principal"><ul><li><a href="#producto">Producto</a></li><li><a href="#soluciones">Soluciones</a></li><li><a href="#clientes">Clientes</a></li><li><a href="#">Recursos</a></li><li><a href="#">Precios</a></li></ul></nav>
+    <div class="right"><a class="in" href="#">Ingresar</a><a class="btn btn-p" href="#">Agendar demo</a></div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="band first hero" aria-labelledby="h1">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="eyebrow">Revenue Engine para SaaS e IA</p>
+        <h1 id="h1">Tu pricing, convertido en ingresos. Exacto y sin trabajo manual.</h1>
+        <p class="lead">Plan fijo, seats, uso o resultados, con tarjeta o con contrato. Relvo calcula, factura, cobra y concilia cada peso en un solo sistema.</p>
+        <div class="ctas"><a class="btn btn-p" href="#">Agendar demo</a><a class="btn btn-s" href="#capas">Ver cómo funciona</a></div>
+      </div>
+      <div class="stage hero-stage" data-tex="orbits">
+        <canvas aria-hidden="true"></canvas>
+        <div class="hc win" data-step="0">
+          <div class="win-bar"><i></i><i></i><i></i><span class="url">app.getrelvo.ai/contratos/nimbo-ai</span></div>
+          <div class="win-body">
+            <aside class="side"><b class="side-logo"><svg viewBox="0 0 1032 263" height="14" aria-hidden="true" style="display:block"><path fill="currentColor" fill-rule="evenodd" d="M55.8,261.9C49.8,260.2 45.5,257.3 42.3,252.8C38.6,247.5 37.0,242.3 37.0,235.0C36.9,213.8 52.7,190.1 73.6,179.8C88.4,172.6 102.3,173.4 111.0,182.1C113.8,184.8 116.2,188.9 117.4,193.0C121.3,205.7 116.4,224.2 105.4,238.5C99.4,246.2 88.7,255.2 82.0,258.0C81.3,258.3 80.1,258.9 79.3,259.2C71.8,262.6 62.1,263.7 55.8,261.9ZM194.5,262.5C194.1,262.2 193.2,262.0 192.5,262.0C189.1,262.0 179.3,257.9 174.0,254.3C162.5,246.5 152.8,234.7 147.8,222.2C143.9,212.7 142.8,201.4 145.0,193.6C147.6,184.3 153.7,178.1 162.7,175.7C166.5,174.7 173.8,174.8 178.9,176.0C184.1,177.3 193.2,181.6 197.6,184.9C206.2,191.4 214.4,200.8 218.7,209.3C223.8,219.5 225.2,225.1 225.2,234.8C225.2,240.6 225.0,242.3 224.1,245.0C221.1,254.0 215.4,259.6 206.4,262.0C202.3,263.1 195.8,263.3 194.5,262.5ZM544.2,226.4C531.5,224.2 523.0,221.0 514.3,215.2C497.5,204.1 487.5,186.7 483.4,161.8C482.5,156.3 482.5,132.5 483.4,127.8C486.1,113.5 487.3,109.7 491.8,100.5C503.5,76.6 527.3,63.0 557.2,63.0C562.1,63.0 572.0,64.0 575.5,64.8C580.3,65.9 581.6,66.2 584.2,67.1C589.8,68.9 596.0,72.0 600.7,75.1C604.7,77.9 612.4,85.3 615.5,89.5C626.1,103.9 630.6,123.6 628.3,146.0L627.8,151.8L571.0,152.0L514.2,152.2L514.1,156.2C513.8,163.3 515.2,172.1 517.3,177.5C522.1,189.7 531.6,197.6 545.8,201.3C550.1,202.5 564.6,202.6 569.0,201.6C583.3,198.1 593.0,190.4 597.8,178.8L598.8,176.2L613.7,176.1C622.0,176.0 628.8,176.2 629.0,176.4C629.8,177.2 626.4,187.4 623.3,193.0C617.0,204.8 605.6,214.9 591.8,220.7C585.2,223.5 580.5,224.8 571.5,226.3C566.3,227.1 548.6,227.2 544.2,226.4ZM941.2,226.4C935.8,225.5 932.7,224.9 931.2,224.5C919.5,221.1 909.2,215.4 901.7,208.2C895.8,202.5 891.3,196.2 887.5,188.6C883.6,180.6 881.7,174.3 879.4,161.8C878.5,156.9 878.5,134.1 879.4,128.5C882.5,109.0 888.9,95.6 900.7,83.7C906.6,77.8 911.1,74.5 917.9,71.1C921.9,69.1 928.7,66.6 933.0,65.6C934.2,65.3 935.8,64.9 936.5,64.8C937.2,64.6 940.5,64.1 943.8,63.7C962.7,61.4 981.7,64.9 995.6,73.2C1005.0,78.8 1014.4,88.0 1019.9,97.0C1024.9,105.3 1028.4,114.9 1030.3,125.5C1032.2,136.5 1032.2,154.1 1030.2,165.0C1025.7,190.3 1012.3,209.4 992.4,219.2C984.3,223.1 979.4,224.7 969.5,226.3C964.7,227.1 945.4,227.2 941.2,226.4ZM386.2,224.0C386.1,223.9 386.0,188.3 386.0,144.9L386.0,66.0L427.0,66.0L468.0,66.0L468.0,79.0L468.0,92.0L442.5,92.0L417.0,92.0L417.0,158.0C417.0,194.3 416.8,224.0 416.6,224.0C402.1,224.2 386.4,224.2 386.2,224.0ZM665.0,224.1C664.7,224.0 664.5,186.6 664.5,113.5L664.5,3.0L679.8,3.0L695.0,3.0L694.9,113.5L694.8,224.0L680.1,224.1C672.1,224.2 665.3,224.2 665.0,224.1ZM776.5,224.0C776.1,223.7 774.8,220.3 772.5,213.8C771.6,211.3 770.5,208.1 770.0,206.8C769.5,205.4 768.4,202.2 767.5,199.8C766.6,197.3 765.5,194.1 765.0,192.8C764.5,191.4 763.4,188.2 762.5,185.8C761.6,183.3 760.5,180.1 760.0,178.8C759.5,177.4 758.4,174.2 757.5,171.8C756.6,169.3 755.5,166.1 755.0,164.8C754.5,163.4 753.4,160.2 752.5,157.8C750.8,153.0 749.6,149.7 748.2,146.0C747.8,144.8 747.0,142.5 746.5,141.0C746.0,139.5 744.9,136.3 744.0,134.0C743.1,131.7 742.0,128.5 741.5,127.0C741.0,125.5 739.9,122.3 739.0,120.0C738.1,117.7 737.0,114.5 736.5,113.0C736.0,111.5 734.9,108.3 734.0,106.0C732.3,101.5 729.7,94.1 729.0,92.0C728.8,91.3 727.6,88.2 726.5,85.0C725.3,81.8 724.2,78.7 724.0,78.0C723.8,77.3 722.8,74.5 721.8,71.8C720.8,69.1 720.0,66.7 720.0,66.4C720.0,66.2 727.4,66.0 736.9,66.0L753.9,66.0L754.4,67.5C755.4,70.0 755.8,71.4 758.5,80.0C759.9,84.5 761.5,89.5 762.0,91.0C762.5,92.5 764.1,97.5 765.5,102.0C766.9,106.5 768.5,111.5 769.0,113.0C769.5,114.5 771.1,119.5 772.5,124.0C773.9,128.5 775.5,133.5 776.0,135.0C777.4,139.1 779.8,146.8 781.0,151.0C781.6,153.1 782.3,155.3 782.5,156.0C782.7,156.7 783.6,159.6 784.5,162.4C785.9,167.3 788.1,174.5 790.0,180.8C794.0,193.9 794.1,194.0 795.0,194.0C795.6,194.0 796.0,193.3 796.5,191.9C796.8,190.7 797.3,189.2 797.5,188.5C797.7,187.8 798.4,185.6 799.0,183.5C800.2,179.6 800.9,177.3 803.5,168.5C806.0,160.1 806.8,157.5 808.0,153.5C809.5,148.5 812.9,137.4 814.0,134.0C814.5,132.5 815.8,128.2 817.0,124.5C818.2,120.8 819.5,116.5 820.0,115.0C821.2,111.4 824.3,101.5 827.0,93.0C828.1,89.3 829.5,85.0 830.0,83.5C830.5,82.0 832.0,77.4 833.2,73.4L835.6,66.0L852.2,66.0C861.3,66.0 869.0,66.1 869.1,66.3C869.3,66.4 868.5,69.1 867.4,72.2C866.3,75.2 865.0,79.0 864.5,80.5C864.0,82.0 862.4,86.5 861.0,90.5C856.3,103.9 855.4,106.2 854.5,109.0C854.0,110.5 852.6,114.3 851.5,117.5C850.4,120.7 849.0,124.5 848.5,126.0C848.0,127.5 846.6,131.3 845.5,134.5C844.4,137.7 843.0,141.5 842.5,143.0C842.0,144.5 840.4,149.0 839.0,153.0C837.6,157.0 836.0,161.5 835.5,163.0C835.0,164.5 833.6,168.3 832.5,171.5C831.4,174.7 830.0,178.5 829.5,180.0C829.0,181.5 827.4,186.0 826.0,190.0C824.6,194.0 823.2,197.8 823.0,198.5C822.8,199.2 821.4,203.0 820.0,207.0C818.6,211.0 817.0,215.5 816.5,217.0C815.2,221.1 813.9,224.0 813.6,224.0C804.7,224.2 776.8,224.2 776.5,224.0ZM966.9,200.2C981.1,196.9 991.5,188.7 996.4,176.8C999.5,169.2 1000.0,164.6 1000.0,145.7C1000.0,129.3 999.6,124.7 997.7,118.5C994.5,108.0 986.5,98.6 976.5,93.9C966.8,89.3 954.6,88.0 943.2,90.6C929.3,93.6 918.5,102.6 913.5,115.0C910.5,122.4 910.0,127.0 910.0,145.8C910.0,167.0 910.6,170.8 915.0,179.8C919.9,189.6 930.2,197.2 942.4,200.1C948.9,201.6 960.6,201.6 966.9,200.2ZM45.8,165.5C34.9,163.6 28.9,161.3 21.0,156.0C10.8,149.1 3.0,138.2 0.9,127.8C0.1,123.8 -0.1,116.5 0.5,114.2C2.1,108.4 3.3,105.4 5.0,102.5C12.2,90.2 26.2,83.0 42.8,83.0C66.5,83.0 87.6,97.7 94.0,118.5C95.5,123.3 95.6,133.0 94.3,137.7C91.3,148.7 83.0,157.7 71.6,162.3C63.8,165.5 53.2,166.8 45.8,165.5ZM186.2,148.2C175.4,146.5 168.3,142.2 166.0,136.1C160.1,120.5 185.4,100.5 218.4,94.7C224.5,93.6 238.3,93.5 243.0,94.4C254.3,96.8 260.9,101.5 262.5,108.3C264.6,116.9 256.4,128.0 242.0,136.4C225.3,146.0 202.4,150.9 186.2,148.2ZM597.2,124.0C597.2,118.1 596.7,115.4 594.9,110.5C591.4,101.3 583.1,93.7 572.8,90.2C563.6,87.2 550.1,87.2 540.6,90.3C535.1,92.1 528.0,96.3 524.7,99.7C520.9,103.8 517.9,108.8 516.1,114.3C515.0,117.7 513.7,127.9 514.2,129.2C514.4,129.9 517.9,130.0 555.9,129.9L597.2,129.8L597.2,124.0ZM119.5,94.8C111.9,92.8 106.4,90.0 101.2,85.7C91.4,77.5 85.8,67.9 83.7,55.5C82.5,48.0 83.1,40.5 85.7,32.8C91.2,16.4 105.2,4.4 122.7,0.9C126.4,0.2 136.2,0.2 140.0,0.9C146.6,2.2 152.4,4.6 158.2,8.5C168.5,15.4 175.6,26.1 178.5,39.0C179.3,42.6 179.3,54.0 178.5,57.5C174.1,77.1 160.0,91.2 141.0,95.3C135.7,96.4 124.7,96.2 119.5,94.8Z"/></svg></b>
+              <span class="on">Contratos</span><span>Facturas</span><span>Cobranza</span><span>Reportes</span></aside>
+            <div class="main">
+              <div class="m-head"><div><small>Contrato</small><b>Nimbo AI</b></div><span class="chip">Activo</span></div>
+                            <table class="tbl"><thead><tr><th>Factura</th><th>Monto</th><th>Estado</th></tr></thead>
+                <tbody><tr><td>F-1042</td><td class="num">USD 2.900</td><td><span class="chip" id="paychip2">Emitida</span></td></tr>
+                <tr><td>F-1031</td><td class="num">USD 2.760</td><td><span class="chip">Pagada</span></td></tr>
+                <tr><td>F-1019</td><td class="num">USD 2.610</td><td><span class="chip">Pagada</span></td></tr></tbody></table>
+            </div>
+          </div>
+        </div>
+        <div class="hc usage" data-step="1">
+          <div class="u-plan"><span class="u-ic" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg></span><div><b>Tokens</b><small>USD 0,002 por 1.000</small></div></div>
+          <div class="u-big"><b class="num">1.200 M</b><small>de 1.500 M</small></div><div class="bar uso"><i style="width:80%"></i></div>
+          <div class="u-hist" aria-hidden="true"><i style="height:8%"></i><i style="height:12%"></i><i style="height:18%"></i><i style="height:15%"></i><i style="height:24%"></i><i style="height:30%"></i><i style="height:22%"></i><i style="height:26%"></i><i style="height:14%"></i><i style="height:10%"></i><i style="height:28%"></i><i style="height:25%"></i><i style="height:33%"></i><i style="height:38%"></i><i style="height:30%"></i><i style="height:52%"></i><i style="height:70%"></i><i style="height:42%"></i><i style="height:35%"></i><i style="height:26%"></i><i style="height:30%"></i><i style="height:34%"></i><i style="height:32%"></i><i style="height:44%"></i><i style="height:50%"></i><i style="height:56%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:36%"></i><i style="height:40%"></i></div>
+          <div class="u-l"><span>Últimos 30 días</span></div>
+        </div>
+        <div class="hc inv" data-step="2">
+          <div class="inv-h"><span>Factura F-1042</span><span>Octubre</span></div>
+          <div class="inv-total num">USD 2.900</div>
+          <div class="hr"><span>Plan Growth, fijo</span><span class="num">500</span></div>
+          <div class="hr"><span>1.200 M tokens</span><span class="num x">2.400</span></div>
+          <div class="hr tot"><span>Total</span><span class="num">USD 2.900</span></div>
+        </div>
+        <div class="hc toast" data-step="3"><span class="mk"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M3 7.5 6 10l5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Pago conciliado</b><small>Nimbo AI, hace un momento</small></div></div>
+        
+      </div>
+    </div>
+    <div class="logos">
+      <div class="lbl">Operan su revenue con Relvo</div>
+      <div class="marq" aria-label="Clientes: LIDZ.ai, Relif, Bulk, Skyward, TGP">
+        <ul><li>LIDZ.ai</li><li>relif</li><li>BULK</li><li>Skyward</li><li>TGP</li><li class="dup" aria-hidden="true">LIDZ.ai</li><li class="dup" aria-hidden="true">relif</li><li class="dup" aria-hidden="true">BULK</li><li class="dup" aria-hidden="true">Skyward</li><li class="dup" aria-hidden="true">TGP</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CIFRAS -->
+<section class="band sec stats" aria-labelledby="t-stats">
+  <div class="wrap">
+    <h2 class="h2" id="t-stats">Operando hoy en LatAm. <span class="s">Con empresas SaaS, IA y agencias.</span></h2>
+    <div class="stat-row">
+      <div><b class="num">1.000+</b><p>facturas emitidas y conciliadas cada mes con Relvo</p></div>
+      <div><b class="num">3</b><p>países en operación: Chile, México y Colombia</p></div>
+      <div><b class="num">2 meses</b><p>de implementación para el primer país, de punta a punta</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRES CAPAS -->
+<section class="band sec b-mint" id="capas" aria-labelledby="t-capas">
+  <canvas class="btex" data-btex="orbitsEdge" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <h2 class="h2" id="t-capas">Tres capas, un solo motor. <span class="s">Rieles para calcular, agentes para operar, inteligencia para decidir.</span></h2>
+    <div class="layers" id="layers">
+      <article class="layer">
+        <div class="hd"><b>01</b><h3>Rieles</h3></div>
+        <p class="what">Calculan el monto exacto de cada período.</p>
+        <div class="body"><table class="calc">
+          <tr><td>Plan Growth, fijo</td><td class="cn" data-v="500">USD 500</td></tr>
+          <tr><td>Consumo de tokens</td><td class="cn x" data-v="2400">USD 2.400</td></tr>
+          <tr class="sub"><td>1.200 M tokens a USD 0,002 por 1.000</td><td></td></tr>
+          <tr class="tot"><td>Total octubre</td><td class="cn" data-v="2900">USD 2.900</td></tr>
+        </table></div>
+      </article>
+      <article class="layer">
+        <div class="hd"><b>02</b><h3>Agentes</h3></div>
+        <p class="what">Hacen el trabajo manual alrededor del cobro.</p>
+        <div class="body"><div class="ev">
+          <div class="who"><span class="mk"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M3 7.5 6 10l5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Agente de Relvo</div>
+          <strong>Orden de compra asociada.</strong>
+          <span class="c">La OC 4500-221 de Nimbo AI calza con el contrato. La factura sale hoy.</span>
+          <span class="chip run" id="lchip">Leyendo la OC</span>
+        </div></div>
+      </article>
+      <article class="layer">
+        <div class="hd"><b>03</b><h3>Inteligencia</h3></div>
+        <p class="what">Muestra cómo se mueve tu revenue.</p>
+        <div class="body">
+          <div class="mrr">MRR de octubre<b class="num" id="lmrr">USD 184.300</b><span class="delta" id="ldelta">&nbsp;</span></div>
+          <svg viewBox="0 0 300 80" preserveAspectRatio="none" style="width:100%;height:70px;margin-top:10px;overflow:visible" aria-hidden="true">
+            <polyline points="0,68 50,62 100,56 150,50 200,38 240,32" fill="none" stroke="#13131E" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+            <polyline id="lproj" points="240,32 300,20" fill="none" stroke="#186666" stroke-width="1.5" stroke-dasharray="4 4" vector-effect="non-scaling-stroke" opacity=".4"/>
+            <line id="lseg" x1="240" y1="32" x2="240" y2="32" stroke="#186666" stroke-width="2" vector-effect="non-scaling-stroke"/>
+            <circle id="lpt" cx="240" cy="32" r="3.5" fill="#186666"/>
+          </svg>
+        </div>
+      </article>
+    </div>
+    <div class="layers-rail" aria-hidden="true"><svg id="lrail"></svg></div>
+    
+  </div>
+</section>
+
+<!-- MANIFIESTO -->
+<section class="band manifesto" aria-label="Principio de Relvo">
+  <canvas class="btex" data-btex="ridgesSoft" aria-hidden="true"></canvas>
+  <div class="wrap"><p>La IA no calcula tu plata.<br>El motor sí.</p></div>
+</section>
+
+<!-- 01 RIELES -->
+<section class="band sec" id="producto" aria-labelledby="t-rieles">
+  <div class="wrap">
+    <h2 class="h2" id="t-rieles"><span class="n">01</span>El cálculo no se negocia. <span class="s">Tu pricing, convertido en reglas exactas.</span></h2>
+    <div class="split">
+      <div class="vtabs" role="tablist" aria-label="Qué hacen los rieles" data-tabs="rieles">
+        <button class="vtab" role="tab" aria-selected="true" aria-controls="r0" id="rt0"><b>Pricing</b><span>Del plan fijo al pricing por uso.</span></button>
+        <button class="vtab" role="tab" aria-selected="false" aria-controls="r1" id="rt1" tabindex="-1"><b>Aprobaciones</b><span>Cada factura con su OC aprobada.</span></button>
+        <button class="vtab" role="tab" aria-selected="false" aria-controls="r2" id="rt2" tabindex="-1"><b>Facturación compleja</b><span>Divididas, prorrateadas y con tu glosa.</span></button>
+        <button class="vtab" role="tab" aria-selected="false" aria-controls="r3" id="rt3" tabindex="-1"><b>Cobro y conciliación</b><span>Cada pago, cuadrado contra su factura.</span></button>
+      </div>
+      <div class="panel-wrap">
+        <div class="ui" role="tabpanel" id="r0" aria-labelledby="rt0">
+          <div class="plan-h"><span class="pic" aria-hidden="true">N</span><div><b>Plan Growth</b><small>Nimbo AI, facturación mensual</small></div><span class="price num">USD 500<small>/mes</small></span></div>
+          <div class="pl"><div class="pl-t"><span>Seats adicionales</span><span class="num">12 × USD 20</span></div></div>
+          <div class="pl"><div class="pl-t"><span>Tokens</span><span class="num">1.200 M</span></div>
+            <div class="tiers"><i class="t1" style="width:66%"></i><i class="t2" style="width:14%"></i><span class="tm" style="left:66%"></span></div>
+            <div class="tl"><span>Tramo 1, incluido</span><span>Tramo 2</span></div></div>
+          <div class="pl"><div class="pl-t"><span>Descuento de lanzamiento</span><span class="num">Fase 1 de 3</span></div></div>
+          <div class="sum"><span>Total octubre</span><span class="num">USD 3.090</span></div>
+        </div>
+        <div class="ui" role="tabpanel" id="r1" aria-labelledby="rt1" hidden>
+          <div class="ui-h"><b>Factura de octubre</b><span>Nimbo AI</span></div>
+          <ol class="tline">
+            <li class="ok"><span class="ic"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7.5 6 10l5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Pre-factura generada</b><small>1 de octubre</small></div></li>
+            <li class="ok"><span class="ic"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7.5 6 10l5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>OC 4500-221 asociada</b><small>Monto y vigencia calzan</small></div></li>
+            <li class="ok"><span class="ic"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7.5 6 10l5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Aprobada por el cliente</b><small>2 de octubre</small></div></li>
+            <li class="now"><span class="ic"></span><div><b>Emisión</b><small>Hoy</small></div></li>
+          </ol>
+        </div>
+        <div class="ui" role="tabpanel" id="r2" aria-labelledby="rt2" hidden>
+          <div class="ui-h"><b>Factura F-1042</b><span class="num">USD 3.090</span></div>
+          <div class="splitbar"><i style="width:60%"></i><i style="width:40%"></i></div>
+          <div class="splitlg">
+            <div><small>Nimbo AI SpA, Chile</small><b class="num">USD 1.854</b><span>60%</span></div>
+            <div><small>Nimbo AI, México</small><b class="num">USD 1.236</b><span>40%</span></div>
+          </div>
+          <div class="glosa"><small>Glosa</small>Servicio Relvo, octubre 2026. OC 4500-221.</div>
+        </div>
+        <div class="ui" role="tabpanel" id="r3" aria-labelledby="rt3" hidden>
+          <div class="ui-h"><b>Cobro de F-1042</b><span class="chip warn">Pago parcial</span></div>
+          <div class="paid"><span class="num">USD 2.000</span><small>de USD 3.090</small></div>
+          <div class="bar big"><i style="width:65%"></i></div>
+          <ol class="tline compact">
+            <li class="ok"><span class="ic"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7.5 6 10l5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Transferencia conciliada</b><small>18 de octubre</small></div></li>
+            <li class="now"><span class="ic"></span><div><b>Recordatorio por correo</b><small>25 de octubre</small></div></li>
+          </ol>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 AGENTES -->
+<section class="band sec b-dark" aria-labelledby="t-ag">
+  <div class="wrap">
+    <h2 class="h2" id="t-ag"><span class="n">02</span>El trabajo manual que se come tu mes, hecho. <span class="s">Tú apruebas solo las excepciones.</span></h2>
+    <div class="agents">
+      <div class="agents-bg" data-tex="pulse" aria-hidden="true"><canvas></canvas></div>
+      <div class="pane">
+        <div class="kpis"><div><small>Tareas hechas hoy</small><b class="num">34</b></div><div><small>Para revisar</small><b class="num warn">2</b></div></div>
+        <ul class="feed" id="feed">
+          <li><span class="fi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg></span><span>OC 4500-221 leída y asociada</span><time>09:02</time></li>
+          <li><span class="fi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="m2 4.5 6 4.5 6-4.5"/></svg></span><span>HES pedida a Nimbo AI</span><time>09:14</time></li>
+          <li><span class="fi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2 4.5 14M11.5 2 10 14M2.5 5.5h11M2 10.5h11"/></svg></span><span>Aviso en #finanzas</span><time>09:20</time></li>
+          <li><span class="fi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5.5 1.5v3M10.5 1.5v3M3.5 4.5h9v3a4.5 4.5 0 0 1-9 0zM8 12v2.5"/></svg></span><span>Consulta vía MCP respondida</span><time>09:31</time></li>
+        </ul>
+      </div>
+      <div class="pane review">
+        <small class="rv-l">Requiere revisión</small>
+        <b class="rv-t">La OC no calza con el contrato.</b>
+        <div class="rv-cmp"><div><small>OC de Tandem SaaS</small><span class="num">USD 1.800</span></div><div><small>Contrato</small><span class="num">USD 2.100</span></div></div>
+        <div class="rv-a"><span class="b-p">Pedir nueva OC</span><span class="b-s">Aprobar igual</span></div>
+      </div>
+    </div>
+    <p class="principle">Los agentes no calculan montos: eso lo hace el motor, siempre igual.</p>
+  </div>
+</section>
+
+<!-- 03 INTELIGENCIA -->
+<section class="band sec b-neutral" aria-labelledby="t-int">
+  <canvas class="btex" data-btex="ridgesSoft" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <h2 class="h2" id="t-int"><span class="n">03</span>Qué está pasando con tu revenue. <span class="s">Lo que ninguna planilla junta.</span></h2>
+    <div class="htabs" role="tablist" aria-label="Reportes" data-tabs="intel" style="background:#fff;border:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:12px 12px 0 0;padding:0 32px">
+      <button class="htab" role="tab" aria-selected="true" aria-controls="i0" id="it0">Recurrente vs. consumo</button>
+      <button class="htab" role="tab" aria-selected="false" aria-controls="i1" id="it1" tabindex="-1">Qué tan rápido conviertes trabajo en caja</button>
+      <button class="htab" role="tab" aria-selected="false" aria-controls="i2" id="it2" tabindex="-1">Cómo se mueve tu MRR</button>
+    </div>
+    <div class="chartbox" role="tabpanel" id="i0" aria-labelledby="it0">
+      <div class="kpi"><small>Consumo sobre el ingreso</small><b class="num">36%</b><p>Desde 26% en abril. Varía mes a mes con el uso.</p></div>
+      <div class="chart"><svg id="c0" viewBox="0 0 640 260" role="img" aria-label="Ingreso recurrente y consumo por mes, abril a septiembre"></svg>
+        <div class="legend"><span><i style="background:#13131E"></i>Recurrente (planes y seats)</span><span><i style="background:#633BF2"></i>Consumo: tokens</span><span><i style="background:#E3C0F2"></i>Consumo: documentos</span></div></div>
+    </div>
+    <div class="chartbox" role="tabpanel" id="i1" aria-labelledby="it1" hidden>
+      <div class="kpi"><small>Días en facturar (DTI)</small><b class="num">3</b><small class="k2" style="margin-top:22px">Días en cobrar (DSO)</small><b class="num">38</b><p>9 días menos que en abril.</p></div>
+      <div class="chart"><svg id="c1" viewBox="0 0 640 260" role="img" aria-label="DTI y DSO por mes"></svg>
+        <div class="legend"><span><i style="background:#186666"></i>DTI</span><span><i style="background:#13131E"></i>DSO</span></div></div>
+    </div>
+    <div class="chartbox" role="tabpanel" id="i2" aria-labelledby="it2" hidden>
+      <div class="kpi"><small>MRR de octubre</small><b class="num">192,4k</b><p>+8.100 neto en el mes.</p></div>
+      <div class="chart"><svg id="c2" viewBox="0 0 640 260" role="img" aria-label="Movimiento del MRR de septiembre a octubre"></svg></div>
+    </div>
+    <p class="also">Además: facturación, recaudación, cuentas por cobrar y reconocimiento de ingresos bajo IFRS 15.</p>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="band sec" aria-labelledby="t-prod">
+  <div class="wrap">
+    <h2 class="h2" id="t-prod">Todo tu revenue, en un solo sistema. <span class="s">Seis productos, del pricing al reporte.</span></h2>
+    <div class="bento">
+      <a class="card w2" href="#"><h3>Contratos y pricing</h3><p>Cualquier pricing, convertido en reglas exactas.</p>
+        <div class="mini"><div class="mrow"><b class="num">USD 3.140</b><small>total del período</small></div>
+          <div class="stack"><i style="width:16%;background:#13131E"></i><i style="width:8%;background:#7FB3AC"></i><i style="width:76%;background:#633BF2"></i></div>
+          <div class="lg"><span><i style="background:#13131E"></i>Fijo</span><span><i style="background:#7FB3AC"></i>Seats</span><span><i style="background:#633BF2"></i>Uso</span></div></div></a>
+      <a class="card" href="#"><h3>Medición del consumo</h3><p>El uso de tus clientes, listo para cobrar.</p>
+        <div class="mini"><div class="mrow"><b class="num">1.200 M</b><small>tokens en octubre</small></div><div class="hist" aria-hidden="true"><i style="height:12%"></i><i style="height:18%"></i><i style="height:15%"></i><i style="height:22%"></i><i style="height:30%"></i><i style="height:26%"></i><i style="height:34%"></i><i style="height:28%"></i><i style="height:40%"></i><i style="height:36%"></i><i style="height:45%"></i><i style="height:38%"></i><i style="height:50%"></i><i style="height:44%"></i><i style="height:58%"></i><i style="height:52%"></i><i style="height:63%"></i><i style="height:55%"></i><i style="height:70%"></i><i style="height:61%"></i><i style="height:74%"></i><i style="height:66%"></i><i style="height:80%"></i><i style="height:72%"></i><i style="height:86%"></i><i style="height:78%"></i><i style="height:90%"></i><i style="height:84%"></i><i style="height:95%"></i><i style="height:88%"></i></div></div></a>
+      <a class="card" href="#"><h3>Aprobaciones y órdenes de compra</h3><p>Cada factura sale con su OC aprobada.</p>
+        <div class="mini"><div class="nodes"><span class="ok"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7.5 6 10l5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i></i><span class="ok"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7.5 6 10l5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i></i><span class="ok"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7.5 6 10l5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i class="off"></i><span class="now"></span></div>
+          <div class="nl"><span>Pre-factura</span><span>OC</span><span>Aprobada</span><span>Emitida</span></div></div></a>
+      <a class="card w2" href="#"><h3>Cuentas por cobrar</h3><p>Factura, cobra y concilia en un solo flujo.</p>
+        <div class="mini"><div class="mrow"><b class="num">USD 48.200</b><small>por cobrar</small></div>
+          <div class="stack"><i style="width:70%;background:#186666"></i><i style="width:22%;background:#C7A35A"></i><i style="width:8%;background:#B4675E"></i></div>
+          <div class="lg"><span><i style="background:#186666"></i>Al día</span><span><i style="background:#C7A35A"></i>1 a 30 días</span><span><i style="background:#B4675E"></i>Más de 30 días</span></div></div></a>
+      <a class="card" href="#"><h3>Agentes</h3><p>Leen OCs, siguen correos y coordinan al equipo.</p>
+        <div class="mini"><div class="mrow"><b class="num">34</b><small>tareas hechas hoy</small></div>
+          <div class="icons" aria-hidden="true"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg></span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="m2 4.5 6 4.5 6-4.5"/></svg></span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2 4.5 14M11.5 2 10 14M2.5 5.5h11M2 10.5h11"/></svg></span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5.5 1.5v3M10.5 1.5v3M3.5 4.5h9v3a4.5 4.5 0 0 1-9 0zM8 12v2.5"/></svg></span></div></div></a>
+      <a class="card w2" href="#"><h3>Reportería SaaS/IA</h3><p>MRR, consumo y DSO sin armar planillas.</p>
+        <div class="mini"><div class="mrow"><b class="num">USD 192,4k</b><small>MRR de octubre</small><span class="up">+4,4%</span></div>
+          <svg class="area" viewBox="0 0 400 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 58 L57 54 L114 52 L171 46 L228 40 L285 34 L342 26 L400 18 L400 70 L0 70Z" fill="#DFF4EB"/><polyline points="0,58 57,54 114,52 171,46 228,40 285,34 342,26 400,18" fill="none" stroke="#186666" stroke-width="2" vector-effect="non-scaling-stroke"/></svg></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- COBRA COMO VENDES -->
+<section class="band sec b-neutral" id="soluciones" aria-labelledby="t-cobra">
+  <canvas class="btex" data-btex="dotsGutter" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <h2 class="h2" id="t-cobra">Cobra como vendes. <span class="s">Tarjeta o contrato, el mismo motor.</span></h2>
+    <div class="two">
+      <div class="path"><h3>Planes recurrentes</h3><p>Tus clientes pagan con tarjeta. Relvo mide el consumo, cobra el plan y el uso en automático y te muestra cómo se mueve tu MRR.</p>
+        <div class="act"><a class="btn btn-p" href="#">Ver precios</a><a class="link" href="#">Cómo funciona para planes recurrentes</a></div></div>
+      <div class="path"><h3>Contratos con pricing híbrido</h3><p>Tus clientes firman contratos. Relvo convierte cada condición en reglas, gestiona las órdenes de compra, factura y cobra.</p>
+        <div class="act"><a class="btn btn-p" href="#">Agendar demo</a><a class="link" href="#">Cómo funciona para contratos</a></div></div>
+    </div>
+    <p class="agency">¿Empezando a cobrar por uso? <a class="link" href="#">Suma consumo sin cambiar de sistema</a></p>
+  </div>
+</section>
+
+<!-- CASO TGP -->
+<section class="band sec" id="clientes" aria-labelledby="t-caso">
+  <div class="wrap">
+    <h2 class="h2" id="t-caso">Lo que cambió para nuestros clientes.</h2>
+    <div class="case">
+      <div><p class="co"><b>TGP</b>La agencia de prospecting más grande de LatAm.</p>
+        <p class="big">70%</p><p class="big-l">menos tiempo operativo</p><p class="sub">mientras su operación creció 30% en 3 meses.</p></div>
+      <div><p class="k"><b>Días en facturar (DTI)</b>, con aprobaciones de clientes y órdenes de compra incluidas.</p>
+        <div class="dd off"><div class="l">Antes</div><div class="d"><b>6</b><small>días</small></div><div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="dd"><div class="l on">Con Relvo</div><div class="d"><b>3</b><small>días</small></div><div class="bars on" aria-hidden="true"><i></i><i></i><i></i></div></div></div>
+      <figure style="margin:0"><blockquote>“Hoy trabajamos mucho más rápido, con mayor confianza en los cálculos y con un proceso que puede escalar junto a nuestro crecimiento.”</blockquote>
+        <figcaption class="by">Francesco Cotroneo<span>Operations Lead, TGP</span></figcaption>
+        <p style="margin:24px 0 0"><a class="link" href="#">Leer el caso de TGP</a></p></figure>
+    </div>
+  </div>
+</section>
+
+<!-- LATAM -->
+<section class="band sec b-dark" aria-labelledby="t-lat">
+  <canvas class="btex" data-btex="orbitsDark" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <h2 class="h2" id="t-lat">Hecho para cobrar en LatAm. <span class="s">Bancos, medios de pago y facturación de la región.</span></h2>
+    <div class="lat lat2">
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg>Facturación electrónica en Chile y México</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 4l9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg>Conciliación con bancos locales</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h4"/></svg>Toku, Fintoc y Stripe</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="10" r="5"/><path d="M14.5 6.2A5 5 0 1 1 13 17.6"/></svg>Cualquier moneda, incluida la UF</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V8l5-3v15M9 20V10l6-3v13M15 20V11l5 2v7M3 20h18"/></svg>Varias sociedades, un solo cierre</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 12l2 2 4-4"/></svg>Órdenes de compra y aprobaciones</span>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRACIONES -->
+<section class="band sec ints" aria-labelledby="t-ints">
+  <canvas class="btex" data-btex="linesEdge" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <h2 class="h2" id="t-ints">Se conecta a lo que ya usas. <span class="s">Tu CRM, ERP, pagos y banco en un solo motor.</span></h2>
+    <div class="marq" aria-label="Integraciones: HubSpot, Stripe, Toku, Fintoc, Sintropix, Slack y Google Chat">
+      <ul><li>HubSpot</li><li>Stripe</li><li>Toku</li><li>Fintoc</li><li>Sintropix</li><li>Slack</li><li>Google Chat</li><li class="dup" aria-hidden="true">HubSpot</li><li class="dup" aria-hidden="true">Stripe</li><li class="dup" aria-hidden="true">Toku</li><li class="dup" aria-hidden="true">Fintoc</li><li class="dup" aria-hidden="true">Sintropix</li><li class="dup" aria-hidden="true">Slack</li><li class="dup" aria-hidden="true">Google Chat</li></ul>
+    </div>
+    <div class="more"><span>¿Usas otro sistema? <a class="link" href="#">Conéctalo por API</a></span><span>¿Trabajas con herramientas de IA? <a class="link" href="#">Conecta Relvo vía MCP</a></span></div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="band final" aria-labelledby="t-fin">
+  <div class="wrap">
+    <div class="final-in final-card" data-tex="periods">
+      <canvas aria-hidden="true"></canvas>
+      <div class="txt">
+        <h2 id="t-fin">Tú vendes. Relvo hace el resto.</h2>
+        <div class="ctas"><a class="btn btn-w" href="#">Agendar demo</a><a class="link" href="#">Ver precios</a><a class="link" href="#">Ver documentación</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="band">
+  <div class="wrap">
+    <div class="cols">
+      <div><a class="logo" href="#" style="color:#fff"><svg viewBox="0 0 1032 263" height="22" aria-hidden="true" style="display:block"><path fill="currentColor" fill-rule="evenodd" d="M55.8,261.9C49.8,260.2 45.5,257.3 42.3,252.8C38.6,247.5 37.0,242.3 37.0,235.0C36.9,213.8 52.7,190.1 73.6,179.8C88.4,172.6 102.3,173.4 111.0,182.1C113.8,184.8 116.2,188.9 117.4,193.0C121.3,205.7 116.4,224.2 105.4,238.5C99.4,246.2 88.7,255.2 82.0,258.0C81.3,258.3 80.1,258.9 79.3,259.2C71.8,262.6 62.1,263.7 55.8,261.9ZM194.5,262.5C194.1,262.2 193.2,262.0 192.5,262.0C189.1,262.0 179.3,257.9 174.0,254.3C162.5,246.5 152.8,234.7 147.8,222.2C143.9,212.7 142.8,201.4 145.0,193.6C147.6,184.3 153.7,178.1 162.7,175.7C166.5,174.7 173.8,174.8 178.9,176.0C184.1,177.3 193.2,181.6 197.6,184.9C206.2,191.4 214.4,200.8 218.7,209.3C223.8,219.5 225.2,225.1 225.2,234.8C225.2,240.6 225.0,242.3 224.1,245.0C221.1,254.0 215.4,259.6 206.4,262.0C202.3,263.1 195.8,263.3 194.5,262.5ZM544.2,226.4C531.5,224.2 523.0,221.0 514.3,215.2C497.5,204.1 487.5,186.7 483.4,161.8C482.5,156.3 482.5,132.5 483.4,127.8C486.1,113.5 487.3,109.7 491.8,100.5C503.5,76.6 527.3,63.0 557.2,63.0C562.1,63.0 572.0,64.0 575.5,64.8C580.3,65.9 581.6,66.2 584.2,67.1C589.8,68.9 596.0,72.0 600.7,75.1C604.7,77.9 612.4,85.3 615.5,89.5C626.1,103.9 630.6,123.6 628.3,146.0L627.8,151.8L571.0,152.0L514.2,152.2L514.1,156.2C513.8,163.3 515.2,172.1 517.3,177.5C522.1,189.7 531.6,197.6 545.8,201.3C550.1,202.5 564.6,202.6 569.0,201.6C583.3,198.1 593.0,190.4 597.8,178.8L598.8,176.2L613.7,176.1C622.0,176.0 628.8,176.2 629.0,176.4C629.8,177.2 626.4,187.4 623.3,193.0C617.0,204.8 605.6,214.9 591.8,220.7C585.2,223.5 580.5,224.8 571.5,226.3C566.3,227.1 548.6,227.2 544.2,226.4ZM941.2,226.4C935.8,225.5 932.7,224.9 931.2,224.5C919.5,221.1 909.2,215.4 901.7,208.2C895.8,202.5 891.3,196.2 887.5,188.6C883.6,180.6 881.7,174.3 879.4,161.8C878.5,156.9 878.5,134.1 879.4,128.5C882.5,109.0 888.9,95.6 900.7,83.7C906.6,77.8 911.1,74.5 917.9,71.1C921.9,69.1 928.7,66.6 933.0,65.6C934.2,65.3 935.8,64.9 936.5,64.8C937.2,64.6 940.5,64.1 943.8,63.7C962.7,61.4 981.7,64.9 995.6,73.2C1005.0,78.8 1014.4,88.0 1019.9,97.0C1024.9,105.3 1028.4,114.9 1030.3,125.5C1032.2,136.5 1032.2,154.1 1030.2,165.0C1025.7,190.3 1012.3,209.4 992.4,219.2C984.3,223.1 979.4,224.7 969.5,226.3C964.7,227.1 945.4,227.2 941.2,226.4ZM386.2,224.0C386.1,223.9 386.0,188.3 386.0,144.9L386.0,66.0L427.0,66.0L468.0,66.0L468.0,79.0L468.0,92.0L442.5,92.0L417.0,92.0L417.0,158.0C417.0,194.3 416.8,224.0 416.6,224.0C402.1,224.2 386.4,224.2 386.2,224.0ZM665.0,224.1C664.7,224.0 664.5,186.6 664.5,113.5L664.5,3.0L679.8,3.0L695.0,3.0L694.9,113.5L694.8,224.0L680.1,224.1C672.1,224.2 665.3,224.2 665.0,224.1ZM776.5,224.0C776.1,223.7 774.8,220.3 772.5,213.8C771.6,211.3 770.5,208.1 770.0,206.8C769.5,205.4 768.4,202.2 767.5,199.8C766.6,197.3 765.5,194.1 765.0,192.8C764.5,191.4 763.4,188.2 762.5,185.8C761.6,183.3 760.5,180.1 760.0,178.8C759.5,177.4 758.4,174.2 757.5,171.8C756.6,169.3 755.5,166.1 755.0,164.8C754.5,163.4 753.4,160.2 752.5,157.8C750.8,153.0 749.6,149.7 748.2,146.0C747.8,144.8 747.0,142.5 746.5,141.0C746.0,139.5 744.9,136.3 744.0,134.0C743.1,131.7 742.0,128.5 741.5,127.0C741.0,125.5 739.9,122.3 739.0,120.0C738.1,117.7 737.0,114.5 736.5,113.0C736.0,111.5 734.9,108.3 734.0,106.0C732.3,101.5 729.7,94.1 729.0,92.0C728.8,91.3 727.6,88.2 726.5,85.0C725.3,81.8 724.2,78.7 724.0,78.0C723.8,77.3 722.8,74.5 721.8,71.8C720.8,69.1 720.0,66.7 720.0,66.4C720.0,66.2 727.4,66.0 736.9,66.0L753.9,66.0L754.4,67.5C755.4,70.0 755.8,71.4 758.5,80.0C759.9,84.5 761.5,89.5 762.0,91.0C762.5,92.5 764.1,97.5 765.5,102.0C766.9,106.5 768.5,111.5 769.0,113.0C769.5,114.5 771.1,119.5 772.5,124.0C773.9,128.5 775.5,133.5 776.0,135.0C777.4,139.1 779.8,146.8 781.0,151.0C781.6,153.1 782.3,155.3 782.5,156.0C782.7,156.7 783.6,159.6 784.5,162.4C785.9,167.3 788.1,174.5 790.0,180.8C794.0,193.9 794.1,194.0 795.0,194.0C795.6,194.0 796.0,193.3 796.5,191.9C796.8,190.7 797.3,189.2 797.5,188.5C797.7,187.8 798.4,185.6 799.0,183.5C800.2,179.6 800.9,177.3 803.5,168.5C806.0,160.1 806.8,157.5 808.0,153.5C809.5,148.5 812.9,137.4 814.0,134.0C814.5,132.5 815.8,128.2 817.0,124.5C818.2,120.8 819.5,116.5 820.0,115.0C821.2,111.4 824.3,101.5 827.0,93.0C828.1,89.3 829.5,85.0 830.0,83.5C830.5,82.0 832.0,77.4 833.2,73.4L835.6,66.0L852.2,66.0C861.3,66.0 869.0,66.1 869.1,66.3C869.3,66.4 868.5,69.1 867.4,72.2C866.3,75.2 865.0,79.0 864.5,80.5C864.0,82.0 862.4,86.5 861.0,90.5C856.3,103.9 855.4,106.2 854.5,109.0C854.0,110.5 852.6,114.3 851.5,117.5C850.4,120.7 849.0,124.5 848.5,126.0C848.0,127.5 846.6,131.3 845.5,134.5C844.4,137.7 843.0,141.5 842.5,143.0C842.0,144.5 840.4,149.0 839.0,153.0C837.6,157.0 836.0,161.5 835.5,163.0C835.0,164.5 833.6,168.3 832.5,171.5C831.4,174.7 830.0,178.5 829.5,180.0C829.0,181.5 827.4,186.0 826.0,190.0C824.6,194.0 823.2,197.8 823.0,198.5C822.8,199.2 821.4,203.0 820.0,207.0C818.6,211.0 817.0,215.5 816.5,217.0C815.2,221.1 813.9,224.0 813.6,224.0C804.7,224.2 776.8,224.2 776.5,224.0ZM966.9,200.2C981.1,196.9 991.5,188.7 996.4,176.8C999.5,169.2 1000.0,164.6 1000.0,145.7C1000.0,129.3 999.6,124.7 997.7,118.5C994.5,108.0 986.5,98.6 976.5,93.9C966.8,89.3 954.6,88.0 943.2,90.6C929.3,93.6 918.5,102.6 913.5,115.0C910.5,122.4 910.0,127.0 910.0,145.8C910.0,167.0 910.6,170.8 915.0,179.8C919.9,189.6 930.2,197.2 942.4,200.1C948.9,201.6 960.6,201.6 966.9,200.2ZM45.8,165.5C34.9,163.6 28.9,161.3 21.0,156.0C10.8,149.1 3.0,138.2 0.9,127.8C0.1,123.8 -0.1,116.5 0.5,114.2C2.1,108.4 3.3,105.4 5.0,102.5C12.2,90.2 26.2,83.0 42.8,83.0C66.5,83.0 87.6,97.7 94.0,118.5C95.5,123.3 95.6,133.0 94.3,137.7C91.3,148.7 83.0,157.7 71.6,162.3C63.8,165.5 53.2,166.8 45.8,165.5ZM186.2,148.2C175.4,146.5 168.3,142.2 166.0,136.1C160.1,120.5 185.4,100.5 218.4,94.7C224.5,93.6 238.3,93.5 243.0,94.4C254.3,96.8 260.9,101.5 262.5,108.3C264.6,116.9 256.4,128.0 242.0,136.4C225.3,146.0 202.4,150.9 186.2,148.2ZM597.2,124.0C597.2,118.1 596.7,115.4 594.9,110.5C591.4,101.3 583.1,93.7 572.8,90.2C563.6,87.2 550.1,87.2 540.6,90.3C535.1,92.1 528.0,96.3 524.7,99.7C520.9,103.8 517.9,108.8 516.1,114.3C515.0,117.7 513.7,127.9 514.2,129.2C514.4,129.9 517.9,130.0 555.9,129.9L597.2,129.8L597.2,124.0ZM119.5,94.8C111.9,92.8 106.4,90.0 101.2,85.7C91.4,77.5 85.8,67.9 83.7,55.5C82.5,48.0 83.1,40.5 85.7,32.8C91.2,16.4 105.2,4.4 122.7,0.9C126.4,0.2 136.2,0.2 140.0,0.9C146.6,2.2 152.4,4.6 158.2,8.5C168.5,15.4 175.6,26.1 178.5,39.0C179.3,42.6 179.3,54.0 178.5,57.5C174.1,77.1 160.0,91.2 141.0,95.3C135.7,96.4 124.7,96.2 119.5,94.8Z"/></svg></a><p style="margin:12px 0 0;max-width:24ch">Revenue Engine para SaaS e IA. Santiago de Chile.</p></div>
+      <div><h4>Producto</h4><ul><li><a href="#">Contratos y pricing</a></li><li><a href="#">Medición del consumo</a></li><li><a href="#">Aprobaciones y órdenes de compra</a></li><li><a href="#">Cuentas por cobrar</a></li><li><a href="#">Agentes</a></li><li><a href="#">Reportería SaaS/IA</a></li></ul></div>
+      <div><h4>Soluciones</h4><ul><li><a href="#">Revenue Ops</a></li><li><a href="#">Finanzas</a></li><li><a href="#">Ingeniería</a></li><li><a href="#">SaaS/IA</a></li><li><a href="#">Agencias</a></li></ul></div>
+      <div><h4>Casos de uso</h4><ul><li><a href="#">Planes recurrentes</a></li><li><a href="#">Contratos con pricing híbrido</a></li><li><a href="#">Empezando a cobrar por uso</a></li></ul></div>
+      <div><h4>Recursos</h4><ul><li><a href="#">Docs</a></li><li><a href="#">Blog</a></li><li><a href="#">Clientes</a></li><li><a href="#">Precios</a></li></ul></div>
+    </div>
+    <p style="margin:0 0 16px;font-size:12.5px;color:#7F8192">Las pantallas de producto muestran datos ilustrativos.</p>
+    <div class="legal"><span>© 2026 Relvo SpA <a href="#">Términos</a><a href="#">Privacidad</a></span><span>getrelvo.ai</span></div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+  const fmt = n => 'USD ' + Math.round(n).toLocaleString('es-CL');
+  const onView = (node, cb, opts) => new IntersectionObserver(([e]) => cb(e.isIntersecting), opts || {}).observe(node);
+
+  /* ---------- Texturas ---------- */
+  const C = { green:'24,102,102', light:'114,221,170', white:'255,255,255' };
+  const painters = {
+    orbits(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      [[-0.08*w, 1.12*h, .55, 0],[1.1*w, -0.15*h, .35, 1]].forEach(([cx, cy, a, k]) => {
+        const max = Math.hypot(w, h) * 1.05, drift = Math.sin(t*0.00025 + k) * 10;
+        for (let r = 30; r < max; r += 11) {
+          ctx.strokeStyle = `rgba(${C.green},${(a*(1 - r/max)).toFixed(3)})`; ctx.lineWidth = 1;
+          const s = -Math.PI/2 + Math.sin(t*0.0002 + r*0.01)*0.12;
+          ctx.beginPath(); ctx.arc(cx, cy, r + drift, s, s + Math.PI*0.9 + (k ? Math.PI*0.3 : 0)); ctx.stroke();
+        }
+      });
+    },
+    pulse(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      const g = 16;
+      for (let j = 0; j < h/g; j++) for (let i = 0; i < w/g; i++) {
+        const x = i*g + g/2, y = j*g + g/2, d = Math.hypot(x - w*0.1, y - h*0.9);
+        const v = Math.pow(0.5 + 0.5*Math.sin(d*0.03 - t*0.002), 3) * Math.max(0, 1 - d/(w*1.1));
+        if (v < 0.04) continue;
+        ctx.fillStyle = `rgba(${C.light},${(0.05 + 0.35*v).toFixed(3)})`;
+        ctx.beginPath(); ctx.arc(x, y, 0.8 + 1.2*v, 0, Math.PI*2); ctx.fill();
+      }
+    },
+    periods(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      const r = h*0.3, cy = h*0.5, n = 60, sx = w*0.58, span = (w - r) - sx;
+      const step = span/(n-1), off = (t*0.012) % step;
+      for (let k = 0; k < n; k++) {
+        const p = k/(n-1), x = sx + p*span + (k < n-1 ? off : 0);
+        ctx.strokeStyle = `rgba(${C.white},${(0.06 + 0.3*(1-p)).toFixed(3)})`; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(x, cy, r, 0, Math.PI*2); ctx.stroke();
+      }
+      ctx.strokeStyle = `rgba(${C.white},.75)`; ctx.lineWidth = 1.25;
+      ctx.beginPath(); ctx.arc(sx, cy, r, 0, Math.PI*2); ctx.stroke();
+    }
+  };
+  document.querySelectorAll('[data-tex]').forEach(box => {
+    const cv = box.querySelector('canvas'), ctx = cv.getContext('2d'), paint = painters[box.dataset.tex];
+    let w = 0, h = 0, vis = false, raf = 0;
+    const size = () => { const d = Math.min(devicePixelRatio || 1, 2); w = box.clientWidth; h = box.clientHeight; cv.width = w*d; cv.height = h*d; ctx.setTransform(d,0,0,d,0,0); paint(ctx, w, h, 0); };
+    const loop = t => { paint(ctx, w, h, t); if (vis && !reduce) raf = requestAnimationFrame(loop); };
+    new ResizeObserver(size).observe(box);
+    onView(box, v => { vis = v; cancelAnimationFrame(raf); if (v && !reduce) raf = requestAnimationFrame(loop); });
+  });
+
+
+  /* ---------- Texturas de fondo (estáticas, fuera de las cards) ---------- */
+  const bg = {
+    orbitsEdge(ctx, w, h) {
+      const cx = w + 60, cy = h * 0.32, max = Math.max(w * 0.62, 700);
+      for (let r = 120; r < max; r += 13) {
+        ctx.strokeStyle = `rgba(15,74,74,${(0.2 * (1 - r / max)).toFixed(3)})`; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI * 0.5, Math.PI * 1.5); ctx.stroke();
+      }
+    },
+    ridgesSoft(ctx, w, h) {
+      for (let y = 14; y < h; y += 11) {
+        const band = Math.exp(-Math.pow((y / h - 0.62) / 0.3, 2));
+        ctx.strokeStyle = `rgba(24,102,102,${(0.04 + 0.08 * band).toFixed(3)})`; ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 8) {
+          const nx = x / w, yy = y - band * 26 * (Math.exp(-Math.pow((nx - 0.8) / 0.18, 2)) + 0.7 * Math.exp(-Math.pow((nx - 0.12) / 0.1, 2)));
+          x === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
+        }
+        ctx.stroke();
+      }
+    },
+    dotsGutter(ctx, w, h, inner) {
+      const g = 16;
+      for (let y = g / 2; y < h; y += g) for (let x = g / 2; x < w; x += g) {
+        const d = x < inner.l ? inner.l - x : x > inner.r ? x - inner.r : -1;
+        if (d < 0) continue;
+        const a = Math.min(0.32, 0.06 + d / 900);
+        ctx.fillStyle = `rgba(24,102,102,${a.toFixed(3)})`;
+        ctx.beginPath(); ctx.arc(x, y, 1, 0, Math.PI * 2); ctx.fill();
+      }
+    },
+    orbitsDark(ctx, w, h) {
+      const cx = -40, cy = h + 40, max = Math.max(w * 0.5, 600);
+      for (let r = 80; r < max; r += 12) {
+        ctx.strokeStyle = `rgba(114,221,170,${(0.1 * (1 - r / max)).toFixed(3)})`; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(cx, cy, r, -Math.PI / 2, 0); ctx.stroke();
+      }
+    },
+    linesEdge(ctx, w, h, inner) {
+      for (let y = 10, i = 0; y < h; y += 7, i++) {
+        const len = inner.l * (0.55 + 0.45 * Math.abs(Math.sin(i * 0.11))) + 60 * Math.sin(i * 0.05);
+        ctx.strokeStyle = `rgba(24,102,102,${(0.08 + 0.06 * Math.sin(i * 0.2)).toFixed(3)})`; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(Math.max(0, len), y); ctx.stroke();
+        const len2 = (w - inner.r) * (0.55 + 0.45 * Math.abs(Math.cos(i * 0.09)));
+        ctx.beginPath(); ctx.moveTo(w, y); ctx.lineTo(w - Math.max(0, len2), y); ctx.stroke();
+      }
+    }
+  };
+  document.querySelectorAll('canvas.btex').forEach(cv => {
+    const band = cv.parentElement, ctx = cv.getContext('2d'), paint = bg[cv.dataset.btex];
+    const draw = () => {
+      const d = Math.min(devicePixelRatio || 1, 2), w = band.clientWidth, h = band.clientHeight;
+      cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0); ctx.clearRect(0, 0, w, h);
+      const wr = band.querySelector('.wrap').getBoundingClientRect(), br = band.getBoundingClientRect();
+      paint(ctx, w, h, { l: wr.left - br.left, r: wr.right - br.left });
+    };
+    new ResizeObserver(draw).observe(band);
+  });
+
+
+  /* ---------- Hero: secuencia única al cargar ---------- */
+  (() => {
+    const st = document.querySelector('.hero-stage'), cards = [...st.querySelectorAll('.hc')], chip = document.getElementById('paychip2');
+    const finish = () => { chip.className = 'chip'; chip.textContent = 'Pagada'; };
+    if (reduce) { cards.forEach(c => c.classList.add('in')); st.classList.add('s3'); finish(); return; }
+    cards.forEach((c, i) => setTimeout(() => { c.classList.add('in'); st.classList.add('s' + i); }, 300 + i * 650));
+    setTimeout(finish, 300 + 2 * 650 + 500);
+  })();
+
+  /* ---------- Tabs (teclado incluido) ---------- */
+  document.querySelectorAll('[data-tabs]').forEach(list => {
+    const tabs = [...list.querySelectorAll('[role=tab]')];
+    const select = (tab, focus) => {
+      tabs.forEach(t => { const on = t === tab; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute('aria-controls')).hidden = !on; });
+      if (focus) tab.focus();
+      list.dispatchEvent(new CustomEvent('tabchange', { detail: tabs.indexOf(tab) }));
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', e => {
+        const k = e.key, n = tabs.length;
+        const next = k === 'ArrowDown' || k === 'ArrowRight' ? (i + 1) % n : k === 'ArrowUp' || k === 'ArrowLeft' ? (i - 1 + n) % n : k === 'Home' ? 0 : k === 'End' ? n - 1 : null;
+        if (next !== null) { e.preventDefault(); select(tabs[next], true); }
+      });
+    });
+  });
+
+  /* ---------- Tres capas: secuencia ---------- */
+  (() => {
+    const layers = [...document.querySelectorAll('.layer')], rail = document.getElementById('lrail');
+    const chip = document.getElementById('lchip'), mrr = document.getElementById('lmrr'), delta = document.getElementById('ldelta');
+    const pt = document.getElementById('lpt'), seg = document.getElementById('lseg'), proj = document.getElementById('lproj');
+    let xs = [], dot, nodes = [];
+    const build = () => {
+      rail.innerHTML = ''; const r = rail.getBoundingClientRect(); if (!r.width) return;
+      xs = layers.map(l => { const b = l.getBoundingClientRect(); return b.left - r.left + b.width/2; });
+      const y = r.height/2;
+      rail.appendChild(el('line', { x1:0, x2:r.width, y1:y, y2:y, stroke:'#186666', 'stroke-width':2 }));
+      nodes = xs.map(x => { const c = el('circle', { cx:x, cy:y, r:6, fill:'#DFF4EB', stroke:'#186666', 'stroke-width':1.5 }); rail.appendChild(c); return c; });
+      dot = el('circle', { cx:0, cy:y, r:4, fill:'#186666' }); rail.appendChild(dot);
+    };
+    const set = (s, t) => {
+      layers.forEach((l, i) => l.classList.toggle('on', i <= s));
+      nodes.forEach((n, i) => n.setAttribute('fill', i <= s ? '#186666' : '#DFF4EB'));
+      document.querySelectorAll('.layer .cn').forEach(td => td.textContent = fmt(s >= 0 ? +td.dataset.v * Math.min(1, s > 0 ? 1 : t) : 0));
+      const done = s > 1 || (s === 1 && t > .5);
+      chip.className = 'chip ' + (done ? '' : 'run'); chip.textContent = done ? 'Listo' : 'Leyendo la OC';
+      const k = s >= 2 ? (s > 2 ? 1 : Math.min(1, t)) : 0;
+      mrr.textContent = fmt(184300 + 2900*k); delta.textContent = k >= 1 ? '+USD 2.900 de Nimbo AI' : '\u00a0';
+      pt.setAttribute('cx', 240 + 60*k); pt.setAttribute('cy', 32 - 12*k); seg.setAttribute('x2', 240 + 60*k); seg.setAttribute('y2', 32 - 12*k);
+      proj.setAttribute('opacity', k >= 1 ? 0 : .4);
+    };
+    build(); new ResizeObserver(build).observe(document.getElementById('layers'));
+    if (reduce) { set(2, 1); return; }
+    set(-1, 0);
+    let raf = 0, start = 0, vis = false;
+    const CYCLE = 9000;
+    const frame = now => {
+      if (!start) start = now;
+      const p = ((now - start) % CYCLE) / CYCLE, w = rail.getBoundingClientRect().width, tr = Math.min(1, p/0.78);
+      if (dot) { dot.setAttribute('cx', tr*w); dot.setAttribute('opacity', p < .92 ? 1 : 0); }
+      let s = -1, t = 0; xs.forEach((x, i) => { if (tr*w >= x) { s = i; t = Math.min(1, (tr*w - x)/(w*0.12)); } });
+      if (p >= .92) { s = 2; t = 1; }
+      set(s, t);
+      if (vis) raf = requestAnimationFrame(frame);
+    };
+    onView(document.getElementById('layers'), v => { vis = v; cancelAnimationFrame(raf); if (v) { start = 0; raf = requestAnimationFrame(frame); } });
+  })();
+
+  /* ---------- Feed de agentes ---------- */
+  (() => {
+    const items = [...document.querySelectorAll('#feed li')];
+    if (reduce) { items.forEach(i => i.classList.add('in')); return; }
+    let timer = 0, k = 0;
+    const step = () => {
+      if (k < items.length) { items[k++].classList.add('in'); timer = setTimeout(step, 900); }
+      else timer = setTimeout(() => { items.forEach(i => i.classList.remove('in')); k = 0; timer = setTimeout(step, 700); }, 5000);
+    };
+    onView(document.getElementById('feed'), v => { clearTimeout(timer); if (v) step(); }, { threshold: .3 });
+  })();
+
+  /* ---------- Gráficos ---------- */
+  const axis = (svg, max, ticks, H, L, W) => {
+    ticks.forEach(v => { const y = H - (v/max)*(H-20);
+      svg.appendChild(el('line', { x1:L, x2:W, y1:y, y2:y, stroke:'#ECEEF1' }));
+      const tx = el('text', { x:L-10, y:y+4, 'text-anchor':'end', 'font-size':11, fill:'#8B8D97', 'font-family':'Instrument Sans, sans-serif' }); tx.textContent = v; svg.appendChild(tx); });
+  };
+  const label = (svg, x, y, s, anchor) => { const t = el('text', { x, y, 'text-anchor':anchor || 'middle', 'font-size':12, fill:'#6E6E7A', 'font-family':'Instrument Sans, sans-serif' }); t.textContent = s; svg.appendChild(t); };
+  // c0: barras apiladas
+  (() => {
+    const svg = document.getElementById('c0'), H = 230, L = 44, W = 640, max = 250;
+    const m = ['Abr','May','Jun','Jul','Ago','Sep'], fix = [140,143,146,149,152,156], api = [38,52,41,63,49,72], doc = [12,9,15,11,17,14];
+    axis(svg, max, [0,125,250], H, L, W);
+    const bw = 46, gap = (W - L - 20 - bw*6)/5;
+    m.forEach((mm, i) => {
+      const x = L + 10 + i*(bw + gap); let y = H;
+      [[fix[i],'#13131E'],[api[i],'#633BF2'],[doc[i],'#E3C0F2']].forEach(([v,c]) => { const hh = v/max*(H-20); y -= hh; svg.appendChild(el('rect', { x, y, width:bw, height:hh, fill:c })); });
+      label(svg, x + bw/2, H + 20, mm);
+    });
+  })();
+  // c1: líneas DTI y DSO
+  (() => {
+    const svg = document.getElementById('c1'), H = 230, L = 44, W = 640, max = 50;
+    const m = ['Abr','May','Jun','Jul','Ago','Sep'], dti = [6,5,5,4,3,3], dso = [47,45,44,41,40,38];
+    axis(svg, max, [0,25,50], H, L, W);
+    const X = i => L + 20 + i*((W - L - 40)/5), Y = v => H - v/max*(H-20);
+    [[dso,'#13131E'],[dti,'#186666']].forEach(([d,c]) => {
+      svg.appendChild(el('polyline', { points:d.map((v,i) => `${X(i)},${Y(v)}`).join(' '), fill:'none', stroke:c, 'stroke-width':2 }));
+      d.forEach((v,i) => svg.appendChild(el('circle', { cx:X(i), cy:Y(v), r:3, fill:c })));
+    });
+    m.forEach((mm,i) => label(svg, X(i), H + 20, mm));
+  })();
+  // c2: waterfall
+  (() => {
+    const svg = document.getElementById('c2'), H = 230, L = 44, W = 640;
+    const steps = [['Sep',184.3,'base'],['Altas',6.2],['Expansión',3.1],['Consumo',2.9],['Contracción',-1.4],['Churn',-2.7],['Oct',192.4,'base']];
+    const lo = 175, hi = 200, Y = v => H - (v - lo)/(hi - lo)*(H - 20);
+    axis(svg, 1, [], H, L, W);
+    [175,185,195].forEach(v => { const y = Y(v); svg.appendChild(el('line', { x1:L, x2:W, y1:y, y2:y, stroke:'#ECEEF1' })); const t = el('text', { x:L-10, y:y+4, 'text-anchor':'end', 'font-size':11, fill:'#8B8D97', 'font-family':'Instrument Sans, sans-serif' }); t.textContent = v; svg.appendChild(t); });
+    const bw = 52, gap = (W - L - 20 - bw*steps.length)/(steps.length - 1); let acc = 0;
+    steps.forEach(([n, v, kind], i) => {
+      const x = L + 10 + i*(bw + gap); let y1, y2, c;
+      if (kind) { y1 = Y(v); y2 = H; c = '#13131E'; acc = v; }
+      else { const a = acc, b = acc + v; y1 = Y(Math.max(a, b)); y2 = Y(Math.min(a, b)); c = v > 0 ? '#186666' : '#C9746B'; acc = b; }
+      svg.appendChild(el('rect', { x, y:y1, width:bw, height:Math.max(1, y2 - y1), fill:c }));
+      const t = el('text', { x:x + bw/2, y:y1 - 6, 'text-anchor':'middle', 'font-size':11, fill:'#4A4A57', 'font-family':'Instrument Sans, sans-serif' }); t.textContent = kind ? v.toFixed(1) : (v > 0 ? '+' : '') + v.toFixed(1); svg.appendChild(t);
+      label(svg, x + bw/2, H + 20, n);
+    });
+  })();
+})();
+</script>
+</body>
+</html>

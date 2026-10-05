@@ -1,0 +1,168 @@
+{
+  "id": "planes",
+  "preset": "solucion",
+  "seo": "planes",
+  "keyword": "cobro de suscripciones y planes recurrentes",
+  "breadcrumb": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Soluciones",
+      "href": "/soluciones"
+    },
+    {
+      "label": "Planes recurrentes"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Cobro de suscripciones y planes recurrentes, en automático.",
+      "lead": "Planes fijos cobrados cada mes o cada año, con tarjeta, link de pago o transferencia. Facturas, cobranza y conciliación en un solo flujo.",
+      "intro": "Un plan fijo parece simple de cobrar hasta que tienes cientos de clientes: facturas que emitir, tarjetas que cobrar, transferencias que conciliar y clientes que pagan tarde. Relvo opera ese ciclo completo para que cada plan se cobre solo, y te deja listo el camino para sumar consumo cuando tu pricing lo pida.",
+      "ctas": [
+        {
+          "label": "Ver precios",
+          "href": "/precios",
+          "style": "primary"
+        },
+        {
+          "label": "Agendar demo",
+          "href": "/agendar-demo",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "heroApp",
+        "data": {
+          "url": "app.getrelvo.ai/facturas",
+          "section": "Facturas",
+          "kpi": {
+            "label": "Facturado en octubre",
+            "value": "USD 86.400",
+            "badge": "214 planes"
+          },
+          "rows": [
+            {
+              "cols": [
+                "F-2201",
+                "Plan Pro anual"
+              ],
+              "status": "Pagada"
+            },
+            {
+              "cols": [
+                "F-2202",
+                "Plan Starter"
+              ],
+              "status": "Pagada"
+            },
+            {
+              "cols": [
+                "F-2203",
+                "Plan Pro mensual"
+              ],
+              "status": "Enviada",
+              "tone": "neutral"
+            }
+          ],
+          "toast": {
+            "title": "Cobro con tarjeta exitoso",
+            "sub": "Plan Pro, hace un momento"
+          }
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "Del cobro mes a mes a mano a la suscripción que se cobra sola.",
+      "h2Soft": "Aunque tengas cientos de planes.",
+      "before": [
+        "Facturas emitidas una por una al inicio de cada mes.",
+        "Pagos por transferencia que nadie sabe a qué factura corresponden.",
+        "Clientes atrasados que se descubren tarde."
+      ],
+      "after": [
+        "Cada plan se factura solo en su fecha.",
+        "Relvo propone a qué factura corresponde cada pago y tu equipo confirma.",
+        "Los correos de cobranza salen antes y después del vencimiento."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "Cómo lo resuelve Relvo.",
+      "h2Soft": "Con las tres capas.",
+      "steps": [
+        {
+          "title": "Rieles",
+          "text": "Cada plan con su precio, frecuencia y moneda, convertido en reglas."
+        },
+        {
+          "title": "Agentes",
+          "text": "Avisan a tu equipo cuando un pago se atrasa o algo no calza."
+        },
+        {
+          "title": "Inteligencia",
+          "text": "MRR, altas y churn de tus planes, sin armar planillas."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Los productos que más usan.",
+      "h2Soft": "Para planes recurrentes.",
+      "items": [
+        "cxc",
+        "contratos",
+        "reporteria"
+      ]
+    },
+    {
+      "type": "case",
+      "ref": "tgp",
+      "h2": "Lo que cambió para TGP.",
+      "optional": true
+    },
+    {
+      "type": "faq",
+      "h2": "Preguntas frecuentes sobre planes recurrentes.",
+      "items": [
+        {
+          "q": "¿Relvo sirve si solo tengo planes fijos?",
+          "a": "Sí. Relvo factura, cobra y concilia planes fijos y suscripciones, y te deja listo para sumar consumo u otros componentes cuando lo necesites."
+        },
+        {
+          "q": "¿Cómo me pagan mis clientes?",
+          "a": "Con tarjeta, link de pago o transferencia, a través de Stripe, Toku o Fintoc."
+        },
+        {
+          "q": "¿Puedo cobrar planes mensuales y anuales?",
+          "a": "Sí. Cada plan puede cobrarse mensual, trimestral, semestral o anualmente."
+        },
+        {
+          "q": "¿Qué pasa si un cliente paga por transferencia?",
+          "a": "Relvo identifica el pago en el banco y propone a qué factura corresponde, incluso si es un pago parcial. Tu equipo confirma y la factura se actualiza."
+        },
+        {
+          "q": "¿Puedo sumar cobro por uso más adelante?",
+          "a": "Sí. Agregas el consumo como una regla más del plan, sin cambiar de sistema."
+        },
+        {
+          "q": "¿Qué pasa si un cliente se atrasa en el pago?",
+          "a": "Relvo envía correos de cobranza antes y después del vencimiento, y en cuentas por cobrar ves la antigüedad de cada saldo para saber a quién priorizar."
+        },
+        {
+          "q": "¿Puedo ver el MRR de mis planes?",
+          "a": "Sí. En Reportería ves el MRR y el ARR con sus altas, expansión, contracción y churn, mes a mes y por plan."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

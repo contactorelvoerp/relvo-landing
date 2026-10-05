@@ -1,3 +1,20 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/about-us", "destination": "/", "statusCode": 301 },
+    { "source": "/pricing", "destination": "/precios", "statusCode": 301 },
+    { "source": "/en/precios", "destination": "/precios", "statusCode": 301 },
+    { "source": "/en", "destination": "/", "statusCode": 301 },
+    { "source": "/en/pricing", "destination": "/precios", "statusCode": 301 },
+    { "source": "/shader-only", "destination": "/", "statusCode": 301 },
+    { "source": "/linkedin-banner", "destination": "/", "statusCode": 301 },
+    { "source": "/login", "destination": "https://app.relvoerp.com/login", "statusCode": 301 }
+  ],
+  "headers": [
+    {
+      "source": "/(assets|fonts)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
+  ]
 }
