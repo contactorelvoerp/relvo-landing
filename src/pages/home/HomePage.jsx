@@ -102,6 +102,11 @@ export function HomePage({ t, locale }) {
         <ThreeLayers c={c.layers} example={c.example} />
       </section>
 
+      <section className="section band manifesto" aria-label={c.manifesto.label}>
+        <BandTexture kind="ridgesSoft" />
+        <p className="manifesto__text">{c.manifesto.lines[0]}<br />{c.manifesto.lines[1]}</p>
+      </section>
+
       <section id="rieles" className="section band">
         <Heading n="01" title={c.rails.title} soft={c.rails.soft} />
         <Rails c={c.rails} example={c.example} />
