@@ -30,7 +30,6 @@
 .vtab:focus-visible{outline-offset:-2px}
 .rails__panel{position:relative;display:grid;place-items:center;min-height:420px;padding:40px;border-radius:var(--radius-lg);background:var(--band-neutral)}
 .rails__screen{display:grid;place-items:center;width:100%}
-.rails__tag{position:absolute;right:14px;bottom:12px}
 
 /* Panel de reportes: tabs de texto, KPI y gráfico. En desktop el panel tiene alto fijo
    (cambiar de tab no mueve la sección) y las tabs van en una línea sin scroll */

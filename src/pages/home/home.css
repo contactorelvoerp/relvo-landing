@@ -24,7 +24,6 @@
   .hero-stage .hc{position:relative;inset:auto;width:100%}
   .hero-stage .win__body{grid-template-columns:1fr;min-height:0}
   .hero-stage .win__side{display:none}
-  .hero-stage__tag{position:static;align-self:flex-end}
 }
 
 /* Carrusel de logos: lineal y lento, pausa en hover, corte limpio con filete (sin fade) */
@@ -88,7 +87,6 @@
 .layers__rail{display:none;position:relative;height:40px;margin-top:20px}
 .layers--wide .layers__rail{display:block}
 .layers__rail svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.layers__example{display:flex;justify-content:flex-end;margin-top:12px}
 
 /* Manifiesto (v2): una frase grande y centrada sobre la textura de relieve */
 .manifesto{padding-block:clamp(96px,10cqi,150px);text-align:center}

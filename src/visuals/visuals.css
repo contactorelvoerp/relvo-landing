@@ -2,8 +2,6 @@
    y las páginas de plantilla. Tokens y reglas de CLAUDE.md: Instrument Sans con cifras tabulares,
    etiquetas rectangulares sin punto y el acento de uso solo para consumo. */
 
-.example-tag{display:inline-flex;align-items:center;height:20px;padding:0 6px;border:1px dashed var(--line-rule);border-radius:var(--radius-sm);font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--text-main);white-space:nowrap}
-.example-tag--on-ink{border-color:var(--text-on-ink-muted);color:var(--text-on-ink-soft)}
 
 /* Etiqueta de estado (v2): rectangular, tinte suave, sin punto */
 .chip{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;background:var(--chip-bg);color:var(--chip-fg);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap}
@@ -119,7 +117,6 @@
 .agents__kpis small{display:block;font-size:12.5px;color:var(--text-muted)}
 .agents__kpis b{display:block;font-size:40px;font-weight:500;line-height:1.1;letter-spacing:-.03em;color:var(--text-main)}
 .agents__kpis b.agents__kpi--review{color:var(--status-review)}
-.agents__kpis .example-tag{margin-left:auto}
 .review{display:flex;flex-direction:column;height:100%}
 .review__label{margin:0 0 8px;font-size:12.5px;font-weight:500;color:var(--status-review)}
 .review__title{margin:0 0 18px;font-size:17px;font-weight:600;color:var(--text-main)}
@@ -186,7 +183,6 @@
 .hc__mark{display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:6px;background:var(--accent)}
 .hc--toast b{display:block;font-size:13.5px}
 .hc--toast small{display:block;font-size:12px;color:var(--text-muted)}
-.hero-stage__tag{position:absolute;right:12px;bottom:10px;z-index:2;background:rgba(255,255,255,.7)}
 @media (prefers-reduced-motion:reduce){.js .hc{clip-path:none;transform:none;transition:none}}
 
 /* heroApp (plantilla): ventana ancha, tarjeta de cobro abajo a la izquierda y aviso abajo a la derecha */
