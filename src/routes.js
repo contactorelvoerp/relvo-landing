@@ -8,9 +8,10 @@ import { PAGE_COMPONENTS, PAGE_LOCALES } from './pages/registry'
 function buildRoutes() {
   const routes = []
   for (const page of seo.pages) {
-    if (page.pagina.includes('(ola 2)')) continue
-    // Las páginas sin implementar se generan solo fuera de producción.
+    // Las páginas sin implementar se generan solo fuera de producción; las de la ola 2, solo cuando
+    // ya están implementadas.
     const built = Boolean(PAGE_COMPONENTS[page.id])
+    if (page.pagina.includes('(ola 2)') && !built) continue
     if (!built && !SHOW_PENDING) continue
     for (const locale of READY_LOCALES) {
       const live = built && (!PAGE_LOCALES[page.id] || PAGE_LOCALES[page.id].includes(locale))

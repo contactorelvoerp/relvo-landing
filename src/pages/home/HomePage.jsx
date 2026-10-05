@@ -153,7 +153,7 @@ export function HomePage({ t, locale }) {
 
       <section id="clientes" className="section band">
         <Heading title={c.case.title} />
-        <Case c={c.case} />
+        <Case c={c.case} link={hrefFor('tgp', locale) ? { href: hrefFor('tgp', locale), label: c.case.link } : null} />
       </section>
 
       <section className="section band band--ink">

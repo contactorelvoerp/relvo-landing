@@ -4,7 +4,7 @@ import { LandingPage } from '../landing/LandingPage'
 
 // Páginas de plantilla publicadas: se renderizan desde su archivo de contenido
 // (content/<idioma>/<url>.json). El resto de los archivos de content/ se valida pero no se publica.
-export const LANDINGS = ['cxc']
+export const LANDINGS = ['cxc', 'contratos', 'medicion', 'aprobaciones', 'agentes', 'reporteria', 'planes', 'hibrido', 'uso', 'saas', 'agencias', 'revops', 'finanzas', 'ingenieria', 'tgp']
 
 // id de página (reference/seo-metadata.json) → componente.
 // Una página se publica en producción solo cuando está registrada acá.

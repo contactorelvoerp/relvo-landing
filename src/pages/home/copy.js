@@ -191,6 +191,7 @@ export const copy = {
       quote: 'Hoy trabajamos mucho más rápido, con mayor confianza en los cálculos y con un proceso que puede escalar junto a nuestro crecimiento.',
       author: 'Francesco Cotroneo',
       role: 'Operations Lead, TGP',
+      link: 'Leer el caso de TGP',
     },
     latam: {
       title: 'Hecho para cobrar en LatAm.',
@@ -355,6 +356,7 @@ export const copy = {
       quote: '[PENDIENTE]',
       author: 'Francesco Cotroneo',
       role: 'Operations Lead, TGP',
+      link: '[PENDIENTE]',
     },
     latam: {
       title: 'Built to get paid in LatAm.',
