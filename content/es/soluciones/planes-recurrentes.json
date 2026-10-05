@@ -20,7 +20,7 @@
     {
       "type": "hero",
       "h1": "Cobro de suscripciones y planes recurrentes, en automático.",
-      "lead": "Planes fijos cobrados cada mes o cada año, con tarjeta, link de pago o transferencia. Facturas, cobranza y conciliación sin trabajo manual.",
+      "lead": "Planes fijos cobrados cada mes o cada año, con tarjeta, link de pago o transferencia. Facturas, cobranza y conciliación en un solo flujo.",
       "intro": "Un plan fijo parece simple de cobrar hasta que tienes cientos de clientes: facturas que emitir, tarjetas que cobrar, transferencias que conciliar y clientes que pagan tarde. Relvo opera ese ciclo completo para que cada plan se cobre solo, y te deja listo el camino para sumar consumo cuando tu pricing lo pida.",
       "ctas": [
         {
@@ -73,7 +73,8 @@
             "sub": "Plan Pro, hace un momento"
           }
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -86,7 +87,7 @@
       ],
       "after": [
         "Cada plan se factura solo en su fecha.",
-        "Cada pago se concilia contra su factura.",
+        "Relvo propone a qué factura corresponde cada pago y tu equipo confirma.",
         "Los correos de cobranza salen antes y después del vencimiento."
       ]
     },
@@ -143,7 +144,7 @@
         },
         {
           "q": "¿Qué pasa si un cliente paga por transferencia?",
-          "a": "Relvo identifica el pago en el banco y lo concilia contra su factura, incluso si es un pago parcial."
+          "a": "Relvo identifica el pago en el banco y propone a qué factura corresponde, incluso si es un pago parcial. Tu equipo confirma y la factura se actualiza."
         },
         {
           "q": "¿Puedo sumar cobro por uso más adelante?",
@@ -162,5 +163,6 @@
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

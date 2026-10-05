@@ -41,7 +41,8 @@
           "code": "POST /usage\n{\n  \"customer\": \"nimbo-ai\",\n  \"metric\": \"tokens\",\n  \"quantity\": 1250000\n}",
           "note": "Endpoint ilustrativo: reemplazar por el real de la API de Relvo."
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -124,5 +125,6 @@
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

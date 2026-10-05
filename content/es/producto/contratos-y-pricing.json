@@ -67,7 +67,8 @@
             "USD 3.090"
           ]
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -192,6 +193,37 @@
       ]
     },
     {
+      "type": "capabilities",
+      "h2": "Seis modelos de precio, tres tipos de cargo.",
+      "h2Soft": "Lo que dice el contrato, calculado igual.",
+      "items": [
+        {
+          "title": "Cargos fijos, de uso y únicos",
+          "text": "Un fijo por período, un cargo por lo que se consume y cargos de una sola vez, como una implementación o un hito."
+        },
+        {
+          "title": "Cargos por asiento",
+          "text": "La cantidad de seats se toma de una métrica, no se escribe a mano cada mes."
+        },
+        {
+          "title": "Seis modelos de precio",
+          "text": "Estándar, por tramos, por volumen, por paquete, porcentual y porcentual por tramos."
+        },
+        {
+          "title": "Unidades gratis, mínimos y topes",
+          "text": "Se aplican en un orden fijo y conocido, para que el monto siempre se pueda explicar."
+        },
+        {
+          "title": "Prorrateo, anticipado y vencido",
+          "text": "Cada cargo define si se prorratea y si se cobra al inicio o al cierre del período."
+        },
+        {
+          "title": "Fases, amendments y versiones",
+          "text": "Los contratos cambian por etapas y cada cambio queda como versión nueva, sin perder el historial."
+        }
+      ]
+    },
+    {
       "type": "related",
       "h2": "Funciona junto con.",
       "h2Soft": "El mismo motor, de punta a punta.",
@@ -228,11 +260,24 @@
         {
           "q": "¿Relvo se conecta con mi CRM?",
           "a": "Sí, Relvo se integra con HubSpot."
+        },
+        {
+          "q": "¿Qué diferencia hay entre cobrar por tramos y por volumen?",
+          "a": "Por tramos, cada tramo cobra su propio precio solo por las unidades que caen en él. Por volumen, la cantidad total define un tramo y ese precio se aplica a todas las unidades. Con los mismos tramos, los montos son distintos: elegir uno u otro es una decisión comercial."
+        },
+        {
+          "q": "¿Puedo cobrar un porcentaje sobre transacciones?",
+          "a": "Sí. Los modelos porcentual y porcentual por tramos cobran sobre el valor de cada evento, por ejemplo una comisión sobre el volumen transado, con pisos y techos por transacción."
+        },
+        {
+          "q": "¿Puedo dividir el cobro entre muchas sociedades?",
+          "a": "Sí. Un cobro puede dividirse en más de veinte razones sociales, cada una con sus reglas fiscales."
         }
       ]
     },
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

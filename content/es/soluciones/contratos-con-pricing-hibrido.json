@@ -53,7 +53,8 @@
           ],
           "glosa": "Servicio Relvo, octubre 2026. OC 4500-221."
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -141,5 +142,6 @@
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

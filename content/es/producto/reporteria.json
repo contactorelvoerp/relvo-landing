@@ -70,7 +70,8 @@
             ]
           ]
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -283,7 +284,7 @@
         },
         {
           "q": "¿De dónde salen los datos?",
-          "a": "Del mismo sistema que calcula, factura y cobra. No hay que exportar ni cruzar información entre herramientas."
+          "a": "Del mismo sistema que calcula, factura y cobra. El MRR y el ARR se calculan desde los contratos vigentes, y lo facturado y lo cobrado se registran como dos cifras distintas, con fechas distintas."
         },
         {
           "q": "¿Qué son el DSO y el DTI?",
@@ -302,5 +303,6 @@
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

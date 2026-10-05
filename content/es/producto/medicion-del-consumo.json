@@ -74,7 +74,8 @@
             40
           ]
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -216,6 +217,37 @@
       ]
     },
     {
+      "type": "capabilities",
+      "h2": "Consumo confiable, de punta a punta.",
+      "h2Soft": "Desde el evento hasta la línea de factura.",
+      "items": [
+        {
+          "title": "API, webhook, lotes o carga masiva",
+          "text": "El consumo entra en tiempo real o por lotes, como ya lo reportas hoy. También se puede registrar a mano."
+        },
+        {
+          "title": "Métricas configurables",
+          "text": "Eventos, transacciones, GB, asientos activos o tokens: cada unidad se mapea a las reglas del contrato."
+        },
+        {
+          "title": "Agregación por período",
+          "text": "El uso del ciclo se suma solo, sea mensual, quincenal o un período a medida."
+        },
+        {
+          "title": "Idempotencia",
+          "text": "Los eventos duplicados o reenviados no se cuentan dos veces."
+        },
+        {
+          "title": "Eventos inmutables",
+          "text": "Un evento no se edita: se corrige de forma explícita, y la corrección queda registrada."
+        },
+        {
+          "title": "Trazabilidad",
+          "text": "Cada línea de factura queda vinculada a los eventos que la generaron."
+        }
+      ]
+    },
+    {
       "type": "related",
       "h2": "Funciona junto con.",
       "h2Soft": "El mismo motor, de punta a punta.",
@@ -231,7 +263,7 @@
       "items": [
         {
           "q": "¿Cómo envío el consumo a Relvo?",
-          "a": "Por API. Tu producto reporta el uso de cada cliente y Relvo lo acumula para el período."
+          "a": "Por API, en tiempo real o por lotes, o con una carga masiva. Tu producto reporta el uso de cada cliente y Relvo lo agrega para el período."
         },
         {
           "q": "¿Qué métricas puedo medir?",
@@ -248,11 +280,20 @@
         {
           "q": "¿Necesito construir mi propio sistema de facturación por uso?",
           "a": "No. Envías el consumo y Relvo calcula, factura y cobra. Tu equipo de ingeniería no tiene que mantener la lógica de cobro."
+        },
+        {
+          "q": "¿Qué pasa si envío un evento dos veces?",
+          "a": "No se cuenta dos veces. Relvo es idempotente: los eventos duplicados o reenviados se descartan."
+        },
+        {
+          "q": "¿Qué pasa si el consumo de un cliente se dispara?",
+          "a": "Cuando el consumo se desvía de forma anómala respecto de los ciclos anteriores, Relvo avisa a tu equipo antes de facturar."
         }
       ]
     },
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

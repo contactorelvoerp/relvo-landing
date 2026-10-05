@@ -35,23 +35,44 @@
         }
       ],
       "visual": {
-        "id": "planCard",
+        "id": "composition",
         "data": {
-          "plan": "Fee de prospecting",
-          "client": "Cliente de agencia, octubre",
-          "price": "USD 2.000",
-          "lines": [
-            [
-              "Reuniones agendadas",
-              "32 × USD 45"
-            ]
-          ],
-          "total": [
-            "Total octubre",
-            "USD 3.440"
+          "pieces": [
+            {
+              "id": "slackMessage",
+              "data": {
+                "channel": "#facturacion",
+                "author": "Equipo de cuentas",
+                "time": "30 oct, 18:04",
+                "text": "Resultados de octubre: 32 reuniones agendadas para el cliente.",
+                "reply": {
+                  "author": "Relvo",
+                  "text": "Listo. Fee fijo USD 2.000 + variable USD 1.440. Pre-factura enviada a aprobación."
+                }
+              }
+            },
+            {
+              "id": "planCard",
+              "data": {
+                "plan": "Fee de prospecting",
+                "client": "Cliente de agencia, octubre",
+                "price": "USD 2.000",
+                "lines": [
+                  [
+                    "Reuniones agendadas",
+                    "32 × USD 45"
+                  ]
+                ],
+                "total": [
+                  "Total octubre",
+                  "USD 3.440"
+                ]
+              }
+            }
           ]
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -139,5 +160,6 @@
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

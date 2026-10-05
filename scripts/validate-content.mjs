@@ -1,7 +1,7 @@
 // Valida content/**/*.json contra content/schema.mjs y las reglas de SEO de content/SCHEMA.md.
 // Errores (detienen el build): schema, ruta del archivo distinta a su URL en seo-metadata.json,
 // caso inexistente y palabra clave repetida. Avisos (no detienen): palabra clave ausente del H1/intro
-// o de un H2, y palabras propias fuera de 450 a 700.
+// o de un H2, palabras propias fuera de 450 a 700 y más de 6 preguntas en la FAQ.
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -35,6 +35,7 @@ function ownWords(page) {
     for (const t of b.tabs ?? []) n += count(t.label) + count(t.desc)
     for (const k of b.kpis ?? []) n += count(k.label) + count(k.value)
     for (const q of b.items ?? []) if (q.q) n += count(q.q) + count(q.a)
+    for (const c of b.type === 'capabilities' ? b.items : []) n += count(c.title) + count(c.text)
   }
   return n
 }
@@ -61,6 +62,9 @@ for (const file of files(contentDir)) {
   const hero = page.blocks[0]
   if (!hasKeyword(`${hero.h1} ${hero.intro ?? ''}`, page.keyword)) warnings.push(`${rel}: la palabra clave "${page.keyword}" no aparece en el H1 ni en la intro`)
   if (!page.blocks.some((b) => b.h2 && hasKeyword(`${b.h2} ${b.h2Soft ?? ''}`, page.keyword))) warnings.push(`${rel}: la palabra clave "${page.keyword}" no aparece en un H2`)
+
+  const faq = page.blocks.find((b) => b.type === 'faq')
+  if (faq && faq.items.length > 6) warnings.push(`${rel}: ${faq.items.length} preguntas en la FAQ (SCHEMA.md: de 4 a 6)`)
 
   const n = ownWords(page)
   if (n < 450 || n > 700) warnings.push(`${rel}: ${n} palabras propias (regla: 450 a 700)`)

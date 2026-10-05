@@ -55,7 +55,8 @@
             }
           ]
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -68,7 +69,7 @@
       ],
       "after": [
         "Las facturas salen el día que corresponde.",
-        "Cada pago se concilia contra su factura, incluso los parciales.",
+        "Relvo propone a qué factura corresponde cada pago, incluso los parciales, y tu equipo confirma.",
         "Ingresos reconocidos bajo IFRS 15 en el mismo sistema."
       ]
     },
@@ -111,7 +112,7 @@
         },
         {
           "q": "¿Cómo concilia Relvo los pagos?",
-          "a": "Se conecta con tu banco, identifica cada movimiento y lo cruza con su factura, incluso si el pago es parcial."
+          "a": "Se conecta con tu banco, evalúa cada movimiento y propone a qué factura corresponde, con su evidencia. Tu equipo confirma, y Relvo aprende de cada confirmación. Los pagos parciales quedan con su saldo pendiente."
         },
         {
           "q": "¿Relvo hace reconocimiento de ingresos?",
@@ -138,5 +139,6 @@
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

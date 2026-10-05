@@ -61,7 +61,8 @@
             }
           ]
         }
-      }
+      },
+      "layout": "centered"
     },
     {
       "type": "beforeAfter",
@@ -188,6 +189,33 @@
       ]
     },
     {
+      "type": "capabilities",
+      "h2": "El proceso de tu cliente, ejecutado sin que nadie escriba el correo.",
+      "h2Soft": "Con reglas claras.",
+      "items": [
+        {
+          "title": "Ruteo configurable",
+          "text": "Cada contrato define quién aprueba: tu equipo, el cliente o ambos, y en qué orden."
+        },
+        {
+          "title": "Prefactura antes de emitir",
+          "text": "Un borrador pendiente de aprobación evita emitir lo que todavía no está confirmado."
+        },
+        {
+          "title": "Match con OC y HES",
+          "text": "Relvo valida que el documento del cliente calce con lo facturado; si no calza, avisa al encargado de la cuenta."
+        },
+        {
+          "title": "Slack y correo dedicado",
+          "text": "El agente pide, recuerda y responde donde ya trabaja tu equipo."
+        },
+        {
+          "title": "Emisión automática",
+          "text": "Con la aprobación completa, la factura y su documento tributario salen sin intervención manual."
+        }
+      ]
+    },
+    {
       "type": "related",
       "h2": "Funciona junto con.",
       "h2Soft": "El mismo motor, de punta a punta.",
@@ -220,11 +248,20 @@
         {
           "q": "¿Funciona con clientes que no piden OC?",
           "a": "Sí. Si un cliente no exige orden de compra ni aprobación, su factura sale directo cuando termina el período."
+        },
+        {
+          "q": "¿Quién aprueba antes de emitir?",
+          "a": "Lo define cada contrato: tu equipo, el cliente o ambos, y en qué orden."
+        },
+        {
+          "q": "¿Cuándo escala un caso a mi equipo?",
+          "a": "Cuando el cliente objeta el monto o la orden de compra no cubre lo facturado. El resto del proceso corre solo."
         }
       ]
     },
     {
       "type": "cta"
     }
-  ]
+  ],
+  "subnav": true
 }

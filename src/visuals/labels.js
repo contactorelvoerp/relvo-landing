@@ -25,6 +25,10 @@ const LABELS = {
     after: 'Con Relvo',
     dti: 'Días en facturar (DTI)',
     breadcrumb: 'Migas de pan',
+    // Barra secundaria: etiqueta corta del ancla de cada bloque con h2 (piloto aprobada)
+    sections: 'Secciones',
+    docs: 'Docs',
+    anchors: { beforeAfter: 'Resumen', steps: 'Cómo funciona', featureTabs: 'Funcionalidades', capabilities: 'Detalle', metrics: 'Métricas', case: 'Caso', related: 'Relacionados', faq: 'Preguntas' },
   },
   en: {
     appNav: [P, P, P, P],
@@ -41,5 +45,8 @@ const LABELS = {
     after: P,
     dti: P,
     breadcrumb: P,
+    sections: P,
+    docs: 'Docs',
+    anchors: { beforeAfter: P, steps: P, featureTabs: P, capabilities: P, metrics: P, case: P, related: P, faq: P },
   },
 }
