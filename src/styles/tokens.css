@@ -7,14 +7,11 @@
 @font-face{font-family:'Instrument Sans';src:url('/fonts/instrument-sans/InstrumentSans-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:'Instrument Sans';src:url('/fonts/instrument-sans/InstrumentSans-SemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
 @font-face{font-family:'Instrument Sans';src:url('/fonts/instrument-sans/InstrumentSans-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:'Geist Mono';src:url('/fonts/geist-mono/GeistMono-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:'Geist Mono';src:url('/fonts/geist-mono/GeistMono-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
 
 :root{
   /* Tipografía */
-  --font-display:'Fujiwara A', sans-serif;          /* h1, h2 y cifras grandes de marketing */
+  --font-display:'Fujiwara A', sans-serif;          /* SOLO el H1 del hero de la home */
   --font-ui:'Instrument Sans', system-ui, sans-serif; /* todo el texto, botones, nav */
-  --font-mono:'Geist Mono', ui-monospace, monospace;  /* SOLO números y datos en UI de producto, y código */
 
   /* Tinta y papel */
   --ink:#13131E;
@@ -38,6 +35,12 @@
   --accent-wash:#EEF4F4;     /* fila seleccionada / foco. Nunca como fondo de sección */
   --accent-on-ink:#8CC7C7;   /* acento sobre --ink (código, eyebrow en oscuro) */
 
+  /* Acento de uso (morado de la paleta Relvo). SOLO consumo/uso: tokens, barras y series de consumo.
+     Nunca en botones, CTAs ni texto largo */
+  --uso:#633BF2;
+  --uso-soft:#E6DCEF;
+  --uso-2:#E3C0F2;
+
   /* Estado y juicio de cifras */
   --positive:#3F7A1C;              /* la cifra va bien / listo · 5,2:1 · oliva, distinto del CTA para que un botón no se lea como estado */
   --negative:#A3302A;              /* la cifra va mal · 6,9:1 */
@@ -54,7 +57,7 @@
   --text-on-green-soft:#DFF4EB;/* 5,9:1 sobre #186666 */
   /* Tarjeta destacada */
   --card-dark:#1D1D2A;         /* tarjeta destacada oscura (sobre banda oscura) */
-  --chip-bg:#DFF4EB; --chip-fg:#0F4A4A;                               /* chip "Cobrado" / "Listo" sobre claro */
+  --chip-bg:#E3F1EC; --chip-fg:#0F4A4A;                               /* etiqueta "Pagada" / "Listo" sobre claro */
   --chip-bg-on-dark:rgba(114,221,170,.14); --chip-fg-on-dark:#72DDAA; /* chip "Listo" sobre tarjeta oscura */
 
   /* Líneas. El filete de tinta es el protagonista */
@@ -84,12 +87,12 @@
 }
 
 /* Tipografía semántica */
-h1,h2{font-family:var(--font-display);font-weight:500;color:var(--text-main);text-wrap:balance}
+h1,h2{font-family:var(--font-ui);font-weight:500;color:var(--text-main);text-wrap:balance}
 h1{font-size:clamp(2.6rem,6.2vw,5.4rem);line-height:1.02;letter-spacing:-.03em}
 h2{font-size:clamp(1.9rem,3.4vw,3rem);line-height:1.08;letter-spacing:-.02em}
 h3{font-family:var(--font-ui);font-weight:600;font-size:1.1875rem;line-height:1.3;letter-spacing:-.01em;color:var(--text-main)}
 p{font-family:var(--font-ui);font-size:1rem;line-height:1.55;color:var(--text-body);text-wrap:pretty}
-code,pre,.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
 a{color:var(--accent)}a:hover{color:var(--accent-hover)}a:active{color:var(--accent-pressed)}
 
 :focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}

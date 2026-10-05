@@ -1,7 +1,7 @@
 // Gate de regla cero: sirve dist/ y corre `impeccable detect` sobre cada página
 // renderizada en un navegador (el análisis estático no resuelve clamp() ni cqi).
 // Falla con cualquier finding. Única excepción aprobada (Ricardo, 2026-10-02):
-// Instrument Sans y Geist Mono son las tipografías del manual de marca, así que
+// Instrument Sans es la tipografía del manual de marca, así que
 // "overused-font" no cuenta para ellas. Y el carrusel de logos del hero (marquee) está aprobado. Los avisos "advisory" se listan pero no bloquean.
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
-const BRAND_FONTS = /instrument sans|geist mono/i
+const BRAND_FONTS = /instrument sans/i
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.woff2': 'font/woff2' }
 
 function htmlFiles(dir) {

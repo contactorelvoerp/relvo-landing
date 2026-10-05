@@ -36,7 +36,7 @@ export function ThreeLayers({ c, example }) {
       nums.forEach((n) => { const v = +n.dataset.v; n.textContent = fmt(s < 0 ? 0 : s === 0 ? v * Math.min(1, t) : v) })
       if (s === 0 && t < 1) return
       const isDone = s >= 1 && (s > 1 || t > 0.5)
-      chip.style.background = isDone ? '#DFF4EB' : '#FBF3E4'; chip.style.color = isDone ? '#0F4A4A' : '#8A5A00'
+      chip.style.background = isDone ? '#E3F1EC' : '#FBF3E4'; chip.style.color = isDone ? '#0F4A4A' : '#8A5A00'
       chipText.textContent = isDone ? done : running
       const k = s >= 2 ? (s > 2 ? 1 : Math.min(1, t)) : 0
       mrr.textContent = fmt(184300 + 2900 * k)
@@ -99,7 +99,7 @@ export function ThreeLayers({ c, example }) {
             </div>
             <strong className="layers__event-title">{c.agents.event}</strong>
             <span className="layers__event-context">{c.agents.context}</span>
-            <span data-k="chip" className="layers__chip"><span className="layers__chip-dot" /><span data-k="chipText">{done}</span></span>
+            <span data-k="chip" className="layers__chip"><span data-k="chipText">{done}</span></span>
           </div>
         </article>
         <article data-k="layer" className="layers__card">
