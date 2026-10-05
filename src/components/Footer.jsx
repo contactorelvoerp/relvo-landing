@@ -13,7 +13,8 @@ const LEGAL = ['terminos', 'privacidad']
 
 export function Footer({ t, locale }) {
   const links = (ids, showWithoutPage = []) => ids
-    .map((id) => ({ id, href: hrefFor(id, locale), name: t.pages[id].name }))
+    // Clientes lleva al caso TGP de la home, como en el menú
+    .map((id) => ({ id, href: id === 'clientes' ? `${hrefFor('home', locale) ?? '/'}#clientes` : hrefFor(id, locale), name: t.pages[id].name }))
     .filter((l) => l.href || showWithoutPage.includes(l.id))
   const columns = COLUMNS
     .map((c) => ({ ...c, links: links(c.ids, c.showWithoutPage) }))
