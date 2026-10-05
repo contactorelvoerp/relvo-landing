@@ -45,7 +45,7 @@ export function Hero({ b, p, breadcrumb }) {
       </div>
       <div className="lp-hero__visual">
         <div className={`stage lp-stage${wide ? ' lp-stage--wide' : ''}`}>
-          <Texture kind="orbits" />
+          <Texture kind={p.heroTexture} />
           <Visual visual={b.visual} locale={p.locale} caseData={p.caseData} label={b.h1} />
         </div>
       </div>

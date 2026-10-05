@@ -10,6 +10,10 @@ import './landing.css'
 // Plantilla única de las páginas de producto, soluciones y casos: lee el archivo de contenido de la
 // ruta (content/<idioma>/<url>.json) y renderiza sus bloques en orden. Todo queda en el HTML inicial.
 // Integraciones y CTA son los de la home (iguales en todo el sitio).
+// Textura del escenario del hero: distinta a la de la home (Órbitas) y fija por página
+const HERO_TEXTURES = ['ridges', 'pulse', 'periods']
+const heroTexture = (id) => HERO_TEXTURES[[...id].reduce((n, ch) => n + ch.charCodeAt(0), 0) % HERO_TEXTURES.length]
+
 const BLOCKS = { beforeAfter: BeforeAfter, steps: Steps, featureTabs: Features, capabilities: Capabilities, metrics: Metrics, case: CaseBlock, related: Related, faq: Faq, quote: Quote }
 
 export function LandingPage({ t, locale, route }) {
@@ -22,6 +26,7 @@ export function LandingPage({ t, locale, route }) {
     l: labelsFor(locale),
     numberLocale: locale === 'en' ? 'en-US' : 'es-CL',
     caseData: page.case,
+    heroTexture: heroTexture(page.id),
     getCase: (ref) => getCase(locale, ref),
   }
   const [hero, ...rest] = page.blocks
