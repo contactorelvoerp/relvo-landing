@@ -14,7 +14,8 @@
     "check:bands": "node scripts/check-bands.mjs",
     "check:design": "node scripts/impeccable-gate.mjs",
     "check:content": "node scripts/validate-content.mjs",
-    "check:jsonld": "node scripts/check-jsonld.mjs"
+    "check:jsonld": "node scripts/check-jsonld.mjs",
+    "check:routes": "node scripts/check-routes.mjs"
   },
   "dependencies": {
     "react": "^18.2.0",
