@@ -5,11 +5,11 @@ export const SITE_URL = seo.site
 export const DEFAULT_LOCALE = seo.defaultLocale
 export const SITE_NAME = 'Relvo'
 export const APP_LOGIN_URL = 'https://app.relvoerp.com/login'
-// Docs y Blog viven fuera de este sitio (como en la web anterior): la documentación de producto y la
-// de la API en la app, el blog en su propio sitio. /docs y /blog redirigen ahí (vercel.json).
+// Páginas que no genera este sitio. Docs vive en la app (/docs redirige ahí). El blog es el proyecto
+// relvo-blog (Astro + Keystatic), servido en /blog con un rewrite (vercel.json).
 export const EXTERNAL_PAGES = {
   docs: 'https://app.relvoerp.com/docs/product',
-  blog: 'https://blog.relvoerp.com',
+  blog: '/blog',
 }
 export const API_DOCS_URL = 'https://app.relvoerp.com/docs'
 export const LINKEDIN_URL = 'https://www.linkedin.com/company/relvoerp/'
