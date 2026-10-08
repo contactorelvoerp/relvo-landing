@@ -8,12 +8,14 @@
     { "source": "/en", "destination": "/", "statusCode": 301 },
     { "source": "/docs", "destination": "https://app.relvoerp.com/docs/product", "statusCode": 301 },
     { "source": "/docs/:path*", "destination": "https://app.relvoerp.com/docs/product", "statusCode": 301 },
-    { "source": "/blog", "destination": "https://blog.relvoerp.com", "statusCode": 301 },
-    { "source": "/blog/:path*", "destination": "https://blog.relvoerp.com/:path*", "statusCode": 301 },
     { "source": "/en/pricing", "destination": "/precios", "statusCode": 301 },
     { "source": "/shader-only", "destination": "/", "statusCode": 301 },
     { "source": "/linkedin-banner", "destination": "/", "statusCode": 301 },
     { "source": "/login", "destination": "https://app.relvoerp.com/login", "statusCode": 301 }
+  ],
+  "rewrites": [
+    { "source": "/blog", "destination": "https://relvo-blog.vercel.app/blog" },
+    { "source": "/blog/:path*", "destination": "https://relvo-blog.vercel.app/blog/:path*" }
   ],
   "headers": [
     {

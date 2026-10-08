@@ -2,7 +2,7 @@
 // textura Órbitas), con el logo oficial (public/logo-logotype-dark.svg) y el dominio. Corre en el
 // build, antes de prerender.mjs, y escribe dist/og/<id>-<idioma>.png (prerender la enlaza si existe).
 // H1: el del archivo de contenido en las plantillas, el de su copy en la home y la demo, y el title
-// (que es su H1) en las páginas en preparación.
+// (que es su H1) en las páginas en preparación. También la de la portada del blog (proyecto relvo-blog).
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -73,6 +73,8 @@ const pages = [
   ['demo', 'es', demoCopy.es.title],
   ['demo', 'en', demoCopy.en.title],
   ...seo.pages.filter((p) => NOINDEX_PAGES.includes(p.id)).map((p) => [p.id, 'es', p.es.title]),
+  // Portada del blog (relvo-blog la usa como og:image de /blog)
+  ['blog', 'es', 'Blog'],
 ]
 for (const file of files(path.join(root, 'content'))) {
   const page = JSON.parse(fs.readFileSync(file, 'utf8'))

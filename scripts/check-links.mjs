@@ -23,16 +23,23 @@ function exists(url) {
     .some((candidate) => fs.existsSync(candidate) && fs.statSync(candidate).isFile())
 }
 
+// Las rutas con rewrite a otro proyecto (el blog en /blog, vercel.json) las sirve ese proyecto: no se
+// buscan en dist/
+const { redirects = [], rewrites = [] } = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'))
+const proxied = rewrites
+  .filter((r) => /^https?:/.test(r.destination))
+  .map((r) => new RegExp(`^${r.source.replace(/:\w+\*/g, '.*').replace(/:\w+/g, '[^/]+')}$`))
+const external = (url) => proxied.some((re) => re.test(url.split('#')[0].split('?')[0]))
+
 const errors = []
 
 for (const file of htmlFiles(dist)) {
   const html = fs.readFileSync(file, 'utf8')
   for (const [, url] of html.matchAll(/\s(?:href|src)="(\/[^"/][^"]*|\/)"/g)) {
-    if (!exists(url)) errors.push(`${path.relative(dist, file)}: ${url} no existe`)
+    if (!external(url) && !exists(url)) errors.push(`${path.relative(dist, file)}: ${url} no existe`)
   }
 }
 
-const { redirects = [] } = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'))
 for (const { source, destination } of redirects) {
   if (exists(source)) errors.push(`redirect ${source}: el origen todavía existe como página`)
   if (destination.startsWith('/') && !exists(destination)) errors.push(`redirect ${source}: destino ${destination} no existe`)
