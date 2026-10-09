@@ -4,11 +4,11 @@ import seo from '../reference/seo-metadata.json'
 export const SITE_URL = seo.site
 export const DEFAULT_LOCALE = seo.defaultLocale
 export const SITE_NAME = 'Relvo'
-export const APP_LOGIN_URL = 'https://app.relvoerp.com/login'
+export const APP_LOGIN_URL = 'https://app.getrelvo.ai/login'
 // Páginas que no genera este sitio. Docs vive en la app (/docs redirige ahí). El blog es el proyecto
 // relvo-blog (Astro + Keystatic), servido en /blog con un rewrite (vercel.json).
 export const EXTERNAL_PAGES = {
-  docs: 'https://app.relvoerp.com/docs/product',
+  docs: 'https://app.getrelvo.ai/docs/product/es/overview/',
   blog: '/blog',
 }
 export const API_DOCS_URL = 'https://app.relvoerp.com/docs'
