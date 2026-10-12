@@ -2,6 +2,12 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.getrelvo.ai" }],
+      "destination": "https://getrelvo.ai/:path*",
+      "statusCode": 301
+    },
     { "source": "/about-us", "destination": "/", "statusCode": 301 },
     { "source": "/pricing", "destination": "/precios", "statusCode": 301 },
     { "source": "/en/precios", "destination": "/precios", "statusCode": 301 },

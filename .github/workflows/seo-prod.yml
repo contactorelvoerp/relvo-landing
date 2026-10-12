@@ -1,0 +1,20 @@
+name: SEO producción
+
+# Tras cada deploy de producción en Vercel (y una vez al día): falla si una página pública
+# sirve noindex o si un redirect del mapa no devuelve 301 al destino correcto.
+on:
+  deployment_status:
+  schedule:
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    if: github.event_name != 'deployment_status' || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm run check:prod-seo
