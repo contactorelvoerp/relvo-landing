@@ -1,6 +1,7 @@
 import { getRoutes } from '../routes'
 import { getContent } from '../content'
 import { getDict } from '../i18n'
+import { answeredFaq } from '../pages/pricing/copy'
 import { APOLLO_APP_ID, DEFAULT_LOCALE, GA_ID, LINKEDIN_URL, SITE_NAME, SITE_URL } from '../site'
 
 const OG_LOCALE = { es: 'es_LA', en: 'en_US' }
@@ -58,6 +59,11 @@ function jsonLd(route) {
       ],
     })
   }
+  // Precios: solo las preguntas con respuesta aprobada (las [PENDIENTE] no se publican)
+  if (route.id === 'precios') {
+    const faq = answeredFaq(route.locale)
+    if (faq.length) graph.push(faqLd(faq))
+  }
   return graph
 }
 
@@ -87,12 +93,16 @@ function landingLd(page, route, url, org) {
   }
   const faq = page.blocks.find((b) => b.type === 'faq')
   if (faq) {
-    ld.push({
-      '@type': 'FAQPage',
-      mainEntity: faq.items.map((q) => ({ '@type': 'Question', name: q.q, acceptedAnswer: { '@type': 'Answer', text: q.a } })),
-    })
+    ld.push(faqLd(faq.items))
   }
   return ld
+}
+
+function faqLd(items) {
+  return {
+    '@type': 'FAQPage',
+    mainEntity: items.map((q) => ({ '@type': 'Question', name: q.q, acceptedAnswer: { '@type': 'Answer', text: q.a } })),
+  }
 }
 
 // Devuelve el HTML del <head> de una ruta. `production` decide indexación y analítica;

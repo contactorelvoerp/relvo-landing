@@ -44,6 +44,8 @@ for (const file of htmlFiles(dist)) {
       if (t === 'FAQPage') {
         faqs++
         const visible = [...html.matchAll(/<details[^>]*><summary>([\s\S]*?)<\/summary><p>([\s\S]*?)<\/p><\/details>/g)].map(([, q, a]) => [decode(q), decode(a)])
+          // Las preguntas [PENDIENTE] solo se ven en preview y no van al FAQPage
+          .filter(([, a]) => !a.includes('[PENDIENTE]'))
         const marked = node.mainEntity.map((q) => [q.name, q.acceptedAnswer.text])
         if (visible.length !== marked.length) errors.push(`${rel}: FAQPage tiene ${marked.length} preguntas y la página muestra ${visible.length}`)
         marked.forEach(([q, a], i) => {

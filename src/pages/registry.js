@@ -1,5 +1,6 @@
 import { HomePage } from './home/HomePage'
 import { DemoPage } from './demo/DemoPage'
+import { PricingPage } from './pricing/PricingPage'
 import { LandingPage } from '../landing/LandingPage'
 import { PlaceholderPage } from './PlaceholderPage'
 import { NOINDEX_PAGES } from './noindex'
@@ -13,6 +14,7 @@ export const LANDINGS = ['cxc', 'contratos', 'medicion', 'aprobaciones', 'agente
 export const PAGE_COMPONENTS = {
   home: HomePage,
   demo: DemoPage,
+  precios: PricingPage,
   ...Object.fromEntries(LANDINGS.map((id) => [id, LandingPage])),
   ...Object.fromEntries(NOINDEX_PAGES.map((id) => [id, PlaceholderPage])),
 }
@@ -22,5 +24,7 @@ export const PAGE_COMPONENTS = {
 // después (rutas /en preparadas, sin publicar).
 export const PAGE_LOCALES = {
   home: ['es'],
+  // Precios: sin copy aprobado en inglés
+  precios: ['es'],
   ...Object.fromEntries([...LANDINGS, ...NOINDEX_PAGES].map((id) => [id, ['es']])),
 }
