@@ -15,7 +15,8 @@
     "check:design": "node scripts/impeccable-gate.mjs",
     "check:content": "node scripts/validate-content.mjs",
     "check:jsonld": "node scripts/check-jsonld.mjs",
-    "check:routes": "node scripts/check-routes.mjs"
+    "check:routes": "node scripts/check-routes.mjs",
+    "check:prod-seo": "node scripts/check-prod-seo.mjs"
   },
   "dependencies": {
     "react": "^18.2.0",

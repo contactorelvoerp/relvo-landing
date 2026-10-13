@@ -2,7 +2,16 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.getrelvo.ai" }],
+      "destination": "https://getrelvo.ai/:path*",
+      "statusCode": 301
+    },
     { "source": "/about-us", "destination": "/", "statusCode": 301 },
+    { "source": "/soluciones", "destination": "/", "statusCode": 301 },
+    { "source": "/soluciones/head-of-revenue", "destination": "/soluciones/revenue-ops", "statusCode": 301 },
+    { "source": "/soluciones/finanzas-revops", "destination": "/soluciones/finanzas", "statusCode": 301 },
     { "source": "/pricing", "destination": "/precios", "statusCode": 301 },
     { "source": "/en/precios", "destination": "/precios", "statusCode": 301 },
     { "source": "/en", "destination": "/", "statusCode": 301 },
