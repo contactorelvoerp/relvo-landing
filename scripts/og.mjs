@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url'
 import { Resvg } from '@resvg/resvg-js'
 import { copy as homeCopy } from '../src/pages/home/copy.js'
 import { copy as demoCopy } from '../src/pages/demo/copy.js'
+import { copy as pricingCopy } from '../src/pages/pricing/copy.js'
 import { NOINDEX_PAGES } from '../src/pages/noindex.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -72,6 +73,7 @@ const pages = [
   ['home', 'es', homeCopy.es.hero.title],
   ['demo', 'es', demoCopy.es.title],
   ['demo', 'en', demoCopy.en.title],
+  ['precios', 'es', pricingCopy.es.hero.h1],
   ...seo.pages.filter((p) => NOINDEX_PAGES.includes(p.id)).map((p) => [p.id, 'es', p.es.title]),
   // Portada del blog (relvo-blog la usa como og:image de /blog)
   ['blog', 'es', 'Blog'],
