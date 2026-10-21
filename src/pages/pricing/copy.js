@@ -18,7 +18,7 @@ export const copy = {
       {
         name: 'Startup',
         who: 'Para SaaS e IA que cobran planes fijos y quieren automatizar el cobro desde el primer cliente.',
-        price: 'USD 249',
+        price: 'USD 299',
         period: '/ mes',
         limits: ['Hasta 50', '1', '1'],
         payLabel: 'Te pagan con',
