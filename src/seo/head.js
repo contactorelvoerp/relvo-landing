@@ -38,7 +38,7 @@ function jsonLd(route) {
   const url = absoluteUrl(route.path)
   const page = getContent(route.locale, route.path)
   if (page) return [...graph, ...landingLd(page, route, url, org)]
-  if (route.id === 'home') {
+  if (route.id === 'home' || route.id === 'powered_by') {
     graph.push({
       '@type': 'SoftwareApplication',
       name: SITE_NAME,
@@ -153,12 +153,8 @@ export function buildHead(route, { production, ogImage }) {
   const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLd(route) }).replace(/</g, '\\u003c')
   tags.push(`<script type="application/ld+json">${ld}</script>`)
 
-  // Analítica solo en producción (los previews no ensucian las métricas de conversión) y recién
-  // después de la carga, para no competir con el primer render. gtag() encola eventos desde el inicio.
-  if (production) {
-    tags.push(
-      `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');addEventListener('load',function(){setTimeout(function(){function add(src,onload){var s=document.createElement('script');s.src=src;s.async=true;if(onload)s.onload=onload;document.head.appendChild(s)}add('https://www.googletagmanager.com/gtag/js?id=${GA_ID}');add('https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache='+Math.random().toString(36).substring(7),function(){window.trackingFunctions.onLoad({appId:'${APOLLO_APP_ID}'})})},1500)})</script>`,
-    )
-  }
+  // Previews never load tracking. The client captures and sanitizes attribution
+  // before configuring GA or loading third-party scripts.
+  if (production) tags.push(`<script>window.__RELVO_ANALYTICS__=${JSON.stringify({ measurementId: GA_ID, apolloAppId: APOLLO_APP_ID })}</script>`)
   return tags.join('\n    ')
 }

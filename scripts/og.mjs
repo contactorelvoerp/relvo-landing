@@ -71,6 +71,8 @@ const render = (h1) => new Resvg(svg(h1), { font: { fontFiles: [font], loadSyste
 // [id, idioma, H1] de cada página
 const pages = [
   ['home', 'es', homeCopy.es.hero.title],
+  ['powered_by', 'es', 'Powered by Relvo'],
+  ['powered_by', 'en', 'Powered by Relvo'],
   ['demo', 'es', demoCopy.es.title],
   ['demo', 'en', demoCopy.en.title],
   ['precios', 'es', pricingCopy.es.hero.h1],

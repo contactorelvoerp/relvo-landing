@@ -20,7 +20,8 @@ module.exports = {
     'react/prop-types': 'off',
   },
   overrides: [
-    { files: ['scripts/**', 'api/**', 'vite.config.js'], env: { node: true, browser: false } },
+    { files: ['scripts/**', 'api/**', 'server/**', 'tests/**', 'playwright.config.js', 'vite.config.js'], env: { node: true, browser: false } },
+    { files: ['tests/browser/**'], env: { node: true, browser: true } },
     { files: ['src/entry-*.jsx'], rules: { 'react-refresh/only-export-components': 'off' } },
   ],
 }

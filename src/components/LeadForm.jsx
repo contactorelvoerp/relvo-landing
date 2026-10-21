@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { captureAttribution } from '../attribution.js'
+import { trackMarketingEvent } from '../analytics.js'
 import { copy } from '../pages/demo/copy'
 import '../pages/demo/demo.css'
 
@@ -9,6 +11,9 @@ const REQUIRED = ['nombre', 'email', 'empresa', 'cargo']
 // Lo usan /agendar-demo y /precios: mismos campos y endpoint; `fuente` dice desde qué página llegó.
 // `success` reemplaza el mensaje de éxito por defecto; `submit`, el texto del botón.
 export function LeadForm({ locale, fuente, submit: submitLabel, success }) {
+  const submissionId = useRef(null)
+  const started = useRef(false)
+  const converted = useRef(false)
   const c = copy[locale]
   const [data, setData] = useState(EMPTY)
   const [errors, setErrors] = useState({})
@@ -28,16 +33,24 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success }) {
     setErrors(next)
     if (Object.keys(next).length > 0) return
 
+    if (status === 'loading') return
+    submissionId.current ??= crypto.randomUUID()
     setStatus('loading')
     try {
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, url_origen: window.location.href, fuente }),
+        body: JSON.stringify({ ...data, url_origen: window.location.href, fuente, attribution: captureAttribution(), submission_id: submissionId.current }),
       })
       if (!res.ok) throw new Error(String(res.status))
       // Evento de conversión (métrica de éxito del sitio). Sin datos personales.
-      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form: fuente, locale })
+      const result = await res.json()
+      // A lost first response can leave a saved lead: a confirmed retry still
+      // converts once in this browser. Honeypot acknowledgments never convert.
+      if (result.recorded !== false && !converted.current) {
+        converted.current = true
+        trackMarketingEvent('generate_lead', { form: fuente, locale })
+      }
       setStatus('success')
     } catch {
       setStatus('error')
@@ -69,7 +82,9 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success }) {
     )
   }
   return (
-    <form className="form" onSubmit={submit} noValidate>
+    <form className="form" onSubmit={submit} noValidate onFocus={() => {
+      if (!started.current) { started.current = true; trackMarketingEvent('powered_by_form_start', { form: fuente, locale }) }
+    }}>
       <div className="form__row">
         {field('nombre', `${c.name} *`, <input type="text" autoComplete="name" placeholder={c.namePlaceholder} {...props('nombre')} />)}
         {field('email', `${c.email} *`, <input type="email" autoComplete="email" placeholder={c.emailPlaceholder} {...props('email')} />)}

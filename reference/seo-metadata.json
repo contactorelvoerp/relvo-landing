@@ -331,6 +331,20 @@
         "title": "TGP: 70% less operational time with Relvo",
         "description": "LatAm's largest prospecting agency cut operational time by 70% and went from 6 to 3 days to invoice while growing 30% in 3 months."
       }
+    },
+    {
+      "id": "powered_by",
+      "pagina": "Powered by Relvo",
+      "es": {
+        "url": "/powered-by-relvo",
+        "title": "Powered by Relvo | Calcula, factura, cobra y concilia",
+        "description": "Powered by Relvo. Relvo convierte tu pricing en ingresos: calcula, factura, cobra y concilia planes fijos, seats y uso en un solo sistema. Para SaaS e IA en LatAm."
+      },
+      "en": {
+        "url": "/en/powered-by-relvo",
+        "title": "Powered by Relvo | Calculate, invoice, collect and reconcile",
+        "description": "Powered by Relvo. Relvo turns your pricing into revenue: it calculates, invoices, collects and reconciles fixed plans, seats and usage in one system. For LatAm SaaS and AI."
+      }
     }
   ]
 }
