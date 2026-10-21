@@ -37,7 +37,7 @@ export function Footer({ t, locale }) {
           </div>
         ))}
       </div>
-      <p className="footer__illustrative">{t.footer.illustrative}</p>
+      {!t.footer.illustrative.includes('[PENDIENTE]') && <p className="footer__illustrative">{t.footer.illustrative}</p>}
       <div className="footer__legal">
         <span>{t.footer.legal}</span>
         {links(LEGAL).map((l) => <a key={l.id} href={l.href}>{l.name}</a>)}

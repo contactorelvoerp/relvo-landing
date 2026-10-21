@@ -1,3 +1,5 @@
+import { cleanAttribution } from '../shared/attribution.js'
+
 // Receives Supabase Database Webhook events (INSERT on public.leads) and
 // relays a formatted message to the Slack #ventas channel via Incoming Webhook.
 //
@@ -38,6 +40,8 @@ export default async function handler(req, res) {
   const lead = body.record
   const field = (label, value) => (value ? `*${label}:* ${value}` : null)
 
+  const attribution = cleanAttribution(lead.attribution)
+  const campaign = (touch) => touch ? [touch.utm_source, touch.utm_medium, touch.utm_campaign].filter(Boolean).join(' / ') : null
   const lines = [
     field('Nombre', lead.nombre),
     field('Email', lead.email),
@@ -46,6 +50,10 @@ export default async function handler(req, res) {
     field('Problema', lead.problema),
     field('Fuente', lead.fuente),
     field('URL origen', lead.url_origen),
+    field('Primera campaña', campaign(attribution.first_touch)),
+    field('Última campaña', campaign(attribution.last_touch)),
+    field('Referencia de distribución', attribution.first_touch?.reference || attribution.last_touch?.reference),
+    field('ID de solicitud', lead.submission_id),
   ].filter(Boolean)
 
   const slackPayload = {

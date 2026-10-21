@@ -18,6 +18,7 @@ export const en = {
     useCases: 'Use cases',
   },
   pages: {
+    powered_by: { name: 'Powered by Relvo' },
     contratos: { name: 'Contracts and pricing', desc: 'Any pricing, turned into exact rules.' },
     medicion: { name: 'Usage metering', desc: "Your customers' usage, ready to bill." },
     aprobaciones: { name: 'Approvals and purchase orders', desc: 'Every invoice goes out with its approved PO.' },

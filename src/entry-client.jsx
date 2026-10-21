@@ -1,3 +1,4 @@
+import { initializeMarketing } from './analytics.js'
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import { App } from './App'
@@ -9,6 +10,7 @@ import './styles/site.css'
 
 // Todo HTML llega renderizado desde el servidor (build estático o servidor de desarrollo).
 // Las páginas de plantilla traen su archivo de contenido antes de hidratar.
+initializeMarketing()
 const root = document.getElementById('root')
 const route = routeFromKey(root.dataset.route)
 const hydrate = () => hydrateRoot(root, <StrictMode><App route={route} /></StrictMode>)

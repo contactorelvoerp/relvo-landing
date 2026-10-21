@@ -1,3 +1,4 @@
+import { PoweredByPage } from './powered-by/PoweredByPage'
 import { HomePage } from './home/HomePage'
 import { DemoPage } from './demo/DemoPage'
 import { PricingPage } from './pricing/PricingPage'
@@ -13,6 +14,7 @@ export const LANDINGS = ['cxc', 'contratos', 'medicion', 'aprobaciones', 'agente
 // Una página se publica en producción solo cuando está registrada acá.
 export const PAGE_COMPONENTS = {
   home: HomePage,
+  powered_by: PoweredByPage,
   demo: DemoPage,
   precios: PricingPage,
   ...Object.fromEntries(LANDINGS.map((id) => [id, LandingPage])),

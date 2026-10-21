@@ -18,6 +18,7 @@ export const es = {
     useCases: 'Casos de uso',
   },
   pages: {
+    powered_by: { name: 'Powered by Relvo' },
     contratos: { name: 'Contratos y pricing', desc: 'Cualquier pricing, convertido en reglas exactas.' },
     medicion: { name: 'Medición del consumo', desc: 'El uso de tus clientes, listo para cobrar.' },
     aprobaciones: { name: 'Aprobaciones y órdenes de compra', desc: 'Cada factura sale con su OC aprobada.' },

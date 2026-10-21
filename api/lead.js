@@ -1,3 +1,6 @@
+import { analyticsUrl, cleanAttribution } from '../shared/attribution.js'
+import { UUID_PATTERN } from '../server/distribution.js'
+
 // Recibe el formulario de contacto del sitio y guarda el lead en la tabla `leads` de Supabase.
 // La key de Supabase vive solo acá (servidor); el navegador nunca la ve.
 // El aviso a Slack sale del webhook de la tabla (api/lead-notify.js).
@@ -20,7 +23,7 @@ export default async function handler(req, res) {
 
   // Honeypot: un bot completó el campo oculto. Se responde OK sin guardar nada.
   if (body.website) {
-    res.status(200).json({ ok: true })
+    res.status(200).json({ ok: true, duplicate: true, recorded: false })
     return
   }
 
@@ -29,6 +32,13 @@ export default async function handler(req, res) {
     const value = typeof body[key] === 'string' ? body[key].trim().slice(0, MAX_LENGTH) : ''
     if (value) lead[key] = value
   }
+  if (lead.url_origen) lead.url_origen = analyticsUrl(lead.url_origen)
+  lead.attribution = cleanAttribution(body.attribution)
+  if (body.submission_id !== undefined && !UUID_PATTERN.test(body.submission_id)) {
+    res.status(400).json({ error: 'Invalid submission' })
+    return
+  }
+  if (body.submission_id) lead.submission_id = body.submission_id
   const missing = REQUIRED.filter((key) => !lead[key])
   if (missing.length > 0 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email)) {
     res.status(400).json({ error: 'Invalid lead', missing })
@@ -43,16 +53,17 @@ export default async function handler(req, res) {
     return
   }
 
-  const insert = await fetch(`${url}/rest/v1/leads`, {
+  const insert = await fetch(`${url}/rest/v1/leads${lead.submission_id ? '?on_conflict=submission_id' : ''}`, {
     method: 'POST',
-    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Prefer: lead.submission_id ? 'resolution=ignore-duplicates,return=representation' : 'return=minimal' },
     body: JSON.stringify(lead),
   })
   if (!insert.ok) {
-    console.error('[lead] Supabase insert failed', insert.status, await insert.text())
+    console.error('[lead] Supabase insert failed', insert.status)
     res.status(502).json({ error: 'Could not save lead' })
     return
   }
 
-  res.status(200).json({ ok: true })
+  const rows = lead.submission_id ? await insert.json() : null
+  res.status(200).json({ ok: true, duplicate: rows !== null && rows.length === 0, recorded: true })
 }
