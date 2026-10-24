@@ -36,7 +36,7 @@ function jsonLd(route) {
       logo: `${SITE_URL}/logo-logotype-dark.svg`,
       description: homeDescription(route.locale),
       disambiguatingDescription: ORG_DISAMBIGUATION[route.locale] || ORG_DISAMBIGUATION.es,
-      sameAs: [LINKEDIN_URL, 'https://www.relvoerp.com/'],
+      sameAs: [LINKEDIN_URL],
     },
     {
       '@type': 'WebSite',
