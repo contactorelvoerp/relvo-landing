@@ -13,6 +13,18 @@ export function absoluteUrl(path) {
   return path === '/' ? `${SITE_URL}/` : `${SITE_URL}${path}`
 }
 
+// Para que los motores de búsqueda e IA no confundan a Relvo con software de cuentas por pagar
+// ni con otras empresas llamadas Relvo. Solo va en datos estructurados (no es copy visible).
+const ORG_DISAMBIGUATION = {
+  es: 'Software de cuentas por cobrar para empresas B2B que venden y facturan, no de cuentas por pagar: automatiza contratos, medición de uso, facturación electrónica, cobranza y conciliación bancaria para SaaS e IA en LatAm.',
+  en: 'Accounts receivable software for B2B companies that sell and invoice, not accounts payable: it automates contracts, usage metering, e-invoicing, collections and bank reconciliation for SaaS and AI companies in LatAm.',
+}
+
+function homeDescription(locale) {
+  const home = getRoutes().find((r) => r.id === 'home' && r.locale === locale)
+  return home ? home.description : undefined
+}
+
 function jsonLd(route) {
   const org = `${SITE_URL}/#organization`
   const graph = [
@@ -22,7 +34,9 @@ function jsonLd(route) {
       name: SITE_NAME,
       url: `${SITE_URL}/`,
       logo: `${SITE_URL}/logo-logotype-dark.svg`,
-      sameAs: [LINKEDIN_URL],
+      description: homeDescription(route.locale),
+      disambiguatingDescription: ORG_DISAMBIGUATION[route.locale] || ORG_DISAMBIGUATION.es,
+      sameAs: [LINKEDIN_URL, 'https://www.relvoerp.com/'],
     },
     {
       '@type': 'WebSite',
