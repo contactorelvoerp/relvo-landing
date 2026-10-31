@@ -108,6 +108,8 @@ a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
 .ints__track li{display:flex;flex:none;align-items:center;height:48px}
 /* Logos en monocromo, como el carrusel de clientes del hero */
 .ints__track img{width:auto;filter:grayscale(1) brightness(0);opacity:.82}
+/* Integración sin logo propio todavía: mismo peso visual que un logo, como texto */
+.ints__word{font-family:var(--font-ui);font-weight:600;font-size:19px;letter-spacing:-.01em;color:var(--text-soft)}
 .ints:hover .ints__track,.ints--offscreen .ints__track{animation-play-state:paused}
 @keyframes relvo-ints{to{transform:translateX(calc(-50% - var(--ints-gap) / 2))}}
 @container (max-width:599px){.ints__track{--ints-gap:48px}.ints__track img{transform:scale(.85)}}

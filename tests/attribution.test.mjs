@@ -42,6 +42,6 @@ test('malformed or restricted storage does not block the website', () => {
 test('analytics and CRM URLs exclude raw IDs, opaque references, fragments and unknown parameters', () => {
   const result = analyticsUrl(`${entry}&organization_id=private&client_id=private&contract_id=private&document_id=private&email=secret@example.com#secret`)
   assert.equal(result, 'https://getrelvo.ai/powered-by-relvo?utm_source=prefactura&utm_medium=pdf&utm_campaign=powered_by_relvo&utm_content=footer')
-  assert.deepEqual(cleanAttribution({ first_touch: { utm_source: 'prefactura', reference: 'bad', organization_id: 'private', landing_path: '/?email=private' } }), { first_touch: { utm_source: 'prefactura' }, last_touch: null })
+  assert.deepEqual(cleanAttribution({ first_touch: { utm_source: 'prefactura', reference: 'bad', organization_id: 'private', landing_path: '/?email=private' } }), { first_touch: { utm_source: 'prefactura' }, last_touch: null, ads_click: null })
   assert.equal(touchFromUrl('https://getrelvo.ai/?ref=../secret', now), null)
 })

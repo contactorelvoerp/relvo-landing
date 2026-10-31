@@ -9,7 +9,7 @@ import { UUID_PATTERN } from '../server/distribution.js'
 //   SUPABASE_URL                (o la ya existente VITE_SUPABASE_URL)
 //   SUPABASE_SERVICE_ROLE_KEY   (o SUPABASE_ANON_KEY / VITE_SUPABASE_ANON_KEY si la tabla permite insert anónimo)
 
-const FIELDS = ['nombre', 'email', 'empresa', 'cargo', 'problema', 'url_origen', 'fuente']
+const FIELDS = ['nombre', 'email', 'empresa', 'cargo', 'problema', 'telefono', 'url_origen', 'fuente']
 const REQUIRED = ['nombre', 'email', 'empresa', 'cargo']
 const MAX_LENGTH = 2000
 

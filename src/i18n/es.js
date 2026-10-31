@@ -35,6 +35,7 @@ export const es = {
     ingenieria: { name: 'Ingeniería' },
     precios: { name: 'Precios' },
     clientes: { name: 'Clientes' },
+    'lp-facturacion-b2b': { name: 'Revenue Engine para B2B' },
     demo: { name: 'Agendar demo' },
     blog: { name: 'Blog' },
     docs: { name: 'Docs' },
