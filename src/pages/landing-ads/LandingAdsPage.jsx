@@ -26,6 +26,7 @@ export function LandingAdsPage({ t, locale }) {
   const c = copy[locale]
   const plan = pricingCopy.es.plans[0] // Startup
   const [adsClick, setAdsClick] = useState(null)
+  const [prefill, setPrefill] = useState(null)
 
   useEffect(() => {
     captureAdsClick()
@@ -126,12 +127,12 @@ export function LandingAdsPage({ t, locale }) {
         <p className="lpads-lead">{c.demo.lead}</p>
         <div className="lpads-demo__grid">
           <div className="lpads-demo__cal">
-            <CalEmbed onBooked={handleBooked} />
+            <CalEmbed onBooked={handleBooked} prefill={prefill} />
             {!CAL_LINK && SHOW_PENDING && <p className="pending__tag">Cal.com: falta el link del evento &quot;Demo Relvo&quot;</p>}
           </div>
           <div className="lpads-demo__form">
             <p className="lpads-demo__alt">{c.demo.altQuestion}</p>
-            <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} />
+            <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} onPrefillChange={setPrefill} />
           </div>
         </div>
       </section>

@@ -15,8 +15,10 @@ const REQUIRED = ['nombre', 'email', 'empresa', 'cargo']
 // página lo pasa. `adsConversion` (src/pages/landing-ads/ads-conversion.js) solo lo pasa esa
 // landing: muestra el teléfono opcional y, al convertir, dispara la conversión de Google Ads con
 // email/teléfono. El resto del sitio no envía PII a analítica (src/analytics.js), así que este
-// comportamiento queda fuera de ahí.
-export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClick, adsConversion }) {
+// comportamiento queda fuera de ahí. `onPrefillChange` (opcional): nombre/email al salir de esos
+// campos, por si la página quiere prefillear otra cosa con lo que la persona ya escribió acá (en
+// esta landing, el embed de Cal.com).
+export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClick, adsConversion, onPrefillChange }) {
   const submissionId = useRef(null)
   const started = useRef(false)
   const converted = useRef(false)
@@ -82,6 +84,7 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClic
     'aria-invalid': errors[name] ? 'true' : undefined,
     'aria-describedby': errors[name] ? `lead-${name}-error` : undefined,
   })
+  const reportPrefill = () => onPrefillChange?.({ name: data.nombre, email: data.email })
 
   if (status === 'success') {
     return (
@@ -96,8 +99,8 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClic
       if (!started.current) { started.current = true; trackMarketingEvent('powered_by_form_start', { form: fuente, locale }) }
     }}>
       <div className="form__row">
-        {field('nombre', `${c.name} *`, <input type="text" autoComplete="name" placeholder={c.namePlaceholder} {...props('nombre')} />)}
-        {field('email', `${c.email} *`, <input type="email" autoComplete="email" placeholder={c.emailPlaceholder} {...props('email')} />)}
+        {field('nombre', `${c.name} *`, <input type="text" autoComplete="name" placeholder={c.namePlaceholder} onBlur={reportPrefill} {...props('nombre')} />)}
+        {field('email', `${c.email} *`, <input type="email" autoComplete="email" placeholder={c.emailPlaceholder} onBlur={reportPrefill} {...props('email')} />)}
       </div>
       <div className="form__row">
         {field('empresa', `${c.company} *`, <input type="text" autoComplete="organization" placeholder={c.companyPlaceholder} {...props('empresa')} />)}
