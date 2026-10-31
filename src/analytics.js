@@ -42,6 +42,10 @@ export function initializeMarketing() {
     page_location: analyticsUrl(window.location.href),
     page_referrer: analyticsUrl(document.referrer),
   })
+  // Mismo gtag.js, un segundo destino: las conversiones de Google Ads de /lp/facturacion-b2b
+  // (src/pages/landing-ads/ads-conversion.js) se disparan con gtag('event','conversion',...) y
+  // necesitan esta cuenta configurada para que Google las reciba y pueda mejorarlas con user_data.
+  if (config.googleAdsId) window.gtag('config', config.googleAdsId, { allow_enhanced_conversions: true })
   // Strip old PDFs' raw IDs before any third-party script loads.
   const visible = new URL(window.location.href)
   for (const key of ['organization_id', 'client_id', 'contract_id', 'document_id']) visible.searchParams.delete(key)

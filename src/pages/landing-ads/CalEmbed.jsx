@@ -1,14 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { captureAdsClick, getAdsClick } from './ads-click'
+import { CAL_LINK } from './config'
 
-// Embed inline de Cal.com para "Agenda tu demo". TODO(Ricardo): reemplazar CAL_LINK por el link
-// real del evento "Demo Relvo" (docs/landing-ads-b2b.md, pendiente #1) — sin él, este componente no
-// pinta nada y la sección queda solo con el formulario de abajo. gclid/utm viajan al booking como
-// metadata y como utm_* en la URL del calLink (Cal.com los usa para su propio tracking); de ahí a
-// Attio depende de cómo Ricardo conecte ese webhook de Cal.com, fuera de este repo.
-// No se pudo probar en vivo (sin cuenta de Cal.com todavía): verificar con Tag Assistant/DebugView
-// en cuanto el link real esté puesto.
-export const CAL_LINK = ''
+// Embed inline de Cal.com para "Agenda tu demo" (CAL_LINK: src/pages/landing-ads/config.js). Sin
+// ella, este componente no pinta nada y la sección queda solo con el formulario de abajo. gclid/utm
+// viajan al booking como metadata y como utm_* en la URL del calLink (Cal.com los usa para su
+// propio tracking); de ahí a Attio depende de cómo Ricardo conecte ese webhook de Cal.com, fuera de
+// este repo. No se pudo probar en vivo (sin cuenta de Cal.com todavía): verificar con Tag
+// Assistant/DebugView en cuanto el link real esté puesto.
 const NAMESPACE = 'demo-relvo'
 
 function loadEmbedScript() {
@@ -68,8 +67,10 @@ export function CalEmbed({ onBooked }) {
     Cal.ns[NAMESPACE]('on', {
       action: 'bookingSuccessful',
       callback: (event) => {
-        const email = event?.detail?.data?.booking?.attendees?.[0]?.email ?? event?.detail?.data?.attendees?.[0]?.email
-        bookedRef.current?.(email)
+        const booking = event?.detail?.data?.booking ?? event?.detail?.data
+        const email = booking?.attendees?.[0]?.email
+        const uid = booking?.uid
+        bookedRef.current?.({ email, uid })
       },
     })
     // El script del embed queda cargado para toda la sesión: no hay cleanup que lo retire.

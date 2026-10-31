@@ -8,8 +8,10 @@ import { Check } from '../../visuals/cards'
 import { ThreeLayers } from '../home/ThreeLayers'
 import { copy as homeCopy } from '../home/copy'
 import { copy as pricingCopy } from '../pricing/copy'
-import { CalEmbed, CAL_LINK } from './CalEmbed'
+import { CalEmbed } from './CalEmbed'
+import { CAL_LINK } from './config'
 import { captureAdsClick, getAdsClick } from './ads-click'
+import { GOOGLE_ADS_CONVERSIONS, fireAdsConversion } from './ads-conversion'
 import { trackMarketingEvent } from '../../analytics.js'
 import { SHOW_PENDING } from '../../env'
 import { copy } from './copy'
@@ -30,8 +32,8 @@ export function LandingAdsPage({ t, locale }) {
     setAdsClick(getAdsClick())
   }, [])
 
-  const handleBooked = (email) => {
-    if (typeof window.gtag === 'function') window.gtag('set', 'user_data', email ? { email } : {})
+  const handleBooked = ({ email, uid } = {}) => {
+    fireAdsConversion({ ...GOOGLE_ADS_CONVERSIONS.demo, transactionId: uid, email })
     trackMarketingEvent('demo_agendada', { form: 'lp-facturacion-b2b', locale })
   }
 
@@ -129,7 +131,7 @@ export function LandingAdsPage({ t, locale }) {
           </div>
           <div className="lpads-demo__form">
             <p className="lpads-demo__alt">{c.demo.altQuestion}</p>
-            <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} enhancedConversions />
+            <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} />
           </div>
         </div>
       </section>

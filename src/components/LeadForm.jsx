@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { captureAttribution } from '../attribution.js'
 import { trackMarketingEvent } from '../analytics.js'
+import { fireAdsConversion } from '../pages/landing-ads/ads-conversion.js'
 import { copy } from '../pages/demo/copy'
 import '../pages/demo/demo.css'
 
@@ -11,10 +12,11 @@ const REQUIRED = ['nombre', 'email', 'empresa', 'cargo']
 // Lo usan /agendar-demo y /precios: mismos campos y endpoint; `fuente` dice desde qué página llegó.
 // `success` reemplaza el mensaje de éxito por defecto; `submit`, el texto del botón.
 // `adsClick` (src/pages/landing-ads/ads-click.js) viaja junto a la atribución del sitio cuando la
-// página lo pasa. `enhancedConversions` solo lo usa esa landing: muestra el teléfono opcional y, al
-// convertir, pasa email/teléfono a Google Ads vía gtag `user_data` (Google los hashea). El resto del
-// sitio no envía PII a analítica (src/analytics.js), así que este comportamiento queda fuera de ahí.
-export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClick, enhancedConversions }) {
+// página lo pasa. `adsConversion` (src/pages/landing-ads/ads-conversion.js) solo lo pasa esa
+// landing: muestra el teléfono opcional y, al convertir, dispara la conversión de Google Ads con
+// email/teléfono. El resto del sitio no envía PII a analítica (src/analytics.js), así que este
+// comportamiento queda fuera de ahí.
+export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClick, adsConversion }) {
   const submissionId = useRef(null)
   const started = useRef(false)
   const converted = useRef(false)
@@ -49,15 +51,14 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClic
       })
       if (!res.ok) throw new Error(String(res.status))
       // Evento de conversión (métrica de éxito del sitio). Sin datos personales, salvo en esta
-      // landing (enhancedConversions), donde Google Ads los necesita para las conversiones mejoradas.
+      // landing (adsConversion), donde Google Ads los necesita para la conversión y para mejorarla.
       const result = await res.json()
       // A lost first response can leave a saved lead: a confirmed retry still
       // converts once in this browser. Honeypot acknowledgments never convert.
       if (result.recorded !== false && !converted.current) {
         converted.current = true
-        if (enhancedConversions && typeof window.gtag === 'function') {
-          window.gtag('set', 'user_data', { email: data.email, ...(data.telefono ? { phone_number: data.telefono } : {}) })
-        }
+        // submissionId: mismo id en cada reintento de este envío, para que Google no la cuente dos veces.
+        if (adsConversion) fireAdsConversion({ ...adsConversion, transactionId: submissionId.current, email: data.email, phone: data.telefono || undefined })
         trackMarketingEvent('generate_lead', { form: fuente, locale })
       }
       setStatus('success')
@@ -107,7 +108,7 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClic
           </select>
         ))}
       </div>
-      {enhancedConversions && field('telefono', <>{c.phone} <span className="form__optional">{c.problemOptional}</span></>, <input type="tel" autoComplete="tel" placeholder={c.phonePlaceholder} {...props('telefono')} />)}
+      {adsConversion && field('telefono', <>{c.phone} <span className="form__optional">{c.problemOptional}</span></>, <input type="tel" autoComplete="tel" placeholder={c.phonePlaceholder} {...props('telefono')} />)}
       {field('problema', <>{c.problem} <span className="form__optional">{c.problemOptional}</span></>, <textarea rows={4} placeholder={c.problemPlaceholder} {...props('problema')} />)}
       {/* Honeypot anti-spam: invisible para personas, los bots lo completan. */}
       <div className="form__trap" aria-hidden="true">
