@@ -13,7 +13,10 @@
 .lpads-bridge{max-width:56ch;margin:-12px 0 32px;font-size:17px;line-height:1.6;color:var(--text-body)}
 .lpads-agentes-lead{max-width:60ch;margin:-12px 0 40px}
 .lpads-paths{margin-bottom:0}
-/* Un dato de apoyo por camino, como el resto del sitio: una tarjeta, un dato, una frase */
+/* Un dato de apoyo por camino, como el resto del sitio: una tarjeta, un dato, una frase.
+   `path__shot`: captura real del producto (no una ilustración) — el único elemento visual del
+   camino, no una tarjeta encima de otra tarjeta. */
+.path__shot{width:min(220px,60%);height:auto;margin:0 0 20px}
 .path__stat{display:flex;align-items:baseline;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(15,74,74,.14)}
 .path__stat b{font-size:22px;font-weight:600;letter-spacing:-.02em;color:var(--accent-pressed)}
 .path__stat span{font-size:14px;color:var(--text-soft)}
@@ -35,6 +38,7 @@
 .lpads-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px 32px}
 .lpads-stats__value{display:block;font-size:clamp(30px,3.2cqi,42px);font-weight:500;line-height:1.05;letter-spacing:-.03em;color:var(--accent)}
 .lpads-stats__label{max-width:26ch;margin:10px 0 0;font-size:15px;line-height:1.5;color:var(--text-body)}
+.lpads-dashboard{width:min(640px,100%);height:auto;margin:48px auto 0;display:block}
 
 /* Precio de entrada: una sola tarjeta centrada, no la grilla de /precios */
 .lpads-plan{display:flex;flex-direction:column;gap:24px;max-width:480px;margin:0 auto;padding:clamp(28px,3cqi,40px);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}

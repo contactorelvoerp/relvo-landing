@@ -73,6 +73,7 @@ export function LandingAdsPage({ t, locale }) {
         <p className="lpads-bridge">{c.queResuelve.bridge}</p>
         <div className="paths lpads-paths">
           <div className="path">
+            <img className="path__shot" src="/product/plan-recurrente.webp" width="800" height="800" alt="Factura de un plan recurrente en Relvo, con seats adicionales y consumo de tokens incluido." loading="lazy" />
             <h3 className="path__title">{c.queResuelve.plans.title}</h3>
             <p className="path__body">{c.queResuelve.plans.body}</p>
             <div className="path__stat">
@@ -81,6 +82,7 @@ export function LandingAdsPage({ t, locale }) {
             </div>
           </div>
           <div className="path">
+            <img className="path__shot" src="/product/pricing-hibrido.webp" width="800" height="800" alt="Configuración de un contrato con cargos fijos y por uso en Relvo." loading="lazy" />
             <h3 className="path__title">{c.queResuelve.contracts.title}</h3>
             <p className="path__body">{c.queResuelve.contracts.body}</p>
             <div className="path__stat">
@@ -106,6 +108,7 @@ export function LandingAdsPage({ t, locale }) {
             <div key={label}><b className="lpads-stats__value num">{value}</b><p className="lpads-stats__label">{label}</p></div>
           ))}
         </div>
+        <img className="lpads-dashboard" src="/product/panel-ingresos.webp" width="1200" height="675" alt="Panel de ingresos de Relvo con MRR, facturación, recaudación y cartera por cobrar en vivo." loading="lazy" />
       </section>
 
       <IntegrationsSection c={{ ...homeCopy[locale].integrations, names: c.integrationNames }} locale={locale} />
