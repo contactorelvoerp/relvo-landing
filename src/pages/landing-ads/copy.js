@@ -4,25 +4,43 @@
 export const copy = {
   es: {
     hero: {
-      h1: 'Revenue Engine para B2B: factura, cobra y concilia a los clientes a los que facturas una y otra vez.',
-      subtitle: 'Planes recurrentes o contratos con pricing híbrido, con tarjeta, transferencia o ambas. Un solo sistema para calcular, facturar, cobrar y conciliar cada peso.',
+      // Eyebrow propio de esta página (Ricardo, 2026-10-31): el brief fija un solo eyebrow para el
+      // resto del sitio (el de la home), pero esta es una landing de campaña aparte.
+      eyebrow: 'Revenue Engine para B2B',
+      h1: 'Factura, cobra y concilia, sin trabajo manual.',
+      subtitle: 'Agentes que facturan, cobran y concilian cada pago de los clientes a los que facturas una y otra vez, para que la plata te llegue más rápido.',
       cta: 'Agenda una demo',
-      // Visual: una sola tarjeta (una factura, no la composición completa del hero de la home) + un dato.
-      invoice: {
-        number: 'Factura F-1042', client: 'Nimbo AI', status: 'Pagada', total: 'USD 2.900',
-      },
-      stat: '1.000+ facturas emitidas y conciliadas al mes',
     },
-    paraQuien: {
+    industrias: {
       title: 'Para empresas B2B que facturan una y otra vez a los mismos clientes.',
-      lead: 'SaaS e IA, logística, 3PL, última milla, staffing, estudios contables, seguridad y renting de maquinaria: si le facturas más de una vez al mismo cliente, con contrato fijo o sin él.',
+      lead: 'Si le facturas más de una vez al mismo cliente, con contrato fijo o sin él, Relvo te sirve.',
+      items: [
+        { key: 'saas', label: 'SaaS e IA' },
+        { key: 'logistica', label: 'Logística' },
+        { key: 'tresPl', label: '3PL' },
+        { key: 'ultimaMilla', label: 'Última milla' },
+        { key: 'staffing', label: 'Staffing' },
+        { key: 'contables', label: 'Estudios contables' },
+        { key: 'seguridad', label: 'Seguridad' },
+        { key: 'maquinaria', label: 'Renting de maquinaria' },
+      ],
     },
     queResuelve: {
-      title: 'Dos formas de cobrar, un solo motor.',
+      title: 'Dos formas de cobrar.',
       bridge: '¿Facturas siempre lo mismo, cada mes? Eso es un plan recurrente. ¿Facturas varias veces al mismo cliente según lo que pasó —envíos, pedidos, horas, hitos— aunque no tengas una cadencia fija? Eso es un contrato con pricing híbrido.',
       // Lead de cada solución, ya aprobado y publicado tal cual (sin reescribir):
-      plans: { title: 'Planes recurrentes', body: 'Planes fijos cobrados cada mes o cada año, con tarjeta, link de pago o transferencia. Facturas, cobranza y conciliación en un solo flujo.' }, // content/es/soluciones/planes-recurrentes.json
-      contracts: { title: 'Contratos con pricing híbrido', body: 'Relvo convierte cada condición negociada en reglas, gestiona las órdenes de compra, divide facturas entre sociedades y cobra.' }, // content/es/soluciones/contratos-con-pricing-hibrido.json
+      plans: {
+        title: 'Planes recurrentes', body: 'Planes fijos cobrados cada mes o cada año, con tarjeta, link de pago o transferencia. Facturas, cobranza y conciliación en un solo flujo.', // content/es/soluciones/planes-recurrentes.json
+        stat: ['214', 'planes activos', 'facturados este mes'],
+      },
+      contracts: {
+        title: 'Contratos con pricing híbrido', body: 'Relvo convierte cada condición negociada en reglas, gestiona las órdenes de compra, divide facturas entre sociedades y cobra.', // content/es/soluciones/contratos-con-pricing-hibrido.json
+        stat: ['USD 3.090', 'factura F-1042', 'fijo + uso, dividida entre 2 sociedades'],
+      },
+    },
+    // Tres capas / Rieles-Agentes-Inteligencia: título y bajada ya aprobados, tal cual home/copy.js.
+    agentes: {
+      lead: 'Agentes que hacen el trabajo manual del cobro —leer una orden de compra, pedir una HES, avisar a tu equipo— para que la plata te llegue más rápido y sin que nadie lo opere a mano.',
     },
     // Las dos primeras cifras son las de home/copy.js → stats (ya aprobadas). Las tres siguientes
     // son nuevas, con el dato de Ricardo y la redacción propuesta en docs/landing-ads-b2b.md.

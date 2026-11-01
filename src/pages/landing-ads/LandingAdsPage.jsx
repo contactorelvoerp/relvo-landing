@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
-import { Texture } from '../../components/Texture'
 import { BandTexture } from '../../components/BandTexture'
 import { LeadForm } from '../../components/LeadForm'
 import { LpFooter } from '../../components/LpFooter'
 import { Heading, IntegrationsSection } from '../../blocks/Shared'
 import { Check } from '../../visuals/cards'
 import { ThreeLayers } from '../home/ThreeLayers'
+import { HeroStage } from '../home/HeroStage'
 import { copy as homeCopy } from '../home/copy'
 import { copy as pricingCopy } from '../pricing/copy'
+import { IndustriesCarousel } from './IndustriesCarousel'
 import { CalEmbed } from './CalEmbed'
 import { CAL_LINK } from './config'
 import { captureAdsClick, getAdsClick } from './ads-click'
@@ -17,6 +18,7 @@ import { SHOW_PENDING } from '../../env'
 import { copy } from './copy'
 import '../../styles/blocks.css'
 import '../../landing/landing.css'
+import '../home/home.css'
 import './landing-ads.css'
 
 // Landing de la primera campaña de Google Ads (docs/landing-ads-b2b.md). Solo ES, sin nav ni
@@ -44,53 +46,59 @@ export function LandingAdsPage({ t, locale }) {
         <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
       </header>
 
-      <section className="section band band--first lp-hero lpads-hero" aria-labelledby="lpads-h1">
-        <div className="lp-head">
-          <h1 id="lpads-h1" className="lp-head__title">{c.hero.h1}</h1>
-          <p className="lp-head__lead">{c.hero.subtitle}</p>
-          <div className="lp-head__ctas">
-            <a className="btn btn--lg btn--primary" href="#agenda">{c.hero.cta}</a>
-          </div>
-        </div>
-        <div className="lp-hero__visual">
-          <div className="stage lp-stage lpads-stage">
-            <Texture kind="ridges" />
-            <div className="lpads-invoice">
-              <div className="lpads-invoice__row">
-                <span className="lpads-invoice__number">{c.hero.invoice.number}</span>
-                <span className="lpads-invoice__chip">{c.hero.invoice.status}</span>
-              </div>
-              <p className="lpads-invoice__client">{c.hero.invoice.client}</p>
-              <p className="lpads-invoice__total num">{c.hero.invoice.total}</p>
+      <section className="section band band--first hero lpads-hero" aria-labelledby="lpads-h1">
+        <div className="hero__top">
+          <div className="hero__copy">
+            <p className="hero__eyebrow">{c.hero.eyebrow}</p>
+            <h1 id="lpads-h1" className="hero__title">{c.hero.h1}</h1>
+            <p className="hero__subtitle">{c.hero.subtitle}</p>
+            <div className="hero__ctas">
+              <a className="btn btn--lg btn--primary" href="#agenda">{c.hero.cta}</a>
             </div>
           </div>
-          <p className="lpads-stat">{c.hero.stat}</p>
+          <div className="hero__visual">
+            <HeroStage c={homeCopy[locale].hero.stage} locale={locale} />
+          </div>
         </div>
       </section>
 
       <section className="section band" aria-labelledby="lpads-quien">
-        <Heading id="lpads-quien" title={c.paraQuien.title} />
-        <p className="lpads-lead">{c.paraQuien.lead}</p>
+        <Heading id="lpads-quien" title={c.industrias.title} />
+        <p className="lpads-lead">{c.industrias.lead}</p>
+        <IndustriesCarousel items={c.industrias.items} label={c.industrias.title} />
       </section>
 
-      <section className="section band band--mint" aria-labelledby="lpads-resuelve">
-        <BandTexture kind="orbitsEdge" />
+      <section className="section band band--neutral" aria-labelledby="lpads-resuelve">
         <Heading id="lpads-resuelve" title={c.queResuelve.title} />
         <p className="lpads-bridge">{c.queResuelve.bridge}</p>
         <div className="paths lpads-paths">
           <div className="path">
             <h3 className="path__title">{c.queResuelve.plans.title}</h3>
             <p className="path__body">{c.queResuelve.plans.body}</p>
+            <div className="path__stat">
+              <b className="num">{c.queResuelve.plans.stat[0]}</b>
+              <span>{c.queResuelve.plans.stat[1]}</span>
+            </div>
           </div>
           <div className="path">
             <h3 className="path__title">{c.queResuelve.contracts.title}</h3>
             <p className="path__body">{c.queResuelve.contracts.body}</p>
+            <div className="path__stat">
+              <b className="num">{c.queResuelve.contracts.stat[0]}</b>
+              <span>{c.queResuelve.contracts.stat[1]}</span>
+            </div>
           </div>
         </div>
+      </section>
+
+      <section className="section band band--mint" aria-labelledby="lpads-agentes">
+        <BandTexture kind="orbitsEdge" />
+        <Heading id="lpads-agentes" title={homeCopy[locale].layers.title} soft={homeCopy[locale].layers.soft} />
+        <p className="lpads-lead lpads-agentes-lead">{c.agentes.lead}</p>
         <ThreeLayers c={homeCopy[locale].layers} />
       </section>
 
-      <section className="section band band--neutral" aria-labelledby="lpads-cifras">
+      <section className="section band" aria-labelledby="lpads-cifras">
         <BandTexture kind="ridgesSoft" />
         <Heading id="lpads-cifras" title={c.stats.title} />
         <div className="lpads-stats">
