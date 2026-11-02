@@ -8,10 +8,9 @@ import { HeroShowcase } from './HeroShowcase'
 import { OneEngine } from './OneEngine'
 import { copy as homeCopy } from '../home/copy'
 import { copy as pricingCopy } from '../pricing/copy'
-import { hrefFor } from '../../routes'
 import { IndustriesCarousel } from './IndustriesCarousel'
 import { CalEmbed } from './CalEmbed'
-import { CAL_LINK, SHOW_CASE_TGP } from './config'
+import { SHOW_CASE_TGP } from './config'
 import { captureAdsClick, getAdsClick } from './ads-click'
 import { GOOGLE_ADS_CONVERSIONS, fireAdsConversion } from './ads-conversion'
 import { trackMarketingEvent } from '../../analytics.js'
@@ -26,6 +25,26 @@ import './landing-ads.css'
 // no hay contenido aprobado todavía, así que no se publica nada (CLAUDE.md: nunca inventar
 // clientes ni citas). Cuando Ricardo entregue texto, logo y cita, van acá.
 const CASE_CONTENT = null
+
+// Los 6 links "Agenda una demo" de la página saltan a #agenda con scroll propio, no el salto nativo
+// del navegador (Ricardo, 2026-11-02: en producción aterrizaban en "Preguntas frecuentes", la
+// sección de arriba — el salto nativo mide la posición al click, y el embed diferido de Cal.com más
+// las animaciones de entrada todavía podían mover el alto de la página después de esa medición).
+// scrollIntoView en vez de calcular la Y a mano (así respeta scroll-margin-top de landing-ads.css),
+// y 3 reintentos espaciados que corrigen la posición si algo debajo del click sigue cambiando de alto.
+function scrollToAgenda(event) {
+  event.preventDefault()
+  const target = document.getElementById('agenda')
+  if (!target) return
+  if (window.location.hash !== '#agenda') window.history.pushState(null, '', '#agenda')
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
+  for (const delay of [400, 900, 1600]) {
+    setTimeout(() => {
+      if (Math.abs(target.getBoundingClientRect().top) > 4) target.scrollIntoView({ behavior: 'auto', block: 'start' })
+    }, delay)
+  }
+}
 
 // Formulario de contacto como alternativa secundaria al calendario: en mobile va colapsado (acordeón)
 // debajo de Cal.com, en desktop siempre abierto (lpads-demo__form-body--closed solo actúa bajo los
@@ -46,12 +65,11 @@ function DemoFormPanel({ title, children }) {
 }
 
 // Landing de la primera campaña de Google Ads (docs/landing-ads-b2b.md). Solo ES, sin nav ni links
-// de salida salvo el logo del header (src/pages/standalone.js): una sola conversión principal
-// (agendar demo) y una secundaria (formulario de contacto), las dos en la última sección.
+// de salida (Ricardo, 2026-11-02: el logo del header ya tampoco es link): una sola conversión
+// principal (agendar demo) y una secundaria (formulario de contacto), las dos en la última sección.
 export function LandingAdsPage({ t, locale }) {
   const c = copy[locale]
   const plan = pricingCopy.es.plans[0] // Startup
-  const home = hrefFor('home', locale)
   const faq = c.faq.items.filter((item) => SHOW_PENDING || !isPending(item.a))
   const [adsClick, setAdsClick] = useState(null)
   const [prefill, setPrefill] = useState(null)
@@ -69,14 +87,8 @@ export function LandingAdsPage({ t, locale }) {
   return (
     <div className="lpads">
       <header className="lpads-top">
-        {home ? (
-          <a href={home} aria-label="Ir a la página principal de Relvo">
-            <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
-          </a>
-        ) : (
-          <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
-        )}
-        <a className="btn btn--primary btn--md lpads-top__cta" href="#agenda">{c.hero.cta}</a>
+        <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
+        <a className="btn btn--primary btn--md lpads-top__cta" href="#agenda" onClick={scrollToAgenda}>{c.hero.cta}</a>
       </header>
 
       <section className="section band band--first hero lpads-hero" aria-labelledby="lpads-h1">
@@ -86,7 +98,7 @@ export function LandingAdsPage({ t, locale }) {
             <h1 id="lpads-h1" className="hero__title">{c.hero.h1}</h1>
             <p className="hero__subtitle">{c.hero.subtitle}</p>
             <div className="hero__ctas">
-              <a className="btn btn--lg btn--primary" href="#agenda">{c.hero.cta}</a>
+              <a className="btn btn--lg btn--primary" href="#agenda" onClick={scrollToAgenda}>{c.hero.cta}</a>
             </div>
             <p className="lpads-hero__microcopy">{c.hero.microcopy}</p>
           </div>
@@ -133,7 +145,7 @@ export function LandingAdsPage({ t, locale }) {
             </div>
           </div>
         </div>
-        <p className="lpads-resuelve__cta"><span>{c.queResuelve.ctaQuestion}</span> <a className="link" href="#agenda">{c.queResuelve.ctaLink}</a></p>
+        <p className="lpads-resuelve__cta"><span>{c.queResuelve.ctaQuestion}</span> <a className="link" href="#agenda" onClick={scrollToAgenda}>{c.queResuelve.ctaLink}</a></p>
       </section>
 
       <section className="section band band--mint" aria-labelledby="lpads-motor">
@@ -151,7 +163,7 @@ export function LandingAdsPage({ t, locale }) {
           ))}
         </div>
         <img className="lpads-dashboard" src="/product/panel-ingresos.webp" width="1400" height="351" alt="Cartera de cuentas por cobrar de Relvo, con el detalle de mora al día, 1-30, 31-60, 61-90 y más de 90 días por cliente." loading="lazy" />
-        <p className="lpads-cifras__cta"><a className="btn btn--md btn--secondary" href="#agenda">{c.stats.cta}</a></p>
+        <p className="lpads-cifras__cta"><a className="btn btn--md btn--secondary" href="#agenda" onClick={scrollToAgenda}>{c.stats.cta}</a></p>
       </section>
 
       {SHOW_CASE_TGP && CASE_CONTENT && (
@@ -178,9 +190,9 @@ export function LandingAdsPage({ t, locale }) {
             {plan.includes.map((item) => <li key={item}><Check />{item}</li>)}
             <li className="lpads-plan__highlight"><Check />{c.precio.implementation}</li>
           </ul>
-          <a className="btn btn--lg btn--primary" href="#agenda">{c.precio.cta}</a>
+          <a className="btn btn--lg btn--primary" href="#agenda" onClick={scrollToAgenda}>{c.precio.cta}</a>
         </article>
-        <p className="lpads-plan__volume"><a className="link" href="#agenda">{c.precio.volume}</a></p>
+        <p className="lpads-plan__volume"><a className="link" href="#agenda" onClick={scrollToAgenda}>{c.precio.volume}</a></p>
       </section>
 
       {faq.length > 0 && (
@@ -204,7 +216,6 @@ export function LandingAdsPage({ t, locale }) {
         <div className="lpads-demo__grid">
           <div className="lpads-demo__cal">
             <CalEmbed onBooked={handleBooked} prefill={prefill} />
-            {!CAL_LINK && SHOW_PENDING && <p className="pending__tag">Cal.com: falta el link del evento &quot;Demo Relvo&quot;</p>}
           </div>
           <DemoFormPanel title={c.demo.formTitle}>
             <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} onPrefillChange={setPrefill} roleOptions={c.demo.roleOptions} />
