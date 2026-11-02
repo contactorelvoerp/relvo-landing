@@ -13,9 +13,13 @@ const migration = fs.readFileSync(new URL('../supabase/migrations/202610210001_d
 const report = fs.readFileSync(new URL('../supabase/distribution-funnel.sql', import.meta.url), 'utf8')
 try {
   docker(['run', '--rm', '-d', '--network', 'none', '--name', name, '-e', 'POSTGRES_PASSWORD=disposable-test-only', 'postgres:16-alpine'])
+  // El postgres oficial arranca, corre initdb, se reinicia y recién ahí queda escuchando de
+  // verdad: pg_isready puede dar "listo" contra ese primer servidor temporal, justo antes de que
+  // se caiga para el reinicio (el socket desaparece un instante y psql falla con "No such file or
+  // directory"). Probar la conexión real, no solo pg_isready, evita esa carrera.
   let ready = false
   for (let attempt = 0; attempt < 30; attempt += 1) {
-    if (spawnSync('docker', ['exec', name, 'pg_isready', '-U', 'postgres']).status === 0) { ready = true; break }
+    if (spawnSync('docker', ['exec', name, 'psql', '-U', 'postgres', '-c', 'SELECT 1']).status === 0) { ready = true; break }
     await new Promise((resolve) => setTimeout(resolve, 300))
   }
   if (!ready) throw new Error('Disposable PostgreSQL did not become ready')
