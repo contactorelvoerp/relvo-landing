@@ -3,6 +3,7 @@
 
 .lpads-top{position:relative;isolation:isolate;display:flex;align-items:center;height:64px;padding:0 var(--gutter)}
 .lpads-top::after{content:"";position:absolute;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);border-bottom:1px solid var(--line)}
+.lpads-top a{display:flex;align-items:center}
 
 /* Hero: mismo molde de la home (título izq., HeroStage der.), con eyebrow propio (ver copy.js).
    El H1 reusa .hero__title por tamaño, pero en Instrument Sans: Fujiwara A es solo del hero de
@@ -11,13 +12,14 @@
 
 .lpads-lead{max-width:56ch;margin:0;font-size:18px;line-height:1.6;color:var(--text-body)}
 .lpads-bridge{max-width:56ch;margin:-12px 0 32px;font-size:17px;line-height:1.6;color:var(--text-body)}
-.lpads-agentes-lead{max-width:60ch;margin:-12px 0 40px}
 .lpads-paths{margin-bottom:0}
 /* Un dato de apoyo por camino, como el resto del sitio: una tarjeta, un dato, una frase.
-   `path__shot`: captura real del producto (no una ilustración) — el único elemento visual del
-   camino, no una tarjeta encima de otra tarjeta. */
-.path__shot{width:min(220px,60%);height:auto;margin:0 0 20px}
-.path__stat{display:flex;align-items:baseline;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(15,74,74,.14)}
+   `path__shot`: captura real del producto (no una ilustración), a todo el ancho de la tarjeta —
+   el único elemento visual del camino, no una tarjeta encima de otra tarjeta. `path__stat` se fija
+   al fondo con margin-top:auto para que el filete quede a la misma altura en las dos tarjetas,
+   sin importar cuánto ocupe el cuerpo de cada una. */
+.path__shot{display:block;width:100%;height:auto;margin:0 0 24px;border:1px solid var(--line);border-radius:var(--radius-md);background:var(--paper)}
+.path__stat{display:flex;align-items:baseline;gap:10px;margin-top:auto;padding-top:16px;border-top:1px solid rgba(15,74,74,.14)}
 .path__stat b{font-size:22px;font-weight:600;letter-spacing:-.02em;color:var(--accent-pressed)}
 .path__stat span{font-size:14px;color:var(--text-soft)}
 
@@ -34,14 +36,19 @@
   .industries__track li[aria-hidden]{display:none}
 }
 
-/* Cifras: 5 datos, misma escala tipográfica que la banda de la home */
-.lpads-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px 32px}
+/* Cifras: 5 datos en una grilla de 3 columnas (como .stats de la home), para que cada fila quede
+   simétrica en vez de repartir 5 anchos distintos en una sola fila (auto-fit). */
+.lpads-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 32px}
 .lpads-stats__value{display:block;font-size:clamp(30px,3.2cqi,42px);font-weight:500;line-height:1.05;letter-spacing:-.03em;color:var(--accent)}
 .lpads-stats__label{max-width:26ch;margin:10px 0 0;font-size:15px;line-height:1.5;color:var(--text-body)}
-.lpads-dashboard{width:min(640px,100%);height:auto;margin:48px auto 0;display:block}
+.lpads-dashboard{width:min(900px,100%);height:auto;margin:48px auto 0;display:block;border:1px solid var(--line);border-radius:var(--radius-lg)}
+@container (max-width:719px){.lpads-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container (max-width:479px){.lpads-stats{grid-template-columns:1fr}}
 
-/* Precio de entrada: una sola tarjeta centrada, no la grilla de /precios */
-.lpads-plan{display:flex;flex-direction:column;gap:24px;max-width:480px;margin:0 auto;padding:clamp(28px,3cqi,40px);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}
+/* Precio de entrada: una sola tarjeta, no la grilla de /precios. Alineada a la izquierda bajo el
+   título (como el resto de la página) y con la textura de la sección detrás, para que no quede
+   flotando sola en una banda en blanco. */
+.lpads-plan{display:flex;flex-direction:column;gap:24px;max-width:520px;margin:0;padding:clamp(28px,3cqi,40px);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}
 .lpads-plan__intro{display:flex;flex-direction:column;gap:8px}
 .lpads-plan__name{margin:0;font-size:22px;font-weight:600}
 .lpads-plan__who{margin:0;font-size:15.5px;color:var(--text-body)}

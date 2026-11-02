@@ -8,6 +8,7 @@ import { ThreeLayers } from '../home/ThreeLayers'
 import { HeroStage } from '../home/HeroStage'
 import { copy as homeCopy } from '../home/copy'
 import { copy as pricingCopy } from '../pricing/copy'
+import { hrefFor } from '../../routes'
 import { IndustriesCarousel } from './IndustriesCarousel'
 import { CalEmbed } from './CalEmbed'
 import { CAL_LINK } from './config'
@@ -27,6 +28,7 @@ import './landing-ads.css'
 export function LandingAdsPage({ t, locale }) {
   const c = copy[locale]
   const plan = pricingCopy.es.plans[0] // Startup
+  const home = hrefFor('home', locale)
   const [adsClick, setAdsClick] = useState(null)
   const [prefill, setPrefill] = useState(null)
 
@@ -43,7 +45,13 @@ export function LandingAdsPage({ t, locale }) {
   return (
     <div className="lpads">
       <header className="lpads-top">
-        <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
+        {home ? (
+          <a href={home} aria-label="Ir a la página principal de Relvo">
+            <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
+          </a>
+        ) : (
+          <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
+        )}
       </header>
 
       <section className="section band band--first hero lpads-hero" aria-labelledby="lpads-h1">
@@ -73,7 +81,7 @@ export function LandingAdsPage({ t, locale }) {
         <p className="lpads-bridge">{c.queResuelve.bridge}</p>
         <div className="paths lpads-paths">
           <div className="path">
-            <img className="path__shot" src="/product/plan-recurrente.webp" width="800" height="800" alt="Factura de un plan recurrente en Relvo, con seats adicionales y consumo de tokens incluido." loading="lazy" />
+            <img className="path__shot" src="/product/plan-recurrente.webp" width="1400" height="286" alt="Panel de ingresos de Relvo con el MRR, la facturación neta y la recaudación de los planes recurrentes, en vivo." loading="lazy" />
             <h3 className="path__title">{c.queResuelve.plans.title}</h3>
             <p className="path__body">{c.queResuelve.plans.body}</p>
             <div className="path__stat">
@@ -82,7 +90,7 @@ export function LandingAdsPage({ t, locale }) {
             </div>
           </div>
           <div className="path">
-            <img className="path__shot" src="/product/pricing-hibrido.webp" width="800" height="800" alt="Configuración de un contrato con cargos fijos y por uso en Relvo." loading="lazy" />
+            <img className="path__shot" src="/product/pricing-hibrido.webp" width="1400" height="492" alt="Etapas y cargos de un contrato con pricing híbrido en Relvo, combinando cargos fijos y cargos por uso." loading="lazy" />
             <h3 className="path__title">{c.queResuelve.contracts.title}</h3>
             <p className="path__body">{c.queResuelve.contracts.body}</p>
             <div className="path__stat">
@@ -96,7 +104,6 @@ export function LandingAdsPage({ t, locale }) {
       <section className="section band band--mint" aria-labelledby="lpads-agentes">
         <BandTexture kind="orbitsEdge" />
         <Heading id="lpads-agentes" title={homeCopy[locale].layers.title} soft={homeCopy[locale].layers.soft} />
-        <p className="lpads-lead lpads-agentes-lead">{c.agentes.lead}</p>
         <ThreeLayers c={homeCopy[locale].layers} />
       </section>
 
@@ -108,12 +115,13 @@ export function LandingAdsPage({ t, locale }) {
             <div key={label}><b className="lpads-stats__value num">{value}</b><p className="lpads-stats__label">{label}</p></div>
           ))}
         </div>
-        <img className="lpads-dashboard" src="/product/panel-ingresos.webp" width="1200" height="675" alt="Panel de ingresos de Relvo con MRR, facturación, recaudación y cartera por cobrar en vivo." loading="lazy" />
+        <img className="lpads-dashboard" src="/product/panel-ingresos.webp" width="1400" height="351" alt="Cartera de cuentas por cobrar de Relvo, con el detalle de mora al día, 1-30, 31-60, 61-90 y más de 90 días por cliente." loading="lazy" />
       </section>
 
       <IntegrationsSection c={{ ...homeCopy[locale].integrations, names: c.integrationNames }} locale={locale} />
 
       <section className="section band lpads-price" aria-labelledby="lpads-precio">
+        <BandTexture kind="ridgesSoft" />
         <Heading id="lpads-precio" title={c.precio.title} />
         <article className="lpads-plan">
           <div className="lpads-plan__intro">
