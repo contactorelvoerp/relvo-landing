@@ -15,6 +15,7 @@
     { "source": "/pricing", "destination": "/precios", "statusCode": 301 },
     { "source": "/en/precios", "destination": "/precios", "statusCode": 301 },
     { "source": "/en", "destination": "/", "statusCode": 301 },
+    { "source": "/en/powered-by-relvo", "destination": "/powered-by-relvo", "statusCode": 301 },
     { "source": "/docs", "destination": "https://app.getrelvo.ai/docs/product/es/overview/", "statusCode": 301 },
     { "source": "/docs/:path*", "destination": "https://app.getrelvo.ai/docs/product/es/overview/", "statusCode": 301 },
     { "source": "/en/pricing", "destination": "/precios", "statusCode": 301 },

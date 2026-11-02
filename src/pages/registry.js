@@ -13,13 +13,12 @@ export const LANDINGS = ['cxc', 'contratos', 'medicion', 'aprobaciones', 'agente
 
 // Páginas noindex con componente propio (no el placeholder genérico): quedan fuera del índice
 // a propósito, no "hasta que estén listas" (ver src/pages/noindex.js).
-const NOINDEX_COMPONENTS = { 'lp-facturacion-b2b': LandingAdsPage }
+const NOINDEX_COMPONENTS = { 'lp-facturacion-b2b': LandingAdsPage, powered_by: PoweredByPage }
 
 // id de página (reference/seo-metadata.json) → componente.
 // Una página se publica en producción solo cuando está registrada acá.
 export const PAGE_COMPONENTS = {
   home: HomePage,
-  powered_by: PoweredByPage,
   demo: DemoPage,
   precios: PricingPage,
   ...Object.fromEntries(LANDINGS.map((id) => [id, LandingPage])),
@@ -28,7 +27,10 @@ export const PAGE_COMPONENTS = {
 
 // Idiomas con copy aprobado por página. Si una página no aparece acá, está lista en todos.
 // Home en inglés: pendiente de traducir el copy del prototipo. Plantillas: el inglés queda para
-// después (rutas /en preparadas, sin publicar).
+// después (rutas /en preparadas, sin publicar). "powered_by" también: el rediseño (PoweredByPage.jsx,
+// brief de Ricardo, 2026-11-02) no tiene copy EN aprobado, así que /en/powered-by-relvo queda sin
+// ruta (404, con redirect 301 a la versión ES — ver vercel.json) hasta que llegue la traducción,
+// igual que /en con home.
 export const PAGE_LOCALES = {
   home: ['es'],
   // Precios: sin copy aprobado en inglés

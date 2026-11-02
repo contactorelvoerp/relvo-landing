@@ -27,27 +27,29 @@ async function intercept(page) {
   return { leads, events }
 }
 
-test('PDF campaign survives demo navigation, validation and a retry without a false conversion', async ({ page }) => {
+test('PDF campaign survives the short form, validation and a retry without a false conversion', async ({ page }) => {
   const { leads, events } = await intercept(page)
   const errors = []; page.on('pageerror', (error) => errors.push(error.message))
   await page.setViewportSize({ width: 1440, height: 1000 })
   await page.goto(`https://distribution.test${entry}`)
-  await expect(page.locator('h1')).toHaveText('Powered by Relvo')
+  await expect(page.locator('h1')).toHaveText('Ese correo no lo mandó una persona.')
   await expect.poll(() => events.length).toBeGreaterThan(0)
   expect(page.url()).not.toContain('private')
   const config = await page.evaluate(() => Array.from(window.dataLayer.find((item) => item[0] === 'config')))
   expect(config[2].page_location).not.toContain('ref=')
   expect(config[2].page_location).not.toContain('private')
-  await expect(page.locator('.hero-stage .hc--in')).toHaveCount(4)
+  // El mock de producto del hero (4 cards hc--*) se reemplazó por la línea de tiempo de 4 pasos.
+  await expect(page.locator('.steps3__step')).toHaveCount(4)
   await page.screenshot({ path: 'test-results/powered-by-desktop.png', fullPage: true })
-  await page.locator('main .lp-head__ctas a').click()
-  await expect(page).toHaveURL('https://distribution.test/agendar-demo')
+  // El CTA primario ya no navega a /agendar-demo: ancla a #agenda en la misma página, donde está
+  // el calendario de Cal.com y, debajo, el form corto alternativo (variant="short").
+  await page.locator('.lp-head__ctas a').first().click()
+  await expect(page).toHaveURL(/#agenda$/)
   await page.getByRole('button', { name: 'Enviar', exact: true }).click()
   expect(leads).toHaveLength(0)
-  await page.locator('input[name="nombre"]').fill('Test Person')
   await page.locator('input[name="email"]').fill('person@example.test')
   await page.locator('input[name="empresa"]').fill('Test Company')
-  await page.locator('select[name="cargo"]').selectOption('RevOps')
+  await page.locator('select[name="cobro"]').selectOption('ERP')
   await page.getByRole('button', { name: 'Enviar', exact: true }).click()
   await expect(page.getByRole('alert')).toBeVisible()
   const beforeRetry = await page.evaluate(() => window.dataLayer.filter((item) => item[0] === 'event' && item[1] === 'generate_lead').length)
@@ -61,30 +63,23 @@ test('PDF campaign survives demo navigation, validation and a retry without a fa
   const conversions = await page.evaluate(() => window.dataLayer.filter((item) => item[0] === 'event' && item[1] === 'generate_lead').map((item) => Array.from(item)))
   expect(conversions).toHaveLength(1)
   expect(conversions[0][2].distribution_channel).toBe('powered_by_relvo')
-  expect(JSON.stringify(conversions)).not.toMatch(/person@example|Test Person|Test Company|v1\./)
+  expect(JSON.stringify(conversions)).not.toMatch(/person@example|Test Company|v1\./)
+  // powered_by_demo_click: con el CTA anclando en la misma página (ya no navega a /agendar-demo),
+  // PoweredByPage.jsx lo dispara a mano para no perder la señal de distribution_events.
   expect(events.map((item) => item.event_name)).toEqual(expect.arrayContaining(['powered_by_landing', 'powered_by_demo_click', 'powered_by_form_start']))
   expect(errors).toEqual([])
 })
 
-test('English mobile landing has no placeholders, overflows or motion requirement', async ({ page }) => {
-  await intercept(page)
-  await page.setViewportSize({ width: 390, height: 844 })
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.goto('https://distribution.test/en/powered-by-relvo')
-  await expect(page.locator('h1')).toHaveText('Powered by Relvo')
-  await expect(page.locator('body')).not.toContainText('[PENDIENTE]')
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-  await page.screenshot({ path: 'test-results/powered-by-mobile-en.png', fullPage: true })
-  await expect(page.locator('main a')).toHaveAttribute('href', '/en/book-a-demo')
-})
+// /en/powered-by-relvo ya no existe (404 con redirect 301 a la versión ES, ver vercel.json y
+// src/pages/registry.js): sin copy EN aprobado para este rediseño, no hay página que probar acá.
+// scripts/check-routes.mjs ya verifica que esa URL responda 404.
 
-
-test('Spanish mobile product visual respects reduced motion without horizontal overflow', async ({ page }) => {
+test('Spanish mobile timeline respects reduced motion without horizontal overflow', async ({ page }) => {
   await intercept(page)
   await page.setViewportSize({ width: 390, height: 844 })
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('https://distribution.test/powered-by-relvo')
-  await expect(page.locator('.hero-stage .hc--in')).toHaveCount(4)
+  await expect(page.locator('.steps3__step')).toHaveCount(4)
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   await expect(page.locator('body')).not.toContainText('[PENDIENTE]')
   await page.screenshot({ path: 'test-results/powered-by-mobile-es.png', fullPage: true })

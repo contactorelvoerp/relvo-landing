@@ -3,18 +3,19 @@ import { BandTexture } from '../../components/BandTexture'
 import { LeadForm } from '../../components/LeadForm'
 import { LpFooter } from '../../components/LpFooter'
 import { Heading, IntegrationsSection } from '../../blocks/Shared'
+import { CalPanel } from '../../blocks/CalPanel'
 import { Check } from '../../visuals/cards'
 import { HeroShowcase } from './HeroShowcase'
 import { OneEngine } from './OneEngine'
 import { copy as homeCopy } from '../home/copy'
 import { copy as pricingCopy } from '../pricing/copy'
 import { IndustriesCarousel } from './IndustriesCarousel'
-import { CalEmbed } from './CalEmbed'
 import { SHOW_CASE_TGP } from './config'
-import { captureAdsClick, getAdsClick } from './ads-click'
+import { captureAdsClick, getAdsClick } from '../../adsClick'
 import { GOOGLE_ADS_CONVERSIONS, fireAdsConversion } from './ads-conversion'
 import { trackMarketingEvent } from '../../analytics.js'
 import { SHOW_PENDING } from '../../env'
+import { scrollToSection } from '../../scrollToSection'
 import { copy, isPending } from './copy'
 import '../../styles/blocks.css'
 import '../../landing/landing.css'
@@ -26,43 +27,12 @@ import './landing-ads.css'
 // clientes ni citas). Cuando Ricardo entregue texto, logo y cita, van acá.
 const CASE_CONTENT = null
 
-// Los 6 links "Agenda una demo" de la página saltan a #agenda con scroll propio, no el salto nativo
-// del navegador (Ricardo, 2026-11-02: en producción aterrizaban en "Preguntas frecuentes", la
-// sección de arriba — el salto nativo mide la posición al click, y el embed diferido de Cal.com más
-// las animaciones de entrada todavía podían mover el alto de la página después de esa medición).
-// scrollIntoView en vez de calcular la Y a mano (así respeta scroll-margin-top de landing-ads.css),
-// y 3 reintentos espaciados que corrigen la posición si algo debajo del click sigue cambiando de alto.
-function scrollToAgenda(event) {
-  event.preventDefault()
-  const target = document.getElementById('agenda')
-  if (!target) return
-  if (window.location.hash !== '#agenda') window.history.pushState(null, '', '#agenda')
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
-  for (const delay of [400, 900, 1600]) {
-    setTimeout(() => {
-      if (Math.abs(target.getBoundingClientRect().top) > 4) target.scrollIntoView({ behavior: 'auto', block: 'start' })
-    }, delay)
-  }
-}
-
-// Formulario de contacto como alternativa secundaria al calendario: en mobile va colapsado (acordeón)
-// debajo de Cal.com, en desktop siempre abierto (lpads-demo__form-body--closed solo actúa bajo los
-// 900px del grid, ver landing-ads.css).
-function DemoFormPanel({ title, children }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="lpads-demo__form">
-      <button type="button" className="lpads-demo__form-toggle" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
-        <span>{title}</span>
-        <svg className={`lpads-demo__form-chevron${open ? ' lpads-demo__form-chevron--open' : ''}`} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4" /></svg>
-      </button>
-      <div className={`lpads-demo__form-body${open ? '' : ' lpads-demo__form-body--closed'}`}>
-        {children}
-      </div>
-    </div>
-  )
-}
+// Los 6 links "Agenda una demo" de la página saltan a #agenda con scroll propio (scrollToSection,
+// src/scrollToSection.js): en producción aterrizaban en "Preguntas frecuentes", la sección de
+// arriba — el salto nativo del navegador mide la posición al click, y el embed diferido de
+// Cal.com más las animaciones de entrada todavía podían mover el alto de la página después de esa
+// medición.
+const scrollToAgenda = scrollToSection('agenda')
 
 // Landing de la primera campaña de Google Ads (docs/landing-ads-b2b.md). Solo ES, sin nav ni links
 // de salida (Ricardo, 2026-11-02: el logo del header ya tampoco es link): una sola conversión
@@ -86,9 +56,9 @@ export function LandingAdsPage({ t, locale }) {
 
   return (
     <div className="lpads">
-      <header className="lpads-top">
+      <header className="standalone-top">
         <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
-        <a className="btn btn--primary btn--md lpads-top__cta" href="#agenda" onClick={scrollToAgenda}>{c.hero.cta}</a>
+        <a className="btn btn--primary btn--md standalone-top__cta" href="#agenda" onClick={scrollToAgenda}>{c.hero.cta}</a>
       </header>
 
       <section className="section band band--first hero lpads-hero" aria-labelledby="lpads-h1">
@@ -213,14 +183,9 @@ export function LandingAdsPage({ t, locale }) {
         <BandTexture kind="dotsGutter" />
         <Heading id="lpads-demo-h2" title={c.demo.title} />
         <p className="lpads-lead">{c.demo.lead}</p>
-        <div className="lpads-demo__grid">
-          <div className="lpads-demo__cal">
-            <CalEmbed onBooked={handleBooked} prefill={prefill} />
-          </div>
-          <DemoFormPanel title={c.demo.formTitle}>
-            <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} onPrefillChange={setPrefill} roleOptions={c.demo.roleOptions} />
-          </DemoFormPanel>
-        </div>
+        <CalPanel onBooked={handleBooked} prefill={prefill} formTitle={c.demo.formTitle}>
+          <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} onPrefillChange={setPrefill} roleOptions={c.demo.roleOptions} />
+        </CalPanel>
       </section>
 
       <LpFooter t={t} locale={locale} showIllustrative tagline={c.footer.tagline} />
