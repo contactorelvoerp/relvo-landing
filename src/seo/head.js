@@ -2,6 +2,7 @@ import { getRoutes } from '../routes'
 import { getContent } from '../content'
 import { getDict } from '../i18n'
 import { answeredFaq } from '../pages/pricing/copy'
+import { answeredFaq as answeredFaqLandingAds } from '../pages/landing-ads/copy'
 import { APOLLO_APP_ID, DEFAULT_LOCALE, GA_ID, GOOGLE_ADS_ID, LINKEDIN_URL, SITE_NAME, SITE_URL } from '../site'
 
 const OG_LOCALE = { es: 'es_LA', en: 'en_US' }
@@ -76,6 +77,11 @@ function jsonLd(route) {
   // Precios: solo las preguntas con respuesta aprobada (las [PENDIENTE] no se publican)
   if (route.id === 'precios') {
     const faq = answeredFaq(route.locale)
+    if (faq.length) graph.push(faqLd(faq))
+  }
+  // LP Ads "Facturación B2B": mismo criterio, su propio FAQ (src/pages/landing-ads/copy.js)
+  if (route.id === 'lp-facturacion-b2b') {
+    const faq = answeredFaqLandingAds(route.locale)
     if (faq.length) graph.push(faqLd(faq))
   }
   return graph

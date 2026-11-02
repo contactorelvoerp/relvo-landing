@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { captureAttribution } from '../attribution.js'
 import { trackMarketingEvent } from '../analytics.js'
-import { fireAdsConversion } from '../pages/landing-ads/ads-conversion.js'
+import { fireAdsConversion, toE164 } from '../pages/landing-ads/ads-conversion.js'
 import { copy } from '../pages/demo/copy'
 import '../pages/demo/demo.css'
 
@@ -17,12 +17,14 @@ const REQUIRED = ['nombre', 'email', 'empresa', 'cargo']
 // email/teléfono. El resto del sitio no envía PII a analítica (src/analytics.js), así que este
 // comportamiento queda fuera de ahí. `onPrefillChange` (opcional): nombre/email al salir de esos
 // campos, por si la página quiere prefillear otra cosa con lo que la persona ya escribió acá (en
-// esta landing, el embed de Cal.com).
-export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClick, adsConversion, onPrefillChange }) {
+// esta landing, el embed de Cal.com). `roleOptions` (opcional): reemplaza las opciones de Cargo del
+// copy compartido (src/pages/demo/copy.js) sin tocarlo, para no afectar /agendar-demo ni /precios.
+export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClick, adsConversion, onPrefillChange, roleOptions }) {
   const submissionId = useRef(null)
   const started = useRef(false)
   const converted = useRef(false)
   const c = copy[locale]
+  const roles = roleOptions ?? c.roleOptions
   const [data, setData] = useState(EMPTY)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
@@ -60,7 +62,7 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClic
       if (result.recorded !== false && !converted.current) {
         converted.current = true
         // submissionId: mismo id en cada reintento de este envío, para que Google no la cuente dos veces.
-        if (adsConversion) fireAdsConversion({ ...adsConversion, transactionId: submissionId.current, email: data.email, phone: data.telefono || undefined })
+        if (adsConversion) fireAdsConversion({ ...adsConversion, transactionId: submissionId.current, email: data.email, phone: toE164(data.telefono) })
         trackMarketingEvent('generate_lead', { form: fuente, locale })
       }
       setStatus('success')
@@ -107,7 +109,7 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClic
         {field('cargo', `${c.role} *`, (
           <select {...props('cargo')}>
             <option value="">{c.rolePlaceholder}</option>
-            {c.roleOptions.map((o) => <option key={o}>{o}</option>)}
+            {roles.map((o) => <option key={o}>{o}</option>)}
           </select>
         ))}
       </div>
