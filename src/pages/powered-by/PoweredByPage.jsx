@@ -53,7 +53,15 @@ function PoweredByEs() {
   // variant="short" de LeadForm.jsx. Sin cliente referente, queda igual que hoy ("powered_by_relvo").
   const fuente = referrer.slug ? `powered_by_relvo:${referrer.slug}` : 'powered_by_relvo'
 
-  const handleCtaPrimary = (e) => { trackMarketingEvent('powered_by_cta_primary', { locale: 'es', placement: 'hero' }); scrollToAgenda(e) }
+  // powered_by_demo_click: antes la disparaba sola el listener global de analytics.js al navegar a
+  // /agendar-demo (destination.pathname). Acá el CTA ya no navega, ancla a #agenda en la misma
+  // página, así que ese listener nunca vería el click — se dispara a mano para no perder la señal
+  // que alimenta distribution_events (atribución de ingresos real, shared/attribution.js).
+  const handleCtaPrimary = (e) => {
+    trackMarketingEvent('powered_by_cta_primary', { locale: 'es', placement: 'hero' })
+    trackMarketingEvent('powered_by_demo_click', { placement: 'powered_by_page' })
+    scrollToAgenda(e)
+  }
   const handleCtaSecondary = (e) => { trackMarketingEvent('powered_by_cta_secondary', { locale: 'es' }); scrollToHistoria(e) }
   const handleBooked = () => trackMarketingEvent('demo_agendada', { form: 'powered_by_relvo', locale: 'es' })
 
@@ -129,7 +137,11 @@ export function PoweredByPage({ t, locale }) {
           <a
             className="btn btn--primary btn--md standalone-top__cta"
             href="#agenda"
-            onClick={(e) => { trackMarketingEvent('powered_by_cta_primary', { locale, placement: 'header' }); scrollToAgenda(e) }}
+            onClick={(e) => {
+              trackMarketingEvent('powered_by_cta_primary', { locale, placement: 'header' })
+              trackMarketingEvent('powered_by_demo_click', { placement: 'powered_by_page' })
+              scrollToAgenda(e)
+            }}
           >
             {t.nav.demo}
           </a>
