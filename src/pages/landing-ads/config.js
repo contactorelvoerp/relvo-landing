@@ -1,13 +1,14 @@
 // Link del evento "Demo Relvo" en Cal.com, en la variable de entorno VITE_CALCOM_LINK (Vercel →
-// Project Settings → Environment Variables). Esta app es Vite, no Next.js: solo las variables con
-// prefijo VITE_ llegan al navegador, así que el nombre pedido (NEXT_PUBLIC_CALCOM_LINK) no serviría
-// acá. Sin ella, src/pages/landing-ads/CalEmbed.jsx no pinta nada y la sección de agenda queda solo
-// con el formulario de contacto.
-export const CAL_LINK = import.meta.env.VITE_CALCOM_LINK ?? ''
+// Project Settings → Environment Variables) si está configurada ahí — y si no, el slug de acá
+// directo (Ricardo, 2026-11-02: no es secreto, y la variable nunca llegó a ningún build de
+// producción pese a estar configurada en Vercel; en vez de seguir dependiendo de esa variable,
+// CAL_LINK ya no puede quedar vacío). Esta app es Vite, no Next.js: solo las variables con prefijo
+// VITE_ llegan al navegador, así que el nombre pedido (NEXT_PUBLIC_CALCOM_LINK) no serviría acá.
+export const CAL_LINK = import.meta.env.VITE_CALCOM_LINK || 'ricardo-cerda-waak-z2uqe2/demo-relvo'
 
-// Link de respaldo del mismo evento "Demo Relvo" (Ricardo, 2026-11-02): si VITE_CALCOM_LINK falta
-// o está mal escrita, CalEmbed.jsx muestra este link en vez de dejar la sección vacía sin avisar.
-// No es sensible (es la URL pública del evento), así que puede ir hardcodeado.
+// Link de respaldo (URL completa, no el slug de arriba) para cuando el embed de Cal.com falla de
+// verdad al cargar (evento linkFailed, o 10s sin linkReady — ver CalEmbed.jsx): CalEmbed.jsx
+// muestra este link en vez de dejar la sección vacía sin avisar.
 export const CAL_LINK_FALLBACK = 'https://cal.com/ricardo-cerda-waak-z2uqe2/demo-relvo'
 
 // Caso de cliente (Ricardo, 2026-11-01): bloque preparado detrás de este flag, apagado hasta que
