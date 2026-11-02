@@ -1,0 +1,70 @@
+/* Landing de Google Ads "Facturación B2B" (docs/landing-ads-b2b.md). Sin nav: logo + footer
+   mínimo. H1 en Instrument Sans como el resto del sitio (Fujiwara A es solo del hero de la home). */
+
+.lpads-top{position:relative;isolation:isolate;display:flex;align-items:center;height:64px;padding:0 var(--gutter)}
+.lpads-top::after{content:"";position:absolute;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);border-bottom:1px solid var(--line)}
+
+/* Hero: mismo molde de la home (título izq., HeroStage der.), con eyebrow propio (ver copy.js).
+   El H1 reusa .hero__title por tamaño, pero en Instrument Sans: Fujiwara A es solo del hero de
+   la home (CLAUDE.md). */
+.lpads-hero .hero__title{font-family:var(--font-ui)}
+
+.lpads-lead{max-width:56ch;margin:0;font-size:18px;line-height:1.6;color:var(--text-body)}
+.lpads-bridge{max-width:56ch;margin:-12px 0 32px;font-size:17px;line-height:1.6;color:var(--text-body)}
+.lpads-agentes-lead{max-width:60ch;margin:-12px 0 40px}
+.lpads-paths{margin-bottom:0}
+/* Un dato de apoyo por camino, como el resto del sitio: una tarjeta, un dato, una frase.
+   `path__shot`: captura real del producto (no una ilustración) — el único elemento visual del
+   camino, no una tarjeta encima de otra tarjeta. */
+.path__shot{width:min(220px,60%);height:auto;margin:0 0 20px}
+.path__stat{display:flex;align-items:baseline;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(15,74,74,.14)}
+.path__stat b{font-size:22px;font-weight:600;letter-spacing:-.02em;color:var(--accent-pressed)}
+.path__stat span{font-size:14px;color:var(--text-soft)}
+
+/* Industrias: mismo patrón del carrusel de integraciones (src/styles/blocks.css → .ints), con
+   chips de ícono + nombre en vez de logos */
+.industries{overflow:hidden;margin-top:40px}
+.industries__track{--industries-gap:14px;display:flex;gap:var(--industries-gap);width:max-content;margin:0;padding:0;list-style:none;animation:relvo-industries 34s linear infinite}
+.industries__track li{display:flex;flex:none;align-items:center;gap:10px;padding:13px 22px;border:1px solid var(--line);border-radius:999px;background:var(--paper);font-size:15.5px;font-weight:500;color:var(--text-main);white-space:nowrap}
+.industries__icon{width:22px;height:22px;flex:none;color:var(--accent)}
+.industries:hover .industries__track,.industries--offscreen .industries__track{animation-play-state:paused}
+@keyframes relvo-industries{to{transform:translateX(calc(-50% - var(--industries-gap) / 2))}}
+@media (prefers-reduced-motion:reduce){
+  .industries__track{flex-wrap:wrap;width:auto;animation:none}
+  .industries__track li[aria-hidden]{display:none}
+}
+
+/* Cifras: 5 datos, misma escala tipográfica que la banda de la home */
+.lpads-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px 32px}
+.lpads-stats__value{display:block;font-size:clamp(30px,3.2cqi,42px);font-weight:500;line-height:1.05;letter-spacing:-.03em;color:var(--accent)}
+.lpads-stats__label{max-width:26ch;margin:10px 0 0;font-size:15px;line-height:1.5;color:var(--text-body)}
+.lpads-dashboard{width:min(640px,100%);height:auto;margin:48px auto 0;display:block}
+
+/* Precio de entrada: una sola tarjeta centrada, no la grilla de /precios */
+.lpads-plan{display:flex;flex-direction:column;gap:24px;max-width:480px;margin:0 auto;padding:clamp(28px,3cqi,40px);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}
+.lpads-plan__intro{display:flex;flex-direction:column;gap:8px}
+.lpads-plan__name{margin:0;font-size:22px;font-weight:600}
+.lpads-plan__who{margin:0;font-size:15.5px;color:var(--text-body)}
+.lpads-plan__price{display:flex;align-items:baseline;gap:8px;margin:0}
+.lpads-plan__amount{font-size:clamp(36px,4cqi,46px);font-weight:500;letter-spacing:-.03em}
+.lpads-plan__period{font-size:15px;color:var(--text-soft)}
+.lpads-plan__includes{display:flex;flex-direction:column;gap:12px;margin:0;padding:20px 0 0;border-top:1px solid var(--line);list-style:none}
+.lpads-plan__includes li{display:flex;gap:12px;font-size:15.5px;line-height:1.4;color:var(--text-main)}
+.lpads-plan__includes svg{flex:none;margin-top:2px;color:var(--accent)}
+.lpads-plan__highlight{font-weight:600}
+.lpads-plan .btn{align-self:flex-start}
+
+/* Agenda tu demo: calendario (Cal.com) a la izquierda, formulario de contacto a la derecha.
+   Cal.com redimensiona su iframe al contenido (mes + horarios + formulario puede ser muy alto):
+   altura fija y scroll propio para que nunca se salga de la sección. */
+.lpads-demo__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:start;gap:40px 56px}
+.lpads-demo__cal{display:flex;flex-direction:column;gap:16px}
+.lpads-cal{width:100%;height:600px;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius-lg)}
+.lpads-cal iframe{height:100%!important}
+.lpads-demo__form{min-width:0;padding:clamp(20px,2.6cqi,28px);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}
+.lpads-demo__alt{margin:0 0 16px;font-size:15.5px;font-weight:500;color:var(--text-main)}
+.lpads-demo__form .form{padding-top:0}
+
+@container (max-width:900px){
+  .lpads-demo__grid{grid-template-columns:1fr}
+}

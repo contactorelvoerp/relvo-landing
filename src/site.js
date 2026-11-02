@@ -15,3 +15,5 @@ export const API_DOCS_URL = 'https://app.relvoerp.com/docs'
 export const LINKEDIN_URL = 'https://www.linkedin.com/company/relvoerp/'
 export const GA_ID = 'G-3612NJ7H02'
 export const APOLLO_APP_ID = '699730cba59e31000dd3ed82'
+// Google Ads (campaña /lp/facturacion-b2b, dato de Ricardo): no es secreto, igual que GA_ID.
+export const GOOGLE_ADS_ID = 'AW-18546425614'

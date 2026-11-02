@@ -42,9 +42,11 @@ export default async function handler(req, res) {
 
   const attribution = cleanAttribution(lead.attribution)
   const campaign = (touch) => touch ? [touch.utm_source, touch.utm_medium, touch.utm_campaign].filter(Boolean).join(' / ') : null
+  const adsClick = attribution.ads_click
   const lines = [
     field('Nombre', lead.nombre),
     field('Email', lead.email),
+    field('Teléfono', lead.telefono),
     field('Empresa', lead.empresa),
     field('Cargo', lead.cargo),
     field('Problema', lead.problema),
@@ -53,6 +55,9 @@ export default async function handler(req, res) {
     field('Primera campaña', campaign(attribution.first_touch)),
     field('Última campaña', campaign(attribution.last_touch)),
     field('Referencia de distribución', attribution.first_touch?.reference || attribution.last_touch?.reference),
+    // Click de Google Ads (landings de campañas pagadas): gclid y la campaña del anuncio.
+    field('Campaña de Ads', adsClick ? [adsClick.utm_campaign, adsClick.utm_term].filter(Boolean).join(' / ') : null),
+    field('gclid', adsClick?.gclid),
     field('ID de solicitud', lead.submission_id),
   ].filter(Boolean)
 

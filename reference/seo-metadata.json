@@ -333,6 +333,20 @@
       }
     },
     {
+      "id": "lp-facturacion-b2b",
+      "pagina": "LP Ads · Facturación B2B (noindex, fuera del sitemap)",
+      "es": {
+        "url": "/lp/facturacion-b2b",
+        "title": "Revenue Engine para B2B | Relvo",
+        "description": "Factura, cobra y concilia a los clientes que te pagan una y otra vez: planes recurrentes o pricing híbrido, desde USD 299/mes. Agenda una demo."
+      },
+      "en": {
+        "url": "/en/lp/facturacion-b2b",
+        "title": "[PENDIENTE]",
+        "description": "[PENDIENTE]"
+      }
+    },
+    {
       "id": "powered_by",
       "pagina": "Powered by Relvo",
       "es": {

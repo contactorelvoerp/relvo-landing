@@ -2,7 +2,7 @@ import { getRoutes } from '../routes'
 import { getContent } from '../content'
 import { getDict } from '../i18n'
 import { answeredFaq } from '../pages/pricing/copy'
-import { APOLLO_APP_ID, DEFAULT_LOCALE, GA_ID, LINKEDIN_URL, SITE_NAME, SITE_URL } from '../site'
+import { APOLLO_APP_ID, DEFAULT_LOCALE, GA_ID, GOOGLE_ADS_ID, LINKEDIN_URL, SITE_NAME, SITE_URL } from '../site'
 
 const OG_LOCALE = { es: 'es_LA', en: 'en_US' }
 
@@ -169,6 +169,6 @@ export function buildHead(route, { production, ogImage }) {
 
   // Previews never load tracking. The client captures and sanitizes attribution
   // before configuring GA or loading third-party scripts.
-  if (production) tags.push(`<script>window.__RELVO_ANALYTICS__=${JSON.stringify({ measurementId: GA_ID, apolloAppId: APOLLO_APP_ID })}</script>`)
+  if (production) tags.push(`<script>window.__RELVO_ANALYTICS__=${JSON.stringify({ measurementId: GA_ID, googleAdsId: GOOGLE_ADS_ID, apolloAppId: APOLLO_APP_ID })}</script>`)
   return tags.join('\n    ')
 }

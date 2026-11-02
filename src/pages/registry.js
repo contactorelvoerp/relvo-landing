@@ -2,6 +2,7 @@ import { PoweredByPage } from './powered-by/PoweredByPage'
 import { HomePage } from './home/HomePage'
 import { DemoPage } from './demo/DemoPage'
 import { PricingPage } from './pricing/PricingPage'
+import { LandingAdsPage } from './landing-ads/LandingAdsPage'
 import { LandingPage } from '../landing/LandingPage'
 import { PlaceholderPage } from './PlaceholderPage'
 import { NOINDEX_PAGES } from './noindex'
@@ -9,6 +10,10 @@ import { NOINDEX_PAGES } from './noindex'
 // Páginas de plantilla publicadas: se renderizan desde su archivo de contenido
 // (content/<idioma>/<url>.json). El resto de los archivos de content/ se valida pero no se publica.
 export const LANDINGS = ['cxc', 'contratos', 'medicion', 'aprobaciones', 'agentes', 'reporteria', 'planes', 'hibrido', 'uso', 'saas', 'agencias', 'revops', 'finanzas', 'ingenieria', 'tgp']
+
+// Páginas noindex con componente propio (no el placeholder genérico): quedan fuera del índice
+// a propósito, no "hasta que estén listas" (ver src/pages/noindex.js).
+const NOINDEX_COMPONENTS = { 'lp-facturacion-b2b': LandingAdsPage }
 
 // id de página (reference/seo-metadata.json) → componente.
 // Una página se publica en producción solo cuando está registrada acá.
@@ -18,7 +23,7 @@ export const PAGE_COMPONENTS = {
   demo: DemoPage,
   precios: PricingPage,
   ...Object.fromEntries(LANDINGS.map((id) => [id, LandingPage])),
-  ...Object.fromEntries(NOINDEX_PAGES.map((id) => [id, PlaceholderPage])),
+  ...Object.fromEntries(NOINDEX_PAGES.map((id) => [id, NOINDEX_COMPONENTS[id] ?? PlaceholderPage])),
 }
 
 // Idiomas con copy aprobado por página. Si una página no aparece acá, está lista en todos.
