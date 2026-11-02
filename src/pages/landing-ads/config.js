@@ -4,3 +4,8 @@
 // acá. Sin ella, src/pages/landing-ads/CalEmbed.jsx no pinta nada y la sección de agenda queda solo
 // con el formulario de contacto.
 export const CAL_LINK = import.meta.env.VITE_CALCOM_LINK ?? ''
+
+// Caso de cliente (Ricardo, 2026-11-01): bloque preparado detrás de este flag, apagado hasta que
+// entregue el texto, el logo y la cita aprobados. CLAUDE.md: nunca se inventan clientes ni citas,
+// así que mientras no haya contenido esto se queda en false y el bloque no se publica ni en preview.
+export const SHOW_CASE_TGP = false
