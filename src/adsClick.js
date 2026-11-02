@@ -1,10 +1,12 @@
-import { cleanAttribution } from '../../../shared/attribution.js'
+import { cleanAttribution } from '../shared/attribution.js'
 
-// Google Ads click identifiers for this campaign's landing page: captured from the URL on
-// arrival and kept in a dedicated first-party cookie for 90 days (brief: enhanced conversions
-// and offline imports need gclid to survive the time between the click and the booked demo).
-// Separate from the site-wide attribution in src/attribution.js (localStorage, 30 days, a
-// different shape) so this page's needs don't change that system's retention or validation.
+// Google Ads click identifiers: capturados de la URL al llegar y guardados en una cookie propia
+// por 90 días (enhanced conversions e importaciones offline necesitan que el gclid sobreviva entre
+// el click y la demo agendada, que puede ser días después). Separado de la atribución del sitio
+// (src/attribution.js, localStorage, 30 días, otra forma) para que las necesidades de esta cookie
+// no cambien la retención ni la validación de ese sistema.
+// Compartido por las páginas con calendario de Cal.com (CalEmbed.jsx): /lp/facturacion-b2b y
+// /agendar-demo, cada una con su propia cuenta de Google Ads o ninguna (el gclid solo se usa si existe).
 const COOKIE = 'relvo_ads_click'
 const DAYS = 90
 const KEYS = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']

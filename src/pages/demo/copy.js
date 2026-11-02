@@ -4,6 +4,11 @@ export const copy = {
   es: {
     title: 'Agenda una demo de Relvo',
     lede: 'Cuéntanos cómo cobras hoy y te mostramos Relvo funcionando con un caso como el tuyo: planes recurrentes, contratos o cobro por uso.',
+    // Mismo texto ya aprobado del panel de calendario de /lp/facturacion-b2b (src/pages/landing-ads/copy.js):
+    // sin traducción en inglés todavía, así que el calendario con panel alternativo solo se muestra en ES
+    // (DemoPage.jsx) hasta que haya copy EN aprobado.
+    formTitle: '¿Prefieres que te llamemos? Déjanos tus datos.',
+    formSubmit: 'Quiero que me contacten',
     name: 'Nombre',
     namePlaceholder: 'Tu nombre',
     email: 'Email corporativo',

@@ -3,12 +3,7 @@
 
 /* Header fijo (Ricardo, 2026-11-01): logo a la izquierda, CTA a la derecha, siempre visible para
    poder agendar desde cualquier punto del scroll. Mismo patrón que .subnav (landing.css). */
-.lpads-top{position:sticky;top:0;z-index:20;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding:12px var(--gutter);background:rgba(255,255,255,.97)}
-.lpads-top::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(255,255,255,.97)}
-.lpads-top::after{content:"";position:absolute;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);border-bottom:1px solid var(--line)}
-.lpads-top a{display:flex;align-items:center}
-.lpads-top__cta{flex:none}
-@container (max-width:479px){.lpads-top__cta{padding-left:14px;padding-right:14px;font-size:14px}}
+/* El header mínimo (logo + CTA) es el bloque compartido .standalone-top de src/styles/blocks.css. */
 
 /* Hero: mismo molde de la home (título izq., HeroShowcase der.), con eyebrow propio (ver copy.js).
    El H1 reusa .hero__title por tamaño, pero en Instrument Sans: Fujiwara A es solo del hero de
@@ -89,34 +84,6 @@
    formulario queda colapsado bajo un acordeón (Ricardo, 2026-11-01). Cal.com redimensiona su
    iframe al contenido (mes + horarios + formulario puede ser muy alto): altura fija y scroll
    propio para que nunca se salga de la sección. */
+/* El calendario (CalEmbed) y el panel de formulario alternativo son el bloque compartido
+   .cal-panel* de src/styles/blocks.css (CalPanel.jsx, incluye el padding del botón) — ver ese archivo. */
 #agenda{scroll-margin-top:88px}
-.lpads-demo__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:start;gap:40px 56px}
-/* Alto fijo del contenedor (Ricardo, 2026-11-02): reservado desde el primer render, antes de que
-   Cal.com cargue de forma diferida — si no, la página cambia de alto cuando el embed por fin llega
-   (o, si VITE_CALCOM_LINK falta, queda directamente sin reservar nada) y los 6 CTA "Agenda una
-   demo" terminan apuntando a una posición que ya no es la correcta. */
-.lpads-demo__cal{display:flex;flex-direction:column;gap:16px;min-height:680px}
-.lpads-cal{width:100%;height:680px;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius-lg)}
-.lpads-cal iframe{height:100%!important}
-.lpads-cal--fallback{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:16px;padding:clamp(24px,3cqi,32px);background:var(--paper)}
-.lpads-cal--fallback p{margin:0;font-size:15.5px;color:var(--text-body)}
-.lpads-demo__form{min-width:0;padding:clamp(20px,2.6cqi,28px);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}
-.lpads-demo__form-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:0;border:0;background:none;font-family:var(--font-ui);font-size:15.5px;font-weight:500;color:var(--text-main);text-align:left;cursor:default}
-.lpads-demo__form-chevron{display:none;flex:none;width:16px;height:16px;color:var(--text-muted);transition:transform .2s}
-.lpads-demo__form-chevron--open{transform:rotate(180deg)}
-.lpads-demo__form-body{margin-top:20px}
-.lpads-demo__form .form{padding-top:0}
-/* El botón de este form mide 24 caracteres ("Quiero que me contacten"), el primero del sitio que
-   cruza el umbral de impeccable para texto propio + fondo + 0 padding vertical (el resto de los
-   .btn del sitio se centran con flex sobre una altura fija, sin necesitarlo). Padding real, sin
-   cambiar la altura fija (box-sizing: border-box) ni el centrado. */
-.lpads-demo__form .btn{padding-top:7px;padding-bottom:7px}
-
-/* Debajo de los 900px (donde .lpads-demo__grid pasa a 1 columna): el formulario es un acordeón de
-   verdad, cerrado por defecto, bajo el calendario. Sobre los 900px queda siempre abierto. */
-@container (max-width:900px){
-  .lpads-demo__grid{grid-template-columns:1fr}
-  .lpads-demo__form-toggle{cursor:pointer}
-  .lpads-demo__form-chevron{display:block}
-  .lpads-demo__form-body--closed{display:none}
-}

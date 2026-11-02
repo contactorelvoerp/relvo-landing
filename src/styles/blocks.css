@@ -142,3 +142,41 @@ a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
   .product--wide{grid-column:auto}
 }
 @container (max-width:719px){.cta__content{max-width:84%}}
+
+/* Header mínimo de una página standalone (src/pages/standalone.js): logo + un solo CTA, sin menú
+   ni más salidas. Usado por /lp/facturacion-b2b y /powered-by-relvo. */
+.standalone-top{position:sticky;top:0;z-index:20;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding:12px var(--gutter);background:rgba(255,255,255,.97)}
+.standalone-top::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(255,255,255,.97)}
+.standalone-top::after{content:"";position:absolute;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);border-bottom:1px solid var(--line)}
+.standalone-top a{display:flex;align-items:center}
+.standalone-top__cta{flex:none}
+@container (max-width:479px){.standalone-top__cta{padding-left:14px;padding-right:14px;font-size:14px}}
+
+/* Calendario de Cal.com + formulario alternativo colapsable (CalPanel.jsx): usado por
+   /lp/facturacion-b2b, /agendar-demo y /powered-by-relvo. */
+.cal-panel__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:start;gap:40px 56px}
+/* Alto fijo del contenedor (Ricardo, 2026-11-02): reservado desde el primer render, antes de que
+   Cal.com cargue de forma diferida — si no, la sección cambia de alto cuando el embed por fin
+   llega y cualquier link con ancla hacia ella termina apuntando a una posición que ya no es la
+   correcta. */
+.cal-panel__cal{display:flex;flex-direction:column;gap:16px;min-height:680px}
+.cal-panel__form{min-width:0;padding:clamp(20px,2.6cqi,28px);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}
+.cal-panel__form-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:0;border:0;background:none;font-family:var(--font-ui);font-size:15.5px;font-weight:500;color:var(--text-main);text-align:left;cursor:default}
+.cal-panel__form-chevron{display:none;flex:none;width:16px;height:16px;color:var(--text-muted);transition:transform .2s}
+.cal-panel__form-chevron--open{transform:rotate(180deg)}
+.cal-panel__form-body{margin-top:20px}
+.cal-panel__form .form{padding-top:0}
+/* Botones con texto propio largo (p. ej. "Quiero que me contacten") cruzan el umbral de impeccable
+   para texto + fondo + 0 padding vertical (el resto de los .btn del sitio se centran con flex sobre
+   una altura fija, sin necesitarlo). Padding real, sin cambiar la altura fija (box-sizing:
+   border-box) ni el centrado de los botones con texto más corto. */
+.cal-panel__form .btn{padding-top:7px;padding-bottom:7px}
+
+/* Debajo de los 900px (donde .cal-panel__grid pasa a 1 columna): el formulario es un acordeón de
+   verdad, cerrado por defecto, bajo el calendario. Sobre los 900px queda siempre abierto. */
+@container (max-width:900px){
+  .cal-panel__grid{grid-template-columns:1fr}
+  .cal-panel__form-toggle{cursor:pointer}
+  .cal-panel__form-chevron{display:block}
+  .cal-panel__form-body--closed{display:none}
+}

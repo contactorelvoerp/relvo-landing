@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import Cal, { getCalApi } from '@calcom/embed-react'
-import { captureAdsClick, getAdsClick } from './ads-click'
-import { CAL_LINK, CAL_LINK_FALLBACK } from './config'
+import { captureAdsClick, getAdsClick } from '../adsClick'
+import { CAL_LINK, CAL_LINK_FALLBACK } from '../config/cal'
+import './cal-embed.css'
 
 // Embed inline de Cal.com con @calcom/embed-react (Ricardo, 2026-11-02: reemplaza el snippet a
 // mano que teníamos antes — mismo comportamiento, pero sin mantenerlo nosotros). CAL_LINK siempre
-// tiene un valor real (config.js), así que este componente ya no depende de que
+// tiene un valor real (src/config/cal.js), así que este componente ya no depende de que
 // VITE_CALCOM_LINK esté configurada en Vercel para mostrar el calendario: el link de respaldo
 // (botón a cal.com) queda solo para cuando el embed de verdad falla al cargar — evento linkFailed
 // de Cal.com, o 10s sin que dispare linkReady.
@@ -13,18 +14,15 @@ import { CAL_LINK, CAL_LINK_FALLBACK } from './config'
 // documentación de prefill de Cal.com — un objeto anidado `metadata: {...}` no funciona); utm_* va
 // en la URL del calLink, que Cal.com usa para su propio tracking. De ahí a Attio depende de cómo
 // Ricardo conecte el webhook de Cal.com, fuera de este repo.
-// Probado en vivo con el evento real: el calendario carga, el tema claro y el color de marca se
-// ven bien, y tanto gclid/utm (iframe src) como el prefill de nombre+email (ver más abajo)
-// llegan correctos. Lo que falta probar es el otro lado: completar una reserva real para confirmar
-// la forma exacta del payload de bookingSuccessfulV2 (de dónde sale el email del asistente) — no
-// se agendó una reunión real para no dejarle una cita falsa a Ricardo en su calendario.
+// Compartido por /lp/facturacion-b2b, /agendar-demo y /powered-by-relvo (movido fuera de
+// src/pages/landing-ads en la rama web3/powered-by-relvo-conversion, mismo comportamiento).
 const NAMESPACE = 'demo-relvo'
 const ELEMENT_ID = 'cal-inline-demo'
 const LOAD_TIMEOUT_MS = 10000
 
-// `prefill` (nombre/email, src/pages/landing-ads/LandingAdsPage.jsx): lo que la persona ya haya
-// escrito en el formulario de abajo, por si prefiere terminar por el calendario. Se aplica una sola
-// vez, la primera vez que llega con algo — remontando el embed con un id nuevo (`key`, más abajo),
+// `prefill` (nombre/email, por ejemplo desde el formulario alternativo de la misma página): lo que
+// la persona ya haya escrito, por si prefiere terminar por el calendario. Se aplica una sola vez,
+// la primera vez que llega con algo — remontando el embed con un id nuevo (`key`, más abajo),
 // no actualizándolo en vivo en cada tecla: eso recargaría el calendario mientras escriben, y si ya
 // habían elegido un horario ahí, se lo haría perder. Probado en vivo: un segundo "inline" sobre el
 // mismo elemento no actualiza nada, Cal.com lo ignora ("Inline embed already exists") — @calcom/
@@ -113,12 +111,12 @@ export function CalEmbed({ onBooked, prefill }) {
   }, [prefill])
 
   // Antes del viewport: una caja vacía del mismo tamaño (la reserva real de 680px viene de
-  // landing-ads.css), para no afectar el alto de la página cuando el embed por fin cargue.
-  if (!visible) return <div ref={wrapperRef} className="lpads-cal" />
+  // cal-embed.css), para no afectar el alto de la página cuando el embed por fin cargue.
+  if (!visible) return <div ref={wrapperRef} className="cal-embed" />
 
   if (failed) {
     return (
-      <div className="lpads-cal lpads-cal--fallback">
+      <div className="cal-embed cal-embed--fallback">
         <p>Agenda directo en Cal.com:</p>
         <a className="btn btn--primary btn--lg" href={CAL_LINK_FALLBACK} target="_blank" rel="noopener noreferrer">Agenda tu demo</a>
       </div>
@@ -137,7 +135,7 @@ export function CalEmbed({ onBooked, prefill }) {
       namespace={NAMESPACE}
       calLink={calLink}
       calOrigin="https://cal.com"
-      className="lpads-cal"
+      className="cal-embed"
       config={{
         theme: 'light',
         layout: 'month_view',

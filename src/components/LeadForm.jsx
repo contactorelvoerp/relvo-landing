@@ -5,27 +5,41 @@ import { fireAdsConversion, toE164 } from '../pages/landing-ads/ads-conversion.j
 import { copy } from '../pages/demo/copy'
 import '../pages/demo/demo.css'
 
-const EMPTY = { nombre: '', email: '', empresa: '', cargo: '', problema: '', telefono: '', website: '' }
-const REQUIRED = ['nombre', 'email', 'empresa', 'cargo']
+const EMPTY_FULL = { nombre: '', email: '', empresa: '', cargo: '', problema: '', telefono: '', website: '' }
+const REQUIRED_FULL = ['nombre', 'email', 'empresa', 'cargo']
+// variant="short" (p. ej. el form alternativo de /powered-by-relvo, bajo el calendario): solo email,
+// empresa y una pregunta de opción múltiple pasada por `cobroOptions`. Sin campo "nombre" propio
+// porque la columna `nombre` de `leads` es obligatoria para todos los formularios del sitio
+// (REQUIRED_FULL, y api/lead.js) y agregar una columna nueva solo para este formulario corto no
+// valía una migración (Ricardo, 2026-11-02) — se deriva del email al enviar, ver nameFromEmail.
+const EMPTY_SHORT = { email: '', empresa: '', cobro: '', website: '' }
+const REQUIRED_SHORT = ['email', 'empresa', 'cobro']
+
+function nameFromEmail(email) {
+  return email.split('@')[0]?.replace(/[._-]+/g, ' ').trim() || email
+}
 
 // Formulario de contacto → /api/lead (tabla `leads` en Supabase). Ninguna key en el navegador.
-// Lo usan /agendar-demo y /precios: mismos campos y endpoint; `fuente` dice desde qué página llegó.
-// `success` reemplaza el mensaje de éxito por defecto; `submit`, el texto del botón.
-// `adsClick` (src/pages/landing-ads/ads-click.js) viaja junto a la atribución del sitio cuando la
-// página lo pasa. `adsConversion` (src/pages/landing-ads/ads-conversion.js) solo lo pasa esa
-// landing: muestra el teléfono opcional y, al convertir, dispara la conversión de Google Ads con
-// email/teléfono. El resto del sitio no envía PII a analítica (src/analytics.js), así que este
-// comportamiento queda fuera de ahí. `onPrefillChange` (opcional): nombre/email al salir de esos
-// campos, por si la página quiere prefillear otra cosa con lo que la persona ya escribió acá (en
-// esta landing, el embed de Cal.com). `roleOptions` (opcional): reemplaza las opciones de Cargo del
-// copy compartido (src/pages/demo/copy.js) sin tocarlo, para no afectar /agendar-demo ni /precios.
-export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClick, adsConversion, onPrefillChange, roleOptions }) {
+// Lo usan /agendar-demo, /precios y /lp/facturacion-b2b: mismos campos y endpoint; `fuente` dice
+// desde qué página llegó. `success` reemplaza el mensaje de éxito por defecto; `submit`, el texto
+// del botón. `adsClick` (src/adsClick.js) viaja junto a la atribución del sitio cuando la página lo
+// pasa. `adsConversion` (src/pages/landing-ads/ads-conversion.js) solo lo pasa esa landing: muestra
+// el teléfono opcional y, al convertir, dispara la conversión de Google Ads con email/teléfono. El
+// resto del sitio no envía PII a analítica (src/analytics.js), así que este comportamiento queda
+// fuera de ahí. `onPrefillChange` (opcional): nombre/email al salir de esos campos, por si la
+// página quiere prefillear otra cosa con lo que la persona ya escribió acá (el embed de Cal.com).
+// `roleOptions` (opcional): reemplaza las opciones de Cargo del copy compartido
+// (src/pages/demo/copy.js) sin tocarlo, para no afectar /agendar-demo ni /precios.
+// `variant="short"` + `cobroLabel`/`cobroPlaceholder`/`cobroOptions` (opcionales): el formulario
+// corto de arriba, con la pregunta de cómo cobra hoy en vez de nombre/cargo/problema.
+export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClick, adsConversion, onPrefillChange, roleOptions, variant = 'full', cobroLabel, cobroPlaceholder, cobroOptions }) {
+  const short = variant === 'short'
   const submissionId = useRef(null)
   const started = useRef(false)
   const converted = useRef(false)
   const c = copy[locale]
   const roles = roleOptions ?? c.roleOptions
-  const [data, setData] = useState(EMPTY)
+  const [data, setData] = useState(short ? EMPTY_SHORT : EMPTY_FULL)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
 
@@ -38,7 +52,8 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClic
   const submit = async (e) => {
     e.preventDefault()
     const next = {}
-    REQUIRED.forEach((k) => { if (!data[k].trim()) next[k] = c.required })
+    const required = short ? REQUIRED_SHORT : REQUIRED_FULL
+    required.forEach((k) => { if (!data[k].trim()) next[k] = c.required })
     if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) next.email = c.invalidEmail
     setErrors(next)
     if (Object.keys(next).length > 0) return
@@ -48,10 +63,16 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClic
     setStatus('loading')
     try {
       const attribution = { ...captureAttribution(), ads_click: adsClick }
+      // El form corto no pide nombre ni cargo: se completan igual, para que el lead cumpla las
+      // mismas columnas obligatorias que el resto del sitio (api/lead.js → REQUIRED) sin una
+      // migración solo para este formulario (ver EMPTY_SHORT más arriba).
+      const payload = short
+        ? { nombre: nameFromEmail(data.email), email: data.email, empresa: data.empresa, cargo: 'Otro', problema: `${cobroLabel ?? ''}: ${data.cobro}`.replace(/^: /, ''), website: data.website }
+        : data
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, url_origen: window.location.href, fuente, attribution, submission_id: submissionId.current }),
+        body: JSON.stringify({ ...payload, url_origen: window.location.href, fuente, attribution, submission_id: submissionId.current }),
       })
       if (!res.ok) throw new Error(String(res.status))
       // Evento de conversión (métrica de éxito del sitio). Sin datos personales, salvo en esta
@@ -100,21 +121,38 @@ export function LeadForm({ locale, fuente, submit: submitLabel, success, adsClic
     <form className="form" onSubmit={submit} noValidate onFocus={() => {
       if (!started.current) { started.current = true; trackMarketingEvent('powered_by_form_start', { form: fuente, locale }) }
     }}>
-      <div className="form__row">
-        {field('nombre', `${c.name} *`, <input type="text" autoComplete="name" placeholder={c.namePlaceholder} onBlur={reportPrefill} {...props('nombre')} />)}
-        {field('email', `${c.email} *`, <input type="email" autoComplete="email" placeholder={c.emailPlaceholder} onBlur={reportPrefill} {...props('email')} />)}
-      </div>
-      <div className="form__row">
-        {field('empresa', `${c.company} *`, <input type="text" autoComplete="organization" placeholder={c.companyPlaceholder} {...props('empresa')} />)}
-        {field('cargo', `${c.role} *`, (
-          <select {...props('cargo')}>
-            <option value="">{c.rolePlaceholder}</option>
-            {roles.map((o) => <option key={o}>{o}</option>)}
-          </select>
-        ))}
-      </div>
-      {adsConversion && field('telefono', <>{c.phone} <span className="form__optional">{c.problemOptional}</span></>, <input type="tel" autoComplete="tel" placeholder={c.phonePlaceholder} {...props('telefono')} />)}
-      {field('problema', <>{c.problem} <span className="form__optional">{c.problemOptional}</span></>, <textarea rows={4} placeholder={c.problemPlaceholder} {...props('problema')} />)}
+      {short ? (
+        <>
+          <div className="form__row">
+            {field('email', `${c.email} *`, <input type="email" autoComplete="email" placeholder={c.emailPlaceholder} {...props('email')} />)}
+            {field('empresa', `${c.company} *`, <input type="text" autoComplete="organization" placeholder={c.companyPlaceholder} {...props('empresa')} />)}
+          </div>
+          {field('cobro', `${cobroLabel} *`, (
+            <select {...props('cobro')}>
+              <option value="">{cobroPlaceholder}</option>
+              {cobroOptions.map((o) => <option key={o}>{o}</option>)}
+            </select>
+          ))}
+        </>
+      ) : (
+        <>
+          <div className="form__row">
+            {field('nombre', `${c.name} *`, <input type="text" autoComplete="name" placeholder={c.namePlaceholder} onBlur={reportPrefill} {...props('nombre')} />)}
+            {field('email', `${c.email} *`, <input type="email" autoComplete="email" placeholder={c.emailPlaceholder} onBlur={reportPrefill} {...props('email')} />)}
+          </div>
+          <div className="form__row">
+            {field('empresa', `${c.company} *`, <input type="text" autoComplete="organization" placeholder={c.companyPlaceholder} {...props('empresa')} />)}
+            {field('cargo', `${c.role} *`, (
+              <select {...props('cargo')}>
+                <option value="">{c.rolePlaceholder}</option>
+                {roles.map((o) => <option key={o}>{o}</option>)}
+              </select>
+            ))}
+          </div>
+          {adsConversion && field('telefono', <>{c.phone} <span className="form__optional">{c.problemOptional}</span></>, <input type="tel" autoComplete="tel" placeholder={c.phonePlaceholder} {...props('telefono')} />)}
+          {field('problema', <>{c.problem} <span className="form__optional">{c.problemOptional}</span></>, <textarea rows={4} placeholder={c.problemPlaceholder} {...props('problema')} />)}
+        </>
+      )}
       {/* Honeypot anti-spam: invisible para personas, los bots lo completan. */}
       <div className="form__trap" aria-hidden="true">
         <label htmlFor="lead-website">Website</label>
