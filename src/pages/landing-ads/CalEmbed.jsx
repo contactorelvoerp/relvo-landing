@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { captureAdsClick, getAdsClick } from './ads-click'
-import { CAL_LINK } from './config'
+import { CAL_LINK, CAL_LINK_FALLBACK } from './config'
 
 // Embed inline de Cal.com para "Agenda tu demo" (CAL_LINK: src/pages/landing-ads/config.js). Sin
 // ella, este componente no pinta nada y la sección queda solo con el formulario de abajo.
@@ -132,7 +132,19 @@ export function CalEmbed({ onBooked, prefill }) {
     setElementId(`${ELEMENT_ID}-prefilled`)
   }, [prefill])
 
-  if (!CAL_LINK) return null
+  if (!CAL_LINK) {
+    // Antes esto no renderizaba nada y la sección de agenda quedaba vacía sin avisar (Ricardo,
+    // 2026-11-02: así se descubrió en producción, con la variable sin configurar en Vercel). Ahora
+    // un aviso en consola + un link de respaldo al mismo evento, en cualquier entorno, no solo en
+    // preview — para que la falta de la variable se note en vez de pasar inadvertida.
+    console.error('[CalEmbed] Falta VITE_CALCOM_LINK (o no coincide letra por letra con la de Vercel): muestro el link de respaldo en vez del calendario embebido.')
+    return (
+      <div className="lpads-cal lpads-cal--fallback">
+        <p>Agenda directo en Cal.com:</p>
+        <a className="btn btn--primary btn--lg" href={CAL_LINK_FALLBACK} target="_blank" rel="noopener noreferrer">Agenda tu demo</a>
+      </div>
+    )
+  }
   // `key` fuerza un nodo del DOM nuevo (no solo un id nuevo en el mismo nodo): el iframe anterior
   // de Cal.com, si lo había, queda realmente reemplazado, no apilado dentro del mismo contenedor.
   return <div ref={wrapperRef} key={elementId} id={elementId} className="lpads-cal" />
