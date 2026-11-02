@@ -4,31 +4,55 @@ import { LeadForm } from '../../components/LeadForm'
 import { LpFooter } from '../../components/LpFooter'
 import { Heading, IntegrationsSection } from '../../blocks/Shared'
 import { Check } from '../../visuals/cards'
-import { ThreeLayers } from '../home/ThreeLayers'
-import { HeroStage } from '../home/HeroStage'
+import { HeroShowcase } from './HeroShowcase'
+import { OneEngine } from './OneEngine'
 import { copy as homeCopy } from '../home/copy'
 import { copy as pricingCopy } from '../pricing/copy'
 import { hrefFor } from '../../routes'
 import { IndustriesCarousel } from './IndustriesCarousel'
 import { CalEmbed } from './CalEmbed'
-import { CAL_LINK } from './config'
+import { CAL_LINK, SHOW_CASE_TGP } from './config'
 import { captureAdsClick, getAdsClick } from './ads-click'
 import { GOOGLE_ADS_CONVERSIONS, fireAdsConversion } from './ads-conversion'
 import { trackMarketingEvent } from '../../analytics.js'
 import { SHOW_PENDING } from '../../env'
-import { copy } from './copy'
+import { copy, isPending } from './copy'
 import '../../styles/blocks.css'
 import '../../landing/landing.css'
 import '../home/home.css'
 import './landing-ads.css'
 
-// Landing de la primera campaña de Google Ads (docs/landing-ads-b2b.md). Solo ES, sin nav ni
-// links de salida (src/pages/standalone.js): una sola conversión principal (agendar demo) y una
-// secundaria (formulario de contacto), las dos en la última sección.
+// Caso de cliente preparado detrás de un flag (src/pages/landing-ads/config.js → SHOW_CASE_TGP):
+// no hay contenido aprobado todavía, así que no se publica nada (CLAUDE.md: nunca inventar
+// clientes ni citas). Cuando Ricardo entregue texto, logo y cita, van acá.
+const CASE_CONTENT = null
+
+// Formulario de contacto como alternativa secundaria al calendario: en mobile va colapsado (acordeón)
+// debajo de Cal.com, en desktop siempre abierto (lpads-demo__form-body--closed solo actúa bajo los
+// 900px del grid, ver landing-ads.css).
+function DemoFormPanel({ title, children }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="lpads-demo__form">
+      <button type="button" className="lpads-demo__form-toggle" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
+        <span>{title}</span>
+        <svg className={`lpads-demo__form-chevron${open ? ' lpads-demo__form-chevron--open' : ''}`} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4" /></svg>
+      </button>
+      <div className={`lpads-demo__form-body${open ? '' : ' lpads-demo__form-body--closed'}`}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+// Landing de la primera campaña de Google Ads (docs/landing-ads-b2b.md). Solo ES, sin nav ni links
+// de salida salvo el logo del header (src/pages/standalone.js): una sola conversión principal
+// (agendar demo) y una secundaria (formulario de contacto), las dos en la última sección.
 export function LandingAdsPage({ t, locale }) {
   const c = copy[locale]
   const plan = pricingCopy.es.plans[0] // Startup
   const home = hrefFor('home', locale)
+  const faq = c.faq.items.filter((item) => SHOW_PENDING || !isPending(item.a))
   const [adsClick, setAdsClick] = useState(null)
   const [prefill, setPrefill] = useState(null)
 
@@ -52,6 +76,7 @@ export function LandingAdsPage({ t, locale }) {
         ) : (
           <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
         )}
+        <a className="btn btn--primary btn--md lpads-top__cta" href="#agenda">{c.hero.cta}</a>
       </header>
 
       <section className="section band band--first hero lpads-hero" aria-labelledby="lpads-h1">
@@ -63,11 +88,20 @@ export function LandingAdsPage({ t, locale }) {
             <div className="hero__ctas">
               <a className="btn btn--lg btn--primary" href="#agenda">{c.hero.cta}</a>
             </div>
+            <p className="lpads-hero__microcopy">{c.hero.microcopy}</p>
           </div>
           <div className="hero__visual">
-            <HeroStage c={homeCopy[locale].hero.stage} locale={locale} />
+            <HeroShowcase tabs={c.heroTabs} saasStage={homeCopy[locale].hero.stage} locale={locale} />
           </div>
         </div>
+      </section>
+
+      <section className="section band band--neutral lpads-pain" aria-labelledby="lpads-pain">
+        <Heading id="lpads-pain" title={c.pain.title} />
+        <ul className="lpads-pain__list">
+          {c.pain.items.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+        <p className="lpads-pain__closing">{c.pain.closing}</p>
       </section>
 
       <section className="section band" aria-labelledby="lpads-quien">
@@ -99,12 +133,13 @@ export function LandingAdsPage({ t, locale }) {
             </div>
           </div>
         </div>
+        <p className="lpads-resuelve__cta"><span>{c.queResuelve.ctaQuestion}</span> <a className="link" href="#agenda">{c.queResuelve.ctaLink}</a></p>
       </section>
 
-      <section className="section band band--mint" aria-labelledby="lpads-agentes">
+      <section className="section band band--mint" aria-labelledby="lpads-motor">
         <BandTexture kind="orbitsEdge" />
-        <Heading id="lpads-agentes" title={homeCopy[locale].layers.title} soft={homeCopy[locale].layers.soft} />
-        <ThreeLayers c={homeCopy[locale].layers} />
+        <Heading id="lpads-motor" title={c.oneEngine.title} />
+        <OneEngine c={c.oneEngine} />
       </section>
 
       <section className="section band" aria-labelledby="lpads-cifras">
@@ -116,7 +151,14 @@ export function LandingAdsPage({ t, locale }) {
           ))}
         </div>
         <img className="lpads-dashboard" src="/product/panel-ingresos.webp" width="1400" height="351" alt="Cartera de cuentas por cobrar de Relvo, con el detalle de mora al día, 1-30, 31-60, 61-90 y más de 90 días por cliente." loading="lazy" />
+        <p className="lpads-cifras__cta"><a className="btn btn--md btn--secondary" href="#agenda">{c.stats.cta}</a></p>
       </section>
+
+      {SHOW_CASE_TGP && CASE_CONTENT && (
+        <section className="section band band--neutral" aria-labelledby="lpads-caso">
+          <Heading id="lpads-caso" title={CASE_CONTENT.title} />
+        </section>
+      )}
 
       <IntegrationsSection c={{ ...homeCopy[locale].integrations, names: c.integrationNames }} locale={locale} />
 
@@ -138,7 +180,22 @@ export function LandingAdsPage({ t, locale }) {
           </ul>
           <a className="btn btn--lg btn--primary" href="#agenda">{c.precio.cta}</a>
         </article>
+        <p className="lpads-plan__volume"><a className="link" href="#agenda">{c.precio.volume}</a></p>
       </section>
+
+      {faq.length > 0 && (
+        <section className="section band band--neutral" aria-labelledby="lpads-faq">
+          <Heading id="lpads-faq" title={c.faq.title} />
+          <div className="faq">
+            {faq.map((item) => (
+              <details key={item.q}>
+                <summary>{item.q}</summary>
+                {isPending(item.a) ? <p><span className="pending__tag">{item.a}</span></p> : <p>{item.a}</p>}
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="section band band--neutral lpads-demo" id="agenda" aria-labelledby="lpads-demo-h2">
         <BandTexture kind="dotsGutter" />
@@ -149,14 +206,13 @@ export function LandingAdsPage({ t, locale }) {
             <CalEmbed onBooked={handleBooked} prefill={prefill} />
             {!CAL_LINK && SHOW_PENDING && <p className="pending__tag">Cal.com: falta el link del evento &quot;Demo Relvo&quot;</p>}
           </div>
-          <div className="lpads-demo__form">
-            <p className="lpads-demo__alt">{c.demo.altQuestion}</p>
-            <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} onPrefillChange={setPrefill} />
-          </div>
+          <DemoFormPanel title={c.demo.formTitle}>
+            <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} onPrefillChange={setPrefill} roleOptions={c.demo.roleOptions} />
+          </DemoFormPanel>
         </div>
       </section>
 
-      <LpFooter t={t} locale={locale} showIllustrative />
+      <LpFooter t={t} locale={locale} showIllustrative tagline={c.footer.tagline} />
     </div>
   )
 }

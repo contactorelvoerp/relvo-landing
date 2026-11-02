@@ -1,18 +1,39 @@
 /* Landing de Google Ads "Facturación B2B" (docs/landing-ads-b2b.md). Sin nav: logo + footer
    mínimo. H1 en Instrument Sans como el resto del sitio (Fujiwara A es solo del hero de la home). */
 
-.lpads-top{position:relative;isolation:isolate;display:flex;align-items:center;height:64px;padding:0 var(--gutter)}
+/* Header fijo (Ricardo, 2026-11-01): logo a la izquierda, CTA a la derecha, siempre visible para
+   poder agendar desde cualquier punto del scroll. Mismo patrón que .subnav (landing.css). */
+.lpads-top{position:sticky;top:0;z-index:20;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding:12px var(--gutter);background:rgba(255,255,255,.97)}
+.lpads-top::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(255,255,255,.97)}
 .lpads-top::after{content:"";position:absolute;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);border-bottom:1px solid var(--line)}
 .lpads-top a{display:flex;align-items:center}
+.lpads-top__cta{flex:none}
+@container (max-width:479px){.lpads-top__cta{padding-left:14px;padding-right:14px;font-size:14px}}
 
-/* Hero: mismo molde de la home (título izq., HeroStage der.), con eyebrow propio (ver copy.js).
+/* Hero: mismo molde de la home (título izq., HeroShowcase der.), con eyebrow propio (ver copy.js).
    El H1 reusa .hero__title por tamaño, pero en Instrument Sans: Fujiwara A es solo del hero de
    la home (CLAUDE.md). */
 .lpads-hero .hero__title{font-family:var(--font-ui)}
+.lpads-hero__microcopy{margin:14px 0 0;font-size:14px;color:var(--text-soft)}
+
+/* Tabs del mockup del hero: 3 casos (Logística, Staffing, SaaS e IA), mismo patrón de chip que el
+   carrusel de industrias. */
+.hero-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.hero-tabs__tab{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper);font-family:var(--font-ui);font-size:14.5px;font-weight:500;color:var(--text-body);cursor:pointer}
+.hero-tabs__tab:hover{border-color:var(--ink-300)}
+.hero-tabs__tab--on{border-color:var(--accent);background:var(--mint);color:var(--accent-pressed)}
+.hero-tabs__icon{width:18px;height:18px;flex:none}
 
 .lpads-lead{max-width:56ch;margin:0;font-size:18px;line-height:1.6;color:var(--text-body)}
 .lpads-bridge{max-width:56ch;margin:-12px 0 32px;font-size:17px;line-height:1.6;color:var(--text-body)}
 .lpads-paths{margin-bottom:0}
+.lpads-resuelve__cta{margin:32px 0 0;font-size:16px;color:var(--text-body)}
+.lpads-resuelve__cta span{font-weight:500;color:var(--text-main)}
+
+/* El dolor: una sola lista, sin tarjetas (regla cero) — el cierre retoma el H2 en negrita. */
+.lpads-pain__list{display:flex;flex-direction:column;gap:14px;max-width:62ch;margin:0;padding:0;list-style:none}
+.lpads-pain__list li{position:relative;padding-left:0;font-size:19px;line-height:1.5;color:var(--text-body)}
+.lpads-pain__closing{max-width:62ch;margin:28px 0 0;font-size:19px;font-weight:600;color:var(--text-main)}
 /* Un dato de apoyo por camino, como el resto del sitio: una tarjeta, un dato, una frase.
    `path__shot`: captura real del producto (no una ilustración), a todo el ancho de la tarjeta —
    el único elemento visual del camino, no una tarjeta encima de otra tarjeta. `path__stat` se fija
@@ -42,6 +63,7 @@
 .lpads-stats__value{display:block;font-size:clamp(30px,3.2cqi,42px);font-weight:500;line-height:1.05;letter-spacing:-.03em;color:var(--accent)}
 .lpads-stats__label{max-width:26ch;margin:10px 0 0;font-size:15px;line-height:1.5;color:var(--text-body)}
 .lpads-dashboard{width:min(900px,100%);height:auto;margin:48px auto 0;display:block;border:1px solid var(--line);border-radius:var(--radius-lg)}
+.lpads-cifras__cta{margin:40px 0 0}
 @container (max-width:719px){.lpads-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (max-width:479px){.lpads-stats{grid-template-columns:1fr}}
 
@@ -60,18 +82,35 @@
 .lpads-plan__includes svg{flex:none;margin-top:2px;color:var(--accent)}
 .lpads-plan__highlight{font-weight:600}
 .lpads-plan .btn{align-self:flex-start}
+.lpads-plan__volume{max-width:520px;margin:20px 0 0;font-size:15px;color:var(--text-muted)}
 
-/* Agenda tu demo: calendario (Cal.com) a la izquierda, formulario de contacto a la derecha.
-   Cal.com redimensiona su iframe al contenido (mes + horarios + formulario puede ser muy alto):
-   altura fija y scroll propio para que nunca se salga de la sección. */
+/* Agenda tu demo: calendario (Cal.com) a la izquierda, formulario secundario a la derecha. Mobile:
+   el calendario va primero y a todo el ancho (orden del DOM, la grilla colapsa a 1 columna) y el
+   formulario queda colapsado bajo un acordeón (Ricardo, 2026-11-01). Cal.com redimensiona su
+   iframe al contenido (mes + horarios + formulario puede ser muy alto): altura fija y scroll
+   propio para que nunca se salga de la sección. */
+#agenda{scroll-margin-top:88px}
 .lpads-demo__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:start;gap:40px 56px}
 .lpads-demo__cal{display:flex;flex-direction:column;gap:16px}
 .lpads-cal{width:100%;height:600px;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius-lg)}
 .lpads-cal iframe{height:100%!important}
 .lpads-demo__form{min-width:0;padding:clamp(20px,2.6cqi,28px);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}
-.lpads-demo__alt{margin:0 0 16px;font-size:15.5px;font-weight:500;color:var(--text-main)}
+.lpads-demo__form-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:0;border:0;background:none;font-family:var(--font-ui);font-size:15.5px;font-weight:500;color:var(--text-main);text-align:left;cursor:default}
+.lpads-demo__form-chevron{display:none;flex:none;width:16px;height:16px;color:var(--text-muted);transition:transform .2s}
+.lpads-demo__form-chevron--open{transform:rotate(180deg)}
+.lpads-demo__form-body{margin-top:20px}
 .lpads-demo__form .form{padding-top:0}
+/* El botón de este form mide 24 caracteres ("Quiero que me contacten"), el primero del sitio que
+   cruza el umbral de impeccable para texto propio + fondo + 0 padding vertical (el resto de los
+   .btn del sitio se centran con flex sobre una altura fija, sin necesitarlo). Padding real, sin
+   cambiar la altura fija (box-sizing: border-box) ni el centrado. */
+.lpads-demo__form .btn{padding-top:7px;padding-bottom:7px}
 
+/* Debajo de los 900px (donde .lpads-demo__grid pasa a 1 columna): el formulario es un acordeón de
+   verdad, cerrado por defecto, bajo el calendario. Sobre los 900px queda siempre abierto. */
 @container (max-width:900px){
   .lpads-demo__grid{grid-template-columns:1fr}
+  .lpads-demo__form-toggle{cursor:pointer}
+  .lpads-demo__form-chevron{display:block}
+  .lpads-demo__form-body--closed{display:none}
 }

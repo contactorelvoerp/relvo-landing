@@ -79,10 +79,23 @@ export function CalEmbed({ onBooked, prefill }) {
   const adsClickRef = useRef(null)
   const listenerBound = useRef(false)
   const appliedPrefill = useRef(false)
+  const bookedUids = useRef(new Set())
+  const wrapperRef = useRef(null)
   const [elementId, setElementId] = useState(ELEMENT_ID)
+  const [visible, setVisible] = useState(false)
+
+  // Carga diferida (Ricardo, 2026-11-01): el script de Cal.com es de terceros y pesado — se pide
+  // recién cuando la sección entra al viewport (con margen, para que ya esté listo al llegar), no
+  // al cargar la página, para no afectar el LCP del hero.
+  useEffect(() => {
+    if (!CAL_LINK || visible || !wrapperRef.current) return
+    const io = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setVisible(true) }, { rootMargin: '400px 0px' })
+    io.observe(wrapperRef.current)
+    return () => io.disconnect()
+  }, [visible])
 
   useEffect(() => {
-    if (!CAL_LINK) return
+    if (!CAL_LINK || !visible) return
     captureAdsClick()
     adsClickRef.current = getAdsClick()
     loadEmbedScript()
@@ -96,13 +109,20 @@ export function CalEmbed({ onBooked, prefill }) {
         action: 'bookingSuccessfulV2',
         callback: (event) => {
           const data = event?.detail?.data
+          const uid = data?.uid
+          // Cal.com puede reenviar el mismo evento (reintento de red, doble render del embed):
+          // la conversión de Google Ads solo se dispara una vez por reserva.
+          if (uid) {
+            if (bookedUids.current.has(uid)) return
+            bookedUids.current.add(uid)
+          }
           const email = data?.attendees?.[0]?.email ?? data?.responses?.email ?? data?.email
-          bookedRef.current?.({ email, uid: data?.uid })
+          bookedRef.current?.({ email, uid })
         },
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [elementId])
+  }, [elementId, visible])
 
   useEffect(() => {
     // Nombre y email, los dos: si solo exige uno, la primera vez que la persona sale del campo
@@ -115,5 +135,5 @@ export function CalEmbed({ onBooked, prefill }) {
   if (!CAL_LINK) return null
   // `key` fuerza un nodo del DOM nuevo (no solo un id nuevo en el mismo nodo): el iframe anterior
   // de Cal.com, si lo había, queda realmente reemplazado, no apilado dentro del mismo contenedor.
-  return <div key={elementId} id={elementId} className="lpads-cal" />
+  return <div ref={wrapperRef} key={elementId} id={elementId} className="lpads-cal" />
 }
