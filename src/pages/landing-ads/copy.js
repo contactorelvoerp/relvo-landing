@@ -38,10 +38,8 @@ export const copy = {
         stat: ['USD 3.090', 'factura F-1042', 'fijo + uso, dividida entre 2 sociedades'],
       },
     },
-    // Tres capas / Rieles-Agentes-Inteligencia: título y bajada ya aprobados, tal cual home/copy.js.
-    agentes: {
-      lead: 'Agentes que hacen el trabajo manual del cobro —leer una orden de compra, pedir una HES, avisar a tu equipo— para que la plata te llegue más rápido y sin que nadie lo opere a mano.',
-    },
+    // Tres capas / Rieles-Agentes-Inteligencia: título y bajada tal cual home/copy.js, sin texto
+    // adicional (Ricardo, 2026-11-01: la sección repetía lo mismo dos veces y sobraba).
     // Las dos primeras cifras son las de home/copy.js → stats (ya aprobadas). Las tres siguientes
     // son nuevas, con el dato de Ricardo y la redacción propuesta en docs/landing-ads-b2b.md.
     stats: {
