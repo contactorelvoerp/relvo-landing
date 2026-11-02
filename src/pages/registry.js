@@ -27,13 +27,13 @@ export const PAGE_COMPONENTS = {
 
 // Idiomas con copy aprobado por página. Si una página no aparece acá, está lista en todos.
 // Home en inglés: pendiente de traducir el copy del prototipo. Plantillas: el inglés queda para
-// después (rutas /en preparadas, sin publicar).
-// "powered_by" es la excepción entre las NOINDEX_PAGES: su inglés no tiene el copy nuevo del
-// rediseño todavía, pero sigue publicado con el contenido simple que ya tenía (PoweredByPage.jsx),
-// así que no se restringe a español como el resto.
+// después (rutas /en preparadas, sin publicar). "powered_by" también: el rediseño (PoweredByPage.jsx,
+// brief de Ricardo, 2026-11-02) no tiene copy EN aprobado, así que /en/powered-by-relvo queda sin
+// ruta (404, con redirect 301 a la versión ES — ver vercel.json) hasta que llegue la traducción,
+// igual que /en con home.
 export const PAGE_LOCALES = {
   home: ['es'],
   // Precios: sin copy aprobado en inglés
   precios: ['es'],
-  ...Object.fromEntries([...LANDINGS, ...NOINDEX_PAGES.filter((id) => id !== 'powered_by')].map((id) => [id, ['es']])),
+  ...Object.fromEntries([...LANDINGS, ...NOINDEX_PAGES].map((id) => [id, ['es']])),
 }

@@ -70,20 +70,9 @@ test('PDF campaign survives the short form, validation and a retry without a fal
   expect(errors).toEqual([])
 })
 
-test('English mobile landing has no placeholders, overflows or motion requirement', async ({ page }) => {
-  await intercept(page)
-  await page.setViewportSize({ width: 390, height: 844 })
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.goto('https://distribution.test/en/powered-by-relvo')
-  await expect(page.locator('h1')).toHaveText('Powered by Relvo')
-  await expect(page.locator('body')).not.toContainText('[PENDIENTE]')
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-  await page.screenshot({ path: 'test-results/powered-by-mobile-en.png', fullPage: true })
-  // El header standalone (logo + "Book a demo") también enlaza a /en/book-a-demo, así que se acota
-  // al CTA del hero en vez de `main a` (que ahora resuelve a dos links).
-  await expect(page.locator('.lp-head__ctas a')).toHaveAttribute('href', '/en/book-a-demo')
-})
-
+// /en/powered-by-relvo ya no existe (404 con redirect 301 a la versión ES, ver vercel.json y
+// src/pages/registry.js): sin copy EN aprobado para este rediseño, no hay página que probar acá.
+// scripts/check-routes.mjs ya verifica que esa URL responda 404.
 
 test('Spanish mobile timeline respects reduced motion without horizontal overflow', async ({ page }) => {
   await intercept(page)

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { hrefFor } from '../../routes'
-import { copy as demoCopy } from '../demo/copy'
 import { copy as homeCopy } from '../home/copy'
 import { Case } from '../../blocks/Case'
 import { Heading } from '../../blocks/Shared'
@@ -22,25 +21,10 @@ const scrollToHistoria = scrollToSection('historia')
 
 // Página de adquisición a la que llega quien hace click en "Powered by Relvo" dentro de una
 // factura, un recordatorio o una confirmación de pago que Relvo envía en nombre de un cliente.
-// Rediseñada para convertir a ese visitante (brief de Ricardo, 2026-11-02). El inglés no tiene
-// copy aprobado para este rediseño todavía (ver copy.js): /en/powered-by-relvo mantiene el
-// contenido simple que ya estaba publicado hasta que llegue esa traducción — no se inventa.
-function PoweredByLegacyEn({ locale }) {
-  const c = homeCopy[locale]
-  return (
-    <section className="section band band--first lp-hero" aria-labelledby="pb-title">
-      <div className="lp-head">
-        <h1 id="pb-title" className="lp-head__title">Powered by Relvo</h1>
-        <p className="lp-head__lead">{demoCopy.en.lede}</p>
-        <div className="lp-head__ctas">
-          <a className="btn btn--lg btn--primary" href={hrefFor('demo', locale)}>{c.hero.demo}</a>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function PoweredByEs() {
+// Rediseñada para convertir a ese visitante (brief de Ricardo, 2026-11-02). Solo ES: sin copy EN
+// aprobado para este rediseño, /en/powered-by-relvo no tiene ruta (404 con redirect 301 a la
+// versión ES, ver vercel.json y src/pages/registry.js) hasta que llegue la traducción.
+export function PoweredByPage({ t }) {
   const c = copy.es
   // El nombre del cliente referente (si `?cliente=` viene en la URL y está en el allowlist) solo
   // se conoce en el navegador: este sitio es prerenderizado en build (sin servidor por request,
@@ -57,8 +41,8 @@ function PoweredByEs() {
   // /agendar-demo (destination.pathname). Acá el CTA ya no navega, ancla a #agenda en la misma
   // página, así que ese listener nunca vería el click — se dispara a mano para no perder la señal
   // que alimenta distribution_events (atribución de ingresos real, shared/attribution.js).
-  const handleCtaPrimary = (e) => {
-    trackMarketingEvent('powered_by_cta_primary', { locale: 'es', placement: 'hero' })
+  const handleDemoClick = (placement) => (e) => {
+    trackMarketingEvent('powered_by_cta_primary', { locale: 'es', placement })
     trackMarketingEvent('powered_by_demo_click', { placement: 'powered_by_page' })
     scrollToAgenda(e)
   }
@@ -67,15 +51,22 @@ function PoweredByEs() {
 
   const planesHref = hrefFor('planes', 'es')
   const hibridoHref = hrefFor('hibrido', 'es')
+  const homeHref = hrefFor('home', 'es')
 
   return (
-    <>
+    <div className="pb">
+      <div className="pb-notice"><p>{c.notice}</p></div>
+      <header className="standalone-top">
+        <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
+        <a className="btn btn--primary btn--md standalone-top__cta" href="#agenda" onClick={handleDemoClick('header')}>{t.nav.demo}</a>
+      </header>
+
       <section className="section band band--first lp-hero" aria-labelledby="pb-title">
         <div className="lp-head">
           <h1 id="pb-title" className="lp-head__title">{c.hero.title}</h1>
           <p className="lp-head__lead">{c.hero.lead(referrer.name)}</p>
           <div className="lp-head__ctas">
-            <a className="btn btn--lg btn--primary pb-cta" href="#agenda" onClick={handleCtaPrimary}>{c.hero.ctaPrimary}</a>
+            <a className="btn btn--lg btn--primary pb-cta" href="#agenda" onClick={handleDemoClick('hero')}>{c.hero.ctaPrimary}</a>
             <a className="btn btn--lg btn--secondary pb-cta" href="#historia" onClick={handleCtaSecondary}>{c.hero.ctaSecondary}</a>
           </div>
         </div>
@@ -120,37 +111,6 @@ function PoweredByEs() {
           />
         </CalPanel>
       </section>
-    </>
-  )
-}
-
-export function PoweredByPage({ t, locale }) {
-  const demoHref = hrefFor('demo', locale)
-  const homeHref = hrefFor('home', locale)
-  const es = locale === 'es'
-  return (
-    <div className="pb">
-      {es && <div className="pb-notice"><p>{copy.es.notice}</p></div>}
-      <header className="standalone-top">
-        <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
-        {es ? (
-          <a
-            className="btn btn--primary btn--md standalone-top__cta"
-            href="#agenda"
-            onClick={(e) => {
-              trackMarketingEvent('powered_by_cta_primary', { locale, placement: 'header' })
-              trackMarketingEvent('powered_by_demo_click', { placement: 'powered_by_page' })
-              scrollToAgenda(e)
-            }}
-          >
-            {t.nav.demo}
-          </a>
-        ) : (
-          demoHref && <a className="btn btn--primary btn--md standalone-top__cta" href={demoHref}>{homeCopy[locale].hero.demo}</a>
-        )}
-      </header>
-
-      {es ? <PoweredByEs /> : <PoweredByLegacyEn locale={locale} />}
 
       <footer className="footer">
         <div className="footer__brand">
