@@ -51,9 +51,11 @@
 
 /* 2 · Banda de cifras (prototipo v2): tres cifras grandes en verde con su contexto */
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px}
+/* Variante de 2 cifras (/powered-by-relvo, junto al caso TGP): mismo componente, menos columnas. */
+.stats--2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .stats__value{display:block;font-size:clamp(48px,5.6cqi,80px);font-weight:500;line-height:1;letter-spacing:-.04em;color:var(--accent)}
 .stats__label{max-width:26ch;margin:14px 0 0;font-size:16px;line-height:1.5;color:var(--text-body)}
-@container (max-width:979px){.stats{grid-template-columns:1fr;gap:32px}}
+@container (max-width:979px){.stats,.stats--2{grid-template-columns:1fr;gap:32px}}
 
 /* 3 · Tres capas */
 .layers{position:relative}

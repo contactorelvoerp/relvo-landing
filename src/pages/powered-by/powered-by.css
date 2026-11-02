@@ -1,0 +1,20 @@
+/* /powered-by-relvo: el resto de la página reutiliza bloques compartidos (.lp-hero/.lp-head de
+   landing.css, .steps3 de landing.css, .stats de home.css, .cal-panel de blocks.css,
+   .standalone-top y .footer de blocks.css/site.css). Acá solo lo propio de esta página. */
+
+/* Barra superior discreta: aviso para quien llega a pagar, no a convertir. El fondo ocupa todo el
+   ancho; el texto no, para no estirar la línea a lo ancho de toda la pantalla (impeccable:
+   line-length). */
+.pb-notice{padding:10px var(--gutter);background:var(--mint);text-align:center}
+.pb-notice p{max-width:50ch;margin:0 auto;color:var(--text-main);font-size:14px;line-height:1.4}
+
+/* "¿Te sirve a ti?": dos frases con su link, sin grilla de cards (regla cero). */
+.pb-fit{display:flex;flex-direction:column;gap:16px;max-width:640px;margin:0;font-size:17px;line-height:1.55;color:var(--text-body)}
+
+/* Las dos cifras nuevas, debajo del caso TGP (mismo bloque .stats de home.css). */
+.pb-case-stats{margin-top:clamp(40px,4.5cqi,64px)}
+
+/* Los dos CTA del hero tienen texto propio largo ("Ver cómo funciona en 20 minutos", "Ver qué
+   pasó detrás de tu correo ↓") y cruzan el mismo umbral de impeccable para texto + fondo + 0
+   padding vertical que ya resolvimos en .cal-panel__form .btn (blocks.css) — mismo ajuste acá. */
+.btn.pb-cta{padding-top:7px;padding-bottom:7px}

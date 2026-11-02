@@ -13,13 +13,12 @@ export const LANDINGS = ['cxc', 'contratos', 'medicion', 'aprobaciones', 'agente
 
 // Páginas noindex con componente propio (no el placeholder genérico): quedan fuera del índice
 // a propósito, no "hasta que estén listas" (ver src/pages/noindex.js).
-const NOINDEX_COMPONENTS = { 'lp-facturacion-b2b': LandingAdsPage }
+const NOINDEX_COMPONENTS = { 'lp-facturacion-b2b': LandingAdsPage, powered_by: PoweredByPage }
 
 // id de página (reference/seo-metadata.json) → componente.
 // Una página se publica en producción solo cuando está registrada acá.
 export const PAGE_COMPONENTS = {
   home: HomePage,
-  powered_by: PoweredByPage,
   demo: DemoPage,
   precios: PricingPage,
   ...Object.fromEntries(LANDINGS.map((id) => [id, LandingPage])),
@@ -29,9 +28,12 @@ export const PAGE_COMPONENTS = {
 // Idiomas con copy aprobado por página. Si una página no aparece acá, está lista en todos.
 // Home en inglés: pendiente de traducir el copy del prototipo. Plantillas: el inglés queda para
 // después (rutas /en preparadas, sin publicar).
+// "powered_by" es la excepción entre las NOINDEX_PAGES: su inglés no tiene el copy nuevo del
+// rediseño todavía, pero sigue publicado con el contenido simple que ya tenía (PoweredByPage.jsx),
+// así que no se restringe a español como el resto.
 export const PAGE_LOCALES = {
   home: ['es'],
   // Precios: sin copy aprobado en inglés
   precios: ['es'],
-  ...Object.fromEntries([...LANDINGS, ...NOINDEX_PAGES].map((id) => [id, ['es']])),
+  ...Object.fromEntries([...LANDINGS, ...NOINDEX_PAGES.filter((id) => id !== 'powered_by')].map((id) => [id, ['es']])),
 }
