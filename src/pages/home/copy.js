@@ -10,19 +10,6 @@ export const copy = {
       demo: 'Agendar demo',
       how: 'Ver cómo funciona',
       logos: 'Operan su revenue con Relvo',
-      // Composición del prototipo v2: ventana de la app → tokens → factura → pago conciliado
-      stage: {
-        window: {
-          url: 'app.getrelvo.ai/contratos/nimbo-ai', nav: ['Contratos', 'Facturas', 'Cobranza', 'Reportes'],
-          label: 'Contrato', name: 'Nimbo AI', status: 'Activo',
-          columns: ['Factura', 'Monto', 'Estado'],
-          rows: [['F-1042', 'USD 2.900', 'Emitida'], ['F-1031', 'USD 2.760', 'Pagada']],
-          paid: 'Pagada',
-        },
-        usage: { unit: 'Tokens', price: 'USD 0,002 por 1.000', used: '1.200 M', included: '1.500 M' },
-        invoice: { title: 'Factura F-1042', meta: 'Octubre', total: 'USD 2.900', rows: [['Plan Growth, fijo', '500'], ['1.200 M tokens', '2.400']], totalLabel: 'Total' },
-        toast: { title: 'Pago conciliado', meta: 'Nimbo AI, hace un momento' },
-      },
     },
     // Banda de cifras (prototipo home v2, después del carrusel de clientes)
     stats: {
@@ -240,18 +227,6 @@ export const copy = {
       demo: 'Book a demo',
       how: 'See how it works',
       logos: 'They run their revenue on Relvo',
-      stage: {
-        window: {
-          url: 'app.getrelvo.ai/contratos/nimbo-ai', nav: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'],
-          label: '[PENDIENTE]', name: 'Nimbo AI', status: '[PENDIENTE]',
-          columns: ['[PENDIENTE]', '[PENDIENTE]', '[PENDIENTE]'],
-          rows: [['F-1042', 'USD 2,900', '[PENDIENTE]'], ['F-1031', 'USD 2,760', '[PENDIENTE]']],
-          paid: '[PENDIENTE]',
-        },
-        usage: { unit: 'Tokens', price: '[PENDIENTE]', used: '1,200 M', included: '1,500 M' },
-        invoice: { title: '[PENDIENTE]', meta: '[PENDIENTE]', total: 'USD 2,900', rows: [['[PENDIENTE]', '500'], ['[PENDIENTE]', '2,400']], totalLabel: 'Total' },
-        toast: { title: '[PENDIENTE]', meta: '[PENDIENTE]' },
-      },
     },
     stats: {
       title: '[PENDIENTE]',
