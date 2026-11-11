@@ -1,4 +1,4 @@
-import { SITE_URL } from '../site'
+import { EXTERNAL_PAGES, SITE_URL } from '../site'
 
 // Footer mínimo para landings de campañas pagadas (src/pages/standalone.js): mismo look del
 // Footer del sitio (marca + legales + dominio) pero sin las columnas de navegación, para no abrir
@@ -6,14 +6,11 @@ import { SITE_URL } from '../site'
 // ejemplo (DS: la línea es obligatoria en ese caso, no decorativa). `tagline` (opcional): reemplaza
 // la bajada compartida (src/i18n/es.js) sin tocarla, para no cambiarla en el resto del sitio.
 //
-// Legal (Ricardo, 2026-11-02, Google Ads lo exige por el formulario): /terminos y /privacidad
-// todavía no existen en este sitio (devuelven 404 en producción — Footer.jsx, el del resto del
-// sitio, tiene el mismo hueco; no es solo de esta landing). Hasta que existan esas páginas en
-// getrelvo.ai, se enlaza a los Términos y la Política de privacidad reales y ya publicados de la
-// plataforma (app.relvoerp.com) — no se inventa el texto legal.
+// Legal (Ricardo, 2026-11-02, Google Ads lo exige por el formulario): los Términos y la Política de
+// privacidad publicados de la plataforma, los mismos del Footer del sitio (EXTERNAL_PAGES).
 const LEGAL = [
-  { name: 'Términos', href: 'https://app.relvoerp.com/terms' },
-  { name: 'Privacidad', href: 'https://app.relvoerp.com/privacy' },
+  { name: 'Términos', href: EXTERNAL_PAGES.terminos },
+  { name: 'Privacidad', href: EXTERNAL_PAGES.privacidad },
 ]
 
 export function LpFooter({ t, showIllustrative, tagline }) {
