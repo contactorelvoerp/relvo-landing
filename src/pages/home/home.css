@@ -12,6 +12,14 @@
 .hero__subtitle{max-width:56ch;margin:32px 0 0;font-size:clamp(18px,1.55cqi,22px);line-height:1.5}
 .hero__ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
 .hero__visual{flex:1.35 1 600px;min-width:0;container-type:inline-size}
+/* Home: hero centrado, solo texto (sin visual) */
+.hero--centered{padding-top:clamp(64px,8cqi,136px)}
+.hero--centered .hero__top{justify-content:center;text-align:center}
+.hero--centered .hero__copy{flex:0 1 980px;align-items:center}
+.hero--centered .hero__title{max-width:18ch;font-size:clamp(44px,6cqi,88px);text-wrap:balance}
+.hero--centered .hero__subtitle{max-width:52ch;text-wrap:balance}
+.hero--centered .hero__ctas{justify-content:center}
+.hero--centered .logo-strip{margin-top:clamp(64px,7cqi,112px)}
 
 /* Hero (prototipo home v2): ventana de la app → tokens → factura → pago conciliado, en secuencia una sola vez */
 .hero-stage{display:block;height:clamp(520px,82cqi,600px)}

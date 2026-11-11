@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 import { hrefFor } from '../../routes'
 import { BandTexture } from '../../components/BandTexture'
 import { ThreeLayers } from './ThreeLayers'
-import { HeroStage } from './HeroStage'
 import { Rails } from './Rails'
 import { Agents } from './Agents'
 import { Intelligence } from './Intelligence'
@@ -80,7 +79,7 @@ export function HomePage({ t, locale }) {
 
   return (
     <>
-      <section className="section band band--first hero">
+      <section className="section band band--first hero hero--centered">
         <div className="hero__top">
           <div className="hero__copy">
             <p className="hero__eyebrow">{c.hero.eyebrow}</p>
@@ -90,9 +89,6 @@ export function HomePage({ t, locale }) {
               {demo && <a className="btn btn--primary btn--lg" href={demo}>{c.hero.demo}</a>}
               <a className="btn btn--secondary btn--lg" href="#como-funciona">{c.hero.how}</a>
             </div>
-          </div>
-          <div className="hero__visual">
-            <HeroStage c={c.hero.stage} locale={locale} />
           </div>
         </div>
         <LogoStrip label={c.hero.logos} />
