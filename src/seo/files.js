@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import seo from '../../reference/seo-metadata.json'
 import { getRoutes } from '../routes'
 import { absoluteUrl } from './head'
-import { SITE_NAME, SITE_URL } from '../site'
+import { API_DOCS_URL, SITE_NAME, SITE_URL } from '../site'
 
 // sitemap.xml, robots.txt y llms.txt (CLAUDE.md, SEO). Los usan el build estático
 // (scripts/prerender.mjs) y el servidor de desarrollo, así ambos sirven lo mismo.
@@ -41,6 +41,19 @@ export function robotsTxt(production) {
 // El blog (relvo-blog) no es una ruta de este sitio, pero sí una página clave
 const blog = seo.pages.find((p) => p.id === 'blog').es
 
+// Para agentes que integran Relvo (no solo los que lo evalúan): la documentación, la referencia y el
+// servidor MCP viven en la app. Son destinos, no copy de marketing; el detalle está en su propio llms.txt.
+const APP_ORIGIN = new URL(API_DOCS_URL).origin
+const DEVELOPER_LINKS = [
+  ['Documentación de producto', `${APP_ORIGIN}/docs/product/es/overview/`, 'guías de integración, conceptos y flujos (también en inglés: /docs/product/en/overview/).'],
+  ['Referencia de la API', API_DOCS_URL, 'cada endpoint público con ejemplos de request.'],
+  ['OpenAPI', `${APP_ORIGIN}/public-openapi.json`, 'especificación de la API pública, para generar clientes.'],
+  ['Servidor MCP', `${APP_ORIGIN}/docs/product/guides/mcp/`, 'cómo conectar un agente de IA a Relvo.'],
+  ['Seguridad y confianza', `${APP_ORIGIN}/docs/product/es/security/`, 'alojamiento, aislamiento, acceso, respaldos y reporte de vulnerabilidades.'],
+  ['llms.txt de la plataforma', `${APP_ORIGIN}/llms.txt`, 'índice para agentes de la documentación técnica.'],
+  ['llms-full.txt', `${APP_ORIGIN}/llms-full.txt`, 'la documentación técnica completa en un solo archivo.'],
+]
+
 // Se arma con los titles y descriptions aprobados de cada página publicada.
 export function llmsTxt() {
   const live = sitemapRoutes()
@@ -51,6 +64,10 @@ export function llmsTxt() {
     '',
     ...live.filter((r) => r.id !== 'home').map((r) => `- [${r.title}](${absoluteUrl(r.path)}): ${r.description}`),
     `- [${blog.title}](${absoluteUrl(blog.url)}): ${blog.description}`,
+    '',
+    '## Desarrolladores y agentes',
+    '',
+    ...DEVELOPER_LINKS.map(([name, url, what]) => `- [${name}](${url}): ${what}`),
   ]
   return `${lines.join('\n')}\n`
 }
