@@ -41,7 +41,18 @@ export function robotsTxt(production) {
 // El blog (relvo-blog) no es una ruta de este sitio, pero sí una página clave
 const blog = seo.pages.find((p) => p.id === 'blog').es
 
-// Se arma con los titles y descriptions aprobados de cada página publicada.
+// La documentación de producto y de la API vive en la app (relvo, docs-site), que publica su propio
+// llms.txt con una copia en Markdown de cada página. Este sitio solo la enlaza: así un agente que
+// llega por getrelvo.ai encuentra cómo funciona e integra Relvo sin que el contenido se duplique.
+const DOCS_ORIGIN = 'https://app.relvoerp.com'
+const docsLinks = [
+  ['Documentación de Relvo para agentes', `${DOCS_ORIGIN}/llms.txt`, 'Índice de la documentación de producto e integración, con cuándo Relvo encaja, cuándo no, y un quickstart de la API.'],
+  ['Documentación completa en un archivo', `${DOCS_ORIGIN}/llms-full.txt`, 'Todas las páginas de la documentación en Markdown, en orden de lectura.'],
+  ['API pública (OpenAPI)', `${DOCS_ORIGIN}/public-openapi.json`, 'Contrato de la API REST: clientes, contratos, uso, facturas y webhooks.'],
+]
+
+// Se arma con los titles y descriptions aprobados de cada página publicada, en el formato de
+// llmstxt.org: H1, resumen y secciones H2 con listas de enlaces.
 export function llmsTxt() {
   const live = sitemapRoutes()
   const home = live.find((r) => r.id === 'home' && r.locale === 'es')
@@ -49,8 +60,14 @@ export function llmsTxt() {
     `# ${SITE_NAME}`,
     ...(home ? ['', `> ${home.description}`] : []),
     '',
+    '## Sitio',
+    '',
     ...live.filter((r) => r.id !== 'home').map((r) => `- [${r.title}](${absoluteUrl(r.path)}): ${r.description}`),
     `- [${blog.title}](${absoluteUrl(blog.url)}): ${blog.description}`,
+    '',
+    '## Documentación',
+    '',
+    ...docsLinks.map(([title, url, description]) => `- [${title}](${url}): ${description}`),
   ]
   return `${lines.join('\n')}\n`
 }
