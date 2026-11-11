@@ -79,11 +79,15 @@ export function HomePage({ t, locale }) {
 
   return (
     <>
-      <section className="section band band--first hero hero--centered">
+      <section className="section band band--first hero hero--centered hero--figuras">
         <div className="hero__top">
           <div className="hero__copy">
             <p className="hero__eyebrow">{c.hero.eyebrow}</p>
-            <h1 className="hero__title">{c.hero.title}</h1>
+            {/* Figura oficial de marca (anillo del agente, rai-figure.svg) en Verde Oscuro, centrada en el H1 */}
+            <div className="hero__title-wrap">
+              <img className="hero__figura hero__figura--anillo" src="/brand/figuras/anillo-agente-verde.svg" alt="" aria-hidden="true" width="972" height="972" decoding="async" fetchPriority="low" />
+              <h1 className="hero__title">{c.hero.title}</h1>
+            </div>
             <p className="hero__subtitle">{c.hero.subtitle}</p>
             <div className="hero__ctas">
               {demo && <a className="btn btn--primary btn--lg" href={demo}>{c.hero.demo}</a>}

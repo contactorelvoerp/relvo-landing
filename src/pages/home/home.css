@@ -132,3 +132,10 @@
 @container (max-width:979px){
   .agents,.paths{grid-template-columns:1fr}
 }
+
+/* Hero con figuras de marca (brand book, Figuras SVG): detrás del texto y recortadas al alto de la banda */
+.hero--figuras{clip-path:inset(0 -100vmax)}
+.band.hero--figuras::after{z-index:-2}
+.hero__title-wrap{position:relative;display:flex;justify-content:center}
+.hero__figura{position:absolute;top:50%;left:50%;z-index:-1;max-width:none;height:auto;transform:translate(-50%,-50%);pointer-events:none;user-select:none}
+.hero__figura--anillo{width:min(972px,150vw);opacity:.32}
