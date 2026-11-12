@@ -8,9 +8,12 @@ const errors = []
 
 async function expect(label, path, init, statuses) {
   try {
-    const res = await fetch(`${base}${path}`, { redirect: 'manual', ...init, headers: { 'user-agent': 'relvo-flows-check', ...init?.headers } })
+    const res = await fetch(`${base}${path}`, { redirect: 'manual', signal: AbortSignal.timeout(10000), ...init, headers: { 'user-agent': 'relvo-flows-check', ...init?.headers } })
     const type = res.headers.get('content-type') ?? ''
-    if (!statuses.includes(res.status)) errors.push(`${label}: ${res.status} (esperado ${statuses.join(' o ')})`)
+    if (!statuses.includes(res.status)) {
+      const action = path === '/api/cal-booking' && res.status === 503 ? '; configurar CAL_WEBHOOK_SECRET en Vercel Production y el mismo secreto en Cal.com, luego redeploy (docs/medicion-y-aprendizaje.md)' : ''
+      errors.push(`${label}: ${res.status} (esperado ${statuses.join(' o ')})${action}`)
+    }
     else if (res.status !== 405 && !type.includes('json')) errors.push(`${label}: respuesta sin JSON (${type}), no es la función`)
   } catch (error) { errors.push(`${label}: ${error.message}`) }
 }

@@ -184,7 +184,7 @@ export function LandingAdsPage({ t, locale }) {
         <BandTexture kind="dotsGutter" />
         <Heading id="lpads-demo-h2" title={c.demo.title} />
         <p className="lpads-lead">{c.demo.lead}</p>
-        <CalPanel locale={locale} onBooked={handleBooked} prefill={prefill} formTitle={c.demo.formTitle}>
+        <CalPanel form="lp-facturacion-b2b" locale={locale} onBooked={handleBooked} prefill={prefill} formTitle={c.demo.formTitle}>
           <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} onPrefillChange={setPrefill} />
         </CalPanel>
       </section>

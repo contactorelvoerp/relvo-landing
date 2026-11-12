@@ -138,11 +138,34 @@ GRANT USAGE ON SCHEMA public TO anon, service_role; GRANT SELECT, INSERT ON publ
   check(rows.some((r) => r.startsWith('Cj0KCQ_form-1,Relvo - Lead calificado,') && r.endsWith(',50,USD')), 'qualified row')
   check(rows.some((r) => r.startsWith('Cj0KCQ_cal-2,Relvo - Demo agendada (CRM),')), 'booking row')
 
+  // Reporting regression: one lead reaches several stages, one stays without
+  // outcomes, and customers have different currencies. Milestones must not
+  // multiply leads or combine acquisition value across currencies.
+  for (const body of [
+    { submission_id: submission, stage: 'demo_booked', event_id: 'report:demo' },
+    { submission_id: submission, stage: 'customer', event_id: 'report:customer:usd', customer_reference: 'report-company-usd', revenue_amount: '1200.00', currency: 'USD' },
+    { submission_id: booked[0].submission_id, stage: 'customer', event_id: 'report:customer:clp', customer_reference: 'report-company-clp', revenue_amount: '240000.00', currency: 'CLP' },
+  ]) {
+    const result = response()
+    await outcome({ method: 'POST', headers: { authorization: 'Bearer outcome-secret' }, body }, result)
+    check(result.statusCode === 200, `report outcome: ${result.statusCode}`)
+  }
+  // A newer campaign with no medium must not inherit cpc from an older ad.
+  psql(`UPDATE public.leads SET attribution = '{"last_touch":{"utm_source":"newsletter","utm_campaign":"followup"},"ads_click":{"utm_source":"google","utm_medium":"cpc","utm_campaign":"old-paid"}}'::jsonb WHERE fuente = 'agendar_demo' AND submission_id <> '${submission}'`)
+  const reports = read('../supabase/growth-funnel.sql').replace(/^--.*$/gm, '').split(';').filter((sql) => /\bSELECT\b/.test(sql))
+  const reportRows = (sql) => JSON.parse(psql(`SELECT coalesce(json_agg(report), '[]') FROM (${sql}) report`))
+  const funnel = reportRows(reports[0])
+  const total = (key) => funnel.reduce((sum, row) => sum + row[key], 0)
+  check(total('leads') === 3 && total('qualified_leads') === 1 && total('booked_demos') === 2 && total('customers') === 2, `growth funnel counts: ${JSON.stringify(funnel)}`)
+  check(funnel.find((row) => row.source === 'newsletter')?.medium === '(not set)', 'campaign fields never mix separate touches')
+  const value = reportRows(reports[1])
+  check(value.length === 2 && value.find((row) => row.currency === 'USD')?.acquisition_value === 1200 && value.find((row) => row.currency === 'CLP')?.acquisition_value === 240000, 'acquisition value stays separated by currency')
+
   // 6. El navegador (anon) no puede leer leads ni etapas.
   const anon = await realFetch(`${base}/leads?select=email`)
   check(anon.status === 401 || anon.status === 403 || (anon.ok && (await anon.json()).length === 0), `anon must not read leads (${anon.status})`)
 
-  console.log('check-lead-flows: formulario simplificado, reserva de Cal.com, contexto de Attio (capturado), etapa del CRM y feed de Google Ads contra PostgREST real: OK')
+  console.log('check-lead-flows: formulario, reserva, Attio (capturado), etapas, feed de Ads y reportes de cohortes sin duplicados contra PostgREST real: OK')
 } finally {
   spawnSync('docker', ['rm', '-f', rest, db], { stdio: 'ignore' })
   spawnSync('docker', ['network', 'rm', net], { stdio: 'ignore' })

@@ -100,7 +100,7 @@ export function PoweredByPage({ t }) {
       <section id="agenda" className="section band band--neutral" aria-labelledby="pb-agenda">
         <BandTexture kind="dotsGutter" />
         <Heading id="pb-agenda" title={c.closing.heading} />
-        <CalPanel onBooked={handleBooked} prefill={prefill} formTitle={c.closing.formTitle}>
+        <CalPanel form="powered_by_relvo" onBooked={handleBooked} prefill={prefill} formTitle={c.closing.formTitle}>
           <LeadForm
             locale="es"
             fuente={fuente}

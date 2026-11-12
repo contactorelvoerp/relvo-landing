@@ -74,7 +74,9 @@ Production setup, in order:
    token with `analytics.edit` scope in `GA_ADMIN_ACCESS_TOKEN`:
    `node scripts/configure-analytics.mjs`. After reviewing the plan, add
    `--apply`. It creates missing event dimensions, registers `generate_lead`
-   as a key event, and copies the default channels into a separate **Relvo
+   and `demo_agendada` as key events, validates the matching web stream, disables
+   duplicate automatic form/history events and outbound URLs containing private
+   attribution metadata, and copies the default channels into a separate **Relvo
    distribution** group with Powered by Relvo first. It never replaces the
    property's primary group. Use that group in acquisition reports. No live
    GA configuration is changed by builds or tests.
@@ -103,3 +105,14 @@ no host ports or configured database), production build, `npm run test:browser`,
 tests intercept every request and create no production leads, events or CRM
 updates. They include first-touch persistence, validation, a failed submission,
 a stable retry ID, success-only conversion, and mobile/reduced-motion rendering.
+
+## Analytics and growth feedback
+
+GA4 is loaded only in production, using `G-3612NJ7H02`. See
+[`docs/medicion-y-aprendizaje.md`](docs/medicion-y-aprendizaje.md) for account
+activation, separate form/calendar funnels, verification and the weekly review.
+Use `npm run analytics:plan` before `npm run analytics:apply`; both require a
+numeric `GA_PROPERTY_ID` and a securely loaded `GA_ADMIN_ACCESS_TOKEN`.
+Campaign quality and acquisition value are reported by
+[`supabase/growth-funnel.sql`](supabase/growth-funnel.sql), without inflating
+leads that have multiple CRM outcomes.

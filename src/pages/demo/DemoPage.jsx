@@ -29,7 +29,7 @@ export function DemoPage({ locale }) {
         <p className="demo__lede">{context.intent === 'proposal' ? c.proposalLede : c.lede}</p>
         {context.plan !== 'undecided' && <p className="demo__context">{c.planLabel}: <strong>{c.planNames[context.plan]}</strong></p>}
       </div>
-      <CalPanel locale={locale} onBooked={handleBooked} contactOpen={context.contact} requestContext={requestContext} formFirst={context.intent === 'proposal'}>
+      <CalPanel form="agendar_demo" locale={locale} onBooked={handleBooked} contactOpen={context.contact} requestContext={requestContext} formFirst={context.intent === 'proposal'}>
         <LeadForm locale={locale} fuente="agendar_demo" requestContext={requestContext} submit={context.intent === 'proposal' ? c.proposalSubmit : c.formSubmit} />
       </CalPanel>
       <LogoStrip label={homeCopy[locale].hero.logos} />

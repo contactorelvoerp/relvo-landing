@@ -23,6 +23,8 @@ Todos salen de `src/analytics.js` y `src/components/LeadForm.jsx`. Solo en produ
 |---|---|---|
 | `generate_lead` (**key event**) | Formulario guardado en Supabase | `form`, `locale`, `plan` / `intent` cuando vienen de precios |
 | `demo_agendada` (**key event**) | Reserva hecha en el calendario de Cal.com (`/agendar-demo`, `/en/book-a-demo`, `/lp/facturacion-b2b`, `/powered-by-relvo`) | `form`, `locale`, `plan` / `intent` cuando vienen de precios |
+| `calendar_view` | Calendario listo para reservar, una vez por página (no significa reserva iniciada) | `form`, `locale`, `plan` / `intent` si existen |
+| `calendar_error` | Fallo al cargar el calendario o timeout; se muestra el enlace de respaldo | `form`, `locale`, `reason` (`load` / `timeout`) |
 | `form_start` | Primer foco en un formulario | `form`, `locale` |
 | `form_error` | Validación fallida o error al enviar | `form`, `locale`, `reason` (`validation` / `server`) |
 | `cta_click` | Click en un botón (`.btn`) o en cualquier link a la demo | `placement` (id de la sección, `hero`, `nav`, `footer`), `destination` (ruta o dominio) |
@@ -34,11 +36,13 @@ Además: la conversión de Google Ads de `/lp/facturacion-b2b` (`ads-conversion.
 
 ### Configurar la propiedad de GA4
 
-`scripts/configure-analytics.mjs` deja la propiedad como la necesita el sitio: key events (`generate_lead`, `demo_agendada`), dimensiones personalizadas de los parámetros de arriba y un grupo de canales "Relvo distribution" que separa **Powered by Relvo** y **AI assistants** (ChatGPT, Perplexity, Claude, Gemini, Copilot, etc.) del resto. No toca el grupo de canales principal.
+`scripts/configure-analytics.mjs` deja la propiedad como la necesita el sitio: key events (`generate_lead`, `demo_agendada`), dimensiones personalizadas de los parámetros de arriba y un grupo de canales "Relvo distribution" que separa **Powered by Relvo** y **AI assistants** (ChatGPT, Perplexity, Claude, Gemini, Copilot, etc.) del resto. No toca el grupo de canales principal. Valida que el stream web corresponda a `G-3612NJ7H02` (o `GA_MEASUREMENT_ID`) antes de modificar nada. Desactiva las interacciones automáticas de formularios y los pageviews por cambios de historial: el formulario ya emite sus propios eventos y el sitio navega con documentos completos. También desactiva los clicks salientes automáticos: el enlace de respaldo de Cal.com contiene metadata de atribución, incluidas referencias opacas que no deben entrar en GA4, y esos eventos enviarían el URL completo. `cta_click` sigue midiendo botones con solo la ruta o el dominio de destino. Conserva las demás opciones de medición mejorada. Registra también `plan` e `intent` para analizar las consultas de precios.
 
 ```bash
-GA_PROPERTY_ID=<id numérico> GA_ADMIN_ACCESS_TOKEN=<token OAuth con analytics.edit> node scripts/configure-analytics.mjs           # plan, solo lee
-GA_PROPERTY_ID=... GA_ADMIN_ACCESS_TOKEN=... node scripts/configure-analytics.mjs --apply   # aplica
+# Cargar GA_PROPERTY_ID (numérico) y GA_ADMIN_ACCESS_TOKEN de forma segura en el entorno.
+# El token necesita analytics.edit; nunca guardarlo en el repo ni usar un prefijo VITE_.
+npm run analytics:plan     # solo lee; revisar los cambios
+npm run analytics:apply    # aplica el plan calculado con el estado actual
 ```
 
 ## 2. Atribución y click de Google Ads
@@ -149,22 +153,17 @@ Además del honeypot. Invisible salvo que Cloudflare pida una interacción, y el
 
 ## 9. Rutina para aprender (semanal)
 
-1. **GA4 → Exploraciones → Embudo:** `page_view` de la página → `cta_click` → `form_start` → `generate_lead` / `demo_agendada`, por página de entrada y canal (incluido *AI assistants*).
+1. **GA4 → Exploraciones:** dos embudos, por página de entrada, canal, dispositivo e idioma. Formulario: `page_view` → `form_start` → `generate_lead`. Calendario: `page_view` → `calendar_view` → `demo_agendada`. Permitir pasos intermedios y entrada directa a la página de demo; `cta_click` es un diagnóstico opcional, nunca un requisito para contar una reserva. `calendar_view` mide disponibilidad del calendario, no una interacción dentro del iframe. Revisar `calendar_error` por `reason` para detectar fallos del embed. No sumar los dos embudos como personas únicas: alguien puede enviar una consulta y reservar.
 2. **`cta_click` por `placement`:** qué secciones mueven a la demo y cuáles no. **`form_error` por `reason`:** dónde se cae el formulario.
 3. **`scroll_depth` en home y precios:** hasta dónde se lee antes del primer CTA.
-4. **Supabase (calidad, no volumen):** leads → calificados → clientes por formulario y campaña:
-   ```sql
-   SELECT l.fuente,
-          coalesce(l.attribution->'last_touch'->>'utm_campaign', l.attribution->'ads_click'->>'utm_campaign', '(directo)') AS campana,
-          count(*) AS leads,
-          count(*) FILTER (WHERE o.stage = 'qualified_lead') AS calificados,
-          count(*) FILTER (WHERE o.stage = 'customer') AS clientes
-   FROM public.leads l
-   LEFT JOIN public.distribution_outcomes o USING (submission_id)
-   WHERE l.submission_id IS NOT NULL
-   GROUP BY 1, 2 ORDER BY leads DESC;
-   ```
+4. **Supabase (calidad, no volumen):** ejecutar `supabase/growth-funnel.sql` con un rol de servidor. Reporta cohortes semanales de leads por formulario, source/medium y campaña, con leads únicos, calificados, demos y empresas adquiridas. Cada lead se cuenta una vez aunque tenga varias etapas. El valor de adquisición va en una consulta separada por moneda. Comparar cohortes con la misma madurez (p. ej. 30 días desde el lead); las etapas tardías actualizan su cohorte original. `fuente = cal_booking` son reservas creadas desde el webhook, no formularios enviados. La atribución CRM guarda campañas explícitas (UTM), no los referrers orgánicos: `(unattributed)` no significa tráfico directo; los canales de adquisición orgánica se analizan en GA4. GA4 y Supabase usan identidades distintas: sus totales no tienen por qué coincidir.
 5. **Un cambio a la vez:** con este volumen de tráfico B2B un test A/B rara vez llega a un resultado significativo. Cada cambio de copy o estructura sale con una hipótesis escrita ("cambiar X debería subir Y en la página Z") y se compara el embudo de 4 semanas antes y después. Los textos siguen saliendo del brief.
+
+### Cierre semanal del aprendizaje
+
+Registrar visitas y tasa de conversión en GA4; leads, calificados, demos, clientes y valor por moneda en Supabase. El embudo CRM permanece en Supabase/Attio: no se envían etapas offline a GA4 ni se promete atribución de ingresos allí. El feed de Google Ads devuelve las etapas con `gclid` para optimización de campañas.
+
+En la revisión de ventas, anotar las objeciones y motivos de descalificación sin enviar texto libre ni datos personales a GA4. Para cada cambio, registrar fecha, página, hipótesis, métrica principal, métricas de calidad, ventana de evaluación y decisión (mantener/revertir/seguir observando). Revisar el mix de canales antes de atribuir una mejora al cambio. Responsable sugerido: marketing para adquisición/UX y ventas para calidad/objeciones; asignar nombres al activar el proceso.
 
 ## 10. Lo que falta y de quién depende
 
@@ -178,6 +177,16 @@ Además del honeypot. Invisible salvo que Cloudflare pida una interacción, y el
 | Formulario en dos pasos / enriquecimiento con Apollo | Cambia la UX y los textos del formulario | Aprobación de Ricardo |
 | LCP de la home en laboratorio | Ver §8 | PR de rendimiento de la home |
 | Configuraciones externas de §3–§7 | Secretos y cuentas fuera del repo | Quien administra Attio, Supabase, Google Ads, Cloudflare |
+
+## Activación cuando estén disponibles los accesos
+
+1. **Vercel + Cal.com:** configurar el mismo `CAL_WEBHOOK_SECRET` en Vercel Production y en el webhook **Booking Created** de Cal.com, destino `https://getrelvo.ai/api/cal-booking`. Redeploy para que Vercel cargue la variable. No sustituir la firma por un endpoint público sin autenticación.
+2. **GA4 Editor:** obtener el ID numérico de la propiedad que contiene `G-3612NJ7H02` y un token OAuth con `analytics.edit`; ejecutar `npm run analytics:plan`, revisar y ejecutar `npm run analytics:apply`. Volver a ejecutar el plan: debe devolver `changes: []`. El script no se ejecuta automáticamente en builds.
+3. **Comprobación sin datos nuevos:** `npm run check:prod-flows` debe pasar. Un 503 en `/api/cal-booking` sin firma indica que falta la configuración del webhook; un 401 confirma que está protegido, pero no prueba la entrega desde Cal.com ni la escritura en la base.
+4. **Prueba integrada controlada:** con un lead y una reserva de prueba, verificar GA4 DebugView (`calendar_view` / `form_start`, y solo tras éxito `demo_agendada` / `generate_lead`), la fila en Supabase, la nota en Attio y la etapa `demo_booked`. Probar un reintento firmado para confirmar que no duplica. Verificar los workflows de etapas de Attio y una carga del feed en Google Ads. Usar Tag Assistant para habilitar debug; no activar `debug_mode` globalmente en producción.
+5. **Reporting:** guardar las dos exploraciones anteriores y ejecutar el SQL semanal. No usar `form_submit` automático ni clicks como conversiones. No habilitar una segunda etiqueta GA4 en GTM si el sitio ya carga gtag.
+
+Sin acceso a estas cuentas, los cambios del repo quedan verificables localmente, pero la activación externa no se considera terminada.
 
 ## 11. Verificación
 

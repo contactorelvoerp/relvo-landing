@@ -17,13 +17,13 @@ function FormPanel({ title, children, contactOpen, intro }) {
 
 // The same scheduling flow serves organic, paid and referral visitors.
 // formFirst: quien pidió una propuesta ve el formulario antes que el calendario.
-export function CalPanel({ onBooked, prefill, formTitle, children, locale = 'es', contactOpen = false, requestContext, formFirst = false }) {
+export function CalPanel({ onBooked, prefill, formTitle, children, locale = 'es', contactOpen = false, requestContext, formFirst = false, form }) {
   const c = copy[locale]
   return (
     <div className={`cal-panel__grid${formFirst ? ' cal-panel__grid--form-first' : ''}`}>
       <div className="cal-panel__cal">
         <div className="cal-panel__heading"><h2>{c.calendarTitle}</h2><p>{c.meetingDetails}</p></div>
-        <CalEmbed onBooked={onBooked} prefill={prefill} locale={locale} requestContext={requestContext} />
+        <CalEmbed onBooked={onBooked} prefill={prefill} locale={locale} requestContext={requestContext} form={form} />
       </div>
       <FormPanel title={formTitle ?? c.formTitle} contactOpen={contactOpen} intro={c.formIntro}>{children}</FormPanel>
     </div>

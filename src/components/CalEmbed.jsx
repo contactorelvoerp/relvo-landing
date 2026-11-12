@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Cal, { getCalApi } from '@calcom/embed-react'
 import { captureAdsClick, getAdsClick } from '../adsClick'
 import { captureAttribution } from '../attribution'
+import { trackMarketingEvent } from '../analytics'
 import { CAL_LINK_FALLBACK } from '../config/cal'
 import { copy } from '../pages/demo/copy'
 import './cal-embed.css'
@@ -32,17 +33,22 @@ const METADATA_KEYS = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 
 // mismo elemento no actualiza nada, Cal.com lo ignora ("Inline embed already exists") — @calcom/
 // embed-react tiene la misma limitación (no vuelve a aplicar `config` si ya montó una vez), por eso
 // sigue haciendo falta el remonte con `key`.
-export function CalEmbed({ onBooked, prefill, locale = 'es', requestContext }) {
+export function CalEmbed({ onBooked, prefill, locale = 'es', requestContext, form }) {
   const c = copy[locale]
   const bookedRef = useRef(onBooked)
   bookedRef.current = onBooked
   const adsClickRef = useRef(null)
   const attributionRef = useRef(null)
   const bookedUids = useRef(new Set())
+  const viewed = useRef(false)
+  const reportedErrors = useRef(new Set())
+  const analyticsContext = useRef()
+  analyticsContext.current = { form, locale, ...requestContext }
   const wrapperRef = useRef(null)
   const appliedPrefill = useRef(false)
   const [elementId, setElementId] = useState(ELEMENT_ID)
   const [visible, setVisible] = useState(false)
+  const [initialized, setInitialized] = useState(false)
   const [failed, setFailed] = useState(false)
 
   // Carga diferida: el script de Cal.com es de terceros y pesado — se pide recién cuando la
@@ -72,20 +78,35 @@ export function CalEmbed({ onBooked, prefill, locale = 'es', requestContext }) {
   useEffect(() => {
     if (!visible) return
     let cancelled = false
+    const reportError = (reason) => {
+      if (cancelled || reportedErrors.current.has(reason)) return
+      reportedErrors.current.add(reason)
+      trackMarketingEvent('calendar_error', { ...analyticsContext.current, reason })
+    }
     const timeout = setTimeout(() => {
       if (cancelled) return
       console.error(`[CalEmbed] Cal.com no terminó de cargar en ${LOAD_TIMEOUT_MS / 1000}s: muestro el link de respaldo en vez del calendario embebido.`)
+      reportError('timeout')
       setFailed(true)
     }, LOAD_TIMEOUT_MS)
     ;(async () => {
       const cal = await getCalApi({ namespace: NAMESPACE })
       if (cancelled) return
       cal('ui', { theme: 'light', cssVarsPerTheme: { light: { 'cal-brand': '#186666' } }, hideEventTypeDetails: true, showTimezoneWhenEventDetailsHidden: true, layout: 'month_view' })
-      cal('on', { action: 'linkReady', callback: () => clearTimeout(timeout) })
+      cal('on', { action: 'linkReady', callback: () => {
+        if (cancelled) return
+        clearTimeout(timeout)
+        if (!viewed.current) {
+          viewed.current = true
+          trackMarketingEvent('calendar_view', analyticsContext.current)
+        }
+      } })
       cal('on', {
         action: 'linkFailed',
         callback: (event) => {
+          if (cancelled) return
           console.error('[CalEmbed] Cal.com no pudo cargar el embed', event?.detail?.data)
+          reportError('load')
           clearTimeout(timeout)
           if (!cancelled) setFailed(true)
         },
@@ -94,6 +115,7 @@ export function CalEmbed({ onBooked, prefill, locale = 'es', requestContext }) {
         // bookingSuccessful está deprecado por Cal.com en favor de bookingSuccessfulV2.
         action: 'bookingSuccessfulV2',
         callback: (event) => {
+          if (cancelled) return
           const data = event?.detail?.data
           const uid = data?.uid
           // Cal.com puede reenviar el mismo evento (reintento de red, doble render del embed):
@@ -106,8 +128,12 @@ export function CalEmbed({ onBooked, prefill, locale = 'es', requestContext }) {
           bookedRef.current?.({ email, uid })
         },
       })
+      // Attach every listener before mounting Cal: a cached/fast iframe can
+      // emit linkReady during its first effect, before this async setup ends.
+      setInitialized(true)
     })().catch(() => {
       clearTimeout(timeout)
+      reportError('load')
       if (!cancelled) setFailed(true)
     })
     return () => { cancelled = true; clearTimeout(timeout) }
@@ -153,6 +179,8 @@ export function CalEmbed({ onBooked, prefill, locale = 'es', requestContext }) {
       </div>
     )
   }
+
+  if (!initialized) return <div className="cal-embed cal-embed--loading" role="status"><p>{c.calendarLoading}</p></div>
 
   const prefillApplied = elementId !== ELEMENT_ID
 

@@ -20,12 +20,12 @@ test.beforeAll(async () => {
 test.afterAll(async () => { await new Promise((resolve) => server.close(resolve)) })
 
 // Exercise the SDK boundary without creating meetings or depending on third-party uptime.
-async function calendarDouble(page) {
+async function calendarDouble(page, { ready = true } = {}) {
   await page.route('**/*', (route) => {
     const url = new URL(route.request().url())
     return url.hostname === '127.0.0.1' ? route.continue() : route.abort()
   })
-  await page.addInitScript(() => {
+  await page.addInitScript(({ ready }) => {
     const callbacks = {}
     window.__emitCal = (action, data) => (callbacks[action] ?? []).forEach((callback) => callback({ detail: { data } }))
     const namespaced = (action, options) => {
@@ -34,13 +34,13 @@ async function calendarDouble(page) {
       if (action === 'inline') {
         window.__calendarConfig = options.config
         window.__calendarLink = options.calLink
-        window.__emitCal('linkReady')
+        if (ready) window.__emitCal('linkReady')
       }
     }
     window.Cal = (action, namespace) => { if (action === 'init') window.Cal.ns[namespace] = namespaced }
     window.Cal.ns = {}
     window.Cal.loaded = true
-  })
+  }, { ready })
 }
 
 for (const locale of ['es', 'en']) {
@@ -101,7 +101,47 @@ for (const locale of ['es', 'en']) {
     await page.locator('.cal-panel__form-toggle').click()
     await expect(page.locator('#lead-email')).toBeVisible()
   })
+
+  test(`${locale} direct calendar funnel records readiness once, errors separately and no form start`, async ({ page }) => {
+    await calendarDouble(page)
+    await page.goto(`${base}${demoPath}?plan=startup`)
+    await expect.poll(() => page.evaluate(() => Boolean(window.__calendarConfig))).toBe(true)
+    // Production analytics queues events even though the third-party collector
+    // is blocked. No CTA or email-form interaction is needed for a booking.
+    const events = () => page.evaluate(() => (window.dataLayer ?? []).filter((entry) => entry[0] === 'event').map((entry) => Array.from(entry)))
+    await expect.poll(async () => (await events()).filter((entry) => entry[1] === 'calendar_view').length).toBe(1)
+    await page.evaluate(() => { window.__emitCal('linkReady'); window.__emitCal('linkReady') })
+    const views = (await events()).filter((entry) => entry[1] === 'calendar_view')
+    expect(views).toHaveLength(1)
+    expect(views[0][2]).toMatchObject({ form: 'agendar_demo', locale, plan: 'startup', intent: 'demo' })
+    expect((await events()).filter((entry) => ['generate_lead', 'form_start', 'demo_agendada'].includes(entry[1]))).toHaveLength(0)
+    await page.evaluate(() => {
+      window.__emitCal('bookingSuccessfulV2', { uid: 'direct-calendar-test' })
+      window.__emitCal('bookingSuccessfulV2', { uid: 'direct-calendar-test' })
+      window.__emitCal('linkFailed')
+      window.__emitCal('linkFailed')
+    })
+    expect((await events()).filter((entry) => entry[1] === 'demo_agendada')).toHaveLength(1)
+    const errors = (await events()).filter((entry) => entry[1] === 'calendar_error')
+    expect(errors).toHaveLength(1)
+    expect(errors[0][2]).toMatchObject({ form: 'agendar_demo', locale, reason: 'load' })
+    expect((await events()).filter((entry) => ['generate_lead', 'form_start'].includes(entry[1]))).toHaveLength(0)
+  })
 }
+
+test('calendar timeout exposes fallback and records one error without a view or conversion', async ({ page }) => {
+  await calendarDouble(page, { ready: false })
+  await page.clock.install()
+  await page.goto(`${base}/agendar-demo`)
+  await expect.poll(() => page.evaluate(() => Boolean(window.__calendarConfig))).toBe(true)
+  await page.clock.fastForward(10001)
+  await expect(page.locator('.cal-embed--fallback a')).toBeVisible()
+  const events = await page.evaluate(() => (window.dataLayer ?? []).filter((entry) => entry[0] === 'event').map((entry) => Array.from(entry)))
+  const errors = events.filter((entry) => entry[1] === 'calendar_error')
+  expect(errors).toHaveLength(1)
+  expect(errors[0][2]).toMatchObject({ form: 'agendar_demo', locale: 'es', reason: 'timeout' })
+  expect(events.filter((entry) => ['calendar_view', 'generate_lead', 'demo_agendada'].includes(entry[1]))).toHaveLength(0)
+})
 
 for (const route of ['/lp/facturacion-b2b', '/powered-by-relvo']) {
   test(`${route} shares the same secondary email form`, async ({ page }) => {
