@@ -9,7 +9,9 @@ const base = (process.argv[2] ?? 'https://getrelvo.ai').replace(/\/$/, '')
 const SITE = 'https://getrelvo.ai'
 const errors = []
 
-const get = (url) => fetch(url, { redirect: 'manual', headers: { 'user-agent': 'relvo-seo-check' } })
+// Audit canonical pages as a crawler. Visitor geolocation may otherwise redirect
+// the Spanish homepage to /en when this runs on a US-hosted Actions runner.
+const get = (url) => fetch(url, { redirect: 'manual', headers: { 'user-agent': 'relvo-seo-check (crawler)' } })
 
 // Páginas del sitemap: indexables y con canonical autorreferente
 const sitemap = await (await get(`${base}/sitemap.xml`)).text()
