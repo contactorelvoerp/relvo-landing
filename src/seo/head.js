@@ -37,7 +37,7 @@ function jsonLd(route) {
       logo: `${SITE_URL}/logo-logotype-dark.svg`,
       description: homeDescription(route.locale),
       disambiguatingDescription: ORG_DISAMBIGUATION[route.locale] || ORG_DISAMBIGUATION.es,
-      sameAs: [LINKEDIN_URL, 'https://www.relvoerp.com/'],
+      sameAs: [LINKEDIN_URL],
     },
     {
       '@type': 'WebSite',
@@ -74,7 +74,7 @@ function jsonLd(route) {
       ],
     })
   }
-  // Precios: solo las preguntas con respuesta aprobada (las [PENDIENTE] no se publican)
+  // Precios: las mismas preguntas y respuestas que se muestran en la página.
   if (route.id === 'precios') {
     const faq = answeredFaq(route.locale)
     if (faq.length) graph.push(faqLd(faq))
@@ -125,12 +125,26 @@ function faqLd(items) {
   }
 }
 
+// Fuentes críticas por página: el texto del cuerpo (Regular) y la del H1 (el LCP de casi todas las
+// páginas). Fujiwara A solo existe en el H1 de la home; en el resto el H1 es Instrument Sans Medium.
+// Precargar una fuente que la página no usa le quita ancho de banda al primer render en mobile.
+const FONT = {
+  display: '/fonts/fujiwara/FujiwaraA-Medium.woff2',
+  regular: '/fonts/instrument-sans/InstrumentSans-Regular.woff2',
+  medium: '/fonts/instrument-sans/InstrumentSans-Medium.woff2',
+}
+function fontPreloads(route) {
+  const fonts = route.id === 'home' ? [FONT.display, FONT.regular] : [FONT.medium, FONT.regular]
+  return fonts.map((href) => `<link rel="preload" href="${href}" as="font" type="font/woff2" crossorigin />`)
+}
+
 // Devuelve el HTML del <head> de una ruta. `production` decide indexación y analítica;
 // `ogImage` es la ruta pública de la imagen 1200×630 de la página, si existe.
 export function buildHead(route, { production, ogImage }) {
   const indexable = production && route.status === 'live' && !route.noindex
   const tags = [
     `<title>${esc(route.title)}</title>`,
+    ...fontPreloads(route),
     // Las páginas en preparación (noindex) dejan seguir sus links en producción
     `<meta name="robots" content="${indexable ? 'index, follow' : production && route.noindex ? 'noindex, follow' : 'noindex, nofollow'}" />`,
   ]

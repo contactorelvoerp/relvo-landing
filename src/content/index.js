@@ -1,3 +1,5 @@
+import seo from '../../reference/seo-metadata.json'
+
 // Contenido de las páginas de plantilla (content/<idioma>/<url>.json, validado en el build por
 // scripts/validate-content.mjs). En el servidor se cargan todos los archivos; en el navegador, solo
 // los de la página (más el caso que referencia) y antes de hidratar, para que el HTML coincida.
@@ -9,7 +11,7 @@ const loaded = { ...EAGER }
 // La ruta del archivo sale de la URL de la página: /producto/cuentas-por-cobrar →
 // /content/es/producto/cuentas-por-cobrar.json (el validador exige que coincidan).
 const fileFor = (locale, path) => `/content/${locale}${path}.json`
-const caseFile = (locale, ref) => `/content/${locale}/clientes/${ref}.json`
+const caseFile = (locale, ref) => fileFor(locale, seo.pages.find((page) => page.id === ref)?.[locale]?.url)
 
 export function getContent(locale, path) {
   return loaded[fileFor(locale, path)] ?? null

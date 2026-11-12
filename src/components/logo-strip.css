@@ -1,0 +1,25 @@
+/* Carrusel de logos de clientes (home y precios). */
+/* Carrusel de logos: lineal y lento, pausa en hover, corte limpio con filete (sin fade) */
+.logo-strip{display:flex;align-items:stretch;margin:clamp(48px,4.5cqi,72px) var(--rail-inset) 0;border-top:1px solid var(--line)}
+.logo-strip__label{display:flex;flex:0 0 calc(220px + var(--gutter) - 16px);align-items:center;margin:0;padding:16px 24px 16px calc(var(--gutter) - 16px);border-right:1px solid var(--line);font-size:15px;line-height:1.4;color:var(--text-soft)}
+.logo-strip__window{flex:1 1 0;min-width:0;overflow:hidden}
+.logo-strip__track{display:flex;width:max-content;animation:relvo-marquee 40s linear infinite}
+.logo-strip:hover .logo-strip__track,.logo-strip--offscreen .logo-strip__track{animation-play-state:paused}
+.logo-strip__group{display:flex;flex-shrink:0}
+.logo-strip__cell{position:relative;display:flex;flex-shrink:0;align-items:center;justify-content:center;width:224px;height:120px;padding:24px 40px}
+.logo-strip__cell::after{content:"";position:absolute;top:calc(50% - 16px);right:0;height:32px;border-right:1px solid var(--line-soft);pointer-events:none}
+.logo-strip__cell img{width:auto;object-fit:contain;filter:grayscale(1) brightness(0);opacity:.82}
+.logo-strip__cell img.logo-strip__preserve-white{filter:grayscale(1)}
+@keyframes relvo-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@container (max-width:719px){
+  .logo-strip{display:block}
+  .logo-strip__label{padding:14px var(--gutter);border-right:0;border-bottom:1px solid var(--line);font-size:14px}
+  .logo-strip__cell{width:184px;height:100px;padding:20px 28px}
+}
+/* Todos los clientes siguen visibles sin animación, también en pantallas pequeñas. */
+@media (prefers-reduced-motion:reduce){
+  .logo-strip__track{width:100%;animation:none}
+  .logo-strip__group{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));width:100%}
+  .logo-strip__group[aria-hidden],.logo-strip__cell--repeat{display:none}
+  .logo-strip__cell{width:auto;min-width:0;height:120px;padding:24px}
+}

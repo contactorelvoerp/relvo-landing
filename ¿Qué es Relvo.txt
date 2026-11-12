@@ -37,4 +37,4 @@ Qué NO es:
 Es:
 Un motor de revenue management basado en reglas + datos + AI que convierte el caos operativo en un sistema determinista y escalable.
 
-La web de Relvo es https://www.relvoerp.com/
+La web de Relvo es https://getrelvo.ai/

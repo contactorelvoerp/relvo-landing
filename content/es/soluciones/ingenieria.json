@@ -21,7 +21,7 @@
       "type": "hero",
       "h1": "Relvo para equipos de ingeniería.",
       "lead": "Envía el consumo por API y deja de construir facturación propia. Relvo calcula, factura y cobra; tu equipo vuelve a trabajar en el producto.",
-      "intro": "Construir facturación dentro del producto parece rápido al principio y se vuelve una deuda permanente: cada cambio de pricing es un ticket, cada error de cálculo es un incidente. Con Relvo, tu producto solo reporta el consumo. Las reglas de cobro viven en Relvo y finanzas puede ajustarlas sin pedirle nada a ingeniería.",
+      "intro": "Construir facturación dentro del producto parece rápido, pero se vuelve una deuda permanente: cada cambio de pricing es un ticket y cada error de cálculo, un incidente. Con Relvo, tu producto reporta el consumo y finanzas ajusta las reglas de cobro sin depender de ingeniería.",
       "ctas": [
         {
           "label": "Agendar demo",

@@ -108,4 +108,4 @@ El SEO es una pieza central del proyecto. La web actual tiene fallas de SEO (inc
 - Google Search Console verificado (dominio completo) y sitemap enviado.
 - Revisar cobertura e indexación después de cada deploy grande.
 
-- Title/OG de la home: "Relvo | Revenue Engine para SaaS e IA".
+- Title/OG de la home: "Relvo | Facturación y cobranza automatizadas".

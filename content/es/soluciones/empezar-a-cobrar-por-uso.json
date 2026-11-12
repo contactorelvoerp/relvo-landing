@@ -21,7 +21,7 @@
       "type": "hero",
       "h1": "Cómo empezar a cobrar por uso sin cambiar de sistema.",
       "lead": "Suma un componente de consumo a tus planes: envía el uso por API y Relvo lo convierte en cobros exactos cada período.",
-      "intro": "Muchas empresas SaaS e IA quieren cobrar por uso, pero frenan porque implica medir, calcular y facturar algo que cambia cada mes. Relvo te deja dar ese paso de a poco: mantienes tu plan fijo, agregas una métrica de consumo y la parte variable se calcula y se cobra sola.",
+      "intro": "Muchas empresas SaaS e IA frenan el cobro por uso porque exige medir, calcular y facturar algo que cambia cada mes. Con Relvo, mantienes tu plan fijo y agregas una métrica de consumo: la parte variable se calcula y cobra sola.",
       "ctas": [
         {
           "label": "Agendar demo",

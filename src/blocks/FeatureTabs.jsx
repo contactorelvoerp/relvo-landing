@@ -5,7 +5,7 @@ import '../styles/blocks.css'
 // Tabs verticales con su pantalla de producto (01 Rieles de la home y bloque featureTabs de la
 // plantilla). Cada tab trae { label, desc, visual }; todos los paneles quedan en el HTML.
 export function FeatureTabs({ prefix, tablist, tabs, locale }) {
-  const t = useTabs(prefix, tabs.length)
+  const t = useTabs(prefix, tabs.length, 'vertical')
   return (
     <div className="rails">
       <div className="vtabs" role="tablist" aria-label={tablist} aria-orientation="vertical">

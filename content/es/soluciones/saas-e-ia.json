@@ -21,7 +21,7 @@
       "type": "hero",
       "h1": "Facturación y cobro para empresas SaaS e IA.",
       "lead": "Seats, uso, tokens o planes fijos: Relvo calcula, factura, cobra y concilia el revenue de empresas SaaS e IA en LatAm.",
-      "intro": "Las empresas de software e IA cambian su pricing más seguido que cualquier otra industria: de seats a uso, de uso a tokens, de self-serve a contratos enterprise. Relvo está hecho para eso. Tu pricing vive como reglas, así que cambiarlo no significa cambiar de sistema, y cada cobro sale exacto aunque el modelo sea nuevo.",
+      "intro": "Las empresas de software e IA cambian de pricing: de seats a uso, de uso a tokens, de self-serve a contratos enterprise. En Relvo, el pricing se configura como reglas: puedes cambiarlo sin cambiar de sistema y cada cobro sale exacto.",
       "ctas": [
         {
           "label": "Agendar demo",

@@ -75,7 +75,7 @@ const pages = [
   ['powered_by', 'en', 'Powered by Relvo'],
   ['demo', 'es', demoCopy.es.title],
   ['demo', 'en', demoCopy.en.title],
-  ['precios', 'es', pricingCopy.es.hero.h1],
+  ...Object.entries(pricingCopy).map(([locale, c]) => ['precios', locale, `${c.hero.h1} ${c.hero.emphasis}`]),
   ...seo.pages.filter((p) => NOINDEX_PAGES.includes(p.id)).map((p) => [p.id, 'es', p.es.title]),
   // Portada del blog (relvo-blog la usa como og:image de /blog)
   ['blog', 'es', 'Blog'],

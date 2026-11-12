@@ -1,5 +1,4 @@
-// Site UI strings in English. Translated from es.js (approved by Ricardo, 2026-10-02);
-// page names follow the EN titles in reference/seo-metadata.json.
+// Site UI strings in English, including navigation and product card copy.
 export const en = {
   nav: {
     product: 'Product',
@@ -10,7 +9,6 @@ export const en = {
     login: 'Log in',
     demo: 'Book a demo',
     menu: 'Menu',
-    layers: { rails: 'Rails', agents: 'Agents', intelligence: 'Intelligence' },
     developers: 'For developers',
     apiDocs: 'API documentation',
     teams: 'For teams',
@@ -19,12 +17,12 @@ export const en = {
   },
   pages: {
     powered_by: { name: 'Powered by Relvo' },
-    contratos: { name: 'Contracts and pricing', desc: 'Any pricing, turned into exact rules.' },
-    medicion: { name: 'Usage metering', desc: "Your customers' usage, ready to bill." },
-    aprobaciones: { name: 'Approvals and purchase orders', desc: 'Every invoice goes out with its approved PO.' },
-    cxc: { name: 'Accounts receivable', desc: 'Invoice, collect and reconcile in one flow.' },
-    agentes: { name: 'Agents', desc: 'They read POs, follow up on emails and coordinate your team over Slack, Google Chat and MCP.' },
-    reporteria: { name: 'SaaS/AI reporting', desc: 'MRR, usage and DSO without building spreadsheets.' },
+    contratos: { name: 'Quote to contract', desc: 'Turn quoted terms into billing rules: fixed fees, usage rates or milestones.' },
+    medicion: { name: 'Usage-based billing', desc: 'Track each customer’s usage and calculate what to bill.' },
+    aprobaciones: { name: 'Purchase orders and approvals', desc: 'Collect the documents and approvals you need to invoice.' },
+    cxc: { name: 'Billing and collections', desc: 'Send invoices, follow up on payments and reconcile what’s paid.' },
+    agentes: { name: 'AI agents', desc: 'Read purchase orders, follow up by email and notify your team. Query invoices, collections and usage via MCP.' },
+    reporteria: { name: 'Revenue reporting', desc: 'Track recurring revenue, customer usage and time to payment.' },
     planes: { name: 'Recurring plans', desc: 'Subscriptions and fixed plans, collected automatically.' },
     hibrido: { name: 'Hybrid pricing contracts', desc: 'Fixed fees, usage and milestones in one contract.' },
     uso: { name: 'Starting usage-based billing', desc: 'Add usage to your plans without switching systems.' },
@@ -35,7 +33,7 @@ export const en = {
     ingenieria: { name: 'Engineering' },
     precios: { name: 'Pricing' },
     clientes: { name: 'Customers' },
-    'lp-facturacion-b2b': { name: 'Revenue Engine for B2B' },
+    'lp-facturacion-b2b': { name: 'Automated Billing & Collections for B2B' },
     demo: { name: 'Book a demo' },
     blog: { name: 'Blog' },
     docs: { name: 'Docs' },
@@ -44,9 +42,8 @@ export const en = {
     privacidad: { name: 'Privacy' },
   },
   footer: {
-    tagline: 'Revenue Engine for SaaS and AI. Santiago, Chile.',
+    tagline: 'Automated Billing & Collections. Santiago, Chile.',
     legal: '© 2026 Relvo SpA',
-    illustrative: '[PENDIENTE]',
   },
   notFound: {
     title: 'Page not found',

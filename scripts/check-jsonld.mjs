@@ -43,7 +43,12 @@ for (const file of htmlFiles(dist)) {
       if (t === 'SoftwareApplication' && !(node.name && node.applicationCategory && node.operatingSystem)) errors.push(`${rel}: SoftwareApplication sin name, applicationCategory u operatingSystem`)
       if (t === 'FAQPage') {
         faqs++
-        const visible = [...html.matchAll(/<details[^>]*><summary>([\s\S]*?)<\/summary><p>([\s\S]*?)<\/p><\/details>/g)].map(([, q, a]) => [decode(q), decode(a)])
+        // Inspect each disclosure separately so feature explanations cannot be
+        // consumed together with a later FAQ question by the summary matcher.
+        const visible = [...html.matchAll(/<details\b[^>]*>([\s\S]*?)<\/details>/g)]
+          .map(([, body]) => body.match(/^<summary>([\s\S]*?)<\/summary><p>([\s\S]*?)<\/p>$/))
+          .filter(Boolean)
+          .map(([, q, a]) => [decode(q), decode(a)])
           // Las preguntas [PENDIENTE] solo se ven en preview y no van al FAQPage
           .filter(([, a]) => !a.includes('[PENDIENTE]'))
         const marked = node.mainEntity.map((q) => [q.name, q.acceptedAnswer.text])

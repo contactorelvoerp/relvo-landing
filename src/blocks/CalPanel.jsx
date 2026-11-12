@@ -1,33 +1,31 @@
-import { useState } from 'react'
 import { CalEmbed } from '../components/CalEmbed'
+import { copy } from '../pages/demo/copy'
 import '../styles/blocks.css'
 
-// Formulario alternativo al calendario: en mobile va colapsado (acordeón) debajo de Cal.com, en
-// desktop siempre abierto (.cal-panel__form-body--closed solo actúa bajo los 900px del grid, ver
-// src/styles/blocks.css). `title` lo decide cada página (ninguna copy fija acá).
-function FormPanel({ title, children }) {
-  const [open, setOpen] = useState(false)
+// Native disclosure keeps email contact secondary on desktop and mobile.
+function FormPanel({ title, children, contactOpen, intro }) {
   return (
-    <div className="cal-panel__form">
-      <button type="button" className="cal-panel__form-toggle" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
+    <details className="cal-panel__form" id="consulta" open={contactOpen || undefined}>
+      <summary className="cal-panel__form-toggle">
         <span>{title}</span>
-        <svg className={`cal-panel__form-chevron${open ? ' cal-panel__form-chevron--open' : ''}`} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4" /></svg>
-      </button>
-      <div className={`cal-panel__form-body${open ? '' : ' cal-panel__form-body--closed'}`}>
-        {children}
-      </div>
-    </div>
+        <svg className="cal-panel__form-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4" /></svg>
+      </summary>
+      <div className="cal-panel__form-body"><p className="cal-panel__form-intro">{intro}</p>{children}</div>
+    </details>
   )
 }
 
-// Calendario de Cal.com (CalEmbed) + un formulario alternativo secundario, lado a lado en desktop.
-// Usado por /lp/facturacion-b2b, /agendar-demo y /powered-by-relvo: una sola conversión principal
-// (agendar) y una secundaria (dejar los datos), nunca dos CTAs del mismo peso.
-export function CalPanel({ onBooked, prefill, formTitle, children }) {
+// The same scheduling flow serves organic, paid and referral visitors.
+// formFirst: quien pidió una propuesta ve el formulario antes que el calendario.
+export function CalPanel({ onBooked, prefill, formTitle, children, locale = 'es', contactOpen = false, requestContext, formFirst = false }) {
+  const c = copy[locale]
   return (
-    <div className="cal-panel__grid">
-      <div className="cal-panel__cal"><CalEmbed onBooked={onBooked} prefill={prefill} /></div>
-      <FormPanel title={formTitle}>{children}</FormPanel>
+    <div className={`cal-panel__grid${formFirst ? ' cal-panel__grid--form-first' : ''}`}>
+      <div className="cal-panel__cal">
+        <div className="cal-panel__heading"><h2>{c.calendarTitle}</h2><p>{c.meetingDetails}</p></div>
+        <CalEmbed onBooked={onBooked} prefill={prefill} locale={locale} requestContext={requestContext} />
+      </div>
+      <FormPanel title={formTitle ?? c.formTitle} contactOpen={contactOpen} intro={c.formIntro}>{children}</FormPanel>
     </div>
   )
 }

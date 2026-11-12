@@ -32,7 +32,10 @@
   --accent:#186666;          /* 6,7:1 sobre blanco */
   --accent-hover:#2E8080;    /* 4,7:1 con texto blanco */
   --accent-pressed:#0F4A4A;
-  --accent-wash:#EEF4F4;     /* fila seleccionada / foco. Nunca como fondo de sección */
+  --accent-wash:#F0F9F5;     /* = --mint-50. Fila seleccionada / foco. Nunca como fondo de sección */
+  /* Escala de verde (auditoría de color A, 2026-11-11): 900 #0F4A4A · 700 #186666 · 500 #2E8080 · 300 · 100 menta · 50 */
+  --green-300:#72DDAA;       /* Verde claro de marca: tono medio para ilustraciones y figuras. Nunca texto sobre blanco */
+  --mint-50:#F0F9F5;         /* el verde más claro: washes y fondos de fila */
   --accent-on-ink:#8CC7C7;   /* acento sobre --ink (código, eyebrow en oscuro) */
 
   /* Acento de uso (morado de la paleta Relvo). SOLO consumo/uso: tokens, barras y series de consumo.
@@ -57,7 +60,7 @@
   --text-on-green-soft:#DFF4EB;/* 5,9:1 sobre #186666 */
   /* Tarjeta destacada */
   --card-dark:#1D1D2A;         /* tarjeta destacada oscura (sobre banda oscura) */
-  --chip-bg:#E3F1EC; --chip-fg:#0F4A4A;                               /* etiqueta "Pagada" / "Listo" sobre claro */
+  --chip-bg:#DFF4EB; --chip-fg:#0F4A4A;                               /* etiqueta "Pagada" / "Listo" sobre claro */
   --chip-bg-on-dark:rgba(114,221,170,.14); --chip-fg-on-dark:#72DDAA; /* chip "Listo" sobre tarjeta oscura */
 
   /* Líneas. El filete de tinta es el protagonista */

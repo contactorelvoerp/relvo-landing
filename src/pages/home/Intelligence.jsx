@@ -33,7 +33,10 @@ export function Intelligence({ c }) {
                 </div>
               ))}
             </div>
-            <div className="report__chart"><Chart {...chartFor(i, t, c.months)} label={t.chartLabel} locale={c.numberLocale} /></div>
+            <div className="report__visual">
+              <p className="report__hint" id={`reportes-hint-${i}`}>{c.chartScroll}<span aria-hidden="true"> →</span></p>
+              <div className="report__chart" role="region" aria-label={t.chartLabel} aria-describedby={`reportes-hint-${i}`} tabIndex={0}><Chart {...chartFor(i, t, c.months)} label={t.chartLabel} locale={c.numberLocale} /></div>
+            </div>
           </div>
         ))}
       </div>

@@ -1,0 +1,384 @@
+{
+  "id": "cxc",
+  "preset": "producto",
+  "seo": "cxc",
+  "keyword": "Invoicing, collections and reconciliation",
+  "breadcrumb": [
+    {
+      "label": "Home",
+      "href": "/en"
+    },
+    {
+      "label": "Product",
+      "href": "/en/product"
+    },
+    {
+      "label": "Accounts receivable"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Invoice, collect and reconcile without a spreadsheet.",
+      "lead": "Complex invoices issued automatically, collections by email or automatic payment, and every payment matched to its invoice. Your accounts receivable, always up to date.",
+      "ctas": [
+        {
+          "label": "Book a demo",
+          "href": "/en/book-a-demo",
+          "style": "primary"
+        },
+        {
+          "label": "View pricing",
+          "href": "/en/pricing",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "heroApp",
+        "data": {
+          "url": "app.getrelvo.ai/collections",
+          "section": "Collections",
+          "columns": [
+            "Invoice",
+            "Customer",
+            "Status"
+          ],
+          "kpi": {
+            "label": "Outstanding",
+            "value": "USD 48,200",
+            "badge": "DSO 38 days"
+          },
+          "rows": [
+            {
+              "cols": [
+                "F-1042",
+                "Nimbo AI"
+              ],
+              "status": "Paid"
+            },
+            {
+              "cols": [
+                "F-1043",
+                "Faro Analytics"
+              ],
+              "status": "Partial payment",
+              "tone": "warn"
+            },
+            {
+              "cols": [
+                "F-1044",
+                "Tandem SaaS"
+              ],
+              "status": "Sent",
+              "tone": "neutral"
+            }
+          ],
+          "card": {
+            "title": "Payment for F-1043",
+            "meta": "Faro Analytics",
+            "amount": "USD 2,000",
+            "progress": 0.65,
+            "line": [
+              "Outstanding balance",
+              "USD 1,090"
+            ]
+          },
+          "toast": {
+            "title": "Bank transfer reconciled",
+            "sub": "Faro Analytics, just now"
+          }
+        }
+      },
+      "intro": "Collections are often the most manual part of revenue: preparing invoices at month-end, chasing payments and checking bank statements to see who paid. Relvo combines invoicing, collections and reconciliation under each contract's rules to keep your accounts receivable up to date.",
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "From manual closing to an automatic cycle.",
+      "h2Soft": "Your team's workflow, without spreadsheets.",
+      "before": [
+        "Invoices prepared by hand at month-end, one per customer.",
+        "Collections tracked in a debtor spreadsheet, with emails written individually.",
+        "Bank statements checked line by line to see who paid."
+      ],
+      "after": [
+        "Each invoice goes out on time, for the exact amount.",
+        "Collection emails go out automatically, and card payments are charged automatically.",
+        "Relvo suggests the invoice for each payment, with supporting evidence, and your team confirms."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "How it works.",
+      "h2Soft": "Three steps, one flow.",
+      "steps": [
+        {
+          "title": "Invoice",
+          "text": "Relvo issues the electronic invoice in Chile or Mexico for the period's amount."
+        },
+        {
+          "title": "Collect",
+          "text": "Send collection emails or charge automatically through Toku, Fintoc or Stripe."
+        },
+        {
+          "title": "Reconcile",
+          "text": "Relvo suggests a match for each bank transaction and updates outstanding balances when confirmed."
+        }
+      ]
+    },
+    {
+      "type": "featureTabs",
+      "h2": "The entire collection cycle, in detail.",
+      "h2Soft": "From invoice to bank.",
+      "tabs": [
+        {
+          "label": "Complex invoicing",
+          "desc": "Split, prorated and with your invoice description.",
+          "visual": {
+            "id": "splitInvoice",
+            "data": {
+              "invoice": "F-1042",
+              "total": "USD 3,090",
+              "parts": [
+                {
+                  "entity": "Nimbo AI SpA, Chile",
+                  "amount": "USD 1,854",
+                  "pct": 60
+                },
+                {
+                  "entity": "Nimbo AI, Mexico",
+                  "amount": "USD 1,236",
+                  "pct": 40
+                }
+              ],
+              "glosa": "Relvo service, October 2026. PO 4500-221."
+            }
+          }
+        },
+        {
+          "label": "Email collections",
+          "desc": "Reminders before and after the due date.",
+          "visual": {
+            "id": "emailPreview",
+            "data": {
+              "to": "finanzas@faro.io",
+              "subject": "Invoice F-1043 is due October 30",
+              "body": "Hi Faro Analytics team: a reminder that invoice F-1043 for USD 3,090 is due October 30.",
+              "cta": "Pay invoice",
+              "schedule": [
+                {
+                  "label": "Sent: 5 days before"
+                },
+                {
+                  "label": "Scheduled: on the due date",
+                  "tone": "warn"
+                },
+                {
+                  "label": "Scheduled: 7 days after",
+                  "tone": "neutral"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "Automatic payments",
+          "desc": "Card, payment link or bank transfer.",
+          "visual": {
+            "id": "methods",
+            "data": {
+              "title": "October payment",
+              "client": "Nimbo AI",
+              "methods": [
+                {
+                  "label": "Card",
+                  "provider": "Stripe",
+                  "selected": true
+                },
+                {
+                  "label": "Payment link",
+                  "provider": "Toku"
+                },
+                {
+                  "label": "Bank transfer",
+                  "provider": "Fintoc"
+                }
+              ],
+              "total": [
+                "Charged on November 1",
+                "USD 2,900"
+              ]
+            }
+          }
+        },
+        {
+          "label": "Reconciliation",
+          "desc": "Suggestions with evidence, confirmed by your team.",
+          "visual": {
+            "id": "payment",
+            "data": {
+              "invoice": "F-1043",
+              "badge": "Partial payment",
+              "paid": "USD 2,000",
+              "total": "USD 3,090",
+              "progress": 0.65,
+              "events": [
+                {
+                  "label": "Bank transfer reconciled",
+                  "sub": "October 18",
+                  "done": true
+                },
+                {
+                  "label": "Email reminder",
+                  "sub": "October 25",
+                  "done": false
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "capabilities",
+      "h2": "Invoiced and collected amounts, tracked separately.",
+      "h2Soft": "Know exactly how much came in.",
+      "items": [
+        {
+          "title": "Credit and debit notes",
+          "text": "Before issuing, a correction means recalculating; afterward, a correction document is issued."
+        },
+        {
+          "title": "Payment method per customer or contract",
+          "text": "Bank details, a payment link or a card subscription portal, without migrating everyone at once."
+        },
+        {
+          "title": "Collection cadence",
+          "text": "Reminders before and after the due date, with configurable tone and frequency."
+        },
+        {
+          "title": "Reconciliation that learns",
+          "text": "Relvo suggests a match for each transaction with evidence and learns from every confirmation."
+        },
+        {
+          "title": "Partial payments and overpayments",
+          "text": "The remaining balance stays open on the invoice, and an overpayment becomes customer credit."
+        },
+        {
+          "title": "Webhooks",
+          "text": "Each reconciliation can update your ERP, your product or your customer portal."
+        }
+      ]
+    },
+    {
+      "type": "metrics",
+      "h2": "Measure how quickly you turn work into cash.",
+      "h2Soft": "Days to invoice and days to collect.",
+      "kpis": [
+        {
+          "label": "Days to invoice (DTI)",
+          "value": "3"
+        },
+        {
+          "label": "Days sales outstanding (DSO)",
+          "value": "38"
+        }
+      ],
+      "note": "9 fewer days than in April.",
+      "chart": {
+        "id": "lineChart",
+        "data": {
+          "labels": [
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+          ],
+          "series": [
+            {
+              "name": "DTI",
+              "values": [
+                6,
+                5,
+                5,
+                4,
+                3,
+                3
+              ]
+            },
+            {
+              "name": "DSO",
+              "values": [
+                47,
+                45,
+                44,
+                41,
+                40,
+                38
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "case",
+      "ref": "tgp",
+      "h2": "What changed for TGP."
+    },
+    {
+      "type": "related",
+      "h2": "Works with.",
+      "h2Soft": "The same engine, from end to end.",
+      "items": [
+        "contratos",
+        "aprobaciones",
+        "reporteria"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Frequently asked questions about accounts receivable.",
+      "items": [
+        {
+          "q": "In which countries does Relvo issue electronic invoices?",
+          "a": "Chile and Mexico. Relvo issues electronic invoices from the same system that calculates charges, using the legal entity and currency specified in each contract."
+        },
+        {
+          "q": "Can I split an invoice across several legal entities?",
+          "a": "Yes. A single contract can be invoiced in parts to different legal entities or cost centers, with proration and the invoice description your customer requires."
+        },
+        {
+          "q": "Which payment methods can I use?",
+          "a": "Payment link, card or bank transfer through Toku, Fintoc or Stripe. You can combine automatic payments for recurring plans with email collections for contracts."
+        },
+        {
+          "q": "How do email collections work?",
+          "a": "Relvo sends collection emails for you, before and after the due date, and tracks each customer's payment status."
+        },
+        {
+          "q": "Does Relvo reconcile partial payments?",
+          "a": "Yes. Relvo suggests the invoice for each bank transaction, and your team confirms. For partial payments, the invoice stays open with its remaining balance and collection continues."
+        },
+        {
+          "q": "Which currencies can I invoice and collect in?",
+          "a": "Any currency, with automatic conversion, including Chile's inflation-indexed UF."
+        },
+        {
+          "q": "Is reconciliation automatic?",
+          "a": "Relvo suggests an invoice for each bank transaction and shows the evidence. A person confirms, and Relvo learns from those confirmations to improve its suggestions."
+        },
+        {
+          "q": "What happens if a customer overpays?",
+          "a": "The excess becomes customer credit, available to apply to a future document."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

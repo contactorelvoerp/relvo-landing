@@ -21,7 +21,7 @@
       "type": "hero",
       "h1": "Medición del consumo: el uso de tus clientes, listo para cobrar.",
       "lead": "Envía el consumo por API y Relvo lo cruza con el plan o el contrato de cada cliente: tokens, llamadas, usuarios activos o la métrica que definas.",
-      "intro": "Cobrar por uso suele terminar en una exportación a fin de mes: alguien saca los datos de la base, los cruza con lo que paga cada cliente y arma el cobro a mano. Con Relvo, el consumo llega por API mientras ocurre y la parte variable de cada cobro se calcula sola, con las mismas reglas que el resto del contrato.",
+      "intro": "Cobrar por uso suele terminar en una exportación a fin de mes: alguien saca los datos, los cruza con el pricing de cada cliente y arma el cobro a mano. Con Relvo, el consumo llega por API mientras ocurre y el cargo variable se calcula solo, con las reglas del contrato.",
       "ctas": [
         {
           "label": "Agendar demo",

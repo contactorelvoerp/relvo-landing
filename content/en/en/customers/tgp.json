@@ -1,0 +1,132 @@
+{
+  "id": "tgp",
+  "preset": "caso",
+  "seo": "tgp",
+  "keyword": "TGP Relvo case study",
+  "breadcrumb": [
+    {
+      "label": "Home",
+      "href": "/en"
+    },
+    {
+      "label": "Customers",
+      "href": "/en/customers"
+    },
+    {
+      "label": "TGP"
+    }
+  ],
+  "case": {
+    "company": "TGP",
+    "descriptor": "The largest prospecting agency in LatAm.",
+    "headline": {
+      "value": "70%",
+      "label": "less operational time",
+      "sub": "while its operation grew 30% in 3 months."
+    },
+    "dti": {
+      "before": 6,
+      "after": 3,
+      "note": "Including customer approvals and purchase orders."
+    },
+    "quote": {
+      "short": "Today we work much faster, with greater confidence in the calculations and a process that can scale alongside our growth.",
+      "full": "Relvo let us move from a manual process that took hours to simply sending information through Slack. Today we work much faster, with greater confidence in the calculations and a process that can scale alongside our growth.",
+      "author": "Francesco Cotroneo",
+      "role": "Operations Lead, TGP"
+    }
+  },
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "TGP cut operational time by 70% with Relvo.",
+      "lead": "While its operation grew 30% in 3 months, TGP went from 6 to 3 days to complete its invoicing cycle.",
+      "intro": "TGP is the largest prospecting agency in LatAm. It charges each customer a fixed fee plus a variable amount based on the month's results, and many of its customers require purchase orders before they will accept an invoice from the agency.",
+      "ctas": [
+        {
+          "label": "Book a demo",
+          "href": "/en/book-a-demo",
+          "style": "primary"
+        }
+      ],
+      "visual": {
+        "id": "composition",
+        "data": {
+          "pieces": [
+            {
+              "id": "dtiBars",
+              "data": {
+                "before": 6,
+                "after": 3,
+                "label": "Days to invoice (DTI)"
+              }
+            },
+            {
+              "id": "slackMessage",
+              "data": {
+                "channel": "#billing",
+                "author": "TGP",
+                "text": "Monthly results sent.",
+                "reply": {
+                  "author": "Relvo",
+                  "text": "Invoices calculated and sent for approval."
+                }
+              }
+            }
+          ]
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "What month-end closing used to look like.",
+      "h2Soft": "And how it works today.",
+      "before": [
+        "At month-end, managers validated results with each customer.",
+        "A form and Zapier sent Slack notifications so someone could prepare each invoice by hand.",
+        "Customers requiring POs were tracked manually, and closing stretched to the 10th."
+      ],
+      "after": [
+        "TGP sends monthly results through Slack, and Relvo calculates fixed and variable charges.",
+        "Invoices go out for the exact amount, without manual preparation.",
+        "Purchase orders are linked to each invoice, and the invoicing cycle dropped from 6 to 3 days."
+      ]
+    },
+    {
+      "type": "metrics",
+      "h2": "The results.",
+      "h2Soft": "In 3 months, with 30% more volume.",
+      "kpis": [
+        {
+          "label": "Operational time",
+          "value": "−70%"
+        },
+        {
+          "label": "Days to invoice (DTI)",
+          "value": "6 → 3"
+        }
+      ],
+      "note": "Customer approvals and purchase orders included."
+    },
+    {
+      "type": "quote",
+      "ref": "tgp",
+      "variant": "full"
+    },
+    {
+      "type": "related",
+      "h2": "What TGP uses.",
+      "h2Soft": "The same engine, from end to end.",
+      "items": [
+        "contratos",
+        "aprobaciones",
+        "agentes"
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

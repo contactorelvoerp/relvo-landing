@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import Cal, { getCalApi } from '@calcom/embed-react'
 import { captureAdsClick, getAdsClick } from '../adsClick'
-import { CAL_LINK, CAL_LINK_FALLBACK } from '../config/cal'
+import { captureAttribution } from '../attribution'
+import { CAL_LINK_FALLBACK } from '../config/cal'
+import { copy } from '../pages/demo/copy'
 import './cal-embed.css'
 
 // Embed inline de Cal.com con @calcom/embed-react (Ricardo, 2026-11-02: reemplaza el snippet a
@@ -10,15 +12,17 @@ import './cal-embed.css'
 // VITE_CALCOM_LINK esté configurada en Vercel para mostrar el calendario: el link de respaldo
 // (botón a cal.com) queda solo para cuando el embed de verdad falla al cargar — evento linkFailed
 // de Cal.com, o 10s sin que dispare linkReady.
-// gclid/gbraid/wbraid viajan como metadata del booking (`metadata[clave]`, formato de la
-// documentación de prefill de Cal.com — un objeto anidado `metadata: {...}` no funciona); utm_* va
-// en la URL del calLink, que Cal.com usa para su propio tracking. De ahí a Attio depende de cómo
-// Ricardo conecte el webhook de Cal.com, fuera de este repo.
+// gclid/gbraid/wbraid, utm_* y la hora del click viajan como metadata del booking (`metadata[clave]`,
+// formato de la documentación de prefill de Cal.com — un objeto anidado `metadata: {...}` no funciona);
+// utm_* va además en la URL del calLink, que Cal.com usa para su propio tracking. El webhook de Cal.com
+// (api/cal-booking.js) lee esa metadata y guarda la reserva como lead, con su etapa demo_booked.
+// El evento del embed (bookingSuccessfulV2) no trae nombre ni email: solo sirve para GA4 y Ads.
 // Compartido por /lp/facturacion-b2b, /agendar-demo y /powered-by-relvo (movido fuera de
 // src/pages/landing-ads en la rama web3/powered-by-relvo-conversion, mismo comportamiento).
 const NAMESPACE = 'demo-relvo'
 const ELEMENT_ID = 'cal-inline-demo'
 const LOAD_TIMEOUT_MS = 10000
+const METADATA_KEYS = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'recorded_at']
 
 // `prefill` (nombre/email, por ejemplo desde el formulario alternativo de la misma página): lo que
 // la persona ya haya escrito, por si prefiere terminar por el calendario. Se aplica una sola vez,
@@ -28,7 +32,8 @@ const LOAD_TIMEOUT_MS = 10000
 // mismo elemento no actualiza nada, Cal.com lo ignora ("Inline embed already exists") — @calcom/
 // embed-react tiene la misma limitación (no vuelve a aplicar `config` si ya montó una vez), por eso
 // sigue haciendo falta el remonte con `key`.
-export function CalEmbed({ onBooked, prefill }) {
+export function CalEmbed({ onBooked, prefill, locale = 'es', requestContext }) {
+  const c = copy[locale]
   const bookedRef = useRef(onBooked)
   bookedRef.current = onBooked
   const adsClickRef = useRef(null)
@@ -50,7 +55,8 @@ export function CalEmbed({ onBooked, prefill }) {
     const io = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return
       captureAdsClick()
-      adsClickRef.current = getAdsClick()
+      // Sin click de Ads, la última campaña (UTM) del sitio: la reserva igual queda atribuida.
+      adsClickRef.current = getAdsClick() ?? captureAttribution().last_touch
       setVisible(true)
     }, { rootMargin: '400px 0px' })
     io.observe(wrapperRef.current)
@@ -72,7 +78,7 @@ export function CalEmbed({ onBooked, prefill }) {
     ;(async () => {
       const cal = await getCalApi({ namespace: NAMESPACE })
       if (cancelled) return
-      cal('ui', { theme: 'light', cssVarsPerTheme: { light: { 'cal-brand': '#186666' } }, hideEventTypeDetails: false, layout: 'month_view' })
+      cal('ui', { theme: 'light', cssVarsPerTheme: { light: { 'cal-brand': '#186666' } }, hideEventTypeDetails: true, showTimezoneWhenEventDetailsHidden: true, layout: 'month_view' })
       cal('on', { action: 'linkReady', callback: () => clearTimeout(timeout) })
       cal('on', {
         action: 'linkFailed',
@@ -98,7 +104,10 @@ export function CalEmbed({ onBooked, prefill }) {
           bookedRef.current?.({ email, uid })
         },
       })
-    })()
+    })().catch(() => {
+      clearTimeout(timeout)
+      if (!cancelled) setFailed(true)
+    })
     return () => { cancelled = true; clearTimeout(timeout) }
   }, [visible])
 
@@ -110,23 +119,34 @@ export function CalEmbed({ onBooked, prefill }) {
     setElementId(`${ELEMENT_ID}-prefilled`)
   }, [prefill])
 
-  // Antes del viewport: una caja vacía del mismo tamaño (la reserva real de 680px viene de
-  // cal-embed.css), para no afectar el alto de la página cuando el embed por fin cargue.
-  if (!visible) return <div ref={wrapperRef} className="cal-embed" />
+  // Reserve loading space; the embed can grow when mobile slots or booking fields need it.
+  if (!visible) return <div ref={wrapperRef} className="cal-embed cal-embed--loading" role="status"><p>{c.calendarLoading}</p></div>
+
+  const adsClick = adsClickRef.current
+  const context = {
+    locale,
+    ...(['startup', 'custom', 'undecided'].includes(requestContext?.plan) ? { plan: requestContext.plan } : {}),
+    ...(['demo', 'proposal'].includes(requestContext?.intent) ? { intent: requestContext.intent } : {}),
+  }
+  const metadata = { ...Object.fromEntries(METADATA_KEYS.filter((k) => adsClick?.[k]).map((k) => [k, adsClick[k]])), ...context }
+  // Fallback and embed carry identical campaign and selected-plan context.
+  const bookingUrl = new URL(CAL_LINK_FALLBACK)
+  for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term']) {
+    if (adsClick?.[key]) bookingUrl.searchParams.set(key, adsClick[key])
+  }
+  for (const [key, value] of Object.entries(metadata)) bookingUrl.searchParams.set(`metadata[${key}]`, value)
+  const calLink = `${bookingUrl.pathname.slice(1)}${bookingUrl.search}`
 
   if (failed) {
     return (
       <div className="cal-embed cal-embed--fallback">
-        <p>Agenda directo en Cal.com:</p>
-        <a className="btn btn--primary btn--lg" href={CAL_LINK_FALLBACK} target="_blank" rel="noopener noreferrer">Agenda tu demo</a>
+        <p>{c.calendarFallback}</p>
+        <a className="btn btn--primary btn--lg" href={bookingUrl.href} target="_blank" rel="noopener noreferrer">{c.calendarFallbackAction}</a>
+        <p>{c.calendarFallbackEmail}</p>
       </div>
     )
   }
 
-  const adsClick = adsClickRef.current
-  const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term'].filter((k) => adsClick?.[k])
-  const query = new URLSearchParams(Object.fromEntries(utm.map((k) => [k, adsClick[k]])))
-  const calLink = query.toString() ? `${CAL_LINK}?${query}` : CAL_LINK
   const prefillApplied = elementId !== ELEMENT_ID
 
   return (
@@ -141,9 +161,9 @@ export function CalEmbed({ onBooked, prefill }) {
         layout: 'month_view',
         ...(prefillApplied && prefill?.name ? { name: prefill.name } : {}),
         ...(prefillApplied && prefill?.email ? { email: prefill.email } : {}),
-        ...(adsClick?.gclid ? { 'metadata[gclid]': adsClick.gclid } : {}),
-        ...(adsClick?.gbraid ? { 'metadata[gbraid]': adsClick.gbraid } : {}),
-        ...(adsClick?.wbraid ? { 'metadata[wbraid]': adsClick.wbraid } : {}),
+        // Metadata del booking: la lee el webhook de Cal.com (api/cal-booking.js) para guardar la
+        // reserva como lead con su click de Ads y devolver la etapa a Google Ads.
+        ...Object.fromEntries(Object.entries(metadata).map(([key, value]) => [`metadata[${key}]`, value])),
       }}
     />
   )

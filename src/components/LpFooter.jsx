@@ -2,8 +2,7 @@ import { EXTERNAL_PAGES, SITE_URL } from '../site'
 
 // Footer mínimo para landings de campañas pagadas (src/pages/standalone.js): mismo look del
 // Footer del sitio (marca + legales + dominio) pero sin las columnas de navegación, para no abrir
-// ninguna salida de la página. `showIllustrative` solo si algún visual de la página usa datos de
-// ejemplo (DS: la línea es obligatoria en ese caso, no decorativa). `tagline` (opcional): reemplaza
+// ninguna salida de la página. `tagline` (opcional): reemplaza
 // la bajada compartida (src/i18n/es.js) sin tocarla, para no cambiarla en el resto del sitio.
 //
 // Legal (Ricardo, 2026-11-02, Google Ads lo exige por el formulario): los Términos y la Política de
@@ -13,14 +12,13 @@ const LEGAL = [
   { name: 'Privacidad', href: EXTERNAL_PAGES.privacidad },
 ]
 
-export function LpFooter({ t, showIllustrative, tagline }) {
+export function LpFooter({ t, tagline }) {
   return (
     <footer className="footer footer--lp">
       <div className="footer__brand">
         <img src="/logo-logotype-light.svg" alt="Relvo" width="102" height="26" loading="lazy" />
         <p className="footer__tagline">{tagline ?? t.footer.tagline}</p>
       </div>
-      {showIllustrative && <p className="footer__illustrative">{t.footer.illustrative}</p>}
       <div className="footer__legal">
         <span>{t.footer.legal}</span>
         {/* Nueva pestaña: esta página no tiene más salidas, así que un link legal no debe sacar a

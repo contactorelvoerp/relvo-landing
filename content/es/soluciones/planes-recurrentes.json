@@ -21,7 +21,7 @@
       "type": "hero",
       "h1": "Cobro de suscripciones y planes recurrentes, en automático.",
       "lead": "Planes fijos cobrados cada mes o cada año, con tarjeta, link de pago o transferencia. Facturas, cobranza y conciliación en un solo flujo.",
-      "intro": "Un plan fijo parece simple de cobrar hasta que tienes cientos de clientes: facturas que emitir, tarjetas que cobrar, transferencias que conciliar y clientes que pagan tarde. Relvo opera ese ciclo completo para que cada plan se cobre solo, y te deja listo el camino para sumar consumo cuando tu pricing lo pida.",
+      "intro": "Cobrar un plan fijo se complica cuando tienes cientos de clientes: emitir facturas, cobrar tarjetas, conciliar transferencias y seguir pagos atrasados. Relvo automatiza ese ciclo para que cada plan se cobre solo y permite sumar consumo cuando tu pricing lo pida.",
       "ctas": [
         {
           "label": "Ver precios",
@@ -132,7 +132,7 @@
       "items": [
         {
           "q": "¿Relvo sirve si solo tengo planes fijos?",
-          "a": "Sí. Relvo factura, cobra y concilia planes fijos y suscripciones, y te deja listo para sumar consumo u otros componentes cuando lo necesites."
+          "a": "Sí. Relvo factura, cobra y concilia planes fijos y suscripciones. Puedes sumar consumo u otros componentes cuando lo necesites."
         },
         {
           "q": "¿Cómo me pagan mis clientes?",

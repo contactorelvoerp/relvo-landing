@@ -14,9 +14,8 @@ import { SHOW_CASE_TGP } from './config'
 import { captureAdsClick, getAdsClick } from '../../adsClick'
 import { GOOGLE_ADS_CONVERSIONS, fireAdsConversion } from './ads-conversion'
 import { trackMarketingEvent } from '../../analytics.js'
-import { SHOW_PENDING } from '../../env'
 import { scrollToSection } from '../../scrollToSection'
-import { copy, isPending } from './copy'
+import { copy } from './copy'
 import '../../styles/blocks.css'
 import '../../landing/landing.css'
 import '../home/home.css'
@@ -40,7 +39,7 @@ const scrollToAgenda = scrollToSection('agenda')
 export function LandingAdsPage({ t, locale }) {
   const c = copy[locale]
   const plan = pricingCopy.es.plans[0] // Startup
-  const faq = c.faq.items.filter((item) => SHOW_PENDING || !isPending(item.a))
+  const faq = c.faq.items
   const [adsClick, setAdsClick] = useState(null)
   const [prefill, setPrefill] = useState(null)
 
@@ -49,8 +48,10 @@ export function LandingAdsPage({ t, locale }) {
     setAdsClick(getAdsClick())
   }, [])
 
+  // El evento del embed de Cal.com no trae el email de quien reservó: para las conversiones
+  // mejoradas se usa el que la persona ya escribió en el formulario de esta página, si lo hizo.
   const handleBooked = ({ email, uid } = {}) => {
-    fireAdsConversion({ ...GOOGLE_ADS_CONVERSIONS.demo, transactionId: uid, email })
+    fireAdsConversion({ ...GOOGLE_ADS_CONVERSIONS.demo, transactionId: uid, email: email ?? prefill?.email })
     trackMarketingEvent('demo_agendada', { form: 'lp-facturacion-b2b', locale })
   }
 
@@ -157,7 +158,7 @@ export function LandingAdsPage({ t, locale }) {
             <span className="lpads-plan__period">{plan.period}</span>
           </p>
           <ul className="lpads-plan__includes">
-            {plan.includes.map((item) => <li key={item}><Check />{item}</li>)}
+            {pricingCopy.es.features.slice(0, 4).map((item) => <li key={item.title}><Check />{item.title}</li>)}
             <li className="lpads-plan__highlight"><Check />{c.precio.implementation}</li>
           </ul>
           <a className="btn btn--lg btn--primary" href="#agenda" onClick={scrollToAgenda}>{c.precio.cta}</a>
@@ -172,7 +173,7 @@ export function LandingAdsPage({ t, locale }) {
             {faq.map((item) => (
               <details key={item.q}>
                 <summary>{item.q}</summary>
-                {isPending(item.a) ? <p><span className="pending__tag">{item.a}</span></p> : <p>{item.a}</p>}
+                <p>{item.a}</p>
               </details>
             ))}
           </div>
@@ -183,12 +184,12 @@ export function LandingAdsPage({ t, locale }) {
         <BandTexture kind="dotsGutter" />
         <Heading id="lpads-demo-h2" title={c.demo.title} />
         <p className="lpads-lead">{c.demo.lead}</p>
-        <CalPanel onBooked={handleBooked} prefill={prefill} formTitle={c.demo.formTitle}>
-          <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} onPrefillChange={setPrefill} roleOptions={c.demo.roleOptions} />
+        <CalPanel locale={locale} onBooked={handleBooked} prefill={prefill} formTitle={c.demo.formTitle}>
+          <LeadForm locale={locale} fuente="lp-facturacion-b2b" submit={c.demo.formSubmit} adsClick={adsClick} adsConversion={GOOGLE_ADS_CONVERSIONS.form} onPrefillChange={setPrefill} />
         </CalPanel>
       </section>
 
-      <LpFooter t={t} locale={locale} showIllustrative tagline={c.footer.tagline} />
+      <LpFooter t={t} locale={locale} tagline={c.footer.tagline} />
     </div>
   )
 }

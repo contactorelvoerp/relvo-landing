@@ -21,7 +21,7 @@
       "type": "hero",
       "h1": "Contratos y pricing: cualquier modelo, convertido en reglas exactas.",
       "lead": "Plan fijo, seats, uso, fases, descuentos y reajustes. Configuras cada condición una vez y Relvo calcula cada cobro igual, todos los meses.",
-      "intro": "En la mayoría de las empresas SaaS e IA, las condiciones de cada cliente viven repartidas entre el contrato en PDF, el CRM, correos y una planilla que entiende una sola persona. Relvo junta todo en un solo lugar: cada cliente tiene sus reglas de pricing, y el monto de cada período sale de esas reglas, no de una fórmula copiada a mano.",
+      "intro": "En muchas empresas SaaS e IA, las condiciones de cada cliente están repartidas entre el contrato en PDF, el CRM, correos y una planilla que entiende una sola persona. Relvo las reúne en reglas de pricing para calcular cada período sin copiar fórmulas a mano.",
       "ctas": [
         {
           "label": "Agendar demo",
@@ -239,7 +239,7 @@
       "items": [
         {
           "q": "¿Qué modelos de pricing soporta Relvo?",
-          "a": "Plan fijo, seats, uso, resultados o una mezcla de ellos, con fases, descuentos por período y reajustes. Cada contrato puede combinar los componentes que necesite."
+          "a": "Plan fijo, seats, uso o resultados, combinados según cada contrato, con fases, descuentos por período y reajustes."
         },
         {
           "q": "¿Cada cliente puede tener condiciones distintas?",
@@ -251,7 +251,7 @@
         },
         {
           "q": "¿Qué pasa si cambio mi pricing?",
-          "a": "Actualizas las reglas en Relvo. No necesitas cambiar de sistema ni rehacer planillas para pasar, por ejemplo, de un plan fijo a un modelo con consumo."
+          "a": "Actualizas las reglas en Relvo para pasar, por ejemplo, de un plan fijo a uno con consumo, sin cambiar de sistema ni rehacer planillas."
         },
         {
           "q": "¿En qué monedas puedo cobrar?",

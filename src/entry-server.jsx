@@ -1,5 +1,6 @@
 import { renderToString } from 'react-dom/server'
 import { App } from './App'
+import { PAGE_COMPONENTS } from './pages/registry'
 import { getRoutes, notFoundRoute, resolvePath, routeKey } from './routes'
 import { absoluteUrl, buildHead } from './seo/head'
 import { SITE_NAME, SITE_URL } from './site'
@@ -10,7 +11,7 @@ export { getRoutes, notFoundRoute, resolvePath, absoluteUrl, SITE_NAME, SITE_URL
 export { llmsTxt, robotsTxt, sitemapXml } from './seo/files'
 
 export function renderDocument(template, route, headOptions) {
-  const html = renderToString(<App route={route} />)
+  const html = renderToString(<App route={route} Page={PAGE_COMPONENTS[route.id]} />)
   return template
     .replace('<html lang="es">', `<html lang="${route.locale}">`)
     .replace('<!--app-head-->', buildHead(route, headOptions))

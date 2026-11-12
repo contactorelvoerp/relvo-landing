@@ -3,6 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { PAGE_DEFINITIONS, PAGE_MODULES } from '../src/pages/manifest.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
@@ -14,8 +15,32 @@ const { getRoutes, notFoundRoute, renderDocument, sitemapXml, robotsTxt, llmsTxt
 )
 
 const ROUTES = getRoutes()
+const manifest = JSON.parse(fs.readFileSync(path.join(dist, '.vite/manifest.json'), 'utf8'))
+const inlineStyles = new Set(manifest['index.html']?.css ?? [])
 
-// El CSS (~8 KB comprimido) va inline: evita una petición que bloquea el primer render.
+// Resolve CSS and shared imports before rendering: a lazy page must be styled
+// on the first paint, and its JavaScript should download alongside the shell.
+function pageAssets(route) {
+  const entry = PAGE_MODULES[PAGE_DEFINITIONS[route.id]?.kind]
+  if (!entry || route.status !== 'live') return ''
+  const scripts = new Set(), styles = new Set(), visited = new Set()
+  const collect = (key) => {
+    if (visited.has(key)) return
+    visited.add(key)
+    const chunk = manifest[key]
+    if (!chunk) throw new Error(`Missing page asset: ${key}`)
+    scripts.add(chunk.file)
+    chunk.css?.forEach((file) => { if (!inlineStyles.has(file)) styles.add(file) })
+    chunk.imports?.forEach(collect)
+  }
+  collect(entry.file)
+  return [
+    ...[...styles].map((file) => `<link rel="stylesheet" crossorigin href="/${file}" />`),
+    ...[...scripts].map((file) => `<link rel="modulepreload" crossorigin href="/${file}" />`),
+  ].join('\n    ')
+}
+
+// El CSS del shell va inline: evita una petición que bloquea el primer render.
 const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8').replace(
   /<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/,
   (_, href) => `<style>${fs.readFileSync(path.join(dist, href), 'utf8')}</style>`,
@@ -25,7 +50,8 @@ fs.rmSync(path.join(dist, 'index.html'))
 function page(route) {
   const ogFile = `/og/${route.id}-${route.locale}.png`
   const ogImage = fs.existsSync(path.join(dist, ogFile)) ? ogFile : null
-  return renderDocument(template, route, { production, ogImage })
+  const styled = template.replace('<!--app-head-->', `<!--app-head-->\n    ${pageAssets(route)}`)
+  return renderDocument(styled, route, { production, ogImage })
 }
 
 function write(file, content) {

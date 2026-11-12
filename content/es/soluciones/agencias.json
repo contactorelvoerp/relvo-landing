@@ -21,7 +21,7 @@
       "type": "hero",
       "h1": "Facturación para agencias con fee variable.",
       "lead": "Fee mensual más un variable por resultados: Relvo calcula el monto de cada cliente, gestiona sus órdenes de compra, factura y cobra cada mes.",
-      "intro": "En una agencia, el cierre de mes es una carrera: validar con cada cliente los resultados del período, calcular el variable, conseguir las OCs y armar las facturas a mano. Con Relvo, envías los resultados del mes por Slack o por API y el resto ocurre solo: cálculo, aprobaciones, facturas y cobranza.",
+      "intro": "En una agencia, cerrar el mes implica validar resultados con cada cliente, calcular el variable, conseguir las OCs y armar facturas. Con Relvo, envías los resultados por Slack o API y el resto ocurre solo: cálculo, aprobaciones, facturas y cobranza.",
       "ctas": [
         {
           "label": "Agendar demo",

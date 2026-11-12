@@ -11,7 +11,7 @@ export const copy = {
       // `name`: nombre del cliente referente si `?cliente=` viene en la URL y está en el
       // allowlist (src/config/powered-by-referrers.js); si no, el genérico "Tu proveedor".
       lead: (name) => `${name ?? 'Tu proveedor'} usa Relvo para calcular, facturar, cobrar y conciliar. La factura, los recordatorios y el cuadre del pago salen solos. Si tu empresa también cobra todos los meses, puede funcionar igual.`,
-      ctaPrimary: 'Ver cómo funciona en 20 minutos',
+      ctaPrimary: 'Agendar demo',
       ctaSecondary: 'Ver qué pasó detrás de tu correo ↓',
     },
     timeline: {
@@ -32,11 +32,8 @@ export const copy = {
     },
     closing: {
       heading: 'Mira cómo funcionaría en tu empresa',
-      formTitle: '¿Prefieres que te escriban?',
-      cobroLabel: '¿Cómo cobras hoy?',
-      cobroPlaceholder: 'Selecciona...',
-      cobroOptions: ['Planillas', 'ERP', 'Otro software de cobro'],
-      formSubmit: 'Enviar',
+      formTitle: '¿Prefieres escribirnos?',
+      formSubmit: 'Enviar consulta',
     },
   },
 }

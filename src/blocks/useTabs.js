@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 
 // Tabs accesibles (patrón WAI-ARIA): tabindex itinerante y flechas, Inicio y Fin para moverse.
 // Todos los paneles se renderizan en el HTML; los inactivos van con `hidden`.
-export function useTabs(prefix, count) {
+export function useTabs(prefix, count, orientation = 'horizontal') {
   const [active, setActive] = useState(0)
   const refs = useRef([])
 
@@ -11,7 +11,8 @@ export function useTabs(prefix, count) {
     if (focus) refs.current[i]?.focus()
   }
   const onKeyDown = (i) => (e) => {
-    const keys = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: count - 1 }
+    const arrows = orientation === 'vertical' ? { ArrowDown: i + 1, ArrowUp: i - 1 } : { ArrowRight: i + 1, ArrowLeft: i - 1 }
+    const keys = { ...arrows, Home: 0, End: count - 1 }
     if (!(e.key in keys)) return
     e.preventDefault()
     select((keys[e.key] + count) % count, true)
@@ -32,6 +33,7 @@ export function useTabs(prefix, count) {
     }),
     panel: (i) => ({
       role: 'tabpanel',
+      tabIndex: 0,
       id: `${prefix}-panel-${i}`,
       'aria-labelledby': `${prefix}-tab-${i}`,
       hidden: active !== i,

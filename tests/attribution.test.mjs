@@ -45,3 +45,9 @@ test('analytics and CRM URLs exclude raw IDs, opaque references, fragments and u
   assert.deepEqual(cleanAttribution({ first_touch: { utm_source: 'prefactura', reference: 'bad', organization_id: 'private', landing_path: '/?email=private' } }), { first_touch: { utm_source: 'prefactura' }, last_touch: null, ads_click: null })
   assert.equal(touchFromUrl('https://getrelvo.ai/?ref=../secret', now), null)
 })
+
+test('long Google click ids survive sanitizing while unsafe ones are dropped', () => {
+  const gclid = `Cj0KCQiA${'x'.repeat(150)}_BwE-1`
+  assert.equal(cleanAttribution({ ads_click: { gclid } }).ads_click.gclid, gclid)
+  assert.equal(cleanAttribution({ ads_click: { gclid: 'bad value<script>' } }).ads_click, null)
+})

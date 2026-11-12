@@ -1,6 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "entry": [
+    "middleware.js",
     "index.html",
     "src/entry-server.jsx",
     "scripts/*.mjs",

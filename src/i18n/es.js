@@ -1,5 +1,5 @@
 // Textos de interfaz del sitio en español.
-// Menú: brief 6.4 y Nav/Footer del Design System v1.5. No se reescriben.
+// Nombres y descripciones compartidos por la navegación y las tarjetas de producto.
 export const es = {
   nav: {
     product: 'Producto',
@@ -10,7 +10,6 @@ export const es = {
     login: 'Ingresar',
     demo: 'Agendar demo',
     menu: 'Menú',
-    layers: { rails: 'Rieles', agents: 'Agentes', intelligence: 'Inteligencia' },
     developers: 'Para desarrolladores',
     apiDocs: 'Documentación de la API',
     teams: 'Para equipos',
@@ -19,12 +18,12 @@ export const es = {
   },
   pages: {
     powered_by: { name: 'Powered by Relvo' },
-    contratos: { name: 'Contratos y pricing', desc: 'Cualquier pricing, convertido en reglas exactas.' },
-    medicion: { name: 'Medición del consumo', desc: 'El uso de tus clientes, listo para cobrar.' },
-    aprobaciones: { name: 'Aprobaciones y órdenes de compra', desc: 'Cada factura sale con su OC aprobada.' },
-    cxc: { name: 'Cuentas por cobrar', desc: 'Factura, cobra y concilia en un solo flujo.' },
-    agentes: { name: 'Agentes', desc: 'Leen OCs, siguen correos y coordinan al equipo por Slack, Google Chat y MCP.' },
-    reporteria: { name: 'Reportería SaaS/IA', desc: 'MRR, consumo y DSO sin armar planillas.' },
+    contratos: { name: 'De cotización a contrato', desc: 'Convierte lo cotizado en reglas de cobro: precios fijos, por uso o por hitos.' },
+    medicion: { name: 'Facturación basada en consumo', desc: 'Registra el uso de cada cliente y calcula cuánto cobrar.' },
+    aprobaciones: { name: 'Órdenes de compra y aprobaciones', desc: 'Reúne los documentos y aprobaciones que necesitas para facturar.' },
+    cxc: { name: 'Facturación y cobranza', desc: 'Emite facturas, envía recordatorios y concilia los pagos.' },
+    agentes: { name: 'Agentes de IA', desc: 'Leen órdenes de compra, siguen correos y avisan a tu equipo. Consulta facturas, cobros y consumo vía MCP.' },
+    reporteria: { name: 'Reportes de ingresos', desc: 'Consulta tus ingresos recurrentes, el consumo y los plazos de cobro.' },
     planes: { name: 'Planes recurrentes', desc: 'Suscripciones y planes fijos, cobrados en automático.' },
     hibrido: { name: 'Contratos con pricing híbrido', desc: 'Fijo, uso e hitos en un mismo contrato.' },
     uso: { name: 'Empezando a cobrar por uso', desc: 'Suma consumo a tus planes sin cambiar de sistema.' },
@@ -35,7 +34,7 @@ export const es = {
     ingenieria: { name: 'Ingeniería' },
     precios: { name: 'Precios' },
     clientes: { name: 'Clientes' },
-    'lp-facturacion-b2b': { name: 'Revenue Engine para B2B' },
+    'lp-facturacion-b2b': { name: 'Facturación y cobranza automatizadas para B2B' },
     demo: { name: 'Agendar demo' },
     blog: { name: 'Blog' },
     docs: { name: 'Docs' },
@@ -44,9 +43,8 @@ export const es = {
     privacidad: { name: 'Privacidad' },
   },
   footer: {
-    tagline: 'Revenue Engine para SaaS e IA. Santiago de Chile.',
+    tagline: 'Facturación y cobranza automatizadas. Santiago de Chile.',
     legal: '© 2026 Relvo SpA',
-    illustrative: 'Las pantallas de producto muestran datos ilustrativos.',
   },
   notFound: {
     title: 'Página no encontrada',

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { hrefFor } from '../../routes'
 import { BandTexture } from '../../components/BandTexture'
+import { LogoStrip } from '../../components/LogoStrip'
 import { ThreeLayers } from './ThreeLayers'
 import { Rails } from './Rails'
 import { Agents } from './Agents'
@@ -11,50 +12,6 @@ import { CtaSection, Heading, IntegrationsSection } from '../../blocks/Shared'
 import { copy } from './copy'
 import './home.css'
 
-// Logos de la versión anterior del sitio, recortados a su contenido. El alto iguala el peso
-// óptico (OpticalLogo del DS, base 30). Carrusel aprobado por Ricardo (2026-10-02).
-const LOGOS = [
-  { src: '/logos/clients/tgp.webp', alt: 'TGP', width: 99, height: 27 },
-  { src: '/logos/clients/lidz.webp', alt: 'Lidz', width: 107, height: 25 },
-  { src: '/logos/clients/relif.webp', alt: 'Relif', width: 81, height: 33 },
-  { src: '/logos/clients/bulk.webp', alt: 'Bulk', width: 41, height: 40 },
-  { src: '/logos/clients/skyward.webp', alt: 'Skyward', width: 128, height: 21 },
-]
-// Cada mitad del carrusel repite los logos hasta tener al menos 8 celdas.
-const REPEAT = Math.ceil(8 / LOGOS.length)
-const SET = Array.from({ length: REPEAT }, () => LOGOS).flat()
-
-function LogoStrip({ label }) {
-  const ref = useRef(null)
-  // El carrusel se detiene fuera de pantalla.
-  useEffect(() => {
-    const el = ref.current
-    const io = new IntersectionObserver(([e]) => el.classList.toggle('logo-strip--offscreen', !e.isIntersecting))
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
-  return (
-    <div ref={ref} className="logo-strip">
-      <p className="logo-strip__label">{label}</p>
-      <div className="logo-strip__window">
-        <div className="logo-strip__track">
-          {[0, 1].map((group) => (
-            <div key={group} className="logo-strip__group" aria-hidden={group === 1 ? 'true' : undefined}>
-              {SET.map((logo, i) => {
-                const repeat = group === 1 || i >= LOGOS.length
-                return (
-                  <div key={i} className={`logo-strip__cell${i >= LOGOS.length ? ' logo-strip__cell--repeat' : ''}`}>
-                    <img src={logo.src} alt={repeat ? '' : logo.alt} width={logo.width} height={logo.height} loading="lazy" draggable="false" />
-                  </div>
-                )
-              })}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
 // Íconos de línea de LatAm (prototipo v2.1), en el mismo orden que las frases
 const LATAM_ICONS = [
   <g key="einvoice"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4M9 12h6M9 16h6" /></g>,
@@ -66,9 +23,6 @@ const LATAM_ICONS = [
 ]
 
 
-// Banda de cifras "Operando hoy en LatAm": oculta por ahora (Ricardo, 2026-10-05)
-const SHOW_STATS = false
-
 export function HomePage({ t, locale }) {
   const c = copy[locale]
   const demo = hrefFor('demo', locale)
@@ -77,17 +31,26 @@ export function HomePage({ t, locale }) {
   const pricing = hrefFor('precios', locale)
   const usage = hrefFor('uso', locale)
 
+  // El tramo final del H1 (después de la última coma) va en verde; el texto no cambia.
+  const cut = c.hero.title.lastIndexOf(', ')
+  const heroRef = useRef(null)
+  // La figura del hero se pausa fuera de pantalla.
+  useEffect(() => {
+    const el = heroRef.current
+    const io = new IntersectionObserver(([e]) => el.classList.toggle('hero--offscreen', !e.isIntersecting))
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   return (
     <>
-      <section className="section band band--first hero hero--centered hero--figuras">
+      <section ref={heroRef} className="section band band--first hero hero--centered hero--amanecer">
         <div className="hero__top">
           <div className="hero__copy">
             <p className="hero__eyebrow">{c.hero.eyebrow}</p>
-            {/* Figura oficial de marca (anillo del agente, rai-figure.svg) en Verde Oscuro, centrada en el H1 */}
-            <div className="hero__title-wrap">
-              <img className="hero__figura hero__figura--anillo" src="/brand/figuras/anillo-agente-verde.svg" alt="" aria-hidden="true" width="972" height="972" decoding="async" fetchPriority="low" />
-              <h1 className="hero__title">{c.hero.title}</h1>
-            </div>
+            <h1 className="hero__title">
+              {cut < 0 ? c.hero.title : <>{c.hero.title.slice(0, cut + 1)} <span className="hero__title-em">{c.hero.title.slice(cut + 2)}</span></>}
+            </h1>
             <p className="hero__subtitle">{c.hero.subtitle}</p>
             <div className="hero__ctas">
               {demo && <a className="btn btn--primary btn--lg" href={demo}>{c.hero.demo}</a>}
@@ -95,24 +58,40 @@ export function HomePage({ t, locale }) {
             </div>
           </div>
         </div>
+        {/* Figura de marca (rosa, brand book) que asoma desde la línea del carrusel de logos */}
+        <div className="hero__horizonte" aria-hidden="true">
+          <div className="hero__cielo">
+            <img className="hero__sol" src="/brand/figuras/rosa-verde.svg" alt="" width="216" height="216" decoding="async" />
+          </div>
+        </div>
         <LogoStrip label={c.hero.logos} />
       </section>
 
-      {SHOW_STATS && <section className="section band" aria-labelledby="cifras">
+      <section className="section band home-metrics" aria-labelledby="cifras">
         <Heading id="cifras" title={c.stats.title} soft={c.stats.soft} />
-        <div className="stats">
-          {c.stats.items.map(([value, label]) => <div key={label}><b className="stats__value num">{value}</b><p className="stats__label">{label}</p></div>)}
-        </div>
-      </section>}
+        <dl className="home-metrics__grid">
+          {c.stats.items.map(([value, label], index) => (
+            <div className={`home-metrics__card${index === 2 ? ' home-metrics__card--featured' : ''}`} key={label}>
+              <dt className="home-metrics__label">{label}</dt>
+              <dd className="home-metrics__value num">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
-      <section id="como-funciona" className="section band band--mint">
+      <section id="clientes" className="section band band--mint">
+        <Heading title={c.case.proofTitle} />
+        <Case c={c.case} link={hrefFor('tgp', locale) ? { href: hrefFor('tgp', locale), label: c.case.link } : null} />
+      </section>
+
+      <section id="como-funciona" className="section band">
         <BandTexture kind="orbitsEdge" />
         <Heading title={c.layers.title} soft={c.layers.soft} />
         <ThreeLayers c={c.layers} />
       </section>
 
-      <section className="section band manifesto" aria-label={c.manifesto.label}>
-        <BandTexture kind="ridgesSoft" />
+      <section className="section band band--ink manifesto" aria-label={c.manifesto.label}>
+        <BandTexture kind="orbitsDark" />
         <p className="manifesto__text">{c.manifesto.lines[0]}<br />{c.manifesto.lines[1]}</p>
       </section>
 
@@ -133,13 +112,13 @@ export function HomePage({ t, locale }) {
       </section>
 
       <section className="section band">
-        <Heading title={c.products.title} soft={c.products.soft} />
+        <Heading title={c.products.title} />
         <Products c={c.products} pages={t.pages} locale={locale} />
       </section>
 
-      <section id="soluciones" className="section band band--neutral">
+      <section id="soluciones" className="section band band--mint">
         <BandTexture kind="dotsGutter" />
-        <Heading title={c.bridge.title} soft={c.bridge.soft} />
+        <Heading title={c.bridge.title} />
         <div className="paths">
           <div className="path">
             <h3 className="path__title">{c.bridge.plans.title}</h3>
@@ -161,13 +140,7 @@ export function HomePage({ t, locale }) {
         {usage && <p className="paths__usage">{c.bridge.usageQuestion} <a className="link" href={usage}>{c.bridge.usageLink}</a></p>}
       </section>
 
-      <section id="clientes" className="section band">
-        <Heading title={c.case.title} />
-        <Case c={c.case} link={hrefFor('tgp', locale) ? { href: hrefFor('tgp', locale), label: c.case.link } : null} />
-      </section>
-
-      <section className="section band band--ink">
-        <BandTexture kind="orbitsDark" />
+      <section className="section band">
         <Heading title={c.latam.title} soft={c.latam.soft} />
         <ul className="latam">
           {c.latam.points.map((point, i) => <li key={i}><svg viewBox="0 0 24 24" aria-hidden="true">{LATAM_ICONS[i]}</svg>{point}</li>)}

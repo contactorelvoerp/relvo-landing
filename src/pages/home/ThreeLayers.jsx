@@ -12,9 +12,11 @@ export function ThreeLayers({ c }) {
     const el = root.current
     const q = (k) => el.querySelector(`[data-k="${k}"]`), qa = (k) => [...el.querySelectorAll(`[data-k="${k}"]`)]
     const layers = qa('layer'), nums = qa('n'), chip = q('chip'), chipText = q('chipText'), mrr = q('mrr'), delta = q('delta'), pt = q('pt'), proj = q('proj'), seg = q('seg'), rail = q('rail')
-    const NS = 'http://www.w3.org/2000/svg', fmt = (n) => 'USD ' + Math.round(n).toLocaleString(numberLocale)
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    let xs = [], nodes = [], dot = null, isWide = true
+    const number = new Intl.NumberFormat(numberLocale, { maximumFractionDigits: 0 })
+    const NS = 'http://www.w3.org/2000/svg', fmt = (n) => 'USD ' + number.format(n)
+    const text = (node, value) => { if (node.textContent !== value) node.textContent = value }
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let xs = [], nodes = [], dot = null, isWide = true, railWidth = 0
     const mk = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e }
     const buildRail = () => {
       const tops = layers.map((l) => l.offsetTop)
@@ -24,6 +26,7 @@ export function ThreeLayers({ c }) {
       rail.innerHTML = ''
       if (!isWide) return
       const r = rail.getBoundingClientRect(); const W = rail.clientWidth, H = rail.clientHeight; if (!r.width || !W) return; const sc = W / r.width
+      railWidth = W
       xs = layers.map((l) => { const bb = l.getBoundingClientRect(); return (bb.left - r.left + bb.width / 2) * sc })
       const y = H / 2
       rail.appendChild(mk('line', { x1: 0, x2: W, y1: y, y2: y, stroke: '#186666', 'stroke-width': 2 }))
@@ -33,23 +36,28 @@ export function ThreeLayers({ c }) {
     const setStep = (s, t) => {
       layers.forEach((l, i) => l.classList.toggle('layers__card--dim', i > s))
       nodes.forEach((n, i) => n.setAttribute('fill', i <= s ? '#186666' : '#DFF4EB'))
-      nums.forEach((n) => { const v = +n.dataset.v; n.textContent = fmt(s < 0 ? 0 : s === 0 ? v * Math.min(1, t) : v) })
+      nums.forEach((n) => { const v = +n.dataset.v; text(n, fmt(s < 0 ? 0 : s === 0 ? v * Math.min(1, t) : v)) })
       if (s === 0 && t < 1) return
       const isDone = s >= 1 && (s > 1 || t > 0.5)
-      chip.style.background = isDone ? '#E3F1EC' : '#FBF3E4'; chip.style.color = isDone ? '#0F4A4A' : '#8A5A00'
-      chipText.textContent = isDone ? done : running
+      const status = isDone ? done : running
+      if (chipText.textContent !== status) {
+        chip.style.background = isDone ? '#DFF4EB' : '#FBF3E4'; chip.style.color = isDone ? '#0F4A4A' : '#8A5A00'
+        text(chipText, status)
+      }
       const k = s >= 2 ? (s > 2 ? 1 : Math.min(1, t)) : 0
-      mrr.textContent = fmt(184300 + 2900 * k)
-      delta.textContent = k >= 1 ? deltaText : ' '
+      text(mrr, fmt(184300 + 2900 * k))
+      text(delta, k >= 1 ? deltaText : ' ')
       pt.setAttribute('cx', 240 + 60 * k); pt.setAttribute('cy', 34 - 12 * k)
       seg.setAttribute('x2', 240 + 60 * k); seg.setAttribute('y2', 34 - 12 * k)
       proj.setAttribute('opacity', k >= 1 ? '0' : '0.5')
     }
-    const CYCLE = 9000; let raf = 0, visible = false, start = 0
+    const CYCLE = 9000; let raf = 0, visible = false, start = 0, last = 0
     const frame = (now) => {
+      if (now - last < 32) { raf = requestAnimationFrame(frame); return }
+      last = now
       if (!start) start = now
       const p = ((now - start) % CYCLE) / CYCLE, travel = Math.min(1, p / 0.78)
-      const w = rail.clientWidth
+      const w = railWidth
       if (dot) { dot.setAttribute('cx', travel * w); dot.setAttribute('opacity', p < 0.92 ? 1 : 0) }
       let s = -1, t = 0
       xs.forEach((x, i) => { if (travel * w >= x) { s = i; t = Math.min(1, (travel * w - x) / (w * 0.12)) } })
@@ -57,17 +65,24 @@ export function ThreeLayers({ c }) {
       setStep(s, t)
       if (visible) raf = requestAnimationFrame(frame)
     }
-    const still = () => !isWide || reduce
+    const still = () => !isWide || motion.matches
     const rest = () => { setStep(2, 1); if (dot) dot.setAttribute('opacity', 0) }
+    const sync = () => {
+      cancelAnimationFrame(raf)
+      if (still()) rest()
+      else if (visible && !document.hidden) { start = 0; last = 0; raf = requestAnimationFrame(frame) }
+    }
     buildRail()
-    const ro = new ResizeObserver(() => { buildRail(); if (still()) rest() }); ro.observe(q('layers'))
+    const ro = new ResizeObserver(() => { buildRail(); sync() }); ro.observe(q('layers'))
     if (still()) rest(); else setStep(-1, 0)
     const io = new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting && !still(); cancelAnimationFrame(raf)
-      if (visible) { start = 0; raf = requestAnimationFrame(frame) } else if (still()) rest()
+      visible = e.isIntersecting
+      sync()
     })
     io.observe(q('layers'))
-    return () => { visible = false; cancelAnimationFrame(raf); ro.disconnect(); io.disconnect() }
+    motion.addEventListener('change', sync)
+    document.addEventListener('visibilitychange', sync)
+    return () => { visible = false; cancelAnimationFrame(raf); motion.removeEventListener('change', sync); document.removeEventListener('visibilitychange', sync); ro.disconnect(); io.disconnect() }
   }, [done, running, deltaText, numberLocale])
 
   const fmt = (n) => 'USD ' + n.toLocaleString(numberLocale)

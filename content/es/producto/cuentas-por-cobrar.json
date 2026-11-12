@@ -89,7 +89,7 @@
           }
         }
       },
-      "intro": "Para la mayoría de los equipos, cobrar es el tramo más manual del revenue: armar facturas a fin de mes, perseguir pagos por correo y revisar la cartola para saber quién pagó. Relvo junta la facturación, la cobranza y la conciliación en un solo flujo, con las reglas de cada contrato, para que tus cuentas por cobrar estén siempre al día.",
+      "intro": "Cobrar suele ser el tramo más manual del revenue: armar facturas a fin de mes, perseguir pagos y revisar la cartola para saber quién pagó. Relvo une facturación, cobranza y conciliación bajo las reglas de cada contrato para mantener tus cuentas por cobrar al día.",
       "layout": "centered"
     },
     {
@@ -368,7 +368,7 @@
         },
         {
           "q": "¿La conciliación es automática?",
-          "a": "Relvo evalúa cada movimiento del banco y propone a qué factura corresponde, con la evidencia a la vista. Una persona confirma, y Relvo aprende de cada confirmación para proponer mejor la próxima vez."
+          "a": "Relvo propone la factura de cada movimiento bancario y muestra la evidencia. Una persona confirma, y Relvo aprende de esas confirmaciones para mejorar sus propuestas."
         },
         {
           "q": "¿Qué pasa si un cliente paga de más?",

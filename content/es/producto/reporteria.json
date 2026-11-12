@@ -21,7 +21,7 @@
       "type": "hero",
       "h1": "Reportería SaaS/IA: tus métricas de revenue, sin armar planillas.",
       "lead": "MRR, ARR, consumo, DSO y más, calculados con los mismos datos con que facturas y cobras.",
-      "intro": "Las métricas de revenue suelen armarse cruzando el CRM, la facturación y el banco, y casi nunca cuadran entre sí. Como Relvo opera todo el flujo, de la venta al pago, las métricas salen del mismo sistema que cobra. Lo que ves en un reporte es lo que efectivamente se facturó y se pagó.",
+      "intro": "Las métricas de revenue suelen armarse cruzando el CRM, la facturación y el banco, y casi nunca cuadran. Relvo opera todo el flujo, de la venta al pago: sus reportes muestran lo facturado y lo pagado desde el mismo sistema.",
       "ctas": [
         {
           "label": "Agendar demo",
@@ -284,11 +284,11 @@
         },
         {
           "q": "¿De dónde salen los datos?",
-          "a": "Del mismo sistema que calcula, factura y cobra. El MRR y el ARR se calculan desde los contratos vigentes, y lo facturado y lo cobrado se registran como dos cifras distintas, con fechas distintas."
+          "a": "Del mismo sistema que calcula, factura y cobra. El MRR y el ARR se calculan desde los contratos vigentes; lo facturado y lo cobrado se registran por separado, con sus respectivas fechas."
         },
         {
           "q": "¿Qué son el DSO y el DTI?",
-          "a": "El DSO son los días que demoras en cobrar una factura. El DTI son los días que demoras en facturar desde que termina el período. Juntos muestran qué tan rápido conviertes trabajo en caja."
+          "a": "El DSO mide los días para cobrar una factura; el DTI, los días para emitirla desde el cierre del período. Juntos muestran qué tan rápido conviertes trabajo en caja."
         },
         {
           "q": "¿Relvo hace reconocimiento de ingresos?",

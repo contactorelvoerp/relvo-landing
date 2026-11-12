@@ -9,7 +9,7 @@
 .chip--plain{background:var(--line-soft);color:var(--text-body)}
 
 /* Tarjeta de UI */
-.ui{width:100%;max-width:470px;padding:24px 26px;border-radius:var(--radius-lg);background:var(--paper);box-shadow:var(--shadow-overlay)}
+.ui{width:100%;min-width:0;max-width:470px;padding:24px 26px;border-radius:var(--radius-lg);background:var(--paper);box-shadow:var(--shadow-overlay)}
 .ui__head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;font-size:14px}
 .ui__head > span:not(.chip){font-size:13px;color:var(--text-muted)}
 .ui__glosa{padding:10px 12px;border-radius:var(--radius-md);background:var(--paper-2);font-size:13px;color:var(--text-body)}
@@ -18,7 +18,7 @@
 .ui--codeBlock{max-width:520px;padding:0;overflow:hidden}
 
 /* planCard: plan con precio, líneas y barra de tramos (en el acento de uso) */
-.plan{display:flex;align-items:center;gap:12px;margin-bottom:6px;padding-bottom:16px;border-bottom:1px solid var(--line-soft)}
+.plan{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:6px;padding-bottom:16px;border-bottom:1px solid var(--line-soft)}
 .plan__mark{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:var(--radius-md);background:var(--accent-wash);font-weight:600;color:var(--accent-pressed)}
 .plan b{display:block;font-size:15px}
 .plan small{display:block;font-size:12.5px;color:var(--text-muted)}

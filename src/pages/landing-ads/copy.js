@@ -4,17 +4,16 @@
 // Revisión del 2026-11-01 (prompt de Ricardo, copy aprobado tal cual): calendario primero,
 // mockup del hero con 3 casos, sección de dolor, "Un solo motor" en beneficio del cliente,
 // cifras recortadas a las 3 aprobadas, integraciones acotadas a las confirmadas, FAQ nuevo.
-const PENDING = '[PENDIENTE]'
 
 export const copy = {
   es: {
     hero: {
       // Eyebrow propio de esta página (Ricardo, 2026-10-31): el brief fija un solo eyebrow para el
       // resto del sitio (el de la home), pero esta es una landing de campaña aparte.
-      eyebrow: 'Revenue Engine para B2B',
+      eyebrow: 'Facturación y cobranza automatizadas para B2B',
       h1: 'Factura, cobra y concilia, sin trabajo manual.',
       subtitle: 'Agentes que calculan, facturan, cobran y concilian cada pago de tus clientes recurrentes, para que cobres antes y sin planillas.',
-      cta: 'Agenda una demo',
+      cta: 'Agendar demo',
       microcopy: '30 minutos · Sin compromiso',
     },
     // Mockup del hero con 3 casos (Ricardo, 2026-11-01): antes era 100% SaaS/tokens y no conectaba
@@ -136,7 +135,7 @@ export const copy = {
         ['3', 'países en operación: Chile, México y Colombia'],
         ['2 semanas', 'de implementación'],
       ],
-      cta: 'Agenda una demo',
+      cta: 'Agendar demo',
     },
     // Solo las integraciones confirmadas por Ricardo (2026-11-01): Odoo, Attio, SII, Bancos, Claude
     // y ChatGPT salen del carrusel hasta que las confirme una por una.
@@ -145,7 +144,7 @@ export const copy = {
       title: 'Desde USD 299 al mes.',
       who: 'Para empresas de servicios B2B con hasta 50 contratos y operación en un solo país.',
       implementation: 'Implementación en 2 semanas.',
-      cta: 'Agenda una demo',
+      cta: 'Agendar demo',
       volume: '¿Más de 50 contratos o más de un país? Te cotizamos según tu volumen.',
     },
     faq: {
@@ -154,26 +153,20 @@ export const copy = {
         { q: '¿Reemplaza mi ERP o mi sistema contable?', a: 'No. Relvo se encarga del ciclo de cobro —contratos, facturación, cobranza y conciliación— y se conecta a tu ERP o vía API.' },
         { q: '¿Emite facturas electrónicas válidas?', a: 'Sí. Relvo emite facturación electrónica en Chile y México.' },
         { q: '¿Sirve si le cobro distinto cada mes a mis clientes?', a: 'Sí. Relvo calcula lo que corresponde según consumo, horas, envíos o hitos, con las reglas de cada contrato.' },
-        // [CONFIRMAR] con Ricardo: propuesta del prompt, pendiente de aprobación antes de publicarse.
-        { q: '¿Qué pasa en las 2 semanas de implementación?', a: PENDING },
-        // [CONFIRMAR] con Ricardo: sin respuesta todavía.
-        { q: '¿Hay permanencia mínima?', a: PENDING },
       ],
     },
     demo: {
-      title: 'Agenda tu demo.',
+      title: 'Agendar demo.',
       lead: 'Una sesión de 30 minutos con tu caso: cómo cobras hoy y cómo lo automatiza Relvo.',
-      formTitle: '¿Prefieres que te llamemos? Déjanos tus datos.',
-      formSubmit: 'Quiero que me contacten',
-      roleOptions: ['CFO / Director Financiero', 'Gerente Financiero', 'Administración y Finanzas', 'Gerente de Operaciones', 'Founder / CEO', 'Contador/a', 'RevOps', 'Otro'],
+      formTitle: '¿Prefieres escribirnos?',
+      formSubmit: 'Enviar consulta',
     },
     footer: {
-      tagline: 'Revenue Engine para B2B.',
+      tagline: 'Facturación y cobranza automatizadas para B2B.',
     },
   },
 }
 
-export const isPending = (text) => text === PENDING
 
-// Preguntas con respuesta aprobada: las únicas que van al JSON-LD FAQPage (y a producción).
-export const answeredFaq = (locale) => copy[locale]?.faq.items.filter((item) => !isPending(item.a)) ?? []
+// Las mismas preguntas y respuestas se muestran en la página y en el JSON-LD FAQPage.
+export const answeredFaq = (locale) => copy[locale]?.faq.items ?? []

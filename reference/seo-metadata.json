@@ -15,12 +15,12 @@
       "pagina": "Home",
       "es": {
         "url": "/",
-        "title": "Relvo | Revenue Engine para SaaS e IA",
+        "title": "Relvo | Facturación y cobranza en automático",
         "description": "Relvo convierte tu pricing en ingresos: calcula, factura, cobra y concilia planes fijos, seats y uso en un solo sistema. Para SaaS e IA en LatAm."
       },
       "en": {
         "url": "/en",
-        "title": "Relvo | Revenue Engine for SaaS and AI",
+        "title": "Relvo | Automated Billing & Collections",
         "description": "Relvo turns your pricing into revenue: it calculates, invoices, collects and reconciles fixed plans, seats and usage in one system. For LatAm SaaS and AI."
       }
     },
@@ -337,7 +337,7 @@
       "pagina": "LP Ads · Facturación B2B (noindex, fuera del sitemap)",
       "es": {
         "url": "/lp/facturacion-b2b",
-        "title": "Revenue Engine para B2B | Relvo",
+        "title": "Facturación y cobranza automatizadas para B2B | Relvo",
         "description": "Factura, cobra y concilia a los clientes que te pagan una y otra vez: planes recurrentes o pricing híbrido, desde USD 299/mes. Agenda una demo."
       },
       "en": {

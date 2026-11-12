@@ -34,3 +34,4 @@ design-reference
 
 test-results/
 playwright-report/
+.lighthouseci/

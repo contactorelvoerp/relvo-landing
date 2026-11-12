@@ -26,7 +26,8 @@ export function fireAdsConversion({ sendTo, value, currency, transactionId, emai
     console.log('[ads-conversion]', { user_data: userData, ...conversion })
     return
   }
-  browser.gtag('set', 'user_data', userData)
+  // Sin email ni teléfono no hay nada que mejorar: no se manda un user_data vacío.
+  if (email || phone) browser.gtag('set', 'user_data', userData)
   browser.gtag('event', 'conversion', conversion)
 }
 

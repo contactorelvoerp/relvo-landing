@@ -21,7 +21,7 @@
       "type": "hero",
       "h1": "Aprobaciones y órdenes de compra: ninguna factura sale sin su OC.",
       "lead": "Relvo prepara la pre-factura, consigue la orden de compra o la aprobación que tu cliente exige y emite solo cuando todo cuadra.",
-      "intro": "Cuando vendes a empresas, una factura sin su orden de compra o su HES es una factura rechazada. Los primeros días del mes se van en pedir documentos por correo, revisar que calcen con el contrato y volver a emitir. Relvo ordena ese tramo: cada factura sale con sus documentos asociados y aprobados.",
+      "intro": "Cuando vendes a empresas, una factura sin su orden de compra o HES se rechaza. Los primeros días del mes se van en pedir documentos, revisarlos contra el contrato y volver a emitir. Con Relvo, cada factura sale con sus documentos asociados y aprobados.",
       "ctas": [
         {
           "label": "Agendar demo",

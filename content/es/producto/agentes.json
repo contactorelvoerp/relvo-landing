@@ -21,7 +21,7 @@
       "type": "hero",
       "h1": "Agentes de IA que hacen el trabajo manual del cobro.",
       "lead": "Leen órdenes de compra, siguen correos, avisan a tu equipo y responden consultas. Cuando algo no calza, te preguntan.",
-      "intro": "Alrededor de cada cobro hay trabajo que no es cálculo: leer documentos, perseguir respuestas, avisar a quien corresponde. Los agentes de Relvo hacen esas tareas sobre los rieles del motor. No calculan montos, no inventan cifras y no emiten nada que no cuadre: lo que no calza llega a tu equipo para que decida.",
+      "intro": "Cada cobro implica leer documentos, perseguir respuestas y avisar a quien corresponde. Los agentes de Relvo hacen esas tareas sobre los rieles del motor. No calculan montos ni inventan cifras, y no emiten nada que no cuadre: las excepciones llegan a tu equipo para que decida.",
       "ctas": [
         {
           "label": "Agendar demo",

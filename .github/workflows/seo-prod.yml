@@ -1,4 +1,4 @@
-name: SEO producción
+name: SEO y flujos en producción
 
 # Tras cada deploy de producción en Vercel (y una vez al día): falla si una página pública
 # sirve noindex o si un redirect del mapa no devuelve 301 al destino correcto.
@@ -18,3 +18,4 @@ jobs:
         with:
           node-version: 20
       - run: npm run check:prod-seo
+      - run: npm run check:prod-flows

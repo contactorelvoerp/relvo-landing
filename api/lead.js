@@ -8,10 +8,25 @@ import { UUID_PATTERN } from '../server/distribution.js'
 // Variables de entorno (Vercel → Project Settings → Environment Variables):
 //   SUPABASE_URL                (o la ya existente VITE_SUPABASE_URL)
 //   SUPABASE_SERVICE_ROLE_KEY   (o SUPABASE_ANON_KEY / VITE_SUPABASE_ANON_KEY si la tabla permite insert anónimo)
+//   TURNSTILE_SECRET_KEY        (opcional; junto con VITE_TURNSTILE_SITE_KEY activa el anti-spam de Cloudflare)
 
 const FIELDS = ['nombre', 'email', 'empresa', 'cargo', 'problema', 'telefono', 'url_origen', 'fuente']
 const REQUIRED = ['nombre', 'email', 'empresa', 'cargo']
 const MAX_LENGTH = 2000
+
+async function verifyTurnstile(token, req) {
+  if (typeof token !== 'string' || !token || token.length > 2048) return false
+  const form = new URLSearchParams({ secret: process.env.TURNSTILE_SECRET_KEY, response: token })
+  const ip = req.headers?.['x-real-ip'] ?? req.headers?.['x-forwarded-for']?.split(',')[0]?.trim()
+  if (ip) form.set('remoteip', ip)
+  try {
+    const result = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: form, signal: AbortSignal.timeout(5000) })
+    return result.ok && (await result.json()).success === true
+  } catch {
+    console.error('[lead] Turnstile verification unavailable')
+    return false
+  }
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -24,6 +39,12 @@ export default async function handler(req, res) {
   // Honeypot: un bot completó el campo oculto. Se responde OK sin guardar nada.
   if (body.website) {
     res.status(200).json({ ok: true, duplicate: true, recorded: false })
+    return
+  }
+
+  // Turnstile (src/turnstile.js): solo se exige cuando el servidor tiene la clave secreta.
+  if (process.env.TURNSTILE_SECRET_KEY && !(await verifyTurnstile(body.turnstile_token, req))) {
+    res.status(403).json({ error: 'Verification failed' })
     return
   }
 

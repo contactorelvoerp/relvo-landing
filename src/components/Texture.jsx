@@ -79,11 +79,15 @@ export function Texture({ kind }) {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     const paint = painters[kind]
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    let w = 0, h = 0, visible = false, ready = false, raf = 0, last = 0
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let reduce = motion.matches
+    let w = 0, h = 0, density = 0, visible = false, ready = false, raf = 0, last = 0
     const size = () => {
+      if (!visible) return
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
-      w = stage.clientWidth; h = stage.clientHeight
+      const width = stage.clientWidth, height = stage.clientHeight
+      if (w === width && h === height && density === dpr) return
+      w = width; h = height; density = dpr
       canvas.width = w * dpr; canvas.height = h * dpr
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       paint(ctx, w, h, 0)
@@ -91,13 +95,20 @@ export function Texture({ kind }) {
     // 20 cuadros por segundo y densidad máxima 1,5×: el movimiento es lento y el costo por cuadro cae a un tercio.
     const loop = (t) => {
       if (t - last >= 50) { paint(ctx, w, h, t); last = t }
-      if (visible && !reduce) raf = requestAnimationFrame(loop)
+      if (visible && !reduce && !document.hidden) raf = requestAnimationFrame(loop)
     }
-    const start = () => { cancelAnimationFrame(raf); if (ready && visible && !reduce) raf = requestAnimationFrame(loop) }
+    const start = () => { cancelAnimationFrame(raf); if (ready && visible && !reduce && !document.hidden) raf = requestAnimationFrame(loop) }
+    const onMotion = () => {
+      reduce = motion.matches
+      start()
+      if (reduce && w && h) paint(ctx, w, h, 0)
+    }
+    motion.addEventListener('change', onMotion)
+    document.addEventListener('visibilitychange', start)
     const ro = new ResizeObserver(size)
     ro.observe(stage)
     // Se pausa fuera de pantalla y con movimiento reducido queda en el primer cuadro.
-    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; start() })
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; size(); start() })
     io.observe(stage)
     // La animación parte después de la carga: el primer render queda libre (el primer cuadro ya está pintado).
     const begin = () => { ready = true; start() }
@@ -105,7 +116,7 @@ export function Texture({ kind }) {
     const onLoad = () => { timer = setTimeout(begin, 1000) }
     if (document.readyState === 'complete') onLoad()
     else window.addEventListener('load', onLoad, { once: true })
-    return () => { visible = false; cancelAnimationFrame(raf); clearTimeout(timer); window.removeEventListener('load', onLoad); ro.disconnect(); io.disconnect() }
+    return () => { visible = false; cancelAnimationFrame(raf); clearTimeout(timer); window.removeEventListener('load', onLoad); motion.removeEventListener('change', onMotion); document.removeEventListener('visibilitychange', start); ro.disconnect(); io.disconnect() }
   }, [kind])
 
   return (

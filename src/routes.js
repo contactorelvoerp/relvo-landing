@@ -2,7 +2,7 @@ import seo from '../reference/seo-metadata.json'
 import { SHOW_PENDING } from './env'
 import { DEFAULT_LOCALE, EXTERNAL_PAGES } from './site'
 import { READY_LOCALES, getDict } from './i18n'
-import { PAGE_COMPONENTS, PAGE_LOCALES } from './pages/registry'
+import { PAGE_DEFINITIONS } from './pages/manifest'
 import { NOINDEX_PAGES } from './pages/noindex'
 
 
@@ -13,11 +13,12 @@ function buildRoutes() {
     // ya están implementadas.
     // Docs y Blog son sitios externos: no generan página en este sitio
     if (EXTERNAL_PAGES[page.id]) continue
-    const built = Boolean(PAGE_COMPONENTS[page.id])
+    const definition = PAGE_DEFINITIONS[page.id]
+    const built = Boolean(definition)
     if (page.pagina.includes('(ola 2)') && !built) continue
     if (!built && !SHOW_PENDING) continue
     for (const locale of READY_LOCALES) {
-      const live = built && (!PAGE_LOCALES[page.id] || PAGE_LOCALES[page.id].includes(locale))
+      const live = built && definition.locales.includes(locale)
       // Sin traducción no hay ruta en inglés (404), tampoco en preview
       if (!live && (!SHOW_PENDING || locale !== DEFAULT_LOCALE)) continue
       const meta = page[locale]
@@ -35,7 +36,7 @@ function buildRoutes() {
   return routes
 }
 
-// Perezoso: las páginas del registro importan este módulo (hrefFor).
+// Build route metadata once without loading page components.
 let cache
 export function getRoutes() {
   cache ??= buildRoutes()

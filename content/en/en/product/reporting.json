@@ -1,0 +1,308 @@
+{
+  "id": "reporteria",
+  "preset": "producto",
+  "seo": "reporteria",
+  "keyword": "SaaS metrics: MRR, ARR and DSO",
+  "breadcrumb": [
+    {
+      "label": "Home",
+      "href": "/en"
+    },
+    {
+      "label": "Product",
+      "href": "/en/product"
+    },
+    {
+      "label": "SaaS/AI reporting"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "SaaS/AI reporting: your revenue metrics, without spreadsheets.",
+      "lead": "MRR, ARR, usage, DSO and more, calculated from the same data you use to invoice and collect.",
+      "intro": "Revenue metrics usually mean reconciling the CRM, invoicing and the bank, and the numbers rarely agree. Relvo handles the entire flow, from sale to payment, so metrics come from the same system that collects. Its reports show what was invoiced and paid.",
+      "ctas": [
+        {
+          "label": "Book a demo",
+          "href": "/en/book-a-demo",
+          "style": "primary"
+        },
+        {
+          "label": "View pricing",
+          "href": "/en/pricing",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "waterfall",
+        "data": {
+          "steps": [
+            [
+              "Sep",
+              184.3,
+              "base"
+            ],
+            [
+              "New",
+              6.2
+            ],
+            [
+              "Expansion",
+              3.1
+            ],
+            [
+              "Usage",
+              2.9
+            ],
+            [
+              "Contraction",
+              -1.4
+            ],
+            [
+              "Churn",
+              -2.7
+            ],
+            [
+              "Oct",
+              192.4,
+              "base"
+            ]
+          ]
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "From reconciling three systems to a single number.",
+      "h2Soft": "That always adds up.",
+      "before": [
+        "CRM MRR does not match invoiced amounts.",
+        "DSO is calculated manually at each close.",
+        "Usage lives in another tool."
+      ],
+      "after": [
+        "MRR and ARR come from the contracts actually being billed.",
+        "DSO and days to invoice, updated throughout the month.",
+        "Recurring revenue and usage in the same chart."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "How it works.",
+      "h2Soft": "From collection to report.",
+      "steps": [
+        {
+          "title": "Relvo records",
+          "text": "Every calculation, invoice and payment stays in the same system."
+        },
+        {
+          "title": "Builds the metrics",
+          "text": "MRR, usage, DSO and more, without exporting anything."
+        },
+        {
+          "title": "You see them",
+          "text": "By customer, period or metric."
+        }
+      ]
+    },
+    {
+      "type": "featureTabs",
+      "h2": "The metrics that matter in SaaS and AI.",
+      "h2Soft": "With the detail behind every number.",
+      "tabs": [
+        {
+          "label": "MRR and ARR",
+          "desc": "New customers, expansion, contraction and churn.",
+          "visual": {
+            "id": "waterfall",
+            "data": {
+              "steps": [
+                [
+                  "Sep",
+                  184.3,
+                  "base"
+                ],
+                [
+                  "New",
+                  6.2
+                ],
+                [
+                  "Expansion",
+                  3.1
+                ],
+                [
+                  "Usage",
+                  2.9
+                ],
+                [
+                  "Contraction",
+                  -1.4
+                ],
+                [
+                  "Churn",
+                  -2.7
+                ],
+                [
+                  "Oct",
+                  192.4,
+                  "base"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "label": "Recurring vs. usage",
+          "desc": "How much of your revenue comes from usage.",
+          "visual": {
+            "id": "barChart",
+            "data": {
+              "labels": [
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "name": "Recurring",
+                  "values": [
+                    140,
+                    143,
+                    146,
+                    149,
+                    152,
+                    156
+                  ]
+                },
+                {
+                  "name": "Usage: tokens",
+                  "values": [
+                    38,
+                    52,
+                    41,
+                    63,
+                    49,
+                    72
+                  ]
+                },
+                {
+                  "name": "Usage: documents",
+                  "values": [
+                    12,
+                    9,
+                    15,
+                    11,
+                    17,
+                    14
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "DSO and DTI",
+          "desc": "How quickly you turn work into cash.",
+          "visual": {
+            "id": "lineChart",
+            "data": {
+              "labels": [
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "name": "DTI",
+                  "values": [
+                    6,
+                    5,
+                    5,
+                    4,
+                    3,
+                    3
+                  ]
+                },
+                {
+                  "name": "DSO",
+                  "values": [
+                    47,
+                    45,
+                    44,
+                    41,
+                    40,
+                    38
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "metrics",
+      "h2": "Also, for your financial close.",
+      "h2Soft": "Under IFRS 15.",
+      "kpis": [
+        {
+          "label": "Invoicing and collections",
+          "value": "Month by month"
+        },
+        {
+          "label": "Revenue recognition",
+          "value": "IFRS 15"
+        }
+      ],
+      "note": "Accounts receivable by customer and aging, in the same place."
+    },
+    {
+      "type": "related",
+      "h2": "Works with.",
+      "h2Soft": "The same engine, from end to end.",
+      "items": [
+        "medicion",
+        "cxc",
+        "contratos"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Frequently asked questions about Relvo's reporting.",
+      "items": [
+        {
+          "q": "Which metrics are included?",
+          "a": "MRR and ARR with their waterfall, recurring revenue versus usage by metric, invoicing, collections, accounts receivable, DSO, days to invoice and revenue recognition under IFRS 15."
+        },
+        {
+          "q": "Where does the data come from?",
+          "a": "The same system that calculates, invoices and collects. MRR and ARR come from active contracts; invoiced and collected amounts are recorded separately, with their respective dates."
+        },
+        {
+          "q": "What are DSO and DTI?",
+          "a": "DSO measures days to collect an invoice; DTI, days to issue it after the period ends. Together they show how quickly you turn work into cash."
+        },
+        {
+          "q": "Does Relvo handle revenue recognition?",
+          "a": "Yes, under IFRS 15."
+        },
+        {
+          "q": "Can I see metrics by customer?",
+          "a": "Yes. Every number can be broken down by customer, period or metric."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

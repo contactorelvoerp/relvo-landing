@@ -9,7 +9,25 @@ export const desiredDimensions = [
   { parameterName: 'distribution_surface', displayName: 'Distribution surface', scope: 'EVENT' },
   { parameterName: 'form', displayName: 'Lead form', scope: 'EVENT' },
   { parameterName: 'locale', displayName: 'Site language', scope: 'EVENT' },
+  // src/analytics.js: qué CTA y desde qué sección, por qué falla un formulario, hasta dónde se lee
+  // y el rating de los Core Web Vitals de usuarios reales.
+  { parameterName: 'placement', displayName: 'CTA placement', scope: 'EVENT' },
+  { parameterName: 'destination', displayName: 'CTA destination', scope: 'EVENT' },
+  { parameterName: 'reason', displayName: 'Form error reason', scope: 'EVENT' },
+  { parameterName: 'percent', displayName: 'Scroll depth', scope: 'EVENT' },
+  { parameterName: 'metric_rating', displayName: 'Web vital rating', scope: 'EVENT' },
 ]
+
+// Las métricas de éxito del sitio (CLAUDE.md): formularios enviados y demos agendadas.
+export const desiredKeyEvents = ['generate_lead', 'demo_agendada']
+
+// Visitas que llegan desde asistentes de IA (GEO): sin esta regla GA4 las mezcla en "Referral".
+const AI_SOURCES = 'chatgpt\\.com|openai\\.com|perplexity\\.ai|claude\\.ai|gemini\\.google\\.com|copilot\\.microsoft\\.com|chat\\.mistral\\.ai|deepseek\\.com|meta\\.ai|grok\\.com'
+export function aiAssistantsRule() {
+  return { displayName: 'AI assistants', expression: { andGroup: { filterExpressions: [
+    { orGroup: { filterExpressions: [{ filter: { fieldName: 'source', stringFilter: { matchType: 'PARTIAL_REGEXP', value: AI_SOURCES } } }] } },
+  ] } } }
+}
 
 // Match source/medium without changing historical campaign taxonomy.
 export function poweredByRule() {
@@ -41,8 +59,9 @@ export async function configureAnalytics({ propertyId, token, apply = false, req
     return all
   }
   const keyEvents = await list('v1beta', 'keyEvents', 'keyEvents')
-  if (!keyEvents.some((event) => event.eventName === 'generate_lead')) {
-    const body = { eventName: 'generate_lead', countingMethod: 'ONCE_PER_EVENT' }
+  for (const eventName of desiredKeyEvents) {
+    if (keyEvents.some((event) => event.eventName === eventName)) continue
+    const body = { eventName, countingMethod: 'ONCE_PER_EVENT' }
     changes.push({ resource: 'keyEvents', body })
     if (apply) await api('v1beta', `${parent}/keyEvents`, 'POST', body)
   }
@@ -57,7 +76,7 @@ export async function configureAnalytics({ propertyId, token, apply = false, req
   if (!defaultGroup) throw new Error('Default channel group missing; refusing to replace other traffic classification')
   const displayName = 'Relvo distribution'
   const existing = groups.find((group) => group.displayName === displayName && !group.systemDefined)
-  const body = { displayName, description: 'Default channels plus Powered by Relvo PDF distribution.', groupingRule: [poweredByRule(), ...defaultGroup.groupingRule] }
+  const body = { displayName, description: 'Default channels plus Powered by Relvo PDF distribution and AI assistants.', groupingRule: [poweredByRule(), aiAssistantsRule(), ...defaultGroup.groupingRule] }
   if (!existing || JSON.stringify(existing.groupingRule) !== JSON.stringify(body.groupingRule)) {
     changes.push({ resource: 'channelGroups', body })
     if (apply) await api('v1alpha', existing ? `${existing.name}?updateMask=displayName,description,groupingRule` : `${parent}/channelGroups`, existing ? 'PATCH' : 'POST', body)

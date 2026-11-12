@@ -1,0 +1,281 @@
+{
+  "id": "agentes",
+  "preset": "producto",
+  "seo": "agentes",
+  "keyword": "AI agents for invoicing and collections",
+  "breadcrumb": [
+    {
+      "label": "Home",
+      "href": "/en"
+    },
+    {
+      "label": "Product",
+      "href": "/en/product"
+    },
+    {
+      "label": "Agents"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "AI agents that handle the manual work of collections.",
+      "lead": "They read purchase orders, follow up on emails, notify your team and answer questions. When something does not match, they ask you.",
+      "intro": "Every collection involves reading documents, chasing replies and notifying the right people. Relvo's agents handle those tasks on the engine's rails. They do not calculate amounts, invent figures or issue anything that does not match: your team decides how to handle exceptions.",
+      "ctas": [
+        {
+          "label": "Book a demo",
+          "href": "/en/book-a-demo",
+          "style": "primary"
+        },
+        {
+          "label": "View pricing",
+          "href": "/en/pricing",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "agentFeed",
+        "data": {
+          "kpis": [
+            [
+              "Tasks completed today",
+              "34"
+            ],
+            [
+              "To review",
+              "2"
+            ]
+          ],
+          "items": [
+            [
+              "doc",
+              "PO 4500-221 read and matched",
+              "09:02"
+            ],
+            [
+              "mail",
+              "Service entry sheet requested from Nimbo AI",
+              "09:14"
+            ],
+            [
+              "hash",
+              "Notification in #finance",
+              "09:20"
+            ],
+            [
+              "plug",
+              "MCP query answered",
+              "09:31"
+            ]
+          ]
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "From chasing documents to reviewing exceptions.",
+      "h2Soft": "Your team decides, agents execute.",
+      "before": [
+        "Hours spent reading POs and copying data.",
+        "Follow-up emails written one by one.",
+        "Team notifications depend on someone remembering."
+      ],
+      "after": [
+        "An agent reads each PO and links it to its invoice.",
+        "Follow-ups go out automatically until missing items arrive.",
+        "Your team receives only what it needs in Slack or Google Chat."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "How it works.",
+      "h2Soft": "On the engine's rails.",
+      "steps": [
+        {
+          "title": "Picks up the task",
+          "text": "An incoming PO, an unanswered email or a question."
+        },
+        {
+          "title": "Executes it",
+          "text": "Using engine data, never amounts of its own."
+        },
+        {
+          "title": "Asks you",
+          "text": "If something does not match, it goes to your review inbox."
+        }
+      ]
+    },
+    {
+      "type": "featureTabs",
+      "h2": "What agents do today.",
+      "h2Soft": "Specific tasks, with visible results.",
+      "tabs": [
+        {
+          "label": "PO reading",
+          "desc": "Extract data and match it.",
+          "visual": {
+            "id": "timeline",
+            "data": {
+              "title": "PO 4500-221",
+              "steps": [
+                {
+                  "label": "PO received",
+                  "sub": "Faro Analytics",
+                  "done": true
+                },
+                {
+                  "label": "Data extracted",
+                  "sub": "Number, amount and validity period",
+                  "done": true
+                },
+                {
+                  "label": "Linked to the draft invoice",
+                  "sub": "Matches the contract",
+                  "done": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "Email follow-up",
+          "desc": "Chase what is missing.",
+          "visual": {
+            "id": "emailPreview",
+            "data": {
+              "to": "finanzas@nimbo.ai",
+              "subject": "Service entry sheet pending for October's invoice",
+              "body": "Hi Nimbo AI team: to issue October's invoice, we still need the service entry sheet linked to PO 4500-221.",
+              "schedule": [
+                {
+                  "label": "Sent today"
+                },
+                {
+                  "label": "Follow-up: in 3 days",
+                  "tone": "neutral"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "Slack, Google Chat and MCP",
+          "desc": "Notify and respond where you work.",
+          "visual": {
+            "id": "agentFeed",
+            "data": {
+              "items": [
+                [
+                  "hash",
+                  "3 invoices ready to issue",
+                  "09:20"
+                ],
+                [
+                  "hash",
+                  "Faro Analytics paid F-1043",
+                  "10:05"
+                ],
+                [
+                  "plug",
+                  "How much is Tandem SaaS being invoiced this month?",
+                  "10:31"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "label": "Review inbox",
+          "desc": "You approve exceptions.",
+          "visual": {
+            "id": "review",
+            "data": {
+              "title": "Change of legal entity.",
+              "left": [
+                "Faro Analytics requests invoicing to",
+                "Another entity in the group"
+              ],
+              "right": [
+                "Contract",
+                "Faro Analytics SpA"
+              ],
+              "actions": [
+                "Review",
+                "Reply"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "capabilities",
+      "h2": "Automation with oversight.",
+      "h2Soft": "Agents operate within your limits.",
+      "items": [
+        {
+          "title": "Explicit rules and limits",
+          "text": "Each agent acts within the contract and your policies: maximum discounts, deadlines and collection tone."
+        },
+        {
+          "title": "Human approval where it matters",
+          "text": "Define which steps need approval before execution. The rest runs automatically."
+        },
+        {
+          "title": "A record of every action",
+          "text": "What the agent did, when and with which data, traceable to the event that triggered it."
+        },
+        {
+          "title": "Escalation with context",
+          "text": "When something goes off track, your team receives the case in Slack with its full history, rather than an isolated alert."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Works with.",
+      "h2Soft": "The same engine, from end to end.",
+      "items": [
+        "aprobaciones",
+        "cxc",
+        "reporteria"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Frequently asked questions about Relvo's agents.",
+      "items": [
+        {
+          "q": "Do agents calculate the amounts to collect?",
+          "a": "No. The rules engine calculates amounts, consistently every time. Agents handle the work around collections: documents, follow-ups and notifications."
+        },
+        {
+          "q": "What tasks do they handle today?",
+          "a": "They read purchase orders, follow up on emails until missing items arrive, notify your team in Slack or Google Chat and answer queries through MCP."
+        },
+        {
+          "q": "What happens when something does not match?",
+          "a": "The agent stops and puts the case in a review inbox. Nothing is issued until someone on your team makes a decision."
+        },
+        {
+          "q": "What is MCP?",
+          "a": "Model Context Protocol, a standard that lets AI tools query systems such as Relvo. Your own AI assistants can ask about invoices, collections or usage."
+        },
+        {
+          "q": "Can I see what each agent did?",
+          "a": "Yes. Every task is recorded with its timestamp and result."
+        },
+        {
+          "q": "Can I limit what an agent does?",
+          "a": "Yes. Each agent acts within the contract and the policies you configure, such as maximum discounts, deadlines or collection tone."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

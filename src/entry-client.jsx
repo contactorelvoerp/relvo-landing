@@ -4,7 +4,8 @@ import { hydrateRoot } from 'react-dom/client'
 import { App } from './App'
 import { routeFromKey } from './routes'
 import { loadContent } from './content'
-import { LANDINGS } from './pages/registry'
+import { LANDINGS } from './pages/manifest'
+import { loadPage } from './pages/load'
 import './styles/tokens.css'
 import './styles/site.css'
 
@@ -13,6 +14,7 @@ import './styles/site.css'
 initializeMarketing()
 const root = document.getElementById('root')
 const route = routeFromKey(root.dataset.route)
-const hydrate = () => hydrateRoot(root, <StrictMode><App route={route} /></StrictMode>)
-if (route.status === 'live' && LANDINGS.includes(route.id)) loadContent(route.locale, route.path).then(hydrate)
-else hydrate()
+const content = route.status === 'live' && LANDINGS.includes(route.id) ? loadContent(route.locale, route.path) : Promise.resolve()
+Promise.all([loadPage(route), content]).then(([Page]) => {
+  hydrateRoot(root, <StrictMode><App route={route} Page={Page} /></StrictMode>)
+})

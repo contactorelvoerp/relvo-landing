@@ -1,0 +1,267 @@
+{
+  "id": "aprobaciones",
+  "preset": "producto",
+  "seo": "aprobaciones",
+  "keyword": "Approvals and purchase orders",
+  "breadcrumb": [
+    {
+      "label": "Home",
+      "href": "/en"
+    },
+    {
+      "label": "Product",
+      "href": "/en/product"
+    },
+    {
+      "label": "Approvals and purchase orders"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "h1": "Approvals and purchase orders: no invoice goes out without its PO.",
+      "lead": "Relvo prepares the draft invoice, obtains the purchase order or approval your customer requires, and issues only when everything matches.",
+      "intro": "When you sell to businesses, an invoice without its purchase order or service entry sheet gets rejected. The first days of the month go into requesting documents, checking them against contracts and reissuing invoices. With Relvo, every invoice goes out with its supporting documents linked and approved.",
+      "ctas": [
+        {
+          "label": "Book a demo",
+          "href": "/en/book-a-demo",
+          "style": "primary"
+        },
+        {
+          "label": "View pricing",
+          "href": "/en/pricing",
+          "style": "secondary"
+        }
+      ],
+      "visual": {
+        "id": "timeline",
+        "data": {
+          "title": "October invoice, Nimbo AI",
+          "steps": [
+            {
+              "label": "Draft invoice generated",
+              "sub": "October 1",
+              "done": true
+            },
+            {
+              "label": "PO 4500-221 linked",
+              "sub": "Amount and validity period match",
+              "done": true
+            },
+            {
+              "label": "Approved by the customer",
+              "sub": "October 2",
+              "done": true
+            },
+            {
+              "label": "Issue invoice",
+              "sub": "Today",
+              "done": false
+            }
+          ]
+        }
+      },
+      "layout": "centered"
+    },
+    {
+      "type": "beforeAfter",
+      "h2": "From requesting a PO by email to an approved invoice.",
+      "h2Soft": "Without rejections.",
+      "before": [
+        "Invoices rejected because a purchase order is missing.",
+        "Back-and-forth emails to obtain the PO or service entry sheet.",
+        "Someone manually checks that the PO matches the contract."
+      ],
+      "after": [
+        "Every invoice goes out with its PO linked.",
+        "An agent follows up by email until the document arrives.",
+        "If the PO does not match, Relvo sends it to review before issuing."
+      ]
+    },
+    {
+      "type": "steps",
+      "h2": "How it works.",
+      "h2Soft": "From draft invoice to issuance.",
+      "steps": [
+        {
+          "title": "Draft invoice",
+          "text": "Relvo calculates the period's amount and prepares the draft invoice."
+        },
+        {
+          "title": "PO and approval",
+          "text": "An agent reads the PO, links it and requests anything missing."
+        },
+        {
+          "title": "Issue invoice",
+          "text": "Once everything is approved, the invoice goes out automatically."
+        }
+      ]
+    },
+    {
+      "type": "featureTabs",
+      "h2": "Every step, with its document.",
+      "h2Soft": "And its approval.",
+      "tabs": [
+        {
+          "label": "Draft invoices",
+          "desc": "Review the amount before issuing.",
+          "visual": {
+            "id": "planCard",
+            "data": {
+              "plan": "October draft invoice",
+              "client": "Nimbo AI",
+              "price": "USD 3,090",
+              "lines": [
+                [
+                  "Growth plan",
+                  "USD 500"
+                ],
+                [
+                  "Additional seats",
+                  "USD 240"
+                ],
+                [
+                  "Tokens",
+                  "USD 2,400"
+                ],
+                [
+                  "Launch discount",
+                  "−USD 50"
+                ]
+              ],
+              "total": [
+                "Total to invoice",
+                "USD 3,090"
+              ]
+            }
+          }
+        },
+        {
+          "label": "PO and service entry sheet",
+          "desc": "Read and linked to each invoice.",
+          "visual": {
+            "id": "timeline",
+            "data": {
+              "title": "PO 4500-221",
+              "steps": [
+                {
+                  "label": "PO received by email",
+                  "sub": "Nimbo AI",
+                  "done": true
+                },
+                {
+                  "label": "Amount and validity period extracted",
+                  "sub": "USD 3,090, through December",
+                  "done": true
+                },
+                {
+                  "label": "Service entry sheet pending",
+                  "sub": "Requested from the customer's finance team",
+                  "done": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "Review",
+          "desc": "You decide what does not match.",
+          "visual": {
+            "id": "review",
+            "data": {
+              "title": "The PO does not match the contract.",
+              "left": [
+                "Tandem SaaS PO",
+                "USD 1,800"
+              ],
+              "right": [
+                "Contract",
+                "USD 2,100"
+              ],
+              "actions": [
+                "Request a new PO",
+                "Approve anyway"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "capabilities",
+      "h2": "Your customer's process, without writing every email.",
+      "h2Soft": "With clear rules.",
+      "items": [
+        {
+          "title": "Configurable routing",
+          "text": "Each contract defines who approves: your team, the customer or both, and in which order."
+        },
+        {
+          "title": "Draft before issuance",
+          "text": "A draft awaiting approval prevents issuing anything that has not been confirmed."
+        },
+        {
+          "title": "PO and service entry sheet matching",
+          "text": "Relvo checks that the customer's document matches the invoice; if it does not, it notifies the account owner."
+        },
+        {
+          "title": "Slack and dedicated email",
+          "text": "The agent requests, reminds and responds where your team already works."
+        },
+        {
+          "title": "Automatic issuance",
+          "text": "Once approval is complete, the invoice and its tax document are issued without manual intervention."
+        }
+      ]
+    },
+    {
+      "type": "related",
+      "h2": "Works with.",
+      "h2Soft": "The same engine, from end to end.",
+      "items": [
+        "agentes",
+        "contratos",
+        "cxc"
+      ]
+    },
+    {
+      "type": "faq",
+      "h2": "Frequently asked questions about approvals and purchase orders.",
+      "items": [
+        {
+          "q": "What is a service entry sheet (HES)?",
+          "a": "A service entry sheet, known as HES in Chile, is a document many customers require alongside the purchase order to accept an invoice. Relvo links it to the invoice just like the PO."
+        },
+        {
+          "q": "Does Relvo read purchase orders?",
+          "a": "Yes. An agent reads the PO, extracts details such as its number, amount and validity period, and links it to the corresponding draft invoice."
+        },
+        {
+          "q": "What happens if the PO does not match the contract?",
+          "a": "Relvo does not issue the invoice. It stays in a review inbox, where your team decides whether to request a new PO or approve it anyway."
+        },
+        {
+          "q": "Can I define internal approvals?",
+          "a": "Yes. You can configure approval flows for your team and the customer before issuing."
+        },
+        {
+          "q": "Does it work with customers who do not require POs?",
+          "a": "Yes. If a customer does not require a purchase order or approval, their invoice goes out directly when the period ends."
+        },
+        {
+          "q": "Who approves before issuance?",
+          "a": "Each contract defines this: your team, the customer or both, and in which order."
+        },
+        {
+          "q": "When does a case escalate to my team?",
+          "a": "When the customer disputes the amount or the purchase order does not cover the invoice. The rest of the process runs automatically."
+        }
+      ]
+    },
+    {
+      "type": "cta"
+    }
+  ],
+  "subnav": true
+}

@@ -33,8 +33,7 @@ export function PoweredByPage({ t }) {
   // real solo para esta página — fuera de alcance de esta tarea.
   const [referrer, setReferrer] = useState({ slug: null, name: null })
   useEffect(() => { setReferrer(referrerFromSearch(window.location.search)) }, [])
-  // Se guarda junto al lead (fuente) sin agregar una columna nueva (Ricardo, 2026-11-02): ver
-  // variant="short" de LeadForm.jsx. Sin cliente referente, queda igual que hoy ("powered_by_relvo").
+  // Preserve the referring customer in the lead source.
   const fuente = referrer.slug ? `powered_by_relvo:${referrer.slug}` : 'powered_by_relvo'
 
   // powered_by_demo_click: antes la disparaba sola el listener global de analytics.js al navegar a
@@ -103,11 +102,7 @@ export function PoweredByPage({ t }) {
           <LeadForm
             locale="es"
             fuente={fuente}
-            variant="short"
             submit={c.closing.formSubmit}
-            cobroLabel={c.closing.cobroLabel}
-            cobroPlaceholder={c.closing.cobroPlaceholder}
-            cobroOptions={c.closing.cobroOptions}
           />
         </CalPanel>
       </section>

@@ -27,7 +27,7 @@ async function intercept(page) {
   return { leads, events }
 }
 
-test('PDF campaign survives the short form, validation and a retry without a false conversion', async ({ page }) => {
+test('PDF campaign survives the email form, validation and a retry without a false conversion', async ({ page }) => {
   const { leads, events } = await intercept(page)
   const errors = []; page.on('pageerror', (error) => errors.push(error.message))
   await page.setViewportSize({ width: 1440, height: 1000 })
@@ -42,20 +42,22 @@ test('PDF campaign survives the short form, validation and a retry without a fal
   await expect(page.locator('.steps3__step')).toHaveCount(4)
   await page.screenshot({ path: 'test-results/powered-by-desktop.png', fullPage: true })
   // El CTA primario ya no navega a /agendar-demo: ancla a #agenda en la misma página, donde está
-  // el calendario de Cal.com y, debajo, el form corto alternativo (variant="short").
+  // el calendario de Cal.com y, debajo, el formulario de email colapsado.
   await page.locator('.lp-head__ctas a').first().click()
   await expect(page).toHaveURL(/#agenda$/)
-  await page.getByRole('button', { name: 'Enviar', exact: true }).click()
+  await page.locator('.cal-panel__form-toggle').click()
+  await page.getByRole('button', { name: 'Enviar consulta', exact: true }).click()
   expect(leads).toHaveLength(0)
+  await page.locator('input[name="nombre"]').fill('Test Buyer')
   await page.locator('input[name="email"]').fill('person@example.test')
   await page.locator('input[name="empresa"]').fill('Test Company')
-  await page.locator('select[name="cobro"]').selectOption('ERP')
-  await page.getByRole('button', { name: 'Enviar', exact: true }).click()
+  await page.locator('textarea[name="problema"]').fill('Usamos un ERP')
+  await page.getByRole('button', { name: 'Enviar consulta', exact: true }).click()
   await expect(page.getByRole('alert')).toBeVisible()
   const beforeRetry = await page.evaluate(() => window.dataLayer.filter((item) => item[0] === 'event' && item[1] === 'generate_lead').length)
   expect(beforeRetry).toBe(0)
   await page.getByRole('button', { name: 'Reintentar', exact: true }).click()
-  await expect(page.getByRole('status')).toContainText('Te contactamos pronto')
+  await expect(page.locator('.demo__success[role="status"]')).toContainText('Recibimos tu consulta.')
   expect(leads).toHaveLength(2)
   expect(leads[0].submission_id).toBe(leads[1].submission_id)
   expect(leads[1].attribution.first_touch.reference).toBe(reference)

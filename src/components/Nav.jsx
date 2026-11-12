@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { hrefFor } from '../routes'
 import { API_DOCS_URL, APP_LOGIN_URL } from '../site'
+import { LanguageSwitch } from './LanguageSwitch'
 
-// Mega-menú por capa (brief 6.4, Nav del Design System v1.5).
-const PRODUCT = [
-  { index: '01', key: 'rails', ids: ['contratos', 'medicion', 'aprobaciones', 'cxc'] },
-  { index: '02', key: 'agents', ids: ['agentes'] },
-  { index: '03', key: 'intelligence', ids: ['reporteria'] },
-]
+// Orden por filas: funciones principales primero, automatización y reportes después.
+const PRODUCT = ['cxc', 'contratos', 'medicion', 'aprobaciones', 'agentes', 'reporteria']
 const SOLUTIONS = [
   // Ola 2: se muestran por nombre, sin link, hasta que sus páginas existan.
   { key: 'teams', ids: ['revops', 'finanzas', 'ingenieria'], showWithoutPage: true },
@@ -15,6 +12,7 @@ const SOLUTIONS = [
   { key: 'useCases', ids: ['planes', 'hibrido', 'uso'] },
 ]
 const RESOURCES = ['docs', 'blog']
+const SHOW_SOLUTIONS = false
 
 function Chevron() {
   return (
@@ -46,16 +44,40 @@ function Column({ index, title, links }) {
   )
 }
 
-export function Nav({ t, locale }) {
+export function Nav({ t, locale, pageId }) {
   const [open, setOpen] = useState(null)
+  const root = useRef(null)
+  const opener = useRef(null)
   // Menú que abrió el mouse al pasar por encima: el clic no debe cerrarlo.
   const hovered = useRef(null)
 
   useEffect(() => {
+    const mobile = window.matchMedia('(max-width:959px)')
+    const reset = () => { hovered.current = null; opener.current = null; setOpen(null) }
+    mobile.addEventListener('change', reset)
+    return () => mobile.removeEventListener('change', reset)
+  }, [])
+
+  useEffect(() => {
     if (!open) return
-    const onKey = (e) => { if (e.key === 'Escape') setOpen(null) }
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return
+      setOpen(null)
+      hovered.current = null
+      opener.current?.focus()
+    }
+    const onPointer = (e) => {
+      if (!root.current?.contains(e.target)) {
+        hovered.current = null
+        setOpen(null)
+      }
+    }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener('pointerdown', onPointer)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('pointerdown', onPointer)
+    }
   }, [open])
 
   // Solo se enlazan páginas que existen en este build: sin links rotos.
@@ -66,8 +88,8 @@ export function Nav({ t, locale }) {
     .map((g) => ({ ...g, title: titles[g.key], links: links(g.ids, g.showWithoutPage) }))
     .filter((g) => g.links.length > 0)
 
-  const product = columns(PRODUCT, t.nav.layers)
-  const solutions = columns(SOLUTIONS, t.nav)
+  const product = links(PRODUCT)
+  const solutions = SHOW_SOLUTIONS ? columns(SOLUTIONS, t.nav) : []
   const resources = links(RESOURCES)
   const docs = hrefFor('docs', locale)
   // Clientes lleva al caso TGP de la home
@@ -79,11 +101,14 @@ export function Nav({ t, locale }) {
   const toggle = (menu) => setOpen((o) => (o === menu && hovered.current !== menu ? null : menu))
   const hover = (menu) => (e) => {
     if (e.pointerType !== 'mouse') return
+    if (menu) opener.current = e.currentTarget
     hovered.current = menu
     setOpen(menu)
   }
   const leave = () => {
     hovered.current = null
+    // El panel usado con teclado sigue abierto cuando el puntero sale del header.
+    if (root.current?.contains(document.activeElement)) return
     setOpen((o) => (o === 'mobile' ? o : null))
   }
   const trigger = (menu, label) => (
@@ -91,7 +116,15 @@ export function Nav({ t, locale }) {
       type="button"
       className="nav__link"
       aria-expanded={open === menu}
-      onClick={() => toggle(menu)}
+      aria-controls={`nav-${menu}`}
+      onClick={(e) => { opener.current = e.currentTarget; toggle(menu) }}
+      onKeyDown={(e) => {
+        if (e.key !== 'ArrowDown') return
+        e.preventDefault()
+        opener.current = e.currentTarget
+        setOpen(menu)
+        requestAnimationFrame(() => document.getElementById(`nav-${menu}`)?.querySelector('a')?.focus())
+      }}
       onPointerEnter={hover(menu)}
     >
       {label} <Chevron />
@@ -104,7 +137,16 @@ export function Nav({ t, locale }) {
   )
 
   return (
-    <header className={`nav${open && open !== 'mobile' ? ' nav--open' : ''}${open === 'product' || open === 'solutions' ? ' nav--mega' : ''}`} onPointerLeave={leave}>
+    <header ref={root} className={`nav${open && open !== 'mobile' ? ' nav--open' : ''}${open === 'product' || open === 'solutions' ? ' nav--mega' : ''}`} onPointerLeave={leave}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+          hovered.current = null
+          setOpen(null)
+        }
+      }}
+      onClick={(e) => {
+        if (e.target.closest('a')) { hovered.current = null; setOpen(null) }
+      }}>
       <nav className="nav__bar nav__bar--desktop" aria-label={t.nav.menu}>
         {logo(26)}
         <div className="nav__links">
@@ -114,7 +156,7 @@ export function Nav({ t, locale }) {
           {resources.length > 0 && (
             <div className="nav__dropdown-anchor">
               {trigger('resources', t.nav.resources)}
-              <div className="nav__dropdown" hidden={open !== 'resources'}>
+              <div id="nav-resources" className="nav__dropdown" hidden={open !== 'resources'}>
                 {resources.map((l) => <a key={l.id} className="nav__plain" href={l.href}>{l.name}</a>)}
               </div>
             </div>
@@ -122,40 +164,47 @@ export function Nav({ t, locale }) {
           {pricing && <a className="nav__link" href={pricing} onPointerEnter={hover(null)}>{t.nav.pricing}</a>}
         </div>
         <div className="nav__actions">
+          <LanguageSwitch locale={locale} pageId={pageId} />
           <a className="btn btn--ghost btn--md" href={APP_LOGIN_URL}>{t.nav.login}</a>
           {demo && <a className="btn btn--primary btn--md" href={demo}>{t.nav.demo}</a>}
         </div>
       </nav>
 
-      <div className="nav__panel nav__panel--product" hidden={open !== 'product'}>
-        {product.map((c) => <Column key={c.key} index={c.index} title={c.title} links={c.links} />)}
+      <div id="nav-product" className="nav__panel nav__panel--product" hidden={open !== 'product'}>
+        <div className="nav__product-group">
+          <p className="nav__product-label">{t.nav.product}</p>
+          <div className="nav__product-grid">
+            {product.map((l) => <Item key={l.id} link={l} className="nav__item nav__product-item" nameClass="nav__item-name" />)}
+          </div>
+        </div>
         {docs && (
-          <div className="nav__col nav__col--last">
-            <p className="nav__col-title">{t.nav.developers}</p>
+          <div className="nav__developers">
+            <p className="nav__product-label">{t.nav.developers}</p>
             <a className="nav__plain nav__plain--accent" href={API_DOCS_URL}>{t.nav.apiDocs} →</a>
           </div>
         )}
       </div>
-      <div className="nav__panel nav__panel--solutions" hidden={open !== 'solutions'}>
+      <div id="nav-solutions" className="nav__panel nav__panel--solutions" hidden={open !== 'solutions'}>
         {solutions.map((c) => <Column key={c.key} title={c.title} links={c.links} />)}
       </div>
 
       <nav className="nav__bar nav__bar--mobile" aria-label={t.nav.menu}>
         {logo(20)}
         <div className="nav__actions">
-          {demo && <a className="btn btn--primary btn--sm" href={demo}>{t.nav.demo}</a>}
-          <button type="button" className="nav__burger" aria-label={t.nav.menu} aria-expanded={open === 'mobile'} onClick={() => toggle('mobile')}>
+          <LanguageSwitch locale={locale} pageId={pageId} />
+          {demo && <a className="btn btn--primary btn--sm" href={demo} aria-label={t.nav.demo}><span className="nav__demo-label">{t.nav.demo}</span><span className="nav__demo-short" aria-hidden="true">Demo</span></a>}
+          <button type="button" className="nav__burger" aria-label={t.nav.menu} aria-expanded={open === 'mobile'} aria-controls="nav-mobile" onClick={(e) => { opener.current = e.currentTarget; toggle('mobile') }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
-              <path d="M4 7h16M4 12h16M4 17h16" />
+              <path d={open === 'mobile' ? 'M6 6l12 12M6 18 18 6' : 'M4 7h16M4 12h16M4 17h16'} />
             </svg>
           </button>
         </div>
       </nav>
-      <div className="nav__sheet" hidden={open !== 'mobile'}>
+      <div id="nav-mobile" className="nav__sheet" hidden={open !== 'mobile'}>
         {product.length > 0 && (
           <div className="nav__sheet-group">
             <p className="nav__sheet-top">{t.nav.product}</p>
-            {product.flatMap((c) => c.links).map((l) => (
+            {product.map((l) => (
               <Item key={l.id} link={l} className="nav__sheet-item" />
             ))}
           </div>

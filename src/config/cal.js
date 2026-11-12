@@ -5,9 +5,9 @@
 // CAL_LINK ya no puede quedar vacío). Esta app es Vite, no Next.js: solo las variables con prefijo
 // VITE_ llegan al navegador, así que el nombre pedido (NEXT_PUBLIC_CALCOM_LINK) no serviría acá.
 // Compartido por CalEmbed.jsx (/lp/facturacion-b2b, /agendar-demo y /powered-by-relvo).
-export const CAL_LINK = import.meta.env.VITE_CALCOM_LINK || 'ricardo-cerda-waak-z2uqe2/demo-relvo'
+const CAL_LINK = import.meta.env.VITE_CALCOM_LINK || 'ricardo-cerda-waak-z2uqe2/demo-relvo'
 
 // Link de respaldo (URL completa, no el slug de arriba) para cuando el embed de Cal.com falla de
 // verdad al cargar (evento linkFailed, o 10s sin linkReady — ver CalEmbed.jsx): CalEmbed.jsx
 // muestra este link en vez de dejar la sección vacía sin avisar.
-export const CAL_LINK_FALLBACK = 'https://cal.com/ricardo-cerda-waak-z2uqe2/demo-relvo'
+export const CAL_LINK_FALLBACK = new URL(CAL_LINK, 'https://cal.com/').href

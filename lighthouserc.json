@@ -1,0 +1,75 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "npx vite preview --port 4318 --strictPort",
+      "startServerReadyPattern": "Local",
+      "url": [
+        "http://localhost:4318/",
+        "http://localhost:4318/precios",
+        "http://localhost:4318/agendar-demo",
+        "http://localhost:4318/producto/contratos-y-pricing",
+        "http://localhost:4318/soluciones/planes-recurrentes"
+      ],
+      "numberOfRuns": 5,
+      "settings": {
+        "chromeFlags": "--no-sandbox --headless=new",
+        "blockedUrlPatterns": [
+          "*googletagmanager.com*",
+          "*apollo.io*",
+          "*cal.com*",
+          "*challenges.cloudflare.com*"
+        ]
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:seo": [
+          "error",
+          {
+            "minScore": 1,
+            "aggregationMethod": "median-run"
+          }
+        ],
+        "categories:accessibility": [
+          "error",
+          {
+            "minScore": 0.95,
+            "aggregationMethod": "median-run"
+          }
+        ],
+        "categories:performance": [
+          "warn",
+          {
+            "minScore": 0.9,
+            "aggregationMethod": "median-run"
+          }
+        ],
+        "largest-contentful-paint": [
+          "warn",
+          {
+            "maxNumericValue": 2500,
+            "aggregationMethod": "median-run"
+          }
+        ],
+        "cumulative-layout-shift": [
+          "error",
+          {
+            "maxNumericValue": 0.1,
+            "aggregationMethod": "median-run"
+          }
+        ],
+        "total-blocking-time": [
+          "warn",
+          {
+            "maxNumericValue": 200,
+            "aggregationMethod": "median-run"
+          }
+        ]
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": ".lighthouseci/reports"
+    }
+  }
+}

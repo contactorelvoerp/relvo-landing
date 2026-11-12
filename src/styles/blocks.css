@@ -20,7 +20,7 @@
 
 /* Tabs verticales + pantalla (01 Rieles y featureTabs) */
 .rails{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);align-items:start;gap:48px}
-.vtabs{display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.vtabs{display:flex;flex-direction:column;min-width:0;border-left:1px solid var(--line)}
 .vtab{display:block;margin-left:-1px;padding:18px 0 18px 22px;border:0;border-left:2px solid transparent;background:none;font-family:var(--font-ui);text-align:left;cursor:pointer}
 .vtab b{display:block;margin-bottom:4px;font-size:17px;font-weight:600;color:var(--text-muted);transition:color .2s}
 .vtab span{display:block;font-size:15px;line-height:1.5;color:var(--text-muted)}
@@ -28,8 +28,10 @@
 .vtab[aria-selected="true"] b{color:var(--text-main)}
 .vtab[aria-selected="true"] span{color:var(--text-body)}
 .vtab:focus-visible{outline-offset:-2px}
+.vtab:hover{background:var(--accent-wash)}
+.vtab:hover b{color:var(--accent)}
 .rails__panel{position:relative;display:grid;place-items:center;min-height:420px;padding:40px;border-radius:var(--radius-lg);background:var(--band-neutral)}
-.rails__screen{display:grid;place-items:center;width:100%}
+.rails__screen{display:grid;place-items:center;width:100%;min-width:0}
 
 /* Panel de reportes: tabs de texto, KPI y gráfico. En desktop el panel tiene alto fijo
    (cambiar de tab no mueve la sección) y las tabs van en una línea sin scroll */
@@ -39,6 +41,8 @@
 .htab[aria-selected="true"]{border-bottom-color:var(--accent);color:var(--text-main)}
 .htab:focus-visible{outline-offset:-2px}
 .report__panel{display:grid;grid-template-columns:240px minmax(0,1fr);align-items:start;gap:40px;height:420px;padding:32px}
+.report__visual{min-width:0;min-height:0;height:100%}
+.report__hint{display:none}
 .kpis{display:flex;flex-direction:column;align-items:flex-start;gap:26px}
 .kpi__label{display:block;font-size:13.5px;color:var(--text-muted)}
 .kpi__value{display:block;margin:6px 0;font-size:44px;font-weight:500;line-height:1.05;letter-spacing:-.03em}
@@ -76,7 +80,11 @@
 .product{display:flex;flex-direction:column;min-height:300px;padding:26px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper);color:var(--text-main);text-decoration:none;transition:border-color .15s}
 a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
 .product--wide{grid-column:span 2}
-.product__title{margin:4px 0 6px;font-size:20px;letter-spacing:-.01em}
+.product__title{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:4px 0 6px;font-size:20px;letter-spacing:-.01em}
+.product__arrow{flex:none;align-self:flex-start;margin-top:3px;color:var(--accent);transition:transform 160ms var(--ease-out)}
+a.product:hover .product__arrow,a.product:focus-visible .product__arrow{transform:translateX(3px)}
+a.product:focus-visible{outline-offset:4px;border-color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.product__arrow,.vtab b{transition:none}a.product:hover .product__arrow,a.product:focus-visible .product__arrow{transform:none}}
 .product__desc{max-width:40ch;margin:0 0 20px;font-size:15px;color:var(--text-body)}
 .mini{margin-top:auto;padding:16px 18px;border:1px solid #EEF0F2;border-radius:var(--radius-md);background:var(--paper);font-size:13px}
 /* Mini gráficos del bento (v2): cifra, barra apilada, histograma, pasos, tareas y área */
@@ -116,7 +124,7 @@ a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
 .ints__more{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:48px;font-size:15px;color:var(--text-muted)}
 @media (prefers-reduced-motion:reduce){
   .ints__track{flex-wrap:wrap;width:auto;gap:20px 40px;animation:none}
-  .ints__dup{display:none}
+  .ints__track .ints__dup{display:none}
 }
 
 /* CTA final: tarjeta verde (prototipo v2.1) dentro de una sección blanca, separada del footer */
@@ -130,18 +138,33 @@ a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
 .cta .link:hover,.band--ink .link:hover{border-bottom-color:#FFFFFF}
 
 @container (max-width:979px){
-  .rails{grid-template-columns:1fr}
+  .rails{grid-template-columns:minmax(0,1fr);gap:28px}
   .rails__panel{padding:20px}
   .report__panel{grid-template-columns:1fr;height:auto;padding:24px}
   .report__chart svg{flex:none;height:auto}
-  /* En mobile las tabs se deslizan, con la barra oculta */
-  .htabs{flex-wrap:nowrap;overflow-x:auto;padding:0 24px;scrollbar-width:none}
-  .htabs::-webkit-scrollbar{display:none}
+  /* La barra de scroll revela que hay más reportes fuera de la pantalla. */
+  .htabs{flex-wrap:nowrap;overflow-x:auto;padding:0 24px;scrollbar-width:thin;scrollbar-color:var(--accent) var(--paper-2)}
+  .htab{flex:none}
   .bento,.case{grid-template-columns:1fr}
   .case{gap:40px}
   .product--wide{grid-column:auto}
 }
-@container (max-width:719px){.cta__content{max-width:84%}}
+@container (min-width:720px) and (max-width:979px){
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@container (max-width:719px){
+  .product{min-height:260px;padding:22px}
+  .cta{padding-block:48px}
+  .cta__content{max-width:100%}
+  .cta .texture{inset:auto -180px -80px auto;width:400px;height:300px;opacity:.3}
+  /* Etiquetas SVG legibles: el gráfico se desplaza dentro de su panel. */
+  .report__chart{min-width:0;overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--accent) var(--paper-2)}
+  .report__hint{display:block;margin:0 0 16px;font-size:12.5px;color:var(--text-soft)}
+  .report__chart::-webkit-scrollbar{height:6px}
+  .report__chart::-webkit-scrollbar-track{background:var(--paper-2)}
+  .report__chart::-webkit-scrollbar-thumb{border-radius:3px;background:var(--accent)}
+  .report .report__chart svg{flex:none;width:640px;max-width:none;height:260px}
+}
 
 /* Header mínimo de una página standalone (src/pages/standalone.js): logo + un solo CTA, sin menú
    ni más salidas. Usado por /lp/facturacion-b2b y /powered-by-relvo. */
@@ -152,31 +175,21 @@ a.product:hover{border-color:#BFC6C6;color:var(--text-main)}
 .standalone-top__cta{flex:none}
 @container (max-width:479px){.standalone-top__cta{padding-left:14px;padding-right:14px;font-size:14px}}
 
-/* Calendario de Cal.com + formulario alternativo colapsable (CalPanel.jsx): usado por
-   /lp/facturacion-b2b, /agendar-demo y /powered-by-relvo. */
-.cal-panel__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:start;gap:40px 56px}
-/* Alto fijo del contenedor (Ricardo, 2026-11-02): reservado desde el primer render, antes de que
-   Cal.com cargue de forma diferida — si no, la sección cambia de alto cuando el embed por fin
-   llega y cualquier link con ancla hacia ella termina apuntando a una posición que ya no es la
-   correcta. */
-.cal-panel__cal{display:flex;flex-direction:column;gap:16px;min-height:680px}
-.cal-panel__form{min-width:0;padding:clamp(20px,2.6cqi,28px);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper)}
-.cal-panel__form-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:0;border:0;background:none;font-family:var(--font-ui);font-size:15.5px;font-weight:500;color:var(--text-main);text-align:left;cursor:default}
-.cal-panel__form-chevron{display:none;flex:none;width:16px;height:16px;color:var(--text-muted);transition:transform .2s}
-.cal-panel__form-chevron--open{transform:rotate(180deg)}
+/* Shared booking flow: calendar first, email enquiry disclosed underneath. */
+.cal-panel__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;width:100%;max-width:1100px;margin-inline:auto}
+.cal-panel__grid--form-first .cal-panel__form{order:-1}
+.cal-panel__cal{display:flex;flex-direction:column;gap:20px;min-width:0;min-height:680px}
+.cal-panel__heading{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px}
+.cal-panel__heading h2{margin:0;font-size:20px;font-weight:500;letter-spacing:-.02em}
+.cal-panel__heading p{margin:0;font-size:14px;color:var(--text-body)}
+.cal-panel__form{width:100%;max-width:640px;min-width:0;margin-inline:auto;padding:20px 24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper);scroll-margin-top:100px}
+.cal-panel__form-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;margin:0;list-style:none;font-size:16px;font-weight:500;color:var(--text-main);cursor:pointer}
+.cal-panel__form-toggle::-webkit-details-marker{display:none}
+.cal-panel__form-chevron{flex:none;width:16px;height:16px;color:var(--text-body);transition:transform .2s}
+.cal-panel__form[open] .cal-panel__form-chevron{transform:rotate(180deg)}
 .cal-panel__form-body{margin-top:20px}
+.cal-panel__form-intro{margin:0 0 20px;font-size:15px;line-height:1.5;color:var(--text-body)}
 .cal-panel__form .form{padding-top:0}
-/* Botones con texto propio largo (p. ej. "Quiero que me contacten") cruzan el umbral de impeccable
-   para texto + fondo + 0 padding vertical (el resto de los .btn del sitio se centran con flex sobre
-   una altura fija, sin necesitarlo). Padding real, sin cambiar la altura fija (box-sizing:
-   border-box) ni el centrado de los botones con texto más corto. */
 .cal-panel__form .btn{padding-top:7px;padding-bottom:7px}
-
-/* Debajo de los 900px (donde .cal-panel__grid pasa a 1 columna): el formulario es un acordeón de
-   verdad, cerrado por defecto, bajo el calendario. Sobre los 900px queda siempre abierto. */
-@container (max-width:900px){
-  .cal-panel__grid{grid-template-columns:1fr}
-  .cal-panel__form-toggle{cursor:pointer}
-  .cal-panel__form-chevron{display:block}
-  .cal-panel__form-body--closed{display:none}
-}
+@container (max-width:479px){.cal-panel__form{padding:16px 20px}}
+@media (prefers-reduced-motion:reduce){.cal-panel__form-chevron{transition:none}}
