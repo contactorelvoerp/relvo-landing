@@ -5,6 +5,7 @@
       "startServerReadyPattern": "Local",
       "url": [
         "http://localhost:4318/",
+        "http://localhost:4318/en",
         "http://localhost:4318/precios",
         "http://localhost:4318/agendar-demo",
         "http://localhost:4318/producto/contratos-y-pricing",
@@ -18,7 +19,8 @@
           "*apollo.io*",
           "*cal.com*",
           "*challenges.cloudflare.com*"
-        ]
+        ],
+        "extraHeaders": "{\"Accept-Language\": \"es-CL,es;q=0.9\"}"
       }
     },
     "assert": {
