@@ -54,13 +54,16 @@ const DEVELOPER_LINKS = [
   ['llms-full.txt', `${APP_ORIGIN}/llms-full.txt`, 'la documentación técnica completa en un solo archivo.'],
 ]
 
-// Se arma con los titles y descriptions aprobados de cada página publicada.
+// Se arma con los titles y descriptions aprobados de cada página publicada, en el formato de
+// llmstxt.org: H1, resumen y secciones H2 con listas de enlaces.
 export function llmsTxt() {
   const live = sitemapRoutes()
   const home = live.find((r) => r.id === 'home' && r.locale === 'es')
   const lines = [
     `# ${SITE_NAME}`,
     ...(home ? ['', `> ${home.description}`] : []),
+    '',
+    '## Sitio',
     '',
     ...live.filter((r) => r.id !== 'home').map((r) => `- [${r.title}](${absoluteUrl(r.path)}): ${r.description}`),
     `- [${blog.title}](${absoluteUrl(blog.url)}): ${blog.description}`,
