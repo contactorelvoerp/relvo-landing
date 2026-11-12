@@ -32,6 +32,7 @@ export function PoweredByPage({ t }) {
   // actualiza apenas monta. No hay forma de evitar ese instante sin agregar una función con SSR
   // real solo para esta página — fuera de alcance de esta tarea.
   const [referrer, setReferrer] = useState({ slug: null, name: null })
+  const [prefill, setPrefill] = useState(null)
   useEffect(() => { setReferrer(referrerFromSearch(window.location.search)) }, [])
   // Preserve the referring customer in the lead source.
   const fuente = referrer.slug ? `powered_by_relvo:${referrer.slug}` : 'powered_by_relvo'
@@ -56,7 +57,7 @@ export function PoweredByPage({ t }) {
     <div className="pb">
       <div className="pb-notice"><p>{c.notice}</p></div>
       <header className="standalone-top">
-        <img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" />
+        <a href={homeHref ?? '/'} aria-label="Relvo — Inicio"><img src="/logo-logotype-dark.svg" alt="Relvo" width="102" height="26" /></a>
         <a className="btn btn--primary btn--md standalone-top__cta" href="#agenda" onClick={handleDemoClick('header')}>{t.nav.demo}</a>
       </header>
 
@@ -68,6 +69,7 @@ export function PoweredByPage({ t }) {
             <a className="btn btn--lg btn--primary pb-cta" href="#agenda" onClick={handleDemoClick('hero')}>{c.hero.ctaPrimary}</a>
             <a className="btn btn--lg btn--secondary pb-cta" href="#historia" onClick={handleCtaSecondary}>{c.hero.ctaSecondary}</a>
           </div>
+          <p className="pb-hero-details">{c.hero.details}</p>
         </div>
       </section>
 
@@ -79,7 +81,7 @@ export function PoweredByPage({ t }) {
 
       <section className="section band band--neutral" aria-labelledby="pb-case">
         <Heading id="pb-case" title={homeCopy.es.case.title} />
-        <Case c={homeCopy.es.case} />
+        <Case c={homeCopy.es.case} link={{ href: hrefFor('tgp', 'es'), label: homeCopy.es.case.link }} />
         <div className="stats stats--2 pb-case-stats">
           {c.stats.map(([value, label]) => (
             <div key={label}><b className="stats__value num">{value}</b><p className="stats__label">{label}</p></div>
@@ -98,11 +100,12 @@ export function PoweredByPage({ t }) {
       <section id="agenda" className="section band band--neutral" aria-labelledby="pb-agenda">
         <BandTexture kind="dotsGutter" />
         <Heading id="pb-agenda" title={c.closing.heading} />
-        <CalPanel onBooked={handleBooked} formTitle={c.closing.formTitle}>
+        <CalPanel onBooked={handleBooked} prefill={prefill} formTitle={c.closing.formTitle}>
           <LeadForm
             locale="es"
             fuente={fuente}
             submit={c.closing.formSubmit}
+            onPrefillChange={setPrefill}
           />
         </CalPanel>
       </section>

@@ -86,3 +86,15 @@ test('Spanish mobile timeline respects reduced motion without horizontal overflo
   await expect(page.locator('body')).not.toContainText('[PENDIENTE]')
   await page.screenshot({ path: 'test-results/powered-by-mobile-es.png', fullPage: true })
 })
+
+test('unrecognized and inherited customer slugs never break the referral page', async ({ page }) => {
+  await intercept(page)
+  const errors = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  for (const slug of ['constructor', '__proto__', 'unknown-customer']) {
+    await page.goto(`https://distribution.test/powered-by-relvo?cliente=${slug}`)
+    await expect(page.locator('.lp-head__lead')).toContainText('Tu proveedor usa Relvo')
+    await expect(page.locator('h1')).toHaveCount(1)
+  }
+  expect(errors).toEqual([])
+})

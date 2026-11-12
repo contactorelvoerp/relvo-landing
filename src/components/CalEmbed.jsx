@@ -37,6 +37,7 @@ export function CalEmbed({ onBooked, prefill, locale = 'es', requestContext }) {
   const bookedRef = useRef(onBooked)
   bookedRef.current = onBooked
   const adsClickRef = useRef(null)
+  const attributionRef = useRef(null)
   const bookedUids = useRef(new Set())
   const wrapperRef = useRef(null)
   const appliedPrefill = useRef(false)
@@ -56,7 +57,8 @@ export function CalEmbed({ onBooked, prefill, locale = 'es', requestContext }) {
       if (!entry.isIntersecting) return
       captureAdsClick()
       // Sin click de Ads, la última campaña (UTM) del sitio: la reserva igual queda atribuida.
-      adsClickRef.current = getAdsClick() ?? captureAttribution().last_touch
+      attributionRef.current = captureAttribution()
+      adsClickRef.current = getAdsClick() ?? attributionRef.current.last_touch
       setVisible(true)
     }, { rootMargin: '400px 0px' })
     io.observe(wrapperRef.current)
@@ -128,7 +130,12 @@ export function CalEmbed({ onBooked, prefill, locale = 'es', requestContext }) {
     ...(['startup', 'custom', 'undecided'].includes(requestContext?.plan) ? { plan: requestContext.plan } : {}),
     ...(['demo', 'proposal'].includes(requestContext?.intent) ? { intent: requestContext.intent } : {}),
   }
-  const metadata = { ...Object.fromEntries(METADATA_KEYS.filter((k) => adsClick?.[k]).map((k) => [k, adsClick[k]])), ...context }
+  const attribution = attributionRef.current
+  const metadata = {
+    ...Object.fromEntries(METADATA_KEYS.filter((k) => adsClick?.[k]).map((k) => [k, adsClick[k]])),
+    ...Object.fromEntries(['first_touch', 'last_touch'].filter((key) => attribution?.[key]).map((key) => [`relvo_${key}`, JSON.stringify(attribution[key])])),
+    ...context,
+  }
   // Fallback and embed carry identical campaign and selected-plan context.
   const bookingUrl = new URL(CAL_LINK_FALLBACK)
   for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term']) {

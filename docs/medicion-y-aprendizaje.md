@@ -104,6 +104,8 @@ El evento del calendario embebido (`bookingSuccessfulV2`) no trae nombre ni emai
 
 Cada reserva genera un `submission_id` fijo derivado de su `uid`: los reintentos de Cal.com no duplican nada. Las reprogramaciones y cancelaciones se ignoran.
 
+El calendario y su enlace de respaldo también conservan `relvo_first_touch` y `relvo_last_touch` como JSON en la metadata. Incluyen la referencia opaca del documento y su superficie cuando existen, incluso si después hubo un click de Ads. El webhook vuelve a validar estos campos con `cleanAttribution`; no guarda IDs de clientes ni campos ajenos a la atribución.
+
 ### Puesta en marcha (una vez)
 
 1. Vercel (producción): `CAL_WEBHOOK_SECRET` = un valor aleatorio largo.

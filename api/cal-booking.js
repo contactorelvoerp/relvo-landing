@@ -42,6 +42,12 @@ function response(responses, pattern) {
   return null
 }
 
+// Booking metadata values are strings. Revalidate referral touches before saving them.
+function referralTouch(value) {
+  if (typeof value !== 'string' || value.length > 2000) return null
+  try { return JSON.parse(value) } catch { return null }
+}
+
 export function leadFromBooking(booking) {
   const attendee = booking.attendees?.[0] ?? {}
   const responses = booking.responses ?? {}
@@ -64,7 +70,11 @@ export function leadFromBooking(booking) {
       text(response(responses, /^notes$|problema|message|mensaje/i) ?? booking.additionalNotes),
     ].filter(Boolean).join('\n')),
     fuente: 'cal_booking',
-    attribution: cleanAttribution(isAdsClick ? { ads_click: { ...adsClick, recorded_at: recordedAt } } : { last_touch: { ...adsClick, recorded_at: recordedAt } }),
+    attribution: cleanAttribution({
+      first_touch: referralTouch(metadata.relvo_first_touch),
+      last_touch: referralTouch(metadata.relvo_last_touch) ?? (!isAdsClick ? { ...adsClick, recorded_at: recordedAt } : null),
+      ads_click: isAdsClick ? { ...adsClick, recorded_at: recordedAt } : null,
+    }),
   }
 }
 

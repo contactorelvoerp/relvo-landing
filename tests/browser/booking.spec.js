@@ -21,6 +21,10 @@ test.afterAll(async () => { await new Promise((resolve) => server.close(resolve)
 
 // Exercise the SDK boundary without creating meetings or depending on third-party uptime.
 async function calendarDouble(page) {
+  await page.route('**/*', (route) => {
+    const url = new URL(route.request().url())
+    return url.hostname === '127.0.0.1' ? route.continue() : route.abort()
+  })
   await page.addInitScript(() => {
     const callbacks = {}
     window.__emitCal = (action, data) => (callbacks[action] ?? []).forEach((callback) => callback({ detail: { data } }))
@@ -111,6 +115,29 @@ for (const route of ['/lp/facturacion-b2b', '/powered-by-relvo']) {
     await expect(page.locator('form button[type="submit"]')).toHaveText('Enviar consulta')
   })
 }
+
+test('Powered by document attribution survives calendar booking, fallback and form prefill', async ({ page }) => {
+  await calendarDouble(page)
+  const reference = `v1.${'a'.repeat(64)}`
+  await page.goto(`${base}/powered-by-relvo?utm_source=prefactura&utm_medium=pdf&utm_campaign=powered_by_relvo&ref=${reference}&surface=invoice_next`)
+  await page.locator('.lp-head__ctas a').first().click()
+  await expect.poll(() => page.evaluate(() => Boolean(window.__calendarConfig))).toBe(true)
+  const config = await page.evaluate(() => window.__calendarConfig)
+  expect(JSON.parse(config['metadata[relvo_first_touch]']).reference).toBe(reference)
+  expect(JSON.parse(config['metadata[relvo_last_touch]']).surface).toBe('invoice_next')
+  await page.locator('.cal-panel__form-toggle').click()
+  await page.locator('#lead-nombre').fill('Test Buyer')
+  await page.locator('#lead-email').fill('buyer@example.test')
+  await page.locator('#lead-email').blur()
+  await expect.poll(() => page.evaluate(() => window.__calendarConfig?.email)).toBe('buyer@example.test')
+  expect(await page.evaluate(() => window.__calendarConfig.name)).toBe('Test Buyer')
+  await page.evaluate(() => window.__emitCal('linkFailed'))
+  const fallback = page.locator('.cal-embed--fallback a')
+  await expect(fallback).toBeVisible()
+  const url = new URL(await fallback.getAttribute('href'))
+  expect(JSON.parse(url.searchParams.get('metadata[relvo_first_touch]')).reference).toBe(reference)
+  expect(JSON.parse(url.searchParams.get('metadata[relvo_last_touch]')).reference).toBe(reference)
+})
 
 test('unrecognized query values never become qualification context', async ({ page }) => {
   await calendarDouble(page)

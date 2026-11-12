@@ -209,3 +209,18 @@ test('a booking without an ads click keeps its campaign as the last touch', () =
   assert.equal(lead.empresa, null)
   assert.equal(lead.nombre, 'Ana Pérez')
 })
+
+test('calendar bookings preserve document referrals alongside a later paid click', () => {
+  const referral = { utm_source: 'prefactura', utm_medium: 'pdf', utm_campaign: 'powered_by_relvo', reference: `v1.${'a'.repeat(64)}`, surface: 'invoice_next', landing_path: '/powered-by-relvo' }
+  const lastTouch = { utm_source: 'google', utm_medium: 'cpc', utm_campaign: 'b2b' }
+  const lead = leadFromBooking({ ...booking, metadata: { ...booking.metadata, relvo_first_touch: JSON.stringify(referral), relvo_last_touch: JSON.stringify(lastTouch) } })
+  assert.deepEqual(lead.attribution.first_touch, referral)
+  assert.deepEqual(lead.attribution.last_touch, lastTouch)
+  assert.equal(lead.attribution.ads_click.gclid, booking.metadata.gclid)
+})
+
+test('malformed booking referral metadata cannot break bookings or store private fields', () => {
+  const lead = leadFromBooking({ ...booking, metadata: { utm_source: 'prefactura', relvo_first_touch: '{broken', relvo_last_touch: JSON.stringify({ utm_source: 'prefactura', reference: 'invalid', email: 'private@example.test', client_id: 'private' }) } })
+  assert.equal(lead.attribution.first_touch, null)
+  assert.deepEqual(lead.attribution.last_touch, { utm_source: 'prefactura' })
+})

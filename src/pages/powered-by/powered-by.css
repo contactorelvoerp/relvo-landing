@@ -18,3 +18,11 @@
    pasó detrás de tu correo ↓") y cruzan el mismo umbral de impeccable para texto + fondo + 0
    padding vertical que ya resolvimos en .cal-panel__form .btn (blocks.css) — mismo ajuste acá. */
 .btn.pb-cta{padding-top:7px;padding-bottom:7px}
+.pb-hero-details{margin:16px 0 0;font-size:14px;color:var(--text-soft)}
+
+/* Keep anchor headings clear of the sticky header, including direct hash links. */
+.pb #agenda,.pb #historia{scroll-margin-top:88px}
+@container (max-width:479px){
+  .pb .lp-head__ctas{flex-direction:column;align-items:stretch}
+  .pb .pb-cta{height:auto;min-height:48px;white-space:normal;text-align:center}
+}
