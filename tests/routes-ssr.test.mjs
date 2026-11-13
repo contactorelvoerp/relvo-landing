@@ -26,6 +26,14 @@ test('SSR routes and pages initialize concurrently on cold loads and reloads', {
         const html = renderer.renderDocument(template, route, { production: false })
         assert.ok(html.includes(`data-route="${route.id}:${route.locale}"`), route.path)
         assert.equal((html.match(/<h1\b/g) ?? []).length, 1, route.path)
+        if (route.path === '/' || route.path === '/en') {
+          assert.match(html, /href="https:\/\/app.getrelvo.ai\/login"/)
+          assert.match(html, /href="https:\/\/app.getrelvo.ai\/privacy"/)
+          assert.match(html, /href="https:\/\/app.getrelvo.ai\/terms"/)
+          assert.match(html, /class="footer__google-signin"/)
+          assert.match(html, /Gmail, Drive, Calendar/)
+          assert.doesNotMatch(html, /app\.relvoerp\.com\/(privacy|terms)/)
+        }
       }
       for (const pathname of ['/precios', '/en/pricing', '/producto/contratos-y-pricing', '/en/product/contracts-and-pricing']) {
         assert.equal(router.resolvePath(pathname).status, 'live', pathname)

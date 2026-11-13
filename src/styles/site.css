@@ -156,6 +156,7 @@ img,svg{display:block;max-width:100%}
 .footer__social:hover{background:var(--line-on-ink)}
 .footer__social:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 .footer--simple .footer__legal{justify-content:space-between;align-items:center;margin-top:48px;padding-top:0;border-top:0}
+.footer__google-signin{max-width:80ch;margin:24px 0 0;font-size:14px;line-height:1.5;color:var(--text-on-ink-soft)}
 .footer__legal-links{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}
 @media (max-width:539px){
   .footer__top{display:grid;grid-template-columns:1fr auto;gap:28px 24px;padding-top:28px}

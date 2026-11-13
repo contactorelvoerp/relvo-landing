@@ -17,6 +17,7 @@ export function Footer({ t, locale }) {
           </svg>
         </a>
       </div>
+      <p className="footer__google-signin">{t.footer.googleSignIn}</p>
       <div className="footer__legal">
         <span>{t.footer.legal}</span>
         <div className="footer__legal-links">

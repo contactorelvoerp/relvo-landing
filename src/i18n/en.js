@@ -42,6 +42,7 @@ export const en = {
     privacidad: { name: 'Privacy' },
   },
   footer: {
+    googleSignIn: 'When you sign in with Google, we use your name, email, photo and account ID to identify you. This sign-in does not grant access to Gmail, Drive, Calendar or Contacts.',
     tagline: 'Automated Billing & Collections. Santiago, Chile.',
     legal: '© 2026 Relvo SpA',
   },

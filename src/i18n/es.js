@@ -43,6 +43,7 @@ export const es = {
     privacidad: { name: 'Privacidad' },
   },
   footer: {
+    googleSignIn: 'Al iniciar sesión con Google, usamos tu nombre, correo, foto e ID de cuenta para identificarte. Este inicio de sesión no permite acceder a Gmail, Drive, Calendar ni Contactos.',
     tagline: 'Facturación y cobranza automatizadas. Santiago de Chile.',
     legal: '© 2026 Relvo SpA',
   },

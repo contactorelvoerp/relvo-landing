@@ -20,6 +20,23 @@ test.beforeAll(async () => {
 test.afterAll(async () => { await new Promise((resolve) => server.close(resolve)) })
 
 for (const locale of ['es', 'en']) {
+  for (const width of [390, 1440]) {
+    test(`${locale} homepage exposes Google sign-in disclosure and legal links at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 })
+      await page.emulateMedia({ reducedMotion: 'reduce' })
+      await page.goto(base + (locale === 'es' ? '/' : '/en'))
+      const footer = page.locator('footer')
+      await footer.scrollIntoViewIfNeeded()
+      await expect(footer.locator('.footer__google-signin')).toBeVisible()
+      await expect(footer.locator('.footer__google-signin')).toContainText('Gmail, Drive, Calendar')
+      await expect(footer.locator('a[href="https://app.getrelvo.ai/privacy"]')).toBeVisible()
+      await expect(footer.locator('a[href="https://app.getrelvo.ai/terms"]')).toBeVisible()
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+    })
+  }
+}
+
+for (const locale of ['es', 'en']) {
   for (const width of [320, 390, 768, 1440]) {
     test(`${locale} landing keeps logos and feature panels readable at ${width}px without motion`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 })

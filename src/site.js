@@ -12,8 +12,8 @@ export const APP_LOGIN_URL = 'https://app.getrelvo.ai/login'
 export const EXTERNAL_PAGES = {
   docs: 'https://app.getrelvo.ai/docs/product/es/overview/',
   blog: '/blog',
-  terminos: 'https://app.relvoerp.com/terms',
-  privacidad: 'https://app.relvoerp.com/privacy',
+  terminos: 'https://app.getrelvo.ai/terms',
+  privacidad: 'https://app.getrelvo.ai/privacy',
 }
 export const API_DOCS_URL = 'https://app.getrelvo.ai/docs'
 export const LINKEDIN_URL = 'https://www.linkedin.com/company/relvoai'
