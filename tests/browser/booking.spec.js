@@ -53,7 +53,7 @@ for (const locale of ['es', 'en']) {
       await page.goto(`${base}${demoPath}?plan=startup`)
       await expect(page.locator('h1')).toHaveCount(1)
       await expect(page.locator('.cal-panel__heading')).toContainText('30')
-      await expect(page.locator('.demo__context')).toContainText('Startup')
+      await expect(page.locator('.demo__context')).toContainText('Business')
       await expect(page.locator('#consulta')).not.toHaveAttribute('open')
       await expect(page.locator('.cal-panel__form-body')).toBeHidden()
       await page.locator('.cal-panel__form-toggle').focus()

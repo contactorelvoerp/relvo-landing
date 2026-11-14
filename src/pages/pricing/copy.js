@@ -26,7 +26,7 @@ export const copy = {
     ],
     plans: [
       {
-        id: 'startup', name: 'Startup',
+        id: 'startup', name: 'Business',
         price: 'USD 299', period: '/ mes', summary: 'Hasta 50 contratos',
         limits: ['Hasta 50', '1', '1'],
         cta: 'Agendar demo', intent: 'demo',
@@ -79,7 +79,7 @@ export const copy = {
     ],
     plans: [
       {
-        id: 'startup', name: 'Startup',
+        id: 'startup', name: 'Business',
         price: 'USD 299', period: '/ month', summary: 'Up to 50 contracts',
         limits: ['Up to 50', '1', '1'],
         cta: 'Book a demo', intent: 'demo',

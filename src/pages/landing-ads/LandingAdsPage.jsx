@@ -38,7 +38,7 @@ const scrollToAgenda = scrollToSection('agenda')
 // principal (agendar demo) y una secundaria (formulario de contacto), las dos en la última sección.
 export function LandingAdsPage({ t, locale }) {
   const c = copy[locale]
-  const plan = pricingCopy.es.plans[0] // Startup
+  const plan = pricingCopy.es.plans[0] // Business
   const faq = c.faq.items
   const [adsClick, setAdsClick] = useState(null)
   const [prefill, setPrefill] = useState(null)

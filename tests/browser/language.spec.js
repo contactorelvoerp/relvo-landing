@@ -85,7 +85,7 @@ for (const width of [1440, 390]) {
     await expect(page.locator('h1')).toHaveText('Your billing and collections, in one plan.')
     await expect(page.locator('.pr-plan__amount')).toHaveText(['USD 299', "Let's talk"])
     await expect(page.locator('.pr-plan__period')).toHaveText('/ month')
-    await expect(page.locator('.pr-plan__name')).toHaveText(['Startup', 'Custom'])
+    await expect(page.locator('.pr-plan__name')).toHaveText(['Business', 'Custom'])
     await expect(page.locator('.pr-plan__limits dd')).toHaveText(['Up to 50', '1', '1', 'More than 50', 'Multiple', 'Multiple'])
     await expect(page.getByRole('link', { name: 'Request a proposal', exact: true })).toBeVisible()
     await expect(page.locator('.pr-faq details').filter({ hasNot: page.locator('.pending__tag') }).locator('summary')).toHaveText([
