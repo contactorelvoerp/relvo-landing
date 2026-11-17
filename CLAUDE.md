@@ -28,6 +28,16 @@ Si algo no está en el brief, no va en la web. Si falta un texto, se pide; no se
 - Movimiento lento, con propósito, pausado fuera de pantalla y desactivado con `prefers-reduced-motion`.
 - Test: si una sección podría estar en la web de otro SaaS cambiando el logo, se rehace.
 
+## Skills: prioridad y alcance
+- Este archivo manda. Si un skill contradice CLAUDE.md o tokens.css, gana CLAUDE.md.
+- Invocar skills por nombre; no depender de la activación automática.
+- taste-skill decide composición, layout, escala tipográfica y ritmo. NO elige colores, fuentes ni radios (salen de tokens.css), NO propone fotos stock, degradados, blur ni glow.
+- Componentes: reutilizar src/blocks, src/visuals y src/components antes de crear nada nuevo. Impeccable (/audit, /polish) revisa la implementación; better-ui solo ajusta detalles dentro de tokens.css.
+- Rendimiento: lo controla el CI del repo (Lighthouse mobile, knip, check:links), no un skill.
+- Copy (hormozi): solo cifras, clientes y citas ya aprobados (1.000+ facturas/mes, 3 países, 80% menos tiempo, TGP 6→3 días y 70%, 2 semanas de implementación, desde USD 299). Prohibido inventar garantías, urgencia, escasez, bonos o testimonios. Todo copy nuevo se marca [PROPUESTA] hasta que Ricardo lo apruebe.
+- Impeccable (npm run check:design) es el gate final; ningún skill lo reemplaza ni lo desactiva.
+- Flujo: copy (hormozi) → dirección (taste-skill) → build con componentes existentes → Impeccable /audit y /polish → CI.
+
 ## Design tokens (DS v1.4, solo modo claro)
 - Acento único: verde #186666 (hover #2E8080, pressed #0F4A4A). Menta #DFF4EB. Positivo #3F7A1C. Requiere revisión: tono ámbar del DS.
 - Texto: #13131E (nunca negro puro), jerarquía de 4 niveles; #ABABB7 nunca como texto sobre blanco. Contraste mínimo 4,5:1.
