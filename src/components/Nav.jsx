@@ -3,8 +3,16 @@ import { hrefFor } from '../routes'
 import { API_DOCS_URL, APP_LOGIN_URL } from '../site'
 import { LanguageSwitch } from './LanguageSwitch'
 
-// Orden por filas: funciones principales primero, automatización y reportes después.
-const PRODUCT = ['cxc', 'contratos', 'medicion', 'aprobaciones', 'agentes', 'reporteria']
+const PRODUCT_FLOW = ['contratos', 'medicion', 'aprobaciones', 'cxc']
+const PRODUCT_SUPPORT = ['agentes', 'reporteria']
+const PRODUCT_MARKS = {
+  contratos: 'M5 3h7l3 3v11H5z M12 3v4h3 M8 10h4 M8 13h4',
+  medicion: 'M6 2.5h8a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 16V4A1.5 1.5 0 0 1 6 2.5Z M7 6h6 M7.5 10h.5 M12 10h.5 M7.5 13.5h.5 M12 13.5h.5',
+  aprobaciones: 'M3 6l1.7 1.7L8 4.5 M10.5 6.5H17 M3.5 11h3v3h-3z M10.5 12.5H17 M3.5 17h3 M10.5 17H17',
+  cxc: 'M4.5 14H3V2.5h10V4 M6.5 5.5h10V17.5h-10z M11.5 7.5v8 M13.5 9h-3a1.25 1.25 0 0 0 0 2.5h2a1.25 1.25 0 0 1 0 2.5h-3',
+  agentes: 'M10 2.5 12 8l5.5 2-5.5 2-2 5.5-2-5.5-5.5-2L8 8z',
+  reporteria: 'M4 4v12h12 M7 12l3-3 2 1 4-5',
+}
 const SOLUTIONS = [
   // Ola 2: se muestran por nombre, sin link, hasta que sus páginas existan.
   { key: 'teams', ids: ['revops', 'finanzas', 'ingenieria'], showWithoutPage: true },
@@ -23,9 +31,10 @@ function Chevron() {
 }
 
 // Página construida: link. Página aún no construida (columna "Para equipos"): solo el nombre.
-function Item({ link, className, nameClass }) {
+function Item({ link, className, nameClass, marker }) {
   const content = (
     <>
+      {marker}
       <span className={nameClass}>{link.name}</span>
       {link.desc && <span className="nav__item-desc">{link.desc}</span>}
     </>
@@ -41,6 +50,32 @@ function Column({ index, title, links }) {
       <p className="nav__col-title">{index && <span>{index}</span>}<span>{title}</span></p>
       {links.map((l) => <Item key={l.id} link={l} className="nav__item" nameClass="nav__item-name" />)}
     </div>
+  )
+}
+
+function ProductLinks({ flow, support }) {
+  const renderItem = (link) => (
+    <Item
+      key={link.id}
+      link={link}
+      className="nav__item nav__product-item"
+      nameClass="nav__item-name"
+      marker={
+        <span className="nav__product-mark" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+            <path d={PRODUCT_MARKS[link.id]} />
+          </svg>
+        </span>
+      }
+    />
+  )
+  return (
+    <>
+      <div className="nav__product-grid">{flow.map(renderItem)}</div>
+      {support.length > 0 && (
+        <div className="nav__product-grid nav__product-grid--support">{support.map(renderItem)}</div>
+      )}
+    </>
   )
 }
 
@@ -88,7 +123,10 @@ export function Nav({ t, locale, pageId }) {
     .map((g) => ({ ...g, title: titles[g.key], links: links(g.ids, g.showWithoutPage) }))
     .filter((g) => g.links.length > 0)
 
-  const product = links(PRODUCT)
+  const productLinks = (ids) => links(ids).map((link) => ({ ...link, ...t.nav.productItems[link.id] }))
+  const flow = productLinks(PRODUCT_FLOW)
+  const support = productLinks(PRODUCT_SUPPORT)
+  const hasProduct = flow.length + support.length > 0
   const solutions = SHOW_SOLUTIONS ? columns(SOLUTIONS, t.nav) : []
   const resources = links(RESOURCES)
   const docs = hrefFor('docs', locale)
@@ -137,7 +175,7 @@ export function Nav({ t, locale, pageId }) {
   )
 
   return (
-    <header ref={root} className={`nav${open && open !== 'mobile' ? ' nav--open' : ''}${open === 'product' || open === 'solutions' ? ' nav--mega' : ''}`} onPointerLeave={leave}
+    <header ref={root} className="nav" onPointerLeave={leave}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget)) {
           hovered.current = null
@@ -150,7 +188,7 @@ export function Nav({ t, locale, pageId }) {
       <nav className="nav__bar nav__bar--desktop" aria-label={t.nav.menu}>
         {logo(26)}
         <div className="nav__links">
-          {product.length > 0 && trigger('product', t.nav.product)}
+          {hasProduct && trigger('product', t.nav.product)}
           {solutions.length > 0 && trigger('solutions', t.nav.solutions)}
           {customers && <a className="nav__link" href={customers} onPointerEnter={hover(null)}>{t.nav.customers}</a>}
           {resources.length > 0 && (
@@ -173,9 +211,7 @@ export function Nav({ t, locale, pageId }) {
       <div id="nav-product" className="nav__panel nav__panel--product" hidden={open !== 'product'}>
         <div className="nav__product-group">
           <p className="nav__product-label">{t.nav.product}</p>
-          <div className="nav__product-grid">
-            {product.map((l) => <Item key={l.id} link={l} className="nav__item nav__product-item" nameClass="nav__item-name" />)}
-          </div>
+          <ProductLinks flow={flow} support={support} />
         </div>
         {docs && (
           <div className="nav__developers">
@@ -201,12 +237,10 @@ export function Nav({ t, locale, pageId }) {
         </div>
       </nav>
       <div id="nav-mobile" className="nav__sheet" hidden={open !== 'mobile'}>
-        {product.length > 0 && (
+        {hasProduct && (
           <div className="nav__sheet-group">
             <p className="nav__sheet-top">{t.nav.product}</p>
-            {product.map((l) => (
-              <Item key={l.id} link={l} className="nav__sheet-item" />
-            ))}
+            <ProductLinks flow={flow} support={support} />
           </div>
         )}
         {solutions.length > 0 && (

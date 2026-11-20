@@ -3,6 +3,14 @@
 export const es = {
   nav: {
     product: 'Producto',
+    productItems: {
+      contratos: { name: 'Contratos y reglas de cobro', desc: 'Convierte lo acordado con cada cliente en reglas de cobro: precio fijo, por consumo o por hitos.' },
+      medicion: { name: 'Cálculo por período', desc: 'Relvo calcula automáticamente cuánto cobrar en cada período, según lo acordado y el consumo de cada cliente.' },
+      aprobaciones: { name: 'Órdenes de compra y aprobaciones', desc: 'Agrega las OCs y aprobaciones que cada cliente requiera para emitir su factura.' },
+      cxc: { name: 'Facturación, cobro y conciliación', desc: 'Emite facturas, da seguimiento al cobro y concilia los pagos.' },
+      agentes: { name: 'Agentes de IA', desc: 'Leen OCs, hacen seguimiento por correo y avisan a tu equipo cuando hace falta intervenir.' },
+      reporteria: { name: 'Inteligencia de ingresos', desc: 'Ve la reportería de tus ingresos, del contrato al pago. Entiende qué impulsa tus ingresos y dónde puedes crecer.' },
+    },
     solutions: 'Soluciones',
     customers: 'Clientes',
     resources: 'Recursos',

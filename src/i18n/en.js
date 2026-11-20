@@ -2,6 +2,14 @@
 export const en = {
   nav: {
     product: 'Product',
+    productItems: {
+      contratos: { name: 'Contracts and billing rules', desc: 'Turn each customer’s agreement into billing rules for fixed fees, consumption or milestones.' },
+      medicion: { name: 'Billing calculations by period', desc: 'Relvo automatically calculates what to charge each period based on each customer’s agreement and consumption.' },
+      aprobaciones: { name: 'Purchase orders and approvals', desc: 'Add the purchase orders and approvals each customer requires before issuing their invoice.' },
+      cxc: { name: 'Invoicing, collections and reconciliation', desc: 'Issue invoices, follow up on collections and reconcile payments.' },
+      agentes: { name: 'AI agents', desc: 'Read purchase orders, follow up by email and alert your team when they need to step in.' },
+      reporteria: { name: 'Revenue intelligence', desc: 'See your revenue reports from contract to payment. Understand what drives revenue and where you can grow.' },
+    },
     solutions: 'Solutions',
     customers: 'Customers',
     resources: 'Resources',

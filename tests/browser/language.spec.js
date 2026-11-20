@@ -62,12 +62,12 @@ for (const width of [1440, 390, 320]) {
 }
 
 const products = [
-  ['contracts-and-pricing', 'contratos-y-pricing', 'Quote to contract', 'Contracts and pricing: any model, turned into exact rules.'],
-  ['usage-metering', 'medicion-del-consumo', 'Usage-based billing', "Usage metering: your customers' usage, ready to bill."],
+  ['contracts-and-pricing', 'contratos-y-pricing', 'Contracts and billing rules', 'Contracts and pricing: any model, turned into exact rules.'],
+  ['usage-metering', 'medicion-del-consumo', 'Billing calculations by period', "Usage metering: your customers' usage, ready to bill."],
   ['approvals-and-purchase-orders', 'aprobaciones-y-ordenes-de-compra', 'Purchase orders and approvals', 'Approvals and purchase orders: no invoice goes out without its PO.'],
-  ['accounts-receivable', 'cuentas-por-cobrar', 'Billing and collections', 'Invoice, collect and reconcile without a spreadsheet.'],
+  ['accounts-receivable', 'cuentas-por-cobrar', 'Invoicing, collections and reconciliation', 'Invoice, collect and reconcile without a spreadsheet.'],
   ['agents', 'agentes', 'AI agents', 'AI agents that handle the manual work of collections.'],
-  ['reporting', 'reporteria', 'Revenue reporting', 'SaaS/AI reporting: your revenue metrics, without spreadsheets.'],
+  ['reporting', 'reporteria', 'Revenue intelligence', 'SaaS/AI reporting: your revenue metrics, without spreadsheets.'],
 ]
 
 for (const width of [1440, 390]) {
