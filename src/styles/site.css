@@ -73,7 +73,18 @@ img,svg{display:block;max-width:100%}
 .nav__bar{position:relative;align-items:center;background:var(--paper)}
 /* El filete del nav cruza toda la pantalla aunque el sitio tenga ancho máximo */
 .nav__bar::after{content:"";position:absolute;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);border-bottom:1px solid var(--line)}
-.nav__bar--desktop{display:flex;isolation:isolate;gap:36px;height:76px;padding:0 var(--gutter);box-shadow:var(--shadow-nav)}
+.nav__bar--desktop{display:flex;isolation:isolate;gap:36px;height:76px;padding:0 var(--gutter)}
+@media (hover:hover){
+  .nav__bar--desktop:hover::before{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    inset:0 var(--rail-x);
+    box-shadow:var(--shadow-nav);
+    clip-path:inset(0 0 -12px);
+    pointer-events:none;
+  }
+}
 .nav__bar--mobile{display:none;gap:8px;height:64px;padding:0 var(--gutter)}
 .nav__bar--mobile .btn{min-height:44px}
 .nav__bar--mobile .language-switch__option{min-width:44px;min-height:44px}
