@@ -131,25 +131,53 @@
   .agents,.paths{grid-template-columns:1fr}
 }
 
-/* Hero "amanecer" (N9): la rosa del brand book en verde asoma desde la línea del carrusel de logos.
-   Capa decorativa entre el fondo de la banda y el texto; sube una sola vez y queda quieta. */
-.hero--amanecer{padding-top:clamp(48px,5.5cqi,96px);clip-path:inset(0 -100vmax)}
-.band.hero--amanecer::after{z-index:-2}
-/* El borde superior del carrusel es el horizonte: un tono más marcado que las divisiones internas */
-.hero--amanecer .logo-strip{margin-top:0;border-top-color:var(--ink-300)}
-.hero__horizonte{position:relative;height:clamp(150px,17vw,250px)}
-.hero__cielo{position:absolute;bottom:0;left:calc(50% - 50vw);z-index:-1;width:100vw;height:200vh;overflow:hidden;pointer-events:none}
-/* Sube una vez y después gira muy lento (una vuelta cada 5 min); se pausa fuera de pantalla */
-.hero__sol{--sol:clamp(430px,70vw,1100px);position:absolute;bottom:0;left:50%;width:var(--sol);max-width:none;height:auto;opacity:.6;transform:translate(-50%,70%);user-select:none;animation:relvo-amanecer 2.4s cubic-bezier(.2,.7,.2,1) .2s both,relvo-giro 300s linear 2.6s infinite}
-.hero--offscreen .hero__sol{animation-play-state:paused}
-@keyframes relvo-amanecer{from{transform:translate(-50%,92%)}}
-@keyframes relvo-giro{to{rotate:360deg}}
-@media (prefers-reduced-motion:reduce){.hero__sol{animation:none}}
-.hero--amanecer .hero__copy{flex-basis:1160px}
-.hero--amanecer .hero__title{max-width:none;margin-top:30px;font-size:clamp(40px,5.4cqi,80px);letter-spacing:-.035em}
-.hero__title-em{color:var(--accent)}
-.hero--amanecer .btn--secondary{border-color:var(--text-muted)}
+/* Light split hero: rotating brand ring. */
+.hero--split{padding-top:0;overflow:hidden}
+.hero--split .hero__top{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:center;gap:48px;min-height:700px;padding-block:88px}
+/* Crop the ring at the section rails and above the logo strip. */
+.hero--split .hero__top{clip-path:inset(0 var(--rail-inset))}
+.hero--split .hero__copy{position:relative;z-index:1}
+.hero--split .hero__eyebrow{font-size:18px;font-weight:400;font-style:italic}
+.hero--split .hero__title{margin-top:24px;font-size:clamp(44px,5.1cqi,76px);line-height:1.04;letter-spacing:-.045em;text-wrap:pretty}
+.hero__title-em{
+  color:var(--accent);
+  background:linear-gradient(transparent 42%,var(--mint) 42% 74%,transparent 74%);
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+}
+.hero--split .hero__subtitle{max-width:49ch;margin-top:28px;font-size:clamp(18px,1.6cqi,22px)}
+.hero__agent{position:relative;display:grid;align-items:center;justify-items:center;min-width:0;min-height:460px}
+.hero__ring{position:absolute;margin-left:340px;width:clamp(620px,62vw,1000px);height:auto;max-width:none;opacity:.48;pointer-events:none;animation:hero-ring-turn 240s linear infinite}
+.hero--offscreen .hero__ring{animation-play-state:paused}
+.hero--split .logo-strip{position:relative;margin-top:0;background:var(--paper)}
+@keyframes hero-ring-turn{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.hero__ring{animation:none}}
+@container (max-width:979px){
+  .hero--split .hero__top{grid-template-columns:1fr;gap:32px;padding-block:56px 36px;min-height:0}
+  .hero--split .hero__copy{max-width:700px}
+  .hero--split .hero__title{font-size:clamp(42px,7.5cqi,68px)}
+  .hero__agent{min-height:350px}
+  .hero__ring{width:640px;margin-left:80px}
+}
+@container (max-width:719px){
+  .hero--split .hero__top{padding-block:40px 0;gap:24px}
+  .hero--split .hero__copy{align-items:center;text-align:center}
+  .hero--split .hero__title{text-wrap:balance}
+  .hero--split .hero__ctas{justify-content:center}
+  .hero__agent{min-height:48px}
+  .hero__ring{
+    inset-block-start:-110px;
+    left:50%;
+    width:130cqi;
+    margin-left:0;
+    translate:-50% 0;
+    transform-origin:center;
+  }
+}
 @container (max-width:479px){
+  .hero--split .hero__eyebrow{font-size:16px}
+  .hero__agent{min-height:28px}
+  .hero__ring{inset-block-start:-158px}
   .hero__ctas{width:100%;max-width:360px}
   .hero__ctas .btn{flex:1 1 180px}
 }

@@ -46,7 +46,7 @@ for (const width of [1440, 390, 320]) {
     await expect(page).toHaveURL(`${base}/en?lang=en&utm_source=language-test`)
     await expect(page.locator('html')).toHaveAttribute('lang', 'en')
     await expect(page.locator('body')).not.toContainText('[PENDIENTE]')
-    await expect(page.locator('h1')).toHaveText('Your billing and collections, on autopilot.')
+    await expect(page.locator('h1')).toHaveText('What you sell, invoiced and collected without manual work.')
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
     await page.goto(`${base}/`)
     await expect(page).toHaveURL(`${base}/en`)

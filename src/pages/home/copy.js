@@ -4,9 +4,10 @@
 export const copy = {
   es: {
     hero: {
-      eyebrow: 'Automatiza tus ingresos, de la cotización al pago',
-      title: 'Tu facturación y cobranza, en\u00a0piloto automático.',
-      subtitle: 'Relvo calcula, factura, cobra y concilia por ti, para que tus ingresos crezcan sin hacer crecer tu equipo.',
+      eyebrow: 'Tu analista de ingresos B2B',
+      title: 'Lo que vendes, facturado y cobrado sin trabajo manual.',
+      emphasis: 'sin trabajo manual.',
+      subtitle: 'Calculamos cuánto cobrar según tus acuerdos comerciales. Agentes de IA gestionan las OCs, emiten facturas y hacen seguimiento hasta el pago.',
       demo: 'Agendar demo',
       how: 'Ver cómo funciona',
       logos: 'Operan su revenue con Relvo',
@@ -219,9 +220,10 @@ export const copy = {
   // EN: translation completed for the language switch; editorial review remains pending.
   en: {
     hero: {
-      eyebrow: 'Automate your revenue, from quote to cash',
-      title: 'Your billing and collections, on autopilot.',
-      subtitle: 'Relvo calculates, bills, collects and reconciles for you, so your revenue grows without growing your team.',
+      eyebrow: 'Your B2B revenue analyst',
+      title: 'What you sell, invoiced and collected without manual work.',
+      emphasis: 'without manual work.',
+      subtitle: 'We calculate what to charge based on your commercial agreements. AI agents manage purchase orders, issue invoices and follow up until payment.',
       demo: 'Book a demo',
       how: 'See how it works',
       logos: 'They run their revenue on Relvo',

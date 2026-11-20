@@ -31,8 +31,8 @@ export function HomePage({ t, locale }) {
   const pricing = hrefFor('precios', locale)
   const usage = hrefFor('uso', locale)
 
-  // El tramo final del H1 (después de la última coma) va en verde; el texto no cambia.
-  const cut = c.hero.title.lastIndexOf(', ')
+  // Highlight the closing benefit without changing the accessible headline.
+  const cut = c.hero.title.indexOf(c.hero.emphasis)
   const heroRef = useRef(null)
   // La figura del hero se pausa fuera de pantalla.
   useEffect(() => {
@@ -44,12 +44,12 @@ export function HomePage({ t, locale }) {
 
   return (
     <>
-      <section ref={heroRef} className="section band band--first hero hero--centered hero--amanecer">
+      <section ref={heroRef} className="section band band--first hero hero--split">
         <div className="hero__top">
           <div className="hero__copy">
             <p className="hero__eyebrow">{c.hero.eyebrow}</p>
             <h1 className="hero__title">
-              {cut < 0 ? c.hero.title : <>{c.hero.title.slice(0, cut + 1)} <span className="hero__title-em">{c.hero.title.slice(cut + 2)}</span></>}
+              {cut < 0 ? c.hero.title : <>{c.hero.title.slice(0, cut)}<span className="hero__title-em">{c.hero.title.slice(cut)}</span></>}
             </h1>
             <p className="hero__subtitle">{c.hero.subtitle}</p>
             <div className="hero__ctas">
@@ -57,11 +57,9 @@ export function HomePage({ t, locale }) {
               <a className="btn btn--secondary btn--lg" href="#como-funciona">{c.hero.how}</a>
             </div>
           </div>
-        </div>
-        {/* Figura de marca (rosa, brand book) que asoma desde la línea del carrusel de logos */}
-        <div className="hero__horizonte" aria-hidden="true">
-          <div className="hero__cielo">
-            <img className="hero__sol" src="/brand/figuras/rosa-verde.svg" alt="" width="216" height="216" decoding="async" />
+          <div className="hero__agent">
+            <img className="hero__ring" src="/brand/figuras/anillo-agente-verde.svg" alt="" width="216" height="216" aria-hidden="true" />
+
           </div>
         </div>
         <LogoStrip label={c.hero.logos} />
