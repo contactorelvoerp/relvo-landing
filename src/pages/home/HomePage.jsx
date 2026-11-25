@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { hrefFor } from '../../routes'
 import { BandTexture } from '../../components/BandTexture'
 import { LogoStrip } from '../../components/LogoStrip'
+import { HeroFigure } from './HeroFigure'
 import { ThreeLayers } from './ThreeLayers'
 import { Rails } from './Rails'
 import { Agents } from './Agents'
@@ -23,7 +24,7 @@ const LATAM_ICONS = [
 ]
 
 
-export function HomePage({ t, locale }) {
+export function HomePage({ t, locale, heroPalette = 'day' }) {
   const c = copy[locale]
   const demo = hrefFor('demo', locale)
   const plans = hrefFor('planes', locale)
@@ -44,10 +45,13 @@ export function HomePage({ t, locale }) {
 
   return (
     <>
-      <section ref={heroRef} className="section band band--first hero hero--split">
+      <section ref={heroRef} className="section band band--first hero hero--split" data-palette={heroPalette}>
         <div className="hero__top">
           <div className="hero__copy">
-            <p className="hero__eyebrow">{c.hero.eyebrow}</p>
+            <p className="hero__eyebrow" key={locale} style={{ '--eyebrow-characters': c.hero.eyebrow.length }}>
+              <span className="hero__eyebrow-reserve">{c.hero.eyebrow}</span>
+              <span className="hero__eyebrow-typing" aria-hidden="true">{c.hero.eyebrow}</span>
+            </p>
             <h1 className="hero__title">
               {cut < 0 ? c.hero.title : <>{c.hero.title.slice(0, cut)}<span className="hero__title-em">{c.hero.title.slice(cut)}</span></>}
             </h1>
@@ -58,7 +62,7 @@ export function HomePage({ t, locale }) {
             </div>
           </div>
           <div className="hero__agent">
-            <img className="hero__ring" src="/brand/figuras/anillo-agente-verde.svg" alt="" width="216" height="216" aria-hidden="true" />
+            <HeroFigure palette={heroPalette} />
 
           </div>
         </div>

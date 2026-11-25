@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relvo — Landing palettes</title>
+<style>
+@font-face{font-family:Geist;src:url('/fonts/geist-mono/GeistMono-Regular.woff2')}
+*{box-sizing:border-box}body{margin:0;padding:24px;background:#f5f6f7;color:#13131e;font-family:Arial,sans-serif}header{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:24px}h1{font-size:26px;font-weight:500;margin:0 0 8px}p{margin:0;color:#5c5c69;font-size:14px}a{color:#186666;text-underline-offset:4px}.grid{display:grid;grid-template-columns:repeat(4,minmax(280px,1fr));align-items:start;gap:24px}.card{position:relative;border:1px solid #dedee4;background:white;border-radius:10px}.label{position:sticky;top:0;z-index:2;background:white;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px;border-bottom:1px solid #dedee4}.label a{font:14px Geist,monospace;text-transform:uppercase}.label p{font-size:12px;margin-top:6px}.swatches{display:flex;gap:5px}.swatches i{width:22px;height:22px;border-radius:50%;background:var(--color)}.preview{position:relative;width:100%;height:450px;overflow:hidden}iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:top left;pointer-events:none}@media(max-width:800px){body{padding:16px}.grid{gap:12px}header{align-items:flex-start;flex-direction:column}h1{font-size:22px}}
+</style>
+</head>
+<body>
+<header><div><h1>Landing palettes</h1><p>Four complete landings, from navigation to footer. Scroll to compare each section; open a palette for full size.</p></div><a href="/">View automatic time of day ↗</a></header>
+<main class="grid">
+<section class="card"><div class="label"><div><a href="/?heroPalette=dawn" target="_blank" rel="noopener">Dawn ↗</a><p>05:00–10:00 · Lilac / peach / teal</p></div><div class="swatches"><i style="--color:#B87BB9"></i><i style="--color:#E39A76"></i><i style="--color:#65AAA0"></i></div></div><div class="preview"><iframe title="Dawn landing palette" src="/?heroPalette=dawn" tabindex="-1"></iframe></div></section>
+<section class="card"><div class="label"><div><a href="/?heroPalette=day" target="_blank" rel="noopener">Day ↗</a><p>10:00–17:00 · Teal / aqua / sky</p></div><div class="swatches"><i style="--color:#186666"></i><i style="--color:#37A9A0"></i><i style="--color:#78ADD4"></i></div></div><div class="preview"><iframe title="Day landing palette" src="/?heroPalette=day" tabindex="-1"></iframe></div></section>
+<section class="card"><div class="label"><div><a href="/?heroPalette=sunset" target="_blank" rel="noopener">Sunset ↗</a><p>17:00–21:00 · Amber / coral / violet</p></div><div class="swatches"><i style="--color:#EDAD55"></i><i style="--color:#D67578"></i><i style="--color:#8265B1"></i></div></div><div class="preview"><iframe title="Sunset landing palette" src="/?heroPalette=sunset" tabindex="-1"></iframe></div></section>
+<section class="card"><div class="label"><div><a href="/?heroPalette=night" target="_blank" rel="noopener">Night ↗</a><p>21:00–05:00 · Indigo / lavender / teal</p></div><div class="swatches"><i style="--color:#384C99"></i><i style="--color:#8175BC"></i><i style="--color:#3F999A"></i></div></div><div class="preview"><iframe title="Night landing palette" src="/?heroPalette=night" tabindex="-1"></iframe></div></section>
+</main>
+<script>
+const previews=[...document.querySelectorAll('.preview')];
+function resize(preview){
+  const frame=preview.querySelector('iframe');
+  const scale=preview.clientWidth/1440;
+  const site=frame.contentDocument?.querySelector('.site');
+  const height=site ? Math.ceil(site.getBoundingClientRect().height) : 900;
+  frame.style.height=height+'px';
+  frame.style.transform=`scale(${scale})`;
+  preview.style.height=(height*scale)+'px';
+}
+const observer=new ResizeObserver(entries=>entries.forEach(entry=>resize(entry.target)));
+previews.forEach(preview=>{
+  observer.observe(preview);
+  const frame=preview.querySelector('iframe');
+  frame.addEventListener('load',()=>{
+    const site=frame.contentDocument.querySelector('.site');
+    if(site)new ResizeObserver(()=>resize(preview)).observe(site);
+    // Load below-fold artwork for the full-page comparison.
+    frame.contentDocument.querySelectorAll('img[loading="lazy"]').forEach(img=>img.loading='eager');
+    resize(preview);
+  });
+});
+</script>
+</body>
+</html>

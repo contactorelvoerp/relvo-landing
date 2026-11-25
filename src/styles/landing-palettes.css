@@ -1,0 +1,10 @@
+/* Time-of-day themes scoped to the home landing, including its navigation and footer. */
+.site[data-palette="dawn"]{--accent:#825078;--accent-hover:#704266;--accent-pressed:#593451;--mint:#F6E5E9;--accent-wash:#FBF2F4;--text-main:#2C2330;--text-body:#554653;--text-soft:#685466}
+.site[data-palette="day"]{--accent:#186666;--accent-hover:#155858;--accent-pressed:#0F4A4A;--mint:#DFF4EB;--accent-wash:#F0F9F5;--text-main:#192A30;--text-body:#3F5358;--text-soft:#52666B}
+.site[data-palette="sunset"]{--accent:#A14F52;--accent-hover:#8C4248;--accent-pressed:#70333E;--mint:#FBE8D8;--accent-wash:#FFF5EC;--text-main:#30232D;--text-body:#5B454E;--text-soft:#6E555B}
+.site[data-palette="night"]{--accent:#514B91;--accent-hover:#433D7C;--accent-pressed:#353062;--mint:#EAE6F7;--accent-wash:#F5F3FC;--text-main:#23243B;--text-body:#494B65;--text-soft:#60617A}
+.site[data-palette]{--focus-ring:var(--accent)}
+.site[data-palette] .btn--secondary{color:var(--accent);border-color:var(--accent)}
+.site[data-palette] .btn--secondary:hover{background:var(--accent-wash)}
+.site[data-palette] .btn--secondary:active{background:var(--mint)}
+.site[data-palette]{--ink:var(--text-main);--ink-2:color-mix(in srgb,var(--ink),white 6%);--band-ink:var(--ink);--panel-on-ink:var(--ink-2);--card-dark:var(--ink-2);--band-green:var(--accent);--band-neutral:var(--accent-wash);--paper-2:var(--accent-wash);--mint-50:var(--accent-wash);--green-300:color-mix(in srgb,var(--accent),white 55%);--accent-on-ink:var(--green-300);--text-on-green-soft:var(--mint);--text-on-ink-soft:color-mix(in srgb,var(--mint),white 30%);--text-on-ink-muted:color-mix(in srgb,var(--mint),var(--ink) 25%);--text-muted:var(--text-soft);--line-rule:var(--ink);--line:color-mix(in srgb,var(--accent),white 80%);--line-soft:color-mix(in srgb,var(--accent),white 91%);--chip-bg:var(--mint);--chip-fg:var(--accent-pressed);--chip-bg-on-dark:color-mix(in srgb,var(--accent),transparent 75%);--chip-fg-on-dark:var(--green-300);color:var(--text-main)}

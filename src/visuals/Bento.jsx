@@ -7,8 +7,8 @@ import { Check, TaskIcon } from './cards'
 // Tokens por día de octubre (ejemplo), en % del día más alto
 const DAYS = [12, 18, 15, 22, 30, 26, 34, 28, 40, 36, 45, 38, 50, 44, 58, 52, 63, 55, 70, 61, 74, 66, 80, 72, 86, 78, 90, 84, 95, 88]
 // Mezcla del total del período y antigüedad de cuentas por cobrar (ejemplo), con colores del DS
-const MIX = [[16, '#13131E'], [8, '#8CC7C7'], [76, '#633BF2']]
-const AGING = [[70, '#186666'], [22, '#8A5A00'], [8, '#A3302A']]
+const MIX = [[16, 'var(--ink)'], [8, 'var(--accent-on-ink)'], [76, 'var(--uso)']]
+const AGING = [[70, 'var(--accent)'], [22, '#8A5A00'], [8, '#A3302A']]
 
 function Figure({ amount, label, delta }) {
   return <div className="mini__figure"><b className="num">{amount}</b><small>{label}</small>{delta && <span className="mini__delta">{delta}</span>}</div>
@@ -45,8 +45,8 @@ const MINIS = {
     <>
       <Figure {...c} />
       <svg className="mini__area" viewBox="0 0 400 70" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 58 L57 54 L114 52 L171 46 L228 40 L285 34 L342 26 L400 18 L400 70 L0 70Z" fill="#DFF4EB" />
-        <polyline points="0,58 57,54 114,52 171,46 228,40 285,34 342,26 400,18" fill="none" stroke="#186666" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+        <path d="M0 58 L57 54 L114 52 L171 46 L228 40 L285 34 L342 26 L400 18 L400 70 L0 70Z" fill="var(--mint)" />
+        <polyline points="0,58 57,54 114,52 171,46 228,40 285,34 342,26 400,18" fill="none" stroke="var(--accent)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
       </svg>
     </>
   ),

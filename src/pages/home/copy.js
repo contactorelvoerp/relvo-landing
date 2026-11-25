@@ -10,7 +10,7 @@ export const copy = {
       subtitle: 'Calculamos cuánto cobrar según tus acuerdos comerciales. Agentes de IA gestionan las OCs, emiten facturas y hacen seguimiento hasta el pago.',
       demo: 'Agendar demo',
       how: 'Ver cómo funciona',
-      logos: 'Operan su revenue con Relvo',
+      logos: 'Operan sus ingresos con Relvo',
     },
     // Cifras de la landing B2B; ahorro de tiempo estimado según volúmenes y tiempos supuestos por tarea (2026-11-11).
     stats: {

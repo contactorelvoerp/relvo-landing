@@ -4,17 +4,17 @@ import { useEffect, useRef } from 'react'
 // Se dibujan una sola vez cuando la banda se acerca al viewport y de nuevo solo si cambia su
 // tamaño. `inner` son los bordes del contenido de la banda: las texturas de borde no lo invaden.
 const painters = {
-  orbitsEdge(ctx, w, h) {
+  orbitsEdge(ctx, w, h, inner) {
     const cx = w + 60, cy = h * 0.32, max = Math.max(w * 0.62, 700)
     for (let r = 120; r < max; r += 13) {
-      ctx.strokeStyle = `rgba(15,74,74,${(0.2 * (1 - r / max)).toFixed(3)})`
+      ctx.strokeStyle = `color-mix(in srgb, ${inner.accent} calc(100% * ${(0.2 * (1 - r / max)).toFixed(3)}), transparent)`
       ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI * 0.5, Math.PI * 1.5); ctx.stroke()
     }
   },
-  ridgesSoft(ctx, w, h) {
+  ridgesSoft(ctx, w, h, inner) {
     for (let y = 14; y < h; y += 11) {
       const band = Math.exp(-Math.pow((y / h - 0.62) / 0.3, 2))
-      ctx.strokeStyle = `rgba(24,102,102,${(0.04 + 0.08 * band).toFixed(3)})`
+      ctx.strokeStyle = `color-mix(in srgb, ${inner.accent} calc(100% * ${(0.04 + 0.08 * band).toFixed(3)}), transparent)`
       ctx.beginPath()
       for (let x = 0; x <= w; x += 8) {
         const nx = x / w
@@ -26,7 +26,7 @@ const painters = {
   },
   dotsGutter(ctx, w, h, inner) {
     const g = 16
-    ctx.fillStyle = 'rgb(24,102,102)'
+    ctx.fillStyle = inner.accent
     for (let y = g / 2; y < h; y += g) for (let x = g / 2; x < w; x += g) {
       const d = x < inner.l ? inner.l - x : x > inner.r ? x - inner.r : -1
       if (d < 0) continue
@@ -35,17 +35,17 @@ const painters = {
     }
     ctx.globalAlpha = 1
   },
-  orbitsDark(ctx, w, h) {
+  orbitsDark(ctx, w, h, inner) {
     const cx = -40, cy = h + 40, max = Math.max(w * 0.5, 600)
     for (let r = 80; r < max; r += 12) {
-      ctx.strokeStyle = `rgba(114,221,170,${(0.1 * (1 - r / max)).toFixed(3)})`
+      ctx.strokeStyle = `color-mix(in srgb, ${inner.light} calc(100% * ${(0.1 * (1 - r / max)).toFixed(3)}), transparent)`
       ctx.beginPath(); ctx.arc(cx, cy, r, -Math.PI / 2, 0); ctx.stroke()
     }
   },
   linesEdge(ctx, w, h, inner) {
     const right = w - inner.r
     for (let y = 10, i = 0; y < h; y += 7, i++) {
-      ctx.strokeStyle = `rgba(24,102,102,${(0.08 + 0.06 * Math.sin(i * 0.2)).toFixed(3)})`
+      ctx.strokeStyle = `color-mix(in srgb, ${inner.accent} calc(100% * ${(0.08 + 0.06 * Math.sin(i * 0.2)).toFixed(3)}), transparent)`
       const len = Math.min(inner.l, inner.l * (0.55 + 0.45 * Math.abs(Math.sin(i * 0.11))) + 60 * Math.sin(i * 0.05))
       ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(Math.max(0, len), y); ctx.stroke()
       const len2 = right * (0.55 + 0.45 * Math.abs(Math.cos(i * 0.09)))
@@ -71,7 +71,7 @@ export function BandTexture({ kind }) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx.lineWidth = 1
       const c = canvas.getBoundingClientRect(), b = band.getBoundingClientRect(), pad = parseFloat(getComputedStyle(band).paddingLeft)
-      painters[kind](ctx, w, h, { l: b.left - c.left + pad, r: b.right - c.left - pad })
+      painters[kind](ctx, w, h, { l: b.left - c.left + pad, r: b.right - c.left - pad, accent: getComputedStyle(canvas).getPropertyValue('--accent').trim(), light: getComputedStyle(canvas).getPropertyValue('--green-300').trim() })
       drawn = true
     }
 
@@ -82,8 +82,11 @@ export function BandTexture({ kind }) {
       draw()
       resize.observe(band)
     }, { rootMargin: '400px 0px' })
+    const theme = new MutationObserver(() => { if (drawn) draw() })
+    const site = canvas.closest('.site')
+    if (site) theme.observe(site, { attributes: true, attributeFilter: ['data-palette'] })
     view.observe(band)
-    return () => { view.disconnect(); resize.disconnect() }
+    return () => { view.disconnect(); resize.disconnect(); theme.disconnect() }
   }, [kind])
 
   return <canvas ref={ref} className="band-texture" aria-hidden="true" />

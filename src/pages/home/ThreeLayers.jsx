@@ -29,19 +29,19 @@ export function ThreeLayers({ c }) {
       railWidth = W
       xs = layers.map((l) => { const bb = l.getBoundingClientRect(); return (bb.left - r.left + bb.width / 2) * sc })
       const y = H / 2
-      rail.appendChild(mk('line', { x1: 0, x2: W, y1: y, y2: y, stroke: '#186666', 'stroke-width': 2 }))
-      nodes = xs.map((x) => rail.appendChild(mk('circle', { cx: x, cy: y, r: 6, fill: '#DFF4EB', stroke: '#186666', 'stroke-width': 1.5 })))
-      dot = rail.appendChild(mk('circle', { cx: 0, cy: y, r: 4, fill: '#186666' }))
+      rail.appendChild(mk('line', { x1: 0, x2: W, y1: y, y2: y, stroke: 'var(--accent)', 'stroke-width': 2 }))
+      nodes = xs.map((x) => rail.appendChild(mk('circle', { cx: x, cy: y, r: 6, fill: 'var(--mint)', stroke: 'var(--accent)', 'stroke-width': 1.5 })))
+      dot = rail.appendChild(mk('circle', { cx: 0, cy: y, r: 4, fill: 'var(--accent)' }))
     }
     const setStep = (s, t) => {
       layers.forEach((l, i) => l.classList.toggle('layers__card--dim', i > s))
-      nodes.forEach((n, i) => n.setAttribute('fill', i <= s ? '#186666' : '#DFF4EB'))
+      nodes.forEach((n, i) => n.setAttribute('fill', i <= s ? 'var(--accent)' : 'var(--mint)'))
       nums.forEach((n) => { const v = +n.dataset.v; text(n, fmt(s < 0 ? 0 : s === 0 ? v * Math.min(1, t) : v)) })
       if (s === 0 && t < 1) return
       const isDone = s >= 1 && (s > 1 || t > 0.5)
       const status = isDone ? done : running
       if (chipText.textContent !== status) {
-        chip.style.background = isDone ? '#DFF4EB' : '#FBF3E4'; chip.style.color = isDone ? '#0F4A4A' : '#8A5A00'
+        chip.style.background = isDone ? 'var(--mint)' : '#FBF3E4'; chip.style.color = isDone ? 'var(--accent-pressed)' : '#8A5A00'
         text(chipText, status)
       }
       const k = s >= 2 ? (s > 2 ? 1 : Math.min(1, t)) : 0
@@ -124,10 +124,10 @@ export function ThreeLayers({ c }) {
             <div data-k="mrr" className="layers__mrr">{fmt(187200)}</div>
             <div data-k="delta" className="layers__delta">{deltaText}</div>
             <svg className="layers__chart" viewBox="0 0 300 84" preserveAspectRatio="none" aria-hidden="true">
-              <polyline points="0,70 50,64 100,58 150,52 200,40 240,34" fill="none" stroke="#13131E" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
-              <polyline data-k="proj" points="240,34 300,22" fill="none" stroke="#13131E" strokeWidth="1" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" opacity="0" />
-              <line data-k="seg" x1="240" y1="34" x2="300" y2="22" stroke="#186666" strokeWidth="2" vectorEffect="non-scaling-stroke" />
-              <circle data-k="pt" cx="300" cy="22" r="3.5" fill="#186666" />
+              <polyline points="0,70 50,64 100,58 150,52 200,40 240,34" fill="none" stroke="var(--text-main)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+              <polyline data-k="proj" points="240,34 300,22" fill="none" stroke="var(--text-main)" strokeWidth="1" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" opacity="0" />
+              <line data-k="seg" x1="240" y1="34" x2="300" y2="22" stroke="var(--accent)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+              <circle data-k="pt" cx="300" cy="22" r="3.5" fill="var(--accent)" />
             </svg>
           </div>
         </article>

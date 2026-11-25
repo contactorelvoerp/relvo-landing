@@ -137,7 +137,13 @@
 /* Crop the ring at the section rails and above the logo strip. */
 .hero--split .hero__top{clip-path:inset(0 var(--rail-inset))}
 .hero--split .hero__copy{position:relative;z-index:1}
-.hero--split .hero__eyebrow{font-size:18px;font-weight:400;font-style:italic}
+@font-face{font-family:'Geist Mono';src:url('/fonts/geist-mono/GeistMono-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+.hero--split .hero__eyebrow{position:relative;align-self:flex-start;width:max-content;max-width:100%;font-family:'Geist Mono',monospace;font-size:18px;font-weight:400;font-style:normal;letter-spacing:0;white-space:nowrap}
+.hero__eyebrow-reserve{opacity:0}
+.hero__eyebrow-typing{position:absolute;inset:0 auto 0 0;box-sizing:content-box;width:0;overflow:hidden;border-right:1ch solid var(--accent);animation:hero-eyebrow-type 5.6s steps(var(--eyebrow-characters),end) infinite,hero-eyebrow-cursor .8s ease-in-out infinite}
+@keyframes hero-eyebrow-type{0%{width:0}20%,100%{width:100%}}
+@keyframes hero-eyebrow-cursor{0%,100%{border-color:var(--accent)}50%{border-color:transparent}}
+@media (prefers-reduced-motion:reduce){.hero__eyebrow-reserve{opacity:1}.hero__eyebrow-typing{display:none;animation:none}}
 .hero--split .hero__title{margin-top:24px;font-size:clamp(44px,5.1cqi,76px);line-height:1.04;letter-spacing:-.045em;text-wrap:pretty}
 .hero__title-em{
   color:var(--accent);
@@ -150,6 +156,7 @@
 .hero__ring{position:absolute;margin-left:340px;width:clamp(620px,62vw,1000px);height:auto;max-width:none;opacity:.48;pointer-events:none;animation:hero-ring-turn 240s linear infinite}
 .hero--offscreen .hero__ring{animation-play-state:paused}
 .hero--split .logo-strip{position:relative;margin-top:0;background:var(--paper)}
+.hero--split .logo-strip__label{font-family:'Geist Mono',monospace;text-transform:uppercase}
 @keyframes hero-ring-turn{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.hero__ring{animation:none}}
 @container (max-width:979px){
@@ -162,6 +169,7 @@
 @container (max-width:719px){
   .hero--split .hero__top{padding-block:40px 0;gap:24px}
   .hero--split .hero__copy{align-items:center;text-align:center}
+  .hero--split .hero__eyebrow{align-self:center}
   .hero--split .hero__title{text-wrap:balance}
   .hero--split .hero__ctas{justify-content:center}
   .hero__agent{min-height:48px}

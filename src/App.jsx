@@ -4,14 +4,17 @@ import { PendingPage } from './pages/PendingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
+import { useHeroPalette } from './pages/home/useHeroPalette'
+import './styles/landing-palettes.css'
 
 export function App({ route, Page }) {
+  const heroPalette = useHeroPalette(route.id === 'home')
   const t = getDict(route.locale)
   const skipLink = <a className="skip-link" href="#main-content">{route.locale === 'en' ? 'Skip to content' : 'Saltar al contenido'}</a>
 
   let content
   if (route.status === '404') content = <NotFoundPage t={t} />
-  else if (Page) content = <Page t={t} locale={route.locale} route={route} />
+  else if (Page) content = <Page t={t} locale={route.locale} route={route} heroPalette={heroPalette} />
   else content = <PendingPage route={route} />
 
   // Landings de campañas pagadas (src/pages/standalone.js): sin nav ni footer completo, sin
@@ -26,7 +29,7 @@ export function App({ route, Page }) {
   }
 
   return (
-    <div className="site">
+    <div className="site" data-palette={route.id === 'home' ? heroPalette : undefined}>
       {skipLink}
       <Nav t={t} locale={route.locale} pageId={route.id} />
       <div className="frame">
