@@ -48,6 +48,15 @@ fields and sanitized page URLs; opaque references stay in first-party storage.
 Legacy PDF URLs have raw billing IDs removed before GA and Apollo load.
 Previews do not load tracking. The reference never enters a GA custom dimension.
 
+Microsoft Clarity (`zjc8qwdmyh`) loads through the shared marketing initializer
+on production pages, after sensitive URL IDs are removed. It collects recordings,
+heatmaps and engagement metrics without a separate tag on each landing page.
+Until a consent banner is integrated, Clarity is skipped by the existing browser
+timezone region check used for Apollo. This heuristic is not reliable geolocation
+or a complete consent solution. Preview and local builds do not load Clarity.
+After deployment, verify the Clarity tag request in the browser network panel and
+check recordings/heatmaps in the Clarity project, filtering by landing-page URL.
+
 Production setup, in order:
 
 1. Apply `supabase/migrations/202610210001_distribution_attribution.sql` to the

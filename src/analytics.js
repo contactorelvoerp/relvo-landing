@@ -152,6 +152,12 @@ export function initializeMarketing() {
     document.head.appendChild(script)
   }
   addScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(config.measurementId)}`)
+  // Until a consent banner is available, keep recordings off in the same regions
+  // as Apollo. Initialize once per document, after sensitive URL IDs are removed.
+  if (config.clarityProjectId && !consentRegion && !window.clarity) {
+    window.clarity = function () { (window.clarity.q ??= []).push(arguments) }
+    addScript(`https://www.clarity.ms/tag/${encodeURIComponent(config.clarityProjectId)}`)
+  }
   const afterLoad = () => {
     trackWebVitals()
     // Apollo no entiende Consent Mode: no se carga donde el consentimiento es obligatorio.
