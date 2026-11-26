@@ -1,5 +1,72 @@
 # Relvo — Web 3.0 (getrelvo.ai)
 
+`CLAUDE.md` is the canonical instruction file. `AGENTS.md` is a relative symlink
+to it so Codex and Claude Code read the same rules. Edit this file and preserve
+the alias.
+
+## One worktree and branch per agent thread
+
+These rules apply to Codex and Claude Code, including threads already in progress.
+Read-only investigation, searches and planning may use the current checkout.
+Before the first edit, generator, dependency install or other command that writes
+files, create or resume a worktree and branch owned by this thread. Do not create
+a new worktree for every follow-up in the same thread.
+
+- The primary checkout is the user's integration checkout, even when it has a
+  feature branch checked out. Do not implement tasks there by default.
+- Work directly on `main` or in the primary checkout only when the user explicitly
+  asks for it for this task. Small or urgent fixes are not an exception. Permission
+  to merge or deploy does not imply permission to develop in the shared checkout.
+- Inspect `git status --short`, `git branch --show-current` and `git worktree list`
+  before writing. Resume an existing worktree only when it belongs to this thread;
+  a similar task name is not proof of ownership.
+- Use a unique `agent/<task-slug>` branch and a sibling directory under
+  `../relvo-landing-worktrees/`. If either name exists, choose a unique suffix;
+  never force reuse, reset an existing branch or remove another thread's worktree.
+- Run all subsequent edits, installs, generators, tests, builds and commits in
+  that worktree. Set each command's working directory explicitly; a `cd` in one
+  tool call may not persist in the next. Use absolute paths for file-editing tools.
+- Never stash, reset, clean, switch branches, merge, apply stashes or change files
+  in another thread's checkout to unblock your task. Do not copy unrelated pending
+  changes into your worktree. If you accidentally edited the shared checkout,
+  identify your exact changes before moving them; preserve everyone else's work.
+- Keep dependencies and generated output local to each worktree. Do not symlink
+  `node_modules`, `dist`, `dist-ssr` or source directories between checkouts.
+  Install with `npm ci --prefer-offline` in your worktree only when needed.
+- Use a free port for your preview. Do not stop or replace another thread's server.
+- Commit and publish from the worktree where you edited. Do not copy changes back
+  into the primary checkout as a publishing shortcut. Keep the worktree for
+  review; report its path and branch in the handoff. Remove it only when its work
+  is merged or intentionally discarded and it has no pending files or unpublished
+  commits. Never use forced worktree removal.
+
+### Creating the worktree
+
+Find the primary checkout with `git worktree list`; do not assume the current
+directory is the primary checkout. For a new independent task, fetch `origin`
+and base the branch on local `main` if it contains `origin/main`, otherwise on
+`origin/main`. This preserves local integration commits without starting behind
+the remote. If fetching is unavailable, report that and use the available local
+base without claiming it is current. For an explicit continuation of a feature,
+use that feature's committed revision instead; pending files are not included.
+
+Example, replacing the paths and slug with this repository's actual primary
+checkout and a unique task name:
+
+```bash
+git -C /path/to/relvo-landing fetch origin
+git -C /path/to/relvo-landing merge-base --is-ancestor origin/main main
+# Exit 0: use main below. Exit 1: use origin/main. Other errors: inspect first.
+git -C /path/to/relvo-landing worktree add \
+  -b agent/<unique-task-slug> \
+  /path/to/relvo-landing-worktrees/<unique-task-slug> main
+```
+
+Then explicitly use the new directory for every writing command and verify its
+branch and status before starting implementation. If the user explicitly asks
+to work on `main`, inspect pending changes first and preserve unrelated work;
+that exception does not authorize destructive cleanup or a production push.
+
 Refactor total del sitio público de Relvo. La web actual NO es base: estructura, secciones, copy y visuales salen del brief.
 
 ## Fuentes de verdad (en este orden)
@@ -47,7 +114,7 @@ Si algo no está en el brief, no va en la web. Si falta un texto, se pide; no se
 
 ## Flujo de trabajo
 - Una rama y un PR por fase o sección. Cada PR genera preview en Vercel para revisión de Ricardo.
-- Push directo a `main` solo para fixes urgentes de una línea, con build local previo.
+- Trabajar directamente en `main` o en el checkout principal requiere una petición explícita del usuario para esa tarea (ver las reglas de worktrees arriba). Los fixes urgentes también usan worktree por defecto; publicar o desplegar requiere autorización dentro del alcance de la tarea.
 - Cero código legacy: al reemplazar una sección se borra en el mismo PR todo lo que quede sin uso (componentes, estilos, assets, rutas, dependencias), en un commit aparte `chore: remove legacy <sección>`. Detectar con `knip` y búsqueda de assets sin referencias; si algo externo podría depender de eso, preguntar antes.
 - Toda URL pública eliminada o renombrada lleva redirect 301.
 
